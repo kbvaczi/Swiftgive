@@ -58,5 +58,9 @@ module Swiftgive
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Prevents server from accessing database during initialization when set to false.  Devise recommends this to be set to false when using Heroku.
+    config.assets.initialize_on_precompile = false
+    
   end
 end
