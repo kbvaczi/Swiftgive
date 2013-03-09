@@ -6,6 +6,7 @@
 
 # ignore protected config files
 /config/protected
+/config/initializers/0_env_variables.rb
 
 # Ignore bundler config
 /.bundle
