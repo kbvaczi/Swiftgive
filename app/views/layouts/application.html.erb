@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  
+    <%= favicon_link_tag %>           
+    <title><%= 'SwiftGive' + yield(:title) %></title>
+
+    <% unless content_for?(:description) %>
+      <% page_description "SwiftGive is a platform making donations and tips easier through technology." %>
+    <% end %>
+  
+    <meta name="description" content='<%= yield(:description) %>'>
+    <meta name="keywords" content="donations, gratuity, tips, anonymous, cash, secure, cheap, safe, easy">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+
+    <%#--------- YIELD STUFF TO PUT IN HEADING SUCH AS JAVASCRIPT INCLUDES, ETC...----# %>
+    <%= yield(:head) %>
+
+    <%# cross site forgery protection %>
+    <%= csrf_meta_tags %>
+  
+    <%# GOOGLE ANALYTICS STUFF ONLY ON PRODUCTION %>
+    <% if Rails.env.production? %>    
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        //_gaq.push(['_setAccount', 'UA-34432189-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+
+    <%# root div for facebook connect plugins %>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+  
+  </head>
+
+  <body>
+    
+    <%# ajax loading spinner %>
+    <div id="loader"></div>  
+
+    <% # DISPLAY FLASH NOTICES --------------------------------------- %>  
+    <% if flash[:notice] %>
+      <div id="flash" class="flash_notice">
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div id="flash" class="flash_alert">
+        <%= flash[:alert] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div id="flash" class="flash_error">
+        <%= flash[:error] %>
+      </div>
+    <% elsif flash[:warning] %>
+      <div id="flash" class="flash_warning">
+        <%= flash[:warning] %>
+      </div>
+    <% end %>
+      
+    <div id='page' class='container'>
+      
+      <div id='header' class='columns sixteen row alpha omega'>
+        <%= render :partial => 'layouts/standard/header' %>
+      </div>
+
+      <div id="main" class="columns sixteen row alpha omega">        
+        
+        <div id="mainbar" class='columns eleven alpha'>
+          <%= yield %>
+        </div>
+        
+        <div id="sidebar" class='columns five omega'>
+          <%= render :partial => 'layouts/standard/sidebar' %>
+        </div>
+           
+      </div>
+
+      <div id="bottomnav" class='columns sixteen alpha omega row'>
+        <%= render :partial => 'layouts/standard/bottomnav' %>
+      </div>
+      
+      <div id="footer" class='columns sixteen alpha omega row'>
+        <%= render :partial => 'layouts/standard/footer' %>
+      </div>
+      
+    </div>
+    
+  </body>
+
+</html>

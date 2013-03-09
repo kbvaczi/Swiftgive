@@ -1,0 +1,117 @@
+@import "shared/variables";
+@import "shared/helpers";
+
+body {
+  margin: 0px;
+  margin-bottom: 25px;
+  padding: 0px;
+  background-color: $backgroundColor;
+  font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+  font-size: 13px;
+  color: $fontColor;
+}  
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+a {
+  color: #03c;
+}
+a:hover {
+  background-color: #03c;
+  color: white;
+  text-decoration: none;
+}
+#page {
+ margin-top: 10px;
+}
+#main {
+}
+#mainbar {
+  background-color: white;  
+}
+#sidebar {
+  background-color: white;    
+}
+#bottomnav {
+  background-color: white;
+  height:20px;
+}
+#footer {
+  background-color: white;      
+  height:20px;
+}
+
+// # ----- Header ----- #
+$headerHeight: 80px;
+#header {
+  height: $headerHeight;
+}
+#header #logo {
+  height: 75px;
+  width: 300px;
+  background-image: image-url("logo.png");  
+  background-repeat: no-repeat;
+  background-position: top left;  
+}
+#header h1, #header h2 {
+  margin: 0px;
+}
+#header h2 {
+  color: #888;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+#navbar {
+  margin-top:10px;
+  @extend .noselect;
+  @extend .right;
+}
+#navbar ul {
+  list-style: none; 
+
+}
+#navbar ul li {
+  @extend .right;
+  text-align: center;
+  border-left: 1px solid #DDD;
+}
+#navbar ul li:last-child {
+  border-left:none;
+}
+
+#navbar ul li a {
+  margin: 5px 10px;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: $fontColorLight;
+  display: block;
+  text-transform: capitalize;
+  letter-spacing: 2px;
+  font-size: 120%;
+  border-radius: $borderRadius;
+}
+#navbar ul li a:hover, #navbar ul li a:focus, #navbar ul li a:active {
+  color: #fff;
+  background: #BEC1C4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#sidebar ul {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+#sidebar ul h3 {
+  margin-top: 25px;
+  font-size: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc; 
+}
+#sidebar li {
+  list-style-type: none;
+}
+#sidebar ul.links li {
+  margin-bottom: 5px;
+}
