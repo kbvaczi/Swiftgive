@@ -82,6 +82,12 @@
       <div id="main" class="columns sixteen row alpha omega">        
         
         <div id="mainbar" class='columns eleven alpha'>
+          <% if user_signed_in? %>
+            <%= "current user = #{current_user.email}" %>
+            <%= "session #{session[:session_id]}"%>
+          <% else %>
+            <%= 'user not signed in' %>
+          <% end %>
           <%= yield %>
         </div>
         

@@ -1,8 +1,5 @@
 <%= link_to content_tag(:div, '', :id => 'logo', :class => 'left scale-with-grid'), root_path %>
 
 <div id="navbar">
-  <ul class="group">
-  		<li><%= link_to "Sign up", new_user_registration_path %></li>    
-  		<li><%= link_to "About", root_path %></li>
-  </ul>
+  <%= render :partial => 'layouts/standard/navbar' %>
 </div>

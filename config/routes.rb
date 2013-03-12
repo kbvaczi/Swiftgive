@@ -1,7 +1,13 @@
 Swiftgive::Application.routes.draw do
-  
-  devise_for :users
 
+
+  devise_for :users, :path => '/account', :controllers => { :registrations => 'users/registrations', 
+                                                            :sessions => 'users/sessions', 
+                                                            :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_scope :user do
+    match 'account/omniauth/sign_in/:provider' => 'users/sessions#omniauth_login', :as => :user_login_omniauth    
+    match 'account/omniauth/register/:provider' => 'users/registrations#omniauth_register', :as => :user_register_omniauth        
+  end 
   root :to => "home#index"
   
   # The priority is based upon order of creation:
