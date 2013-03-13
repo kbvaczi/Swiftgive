@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def facebook
     @auth_hash = request.env["omniauth.auth"]
-    @standardized_auth_data = {:email => @auth_hash.info.email, :provider => 'facebook', :uid => @auth_hash.uid}
+    @standardized_auth_data = {:email => @auth_hash.info.email, :provider => 'Facebook', :uid => @auth_hash.uid}
     common
   end
   

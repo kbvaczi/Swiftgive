@@ -4,10 +4,11 @@ Swiftgive::Application.routes.draw do
   devise_for :users, :path => '/account', :controllers => { :registrations => 'users/registrations', 
                                                             :sessions => 'users/sessions', 
                                                             :omniauth_callbacks => "users/omniauth_callbacks" }
-  devise_scope :user do
-    match 'account/omniauth/sign_in/:provider' => 'users/sessions#omniauth_login', :as => :user_login_omniauth    
-    match 'account/omniauth/register/:provider' => 'users/registrations#omniauth_register', :as => :user_register_omniauth        
-  end 
+
+  get 'account/sign_in_using_authentication/:provider'  => 'users/authentications#sign_in_to_existing_account', :as => :authentication_sign_in
+  get 'account/register_using_authentication/:provider' => 'users/authentications#register_new_account', :as => :authentication_register
+  get 'account/add_authentication/:provider'            => 'users/authentications#add_authentication_to_existing_account', :as => :authentication_add        
+  
   root :to => "home#index"
   
   # The priority is based upon order of creation:

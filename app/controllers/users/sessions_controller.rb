@@ -1,12 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
   
-  prepend_before_filter :require_no_authentication, :only => [:omniauth_login, :new, :create]  
-  
-  def omniauth_login
-    session['devise.authentication_reason'] = 'sign_in'
-    redirect_to user_omniauth_authorize_path(params[:provider])
-  end
-  
   # do this after a user signs in
   #TODO: implement banned funcationality for users
   def after_sign_in_path_for(resource) 
