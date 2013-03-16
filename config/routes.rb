@@ -8,6 +8,8 @@ Swiftgive::Application.routes.draw do
   get 'account/sign_in_using_authentication/:provider'  => 'users/authentications#sign_in_to_existing_account', :as => :authentication_sign_in
   get 'account/register_using_authentication/:provider' => 'users/authentications#register_new_account', :as => :authentication_register
   get 'account/add_authentication/:provider'            => 'users/authentications#add_authentication_to_existing_account', :as => :authentication_add        
+  get 'account/remove_authentication/:provider'         => 'users/authentications#remove_authentication_from_existing_account', :as => :authentication_remove          
+  
   
   root :to => "home#index"
   

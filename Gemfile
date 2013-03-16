@@ -7,6 +7,10 @@ gem "devise", "~> 2.2.3"                              # User Authentication
 gem "omniauth", "~> 1.1.3"                            # omni-auth implementation for signing in from third party services (facebook, google, etc...)
 gem "omniauth-facebook", "~> 1.4.1"                   # omni-auth plugin for logging in from facebook
 gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for logging in with google
+gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
+
+gem "carmen", "~> 1.0.0.beta2"
+#gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
 
 gem 'unicorn'                                         # Multi-threaded web server                                         
 

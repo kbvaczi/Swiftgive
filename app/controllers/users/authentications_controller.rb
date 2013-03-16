@@ -1,6 +1,6 @@
 class Users::AuthenticationsController < ApplicationController
 
-  before_filter :authenticate_user!, :only => :add_authentication_to_existing_account
+  before_filter :authenticate_user!, :only => [:add_authentication_to_existing_account, :remove_authentication_from_existing_account]
   before_filter :require_no_authentication, :only => [:sign_in_to_existing_account, :register_new_account]
   
   def sign_in_to_existing_account
@@ -17,6 +17,11 @@ class Users::AuthenticationsController < ApplicationController
     session['devise.authentication_reason'] = 'add_authentication'
     redirect_to user_omniauth_authorize_path(params[:provider])
   end
+  
+  def remove_authentication_from_existing_account
+    session['devise.authentication_reason'] = 'remove_authentication'
+    redirect_to user_omniauth_authorize_path(params[:provider])
+  end  
   
   protected
   
