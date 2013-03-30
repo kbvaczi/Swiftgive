@@ -1,5 +1,6 @@
 @import "shared/variables";
 @import "shared/helpers";
+@import "shared/navbar";
 
 body {
   margin: 0px;
@@ -43,16 +44,18 @@ a:hover {
 }
 
 // # ----- Header ----- #
-$headerHeight: 200px;
+$headerHeight: 100px;
 #header {
   height: $headerHeight;
 }
 #header #logo {
-  height: 75px;
-  width: 300px;
-  background-image: image-url("logo.png");  
+  width:100%;
+  max-width:250px;  
+  min-height:100px;
+  background-image: image-url("logo_text_md.png");  
   background-repeat: no-repeat;
-  background-position: top left;  
+  background-position: top left; 
+  background-size: 100%; 
 }
 #header h1, #header h2 {
   margin: 0px;
@@ -62,43 +65,9 @@ $headerHeight: 200px;
   font-weight: normal;
   font-size: 16px;
 }
-
-#navbar {
-  margin-top:10px;
-  @extend .noselect;
-  @extend .right;
+#sidebar {
+  @extend .standard_only;
 }
-#navbar ul {
-  list-style: none; 
-
-}
-#navbar ul li {
-  @extend .right;
-  text-align: center;
-  border-left: 1px solid #DDD;
-}
-#navbar ul li:last-child {
-  border-left:none;
-}
-
-#navbar ul li a {
-  margin: 5px 10px;
-  padding: 5px 10px;
-  text-decoration: none;
-  color: $fontColorLight;
-  display: block;
-  text-transform: capitalize;
-  letter-spacing: 2px;
-  font-size: 120%;
-  border-radius: $borderRadius;
-}
-#navbar ul li a:hover, #navbar ul li a:focus, #navbar ul li a:active {
-  color: #fff;
-  background: #BEC1C4;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 #sidebar ul {
   margin-left: 0px;
   padding-left: 0px;
@@ -114,4 +83,49 @@ $headerHeight: 200px;
 }
 #sidebar ul.links li {
   margin-bottom: 5px;
+}
+.button2 {
+  font-family: "Calibri", "Helvetica Neue", "Arial", sans-serif;
+  position:relative;
+  bottom:2px;
+  line-height:13px;
+  margin-left:1px !important;
+  margin-right:0px !important;
+  padding: 1px 5px 1px 5px !important;
+  border: 1px solid rgb(199, 199, 199);
+  text-shadow: 0px 1px 0px rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 0px 0px, rgba(255, 255, 255, 0.7) 0px 0px 0px 1px inset;  
+  color:rgb(119,119,119);
+  font-weight:normal;
+  background: rgb(255,255,255);
+  background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1)));
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+  background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+  background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+  background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+}
+.button2:hover, .button2:focus {
+  color:#444;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.standard_only {
+  visibility:visible;
+}
+
+.mobile_only {
+  visibility:hidden;
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+  .mobile_only {
+    visibility:visible;
+  }
+  .standard_only {
+    visibility:hidden;
+  }
 }

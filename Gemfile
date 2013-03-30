@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 gem 'rails', '3.2.12'
 gem "skeleton-rails", "~> 0.0.2"                      # Grid 960 CSS foundation
 
@@ -8,11 +10,14 @@ gem "omniauth", "~> 1.1.3"                            # omni-auth implementation
 gem "omniauth-facebook", "~> 1.4.1"                   # omni-auth plugin for logging in from facebook
 gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for logging in with google
 gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
+gem "omniauth-stripe-connect", "~> 2.2.0"             # omni-auth strategy for stripe-connect
+
+gem "stripe", "~> 1.7.11"                             # stripe payment gateway
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
 
-gem 'unicorn'                                         # Multi-threaded web server                                         
+gem 'unicorn'                                         # Multi-threaded web server
 
 group :development do
   gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"

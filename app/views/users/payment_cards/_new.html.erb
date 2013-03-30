@@ -1,0 +1,28 @@
+<%= form_tag payment_cards_path, :method => :post do %>  
+
+<div id="customStripeButton" class='button2 center noselect'><strong>+</strong> Add Credit Card</div>
+  
+
+<% end %>
+
+<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+<script>
+  $('#customStripeButton').click(function(){
+    var token = function(res){
+      var $input = $('<input type=hidden name=stripeToken />').val(res.id);
+      $('form').append($input).submit();
+    };
+
+    StripeCheckout.open({
+      key:         '<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>',
+      address:     false,
+      name:        'SwiftGive',
+      image:       "/logo_text_md.png", 
+      description: 'Save your payment card for future use',
+      panelLabel:  'Save',
+      token:       token
+    });
+
+    return false;
+  });
+</script>

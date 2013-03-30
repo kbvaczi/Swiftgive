@@ -1,17 +1,7 @@
-<h2>Sign in</h2>
+<h2>Sign in through one of these social networks</h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+<li><%= link_to "Sign in with Facebook", authentication_sign_in_path(:facebook) %></li>		
+<li><%= link_to "Sign in with Google",   authentication_sign_in_path(:google_oauth2) %></li>    
+<li><%= link_to "Sign in with linkedin",   authentication_sign_in_path(:linkedin) %></li>    
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<p>Note: Unless you link additional social networks to your profile, sign in using the one you created your account with</p>

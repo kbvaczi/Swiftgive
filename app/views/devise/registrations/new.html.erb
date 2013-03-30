@@ -1,18 +1,5 @@
-<h2>Sign up</h2>
+<h2>Sign up using your favorite social network</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %>
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<li><%= link_to "Sign up with Facebook", authentication_register_path(:facebook) %></li>
+<li><%= link_to "Sign up with Google",   authentication_register_path(:google_oauth2) %></li>
+<li><%= link_to "Sign up with linkedin",   authentication_register_path(:linkedin) %></li>

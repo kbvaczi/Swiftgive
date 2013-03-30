@@ -1,0 +1,54 @@
+<h2>Personal Profile</h2>
+<h3>Picture</h3>
+<div class='two-thirds column row'>
+  <%= image_tag current_user.image, :height => '80px', :width => '80px' %>
+</div>
+
+<h3>Name</h3>
+<div class='two-thirds column row'>
+  <%= current_user.full_name %>
+</div>
+
+<h3>Email</h3>
+<div class='two-thirds column row'>
+  <%= current_user.email %>
+</div>
+
+<h3>Location</h3>
+<div class='two-thirds column row'>
+  <%= "#{current_user.city}, " if current_user.city.present? %>
+  <%= "#{Carmen::Country.coded(current_user.country).subregions.coded(current_user.state).name rescue current_user.state}" if current_user.state.present? %> 
+  <%= "(#{Carmen::Country.coded(current_user.country).name rescue current_user.country})" if current_user.country.present? %>
+</div>
+
+<h3>Credit Card</h3>
+<div class='two-thirds column' id=>
+  <% payment_card = current_user.payment_card %>
+  <% if payment_card.present? %>
+    <ul>
+      <li><%= payment_card.stripe_customer_object.active_card.type %> ending in <%= payment_card.stripe_customer_object.active_card.last4 %> <%= link_to 'remove', payment_card_path(payment_card), :method => :delete %></li>
+    </ul>
+  <% else %>
+    <%= render :partial => 'users/payment_cards/new' %>
+    <br class='spacer'/>
+  <% end %>
+</div>
+
+<script type='text/javascript'>
+  $('#add_new_card_button').click(function(){
+    $('#add_new_card_button').hide();
+    $('#payment_card_form').show();    
+  });
+</script>
+
+<h3>My Stripe Account</h3>
+
+<h3>Social Networks Linked</h3>
+<div class='two-thirds column'>
+  <% current_user.authentications.each do |authentication| %>
+    <ul>
+      <li><%= authentication.provider_name %></li>
+    </ul>
+  <% end %>
+</div>
+

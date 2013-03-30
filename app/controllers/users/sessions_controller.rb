@@ -23,4 +23,8 @@ class Users::SessionsController < Devise::SessionsController
     super
   end
   
+  def sign_in_test
+    sign_in_and_redirect User.first, :event => :authentication #this will throw if @user is not activated      
+  end
+  
 end

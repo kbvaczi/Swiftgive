@@ -3,15 +3,35 @@ Swiftgive::Application.routes.draw do
 
   devise_for :users, :path => '/account', :controllers => { :registrations => 'users/registrations', 
                                                             :sessions => 'users/sessions', 
-                                                            :omniauth_callbacks => "users/omniauth_callbacks" }
-
-  get 'account/sign_in_using_authentication/:provider'  => 'users/authentications#sign_in_to_existing_account', :as => :authentication_sign_in
-  get 'account/register_using_authentication/:provider' => 'users/authentications#register_new_account', :as => :authentication_register
-  get 'account/add_authentication/:provider'            => 'users/authentications#add_authentication_to_existing_account', :as => :authentication_add        
-  get 'account/remove_authentication/:provider'         => 'users/authentications#remove_authentication_from_existing_account', :as => :authentication_remove          
+                                                            :omniauth_callbacks => "users/omniauth_callbacks" } do
+    if Rails.env.development? or Rails.env.staging?                                                         
+      get 'sign_in' => "users/sessions#sign_in_test" 
+    end
+  end 
   
+  scope :module => 'users' do
+    resources :payment_cards, :path => '/account/payment_cards', :only => [:create, :destroy]
+
+    get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in_to_existing_account', :as => :authentication_sign_in
+    get 'account/register_using_authentication/:provider' => 'authentications#register_new_account', :as => :authentication_register
+    get 'account/add_authentication/:provider'            => 'authentications#add_authentication_to_existing_account', :as => :authentication_add        
+    get 'account/remove_authentication/:provider'         => 'authentications#remove_authentication_from_existing_account', :as => :authentication_remove
+
+    get 'account/profile' => 'accounts#show', :as => :show_user_profile
+  end 
+  
+
+  
+
+  
+  # routes for testing (not for production)  
+  if Rails.env.development? or Rails.env.staging?
+    match 'test' => 'home#test'
+    match 'test2' => 'home#test2'
+  end
   
   root :to => "home#index"
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
