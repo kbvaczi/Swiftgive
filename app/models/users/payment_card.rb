@@ -26,7 +26,7 @@ class Users::PaymentCard < ActiveRecord::Base
   # ----- Member Methods ----- #
 
   def stripe_customer_object
-    self.loaded_stripe_customer_object ||= YAML.load read_attribute :stripe_customer_object
+    self.loaded_stripe_customer_object ||= YAML.load(read_attribute :stripe_customer_object)
   end
   
   # ----- Class Methods ----- #

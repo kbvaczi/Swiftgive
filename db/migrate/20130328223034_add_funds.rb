@@ -8,12 +8,6 @@ class AddFunds < ActiveRecord::Migration
         t.string  :description
         t.text    :profile
         
-        t.string  :stripe_access_token
-        t.string  :stripe_refresh_token
-        t.string  :stripe_publishable_key
-        t.string  :stripe_user_id
-        t.text    :stripe_omniauth_response
-        
         t.timestamps
       end
         add_index :funds, :uid
@@ -25,7 +19,7 @@ class AddFunds < ActiveRecord::Migration
         t.string  :user_id
         t.string  :fund_id
         
-        t.boolean :is_admin, :default => false
+        t.boolean :is_owner, :default => false
       end
       add_index   :funds_memberships, :user_id
       add_index   :funds_memberships, :fund_id

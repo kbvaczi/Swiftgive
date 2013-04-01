@@ -11,20 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130328223034) do
+ActiveRecord::Schema.define(:version => 20130330150003) do
 
   create_table "funds", :force => true do |t|
     t.string   "uid"
     t.string   "name"
     t.string   "description"
     t.text     "profile"
-    t.string   "stripe_access_token"
-    t.string   "stripe_refresh_token"
-    t.string   "stripe_publishable_key"
-    t.string   "stripe_user_id"
-    t.text     "stripe_omniauth_response"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "funds", ["name"], :name => "index_funds_on_name"
@@ -33,11 +28,24 @@ ActiveRecord::Schema.define(:version => 20130328223034) do
   create_table "funds_memberships", :force => true do |t|
     t.string  "user_id"
     t.string  "fund_id"
-    t.boolean "is_admin", :default => false
+    t.boolean "is_owner", :default => false
   end
 
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
   add_index "funds_memberships", ["user_id"], :name => "index_funds_memberships_on_user_id"
+
+  create_table "funds_stripe_accounts", :force => true do |t|
+    t.string   "fund_id"
+    t.string   "stripe_access_token"
+    t.string   "stripe_refresh_token"
+    t.string   "stripe_publishable_key"
+    t.string   "stripe_user_id"
+    t.text     "stripe_access_response"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "funds_stripe_accounts", ["fund_id"], :name => "index_funds_stripe_accounts_on_fund_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

@@ -1,0 +1,25 @@
+<%= form_for(@fund) do |f| %>
+ <%= "uid = #{@fund.uid}" %>
+  <% if @fund.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fund.errors.count, "error") %> prohibited this fund from being saved:</h2>
+
+      <ul>
+      <% @fund.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='inputs'>
+    <%= f.text_field :name, :placeholder => 'Name' %>
+    <%= f.text_field :description, :placeholder => 'Description' %>
+    <%= f.text_area :profile, :placeholder => 'Profile for this fund' %>
+    <%= %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

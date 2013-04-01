@@ -1,6 +1,5 @@
 Swiftgive::Application.routes.draw do
 
-
   devise_for :users, :path => '/account', :controllers => { :registrations => 'users/registrations', 
                                                             :sessions => 'users/sessions', 
                                                             :omniauth_callbacks => "users/omniauth_callbacks" } do
@@ -19,10 +18,13 @@ Swiftgive::Application.routes.draw do
 
     get 'account/profile' => 'accounts#show', :as => :show_user_profile
   end 
-  
 
-  
-
+  get 'funds/stripe_accounts/create' => 'funds/stripe_accounts#create'  
+  resources :funds do
+    scope :module => 'funds' do
+      resources :stripe_accounts, :only => [:new, :destroy]
+    end
+  end
   
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?

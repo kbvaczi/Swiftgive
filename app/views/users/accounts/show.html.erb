@@ -26,7 +26,7 @@
   <% payment_card = current_user.payment_card %>
   <% if payment_card.present? %>
     <ul>
-      <li><%= payment_card.stripe_customer_object.active_card.type %> ending in <%= payment_card.stripe_customer_object.active_card.last4 %> <%= link_to 'remove', payment_card_path(payment_card), :method => :delete %></li>
+      <li><%= payment_card.stripe_customer_object.active_card.type %> ending in <%= payment_card.stripe_customer_object.active_card.last4 %> <%= link_to 'X delete', payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
     </ul>
   <% else %>
     <%= render :partial => 'users/payment_cards/new' %>

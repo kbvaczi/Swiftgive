@@ -18,9 +18,13 @@ class User < ActiveRecord::Base
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   
+  # ----- Validations ----- #
+  
+  validates_presence_of :uid, :email
+  
   # ----- Callbacks ----- #
   
-  before_create     :generate_and_assign_uid
+  before_validation :generate_and_assign_uid, :on => :create
   
   # ----- Member Methods ----- #
   
@@ -95,7 +99,7 @@ class User < ActiveRecord::Base
 
   def generate_and_assign_uid
     self.uid = loop do
-      random_uid = 'U_' + SecureRandom.urlsafe_base64(5).gsub(/[-=_]/,"0").upcase
+      random_uid = 'u_' + SecureRandom.hex(4)
       break random_uid unless User.where(uid: random_uid).exists?
     end
   end
