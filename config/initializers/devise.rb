@@ -218,7 +218,6 @@ Devise.setup do |config|
   config.omniauth :facebook,       ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], :scope => 'email, user_location'
   config.omniauth :google_oauth2,  ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], { access_type: "offline", approval_prompt: "" }  
   config.omniauth :linkedin,       ENV['LINKEDIN_API_KEY'], ENV['LINKEDIN_SECRET_KEY']
-  config.omniauth :stripe_connect, ENV['STRIPE_CONNECT_CLIENT_ID'], ENV['STRIPE_SECRET_KEY'], :scope => 'read_write', :stripe_landing => 'login'
       
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

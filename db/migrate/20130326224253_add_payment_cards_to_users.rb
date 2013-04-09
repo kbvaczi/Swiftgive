@@ -4,10 +4,10 @@ class AddPaymentCardsToUsers < ActiveRecord::Migration
       create_table :users_payment_cards do |t|
         t.integer :user_id
 
-        #t.string  :description
-        t.string  :stripe_customer_id
-        #t.boolean :is_default, :default => false
-        t.text    :stripe_customer_object
+        t.string  :card_type
+        t.string  :last_4_digits
+        t.string  :uri    # balanced payments unique identifier
+        t.boolean :is_default, :default => false
     
         t.timestamps
       end

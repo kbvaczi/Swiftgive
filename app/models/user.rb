@@ -14,22 +14,39 @@ class User < ActiveRecord::Base
                   :first_name, :last_name, :city, :state, :country, :image
   
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
-  has_one     :payment_card,      :class_name => 'Users::PaymentCard',    :dependent => :destroy
+  has_many    :payment_cards,     :class_name => 'Users::PaymentCard',    :dependent => :destroy
+  has_many    :bank_accounts,     :class_name => 'BankAccount',           :dependent => :destroy
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   
   # ----- Validations ----- #
   
-  validates_presence_of :uid, :email
+  validates_presence_of :uid, :email, :account_uri
   
   # ----- Callbacks ----- #
   
   before_validation :generate_and_assign_uid, :on => :create
+  before_validation :create_balanced_payments_account_and_set_balance, :on => :create
+
+  def create_balanced_payments_account_and_set_balance
+    begin
+      account = Balanced::Marketplace.my_marketplace.create_account(:email_address => self.email, :name => self.full_name)
+    rescue Balanced::Error => error
+      Rails.logger.info("ERROR CREATING BALANCE ACCOUNT: #{error}")
+      account = Balanced::Account.where(:email_address => self.email).first rescue nil
+    end
+    self.account_uri = account.uri if account.present?
+    self.account_balance = 0
+  end
   
   # ----- Member Methods ----- #
   
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+  
+  def balanced_account
+    Balanced::Account.find(self.account_uri)
   end
   
   def self.new_with_session(params, session)

@@ -9,8 +9,11 @@ Swiftgive::Application.routes.draw do
   end 
   
   scope :module => 'users' do
-    resources :payment_cards, :path => '/account/payment_cards', :only => [:create, :destroy]
-
+    namespace :account do
+      resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]
+      resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]    
+    end
+    
     get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in_to_existing_account', :as => :authentication_sign_in
     get 'account/register_using_authentication/:provider' => 'authentications#register_new_account', :as => :authentication_register
     get 'account/add_authentication/:provider'            => 'authentications#add_authentication_to_existing_account', :as => :authentication_add        

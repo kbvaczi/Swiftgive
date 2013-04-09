@@ -1,4 +1,4 @@
-class AddFunds < ActiveRecord::Migration
+class CreateFunds < ActiveRecord::Migration
   def up
     unless table_exists? :funds
       create_table :funds do |t|

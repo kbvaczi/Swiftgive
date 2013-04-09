@@ -21,13 +21,15 @@
   <%= "(#{Carmen::Country.coded(current_user.country).name rescue current_user.country})" if current_user.country.present? %>
 </div>
 
-<h3>Credit Card</h3>
-<div class='two-thirds column' id=>
-  <% payment_card = current_user.payment_card %>
-  <% if payment_card.present? %>
-    <ul>
-      <li><%= payment_card.stripe_customer_object.active_card.type %> ending in <%= payment_card.stripe_customer_object.active_card.last4 %> <%= link_to 'X delete', payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
-    </ul>
+<h3>Credit Cards</h3>
+<div class='two-thirds column'>
+  <% payment_cards = current_user.payment_cards %>
+  <% if payment_cards.present? %>
+    <% payment_cards.each do |payment_card| %>
+      <ul>
+        <li><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to 'X delete', account_payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
+      </ul>
+    <% end %>
   <% else %>
     <%= render :partial => 'users/payment_cards/new' %>
     <br class='spacer'/>
@@ -41,7 +43,21 @@
   });
 </script>
 
-<h3>My Stripe Account</h3>
+<h3>Bank Accounts</h3>
+<div class='two-thirds column'>
+  <% bank_accounts = current_user.bank_accounts %>
+  <% if bank_accounts.present? %>
+    <% bank_accounts.each do |bank_account| %>
+      <ul>
+        <li><%= bank_account.bank_name %> <%= bank_account.account_type %> ending in <%= bank_account.last_4_digits %> <%= link_to 'X delete', account_bank_account_path(bank_account), :method => :delete, :class => 'button2' %></li>
+      </ul>
+    <% end %>
+  <% else %>
+    <%= render :partial => 'bank_accounts/new' %>
+    <br class='spacer'/>
+  <% end %>
+</div>
+
 
 <h3>Social Networks Linked</h3>
 <div class='two-thirds column'>

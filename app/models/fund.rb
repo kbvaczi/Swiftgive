@@ -10,7 +10,7 @@ class Fund < ActiveRecord::Base
   has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id, :conditions => {:is_owner => true}  
   has_many    :owners,          :class_name => "User",              :through => :ownerships,  :source => :member
   
-  has_one     :stripe_account,  :class_name => 'Funds::StripeAccount', :dependent => :destroy
+  has_many    :bank_accounts,   :class_name => 'BankAccount',       :dependent => :destroy
   
   attr_accessible :name, :description, :profile
 

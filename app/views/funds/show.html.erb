@@ -17,13 +17,7 @@
 
 <h3>Funding Account</h3>
 <div class='two-thirds column row'>
-  <% stripe_account = current_fund.stripe_account %>
-  <% if stripe_account.present? %>
-    Funding Account Present
-    <%= link_to 'X delete', fund_stripe_account_path(stripe_account), :method => :delete, :class => 'button2' %>    
-  <% else %>
-    <%= link_to 'Add funding account', new_fund_stripe_account_path(current_fund) %>
-  <% end %>
+
 </div>
 
 <%= link_to 'Edit', edit_fund_path(@fund) %> |

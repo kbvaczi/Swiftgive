@@ -1,28 +1,90 @@
-<%= form_tag payment_cards_path, :method => :post do %>  
+<div class="row">
+    <div class="span6">
+        <form id="paymentCardForm">
+            <div>
+                <label>Card Number</label>
+                <input type="text" name="card_number" value="4111111111111111" autocomplete="off">
+            </div>
+            <div>
+                <label>Expiration</label>
+                <input type="text" name="expiration_month" value="1" class='left'> <div class='left'> &nbsp;/&nbsp; </div> <input type="text" name="expiration_year" value="2020" class='left'>
+            </div>
+            <br class='spacer'/>
+            <div>
+                <label>Security Code</label>
+                <input type="text" name="security_code" value="123" autocomplete="off">
+            </div>
+            <button>Submit Payment Data</button>
+        </form>
+    </div>
+</div>
+<div id="result"></div>
 
-<div id="customStripeButton" class='button2 center noselect'><strong>+</strong> Add Credit Card</div>
-  
+<%= form_tag account_payment_cards_path, :id => 'cardData', :method => :post do %>  
+
+  <%= hidden_field_tag 'cardData[uri]' %>
+  <%= hidden_field_tag 'cardData[card_type]' %>  
+  <%= hidden_field_tag 'cardData[last_4_digits]' %>  
+  <%= hidden_field_tag 'cardData[is_valid]' %>    
 
 <% end %>
 
-<script src="https://checkout.stripe.com/v2/checkout.js"></script>
-<script>
-  $('#customStripeButton').click(function(){
-    var token = function(res){
-      var $input = $('<input type=hidden name=stripeToken />').val(res.id);
-      $('form').append($input).submit();
+<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+<script type="text/javascript">
+  var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
+ 
+    var debug = function (tag, content) {
+        $('<' + tag + '>' + content + '</' + tag + '>').appendTo('#result');
     };
+ 
+    try {
+        balanced.init(marketplaceUri);
+    } catch (e) {
+        debug('code', 'You need to set the marketplaceUri variable');
+    }
+ 
+    function balancedAddCardCallback(response) {
+        var tag = (response.status < 300) ? 'pre' : 'code';
+        debug(tag, JSON.stringify(response));
+        switch (response.status) {
+            case 201:
+                // response.data.uri == uri of the card resource, submit to your server
+                //$.post('<%= test2_path %>', response.data);                     
+                $('#cardData_uri').val(response.data.uri);
+                $('#cardData_card_type').val(response.data.card_type);                
+                $('#cardData_last_4_digits').val(response.data.last_four);
+                $('#cardData_is_valid').val(response.data.is_valid);                
+                $('form#cardData').submit();                
+            case 400:
+            case 403:
+                // missing/malformed data - check response.error for details
+                break;
+            case 402:
+                // we couldn't authorize the buyer's credit card - check response.error for details
+                break;
+            case 404:
+                // your marketplace URI is incorrect
+                break;
+            default:
+                // we did something unexpected - check response.error for details
+                break;
+        }
+    }
+ 
+    var tokenizeCard = function(e) {
+        e.preventDefault();
+ 
+        var $form = $('form#paymentCardForm');
+        var cardData = {
+            card_number: $form.find('[name="card_number"]').val(),
+            expiration_month: $form.find('[name="expiration_month"]').val(),
+            expiration_year: $form.find('[name="expiration_year"]').val(),
+            security_code: $form.find('[name="security_code"]').val()
+        };
+ 
+        balanced.card.create(cardData, balancedAddCardCallback);
+    };
+ 
+    $('#paymentCardForm').submit(tokenizeCard);
 
-    StripeCheckout.open({
-      key:         '<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>',
-      address:     false,
-      name:        'SwiftGive',
-      image:       "/logo_text_md.png", 
-      description: 'Save your payment card for future use',
-      panelLabel:  'Save',
-      token:       token
-    });
-
-    return false;
-  });
 </script>

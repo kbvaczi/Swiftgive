@@ -13,6 +13,22 @@
 
 ActiveRecord::Schema.define(:version => 20130330150003) do
 
+  create_table "bank_accounts", :force => true do |t|
+    t.string   "fund_id"
+    t.string   "user_id"
+    t.string   "uri"
+    t.string   "bank_name"
+    t.string   "owner_name"
+    t.string   "last_4_digits"
+    t.string   "account_type"
+    t.boolean  "is_debitable",  :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "bank_accounts", ["fund_id"], :name => "index_bank_accounts_on_fund_id"
+  add_index "bank_accounts", ["user_id"], :name => "index_bank_accounts_on_user_id"
+
   create_table "funds", :force => true do |t|
     t.string   "uid"
     t.string   "name"
@@ -34,19 +50,6 @@ ActiveRecord::Schema.define(:version => 20130330150003) do
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
   add_index "funds_memberships", ["user_id"], :name => "index_funds_memberships_on_user_id"
 
-  create_table "funds_stripe_accounts", :force => true do |t|
-    t.string   "fund_id"
-    t.string   "stripe_access_token"
-    t.string   "stripe_refresh_token"
-    t.string   "stripe_publishable_key"
-    t.string   "stripe_user_id"
-    t.text     "stripe_access_response"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-  end
-
-  add_index "funds_stripe_accounts", ["fund_id"], :name => "index_funds_stripe_accounts_on_fund_id"
-
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -66,6 +69,8 @@ ActiveRecord::Schema.define(:version => 20130330150003) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "uid"
+    t.string   "account_uri"
+    t.integer  "account_balance"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "first_name"
@@ -98,10 +103,12 @@ ActiveRecord::Schema.define(:version => 20130330150003) do
 
   create_table "users_payment_cards", :force => true do |t|
     t.integer  "user_id"
-    t.string   "stripe_customer_id"
-    t.text     "stripe_customer_object"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.string   "card_type"
+    t.string   "last_4_digits"
+    t.string   "uri"
+    t.boolean  "is_default",    :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "users_payment_cards", ["user_id"], :name => "index_users_payment_cards_on_user_id"
