@@ -1,0 +1,66 @@
+<div class='center_wrap'><%= receiving_fund.name %></div>
+<div style='margin-top:30px;margin-bottom:50px;' class='center_wrap'>
+  <h1 id='payment_amount_display'></h1>  
+</div>
+
+<%= form_for @payment do |f| %>
+  <div class='payment_category'>
+    <fieldset data-role='controlgroup' data-type='horizontal'>
+      <%= label_tag('paymentOption1', "Tip") %>        
+      <%= f.radio_button(:category, "tip", :id => 'paymentOption1', :selected => 'selected') %>
+      <%= label_tag('paymentOption2', "Gift") %>        
+      <%= f.radio_button(:category, "gift", :id => 'paymentOption2') %>
+      <%= label_tag('paymentOption3', "Grant") %>        
+      <%= f.radio_button(:category, "grant", :id => 'paymentOption3') %>        
+    </fieldset>
+    <div class='center_wrap slider_wrap slider_wrap_hidden_field' style='margin-top:20px;'>    
+      <%= f.hidden_field :amount, :'data-type' => 'range', :'data-highlight' => true, :value => "5",  :min => "2", :max => "20" %>  
+    </div>  
+  </div>
+  
+  <%#= label_tag('slider', "$ 10.00") %>        
+
+  <br class='spacer'/>  
+  <div>
+    <div class='left'><h4>Give Anonymously</h4></div>
+    <div class='right'>
+      <%= f.select :is_anonymous, [["on",true],['off',false]], {}, :'data-role' => 'slider', :style => 'width:300px' %>
+    </div>
+  </div>  
+  <br class='spacer'/>
+
+
+  <%= f.text_field :message, :'placeholder' => 'Optional Message' %>    
+
+  <%= f.hidden_field :fund_id %>
+  <br class='spacer'/>
+  <%= f.submit "Give", :'data-role' => 'button', :'data-theme' => 'a', :'data-icon' => 'button'%>
+  
+<% end %>
+
+<script type='text/javascript'>
+    updatePaymentAmountDisplay();    
+  
+  $('#paymentOption1').click(function(){
+    $('#payment_amount').val(5).attr('min', 2).attr('max', 20).attr('step',1).slider('refresh');
+    updatePaymentAmountDisplay();    
+  });
+  
+  $('#paymentOption2').click(function(){
+    $('#payment_amount').val(50).attr('min', 20).attr('max', 100).attr('step',5).slider('refresh');
+    updatePaymentAmountDisplay();    
+  });  
+  
+  $('#paymentOption3').click(function(){
+    $('#payment_amount').val(250).attr('min', 100).attr('max', 500).attr('step',10).slider('refresh');
+    updatePaymentAmountDisplay();    
+  });
+    
+  $('.slider_wrap').change(function(){
+   updatePaymentAmountDisplay();
+  });
+
+  function updatePaymentAmountDisplay(){
+    $('#payment_amount_display').html($('#payment_amount').val()).currency();
+  }
+</script>

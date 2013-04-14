@@ -1,0 +1,16 @@
+@import "shared/variables";
+@import "shared/helpers";
+@import "shared/navbar";
+
+#header {
+  height:40px;
+}
+
+#logo {
+  margin-top:2px;
+  width:180px;
+  height:40px;
+  background-size: auto 100%;
+  background-image: image-url("logo_text_md.png");  
+  background-repeat: no-repeat;
+}

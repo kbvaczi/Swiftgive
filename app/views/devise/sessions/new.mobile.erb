@@ -1,0 +1,19 @@
+<div class='center_wrap'>
+  <h2>Please sign-in through one of these networks</h2>
+</div>
+
+<div class='center_wrap'>
+  <%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
+  <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
+  <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:google_oauth2), :rel => 'external' %>
+  <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
+</div>
+
+<br class='spacer'/>
+
+<div class='center_wrap'>
+  <p>Swiftgive is the easiest way to tip or donate without needing cash</p>
+</div>
+<div class=''>
+  <%= link_to 'Learn More', root_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'info'%>
+</div>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <%= render :partial => 'layouts/shared/html_head' %>
+    <%= stylesheet_link_tag "mobile", :media => "all" %>
+    <%= javascript_include_tag "mobile" %>    
+  </head>
+
+  <body>
+    
+    <%# ajax loading spinner %>
+    <div id="loader"></div>  
+  
+    <div data-role="page">
+      <div data-role="header" data-id='header' data-fullscreen='true' data-theme='d'>
+        <div class='center_wrap'><div><%= link_to content_tag(:div, '', :id => 'logo', :class => 'center'), root_path %></div></div>
+      </div>
+      <div data-role="content">
+        <%= yield %>
+      </div>
+      <div data-role='footer' data-position='fixed' data-theme='a'>
+        <div data-role='navbar', data-iconpos='left'>
+          <ul>
+            <li><%= link_to 'Home', root_path, :'data-icon' => 'home' %></li>
+            <li><%= link_to 'Profile', show_user_profile_path, :'data-icon' => 'gear' %></li>            
+          </ul>
+        </div>
+      </div>
+    </div>  
+
+  </body>
+
+</html>
