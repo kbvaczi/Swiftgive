@@ -62,5 +62,8 @@ module Swiftgive
     # Prevents server from accessing database during initialization when set to false.  Devise recommends this to be set to false when using Heroku.
     config.assets.initialize_on_precompile = false
     
+    # compile additional manifest files for mobile and standard
+    config.assets.precompile += %w( standard.js standard.css mobile.js mobile.css )
+    
   end
 end
