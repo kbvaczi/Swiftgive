@@ -27,7 +27,7 @@ group :development do
 end
 
 group :staging, :production do
-  gem "pg"                                            # PostgesQL Adapter for Heroku Database
+  gem "activerecord-postgresql-adapter"               # PostgesQL Adapter for Heroku Database
 end
 
 # Gems used only for assets and not required in production environments by default.

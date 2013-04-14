@@ -22,6 +22,8 @@ GEM
       activesupport (= 3.2.12)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-postgresql-adapter (0.0.1)
+      pg
     activeresource (3.2.12)
       activemodel (= 3.2.12)
       activesupport (= 3.2.12)
@@ -103,6 +105,7 @@ GEM
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     orm_adapter (0.4.0)
+    pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -163,6 +166,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-postgresql-adapter
   balanced (~> 0.7.0)
   carmen (~> 1.0.0.beta2)
   coffee-rails (~> 3.2.1)
