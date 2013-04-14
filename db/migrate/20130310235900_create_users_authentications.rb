@@ -3,7 +3,7 @@ class CreateUsersAuthentications < ActiveRecord::Migration
   def up
     unless table_exists? :users_authentications
       create_table :users_authentications do |t|
-        t.string :user_id
+        t.integer :user_id
         
         t.string :provider
         t.string :provider_name

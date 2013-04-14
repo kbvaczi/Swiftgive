@@ -3,8 +3,8 @@ class CreateBankAccounts < ActiveRecord::Migration
   def up
     unless table_exists? :bank_accounts
       create_table :bank_accounts do |t|
-        t.string  :fund_id
-        t.string  :user_id        
+        t.integer  :fund_id
+        t.integer  :user_id        
 
         t.string   :uri # balanced payments unique identifier
         t.string   :bank_name
