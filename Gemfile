@@ -14,7 +14,7 @@ gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for l
 
 gem "balanced", "~> 0.7.0"                            # balanced payments gateway
 
-gem "rqrcode", "~> 0.4.2"
+gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
@@ -24,6 +24,10 @@ gem 'unicorn'                                         # Multi-threaded web serve
 group :development do
   gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"
   gem 'sqlite3'                                       # simple file-based database
+end
+
+group :staging, :production do
+  gem "pg"                                            # PostgesQL Adapter for Heroku Database
 end
 
 # Gems used only for assets and not required in production environments by default.
