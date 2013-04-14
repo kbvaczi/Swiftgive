@@ -37,8 +37,10 @@ Swiftgive::Application.routes.draw do
     match 'test2' => 'home#test2'
   end
   
+  # dynamic robots.txt per environment
+  get '/robots.txt' => 'home#robots'
+  
   root :to => "home#index"
-
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
