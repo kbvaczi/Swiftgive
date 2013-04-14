@@ -18,6 +18,18 @@
   user-select: none;
 }
 
+/* Clearfix */
+.cf:before, .cf:after {
+  content: " ";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  *zoom: 1;
+}
+
 .br {border-radius: $borderRadius;}
 .pr {padding-right:15px; }
 .pr-s {padding-right:5px; }

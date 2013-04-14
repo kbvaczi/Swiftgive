@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330150003) do
+ActiveRecord::Schema.define(:version => 20130410214608) do
 
   create_table "bank_accounts", :force => true do |t|
     t.string   "fund_id"
@@ -49,6 +49,21 @@ ActiveRecord::Schema.define(:version => 20130330150003) do
 
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
   add_index "funds_memberships", ["user_id"], :name => "index_funds_memberships_on_user_id"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "fund_id"
+    t.integer  "sender_id"
+    t.string   "uid"
+    t.integer  "amount"
+    t.text     "message"
+    t.boolean  "is_anonymous", :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"
+  add_index "payments", ["sender_id"], :name => "index_payments_on_sender_id"
+  add_index "payments", ["uid"], :name => "index_payments_on_uid"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

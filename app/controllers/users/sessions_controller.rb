@@ -1,4 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
+
+  include Mobylette::RespondToMobileRequests  
   
   # do this after a user signs in
   #TODO: implement banned funcationality for users

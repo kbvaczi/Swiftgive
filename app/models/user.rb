@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, 
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin, :stripe_connect]
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
   has_many    :payment_cards,     :class_name => 'Users::PaymentCard',    :dependent => :destroy
+  has_many    :payments,          :class_name => 'Payment',       :foreign_key => :sender_id
   has_many    :bank_accounts,     :class_name => 'BankAccount',           :dependent => :destroy
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships

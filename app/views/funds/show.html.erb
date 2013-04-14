@@ -21,4 +21,6 @@
 </div>
 
 <%= link_to 'Edit', edit_fund_path(@fund) %> |
-<%= link_to 'Back', funds_path %>
+<%= link_to 'Back', funds_path %> |
+<%= link_to 'Give', new_payment_path(:fund_uid => current_fund.uid) %> |
+<%= link_to 'Give Code', give_code_fund_path(current_fund) %>

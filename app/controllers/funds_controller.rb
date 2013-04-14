@@ -1,6 +1,6 @@
 class FundsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => :show
+  before_filter :authenticate_user!, :except => [:show]
   before_filter :authenticate_fund_owner, :only => [:edit, :update, :destroy]
 
   # GET /funds
@@ -84,6 +84,11 @@ class FundsController < ApplicationController
       format.html { redirect_to funds_url }
       format.json { head :no_content }
     end
+  end
+  
+  def give_code
+    code_url = new_payment_url(:fund_uid => current_fund.uid)
+    render :partial => 'funds/give_code', :locals => {:message => code_url}    
   end
   
   protected

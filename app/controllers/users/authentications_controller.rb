@@ -1,5 +1,7 @@
 class Users::AuthenticationsController < ApplicationController
 
+  include Mobylette::RespondToMobileRequests  
+  
   before_filter :authenticate_user!, :only => [:add_authentication_to_existing_account, :remove_authentication_from_existing_account]
   before_filter :require_no_authentication, :only => [:sign_in_to_existing_account, :register_new_account]
   

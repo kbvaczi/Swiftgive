@@ -22,12 +22,14 @@ Swiftgive::Application.routes.draw do
     get 'account/profile' => 'accounts#show', :as => :show_user_profile
   end 
 
-  get 'funds/stripe_accounts/create' => 'funds/stripe_accounts#create'  
   resources :funds do
+    get  'give_code', :on => :member
     scope :module => 'funds' do
-      resources :stripe_accounts, :only => [:new, :destroy]
+      resources :bank_accounts, :only => [:new, :destroy]
     end
   end
+  
+  resources :payments, :only => [:new, :create]
   
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?

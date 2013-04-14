@@ -1,5 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
+  include Mobylette::RespondToMobileRequests  
   include Devise::Controllers::Rememberable # allows us to use remember_me helper to persist sessions
   
   def facebook

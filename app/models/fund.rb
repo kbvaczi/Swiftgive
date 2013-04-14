@@ -6,11 +6,12 @@ class Fund < ActiveRecord::Base
     
   has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id, :dependent => :destroy
   has_many    :members,         :class_name => "User",              :through => :memberships, :source => :member
-  
   has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id, :conditions => {:is_owner => true}  
   has_many    :owners,          :class_name => "User",              :through => :ownerships,  :source => :member
   
   has_many    :bank_accounts,   :class_name => 'BankAccount',       :dependent => :destroy
+  
+  has_many    :payments,        :class_name => 'Payment',    :dependent => :destroy
   
   attr_accessible :name, :description, :profile
 

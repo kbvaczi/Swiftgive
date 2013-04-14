@@ -4,6 +4,7 @@ ruby '1.9.3'
 
 gem 'rails', '3.2.12'
 gem "skeleton-rails", "~> 0.0.2"                      # Grid 960 CSS foundation
+gem "mobylette", "~> 3.3.2"                           # adds mobile mime type and ability to display separate mobile views
 
 gem "devise", "~> 2.2.3"                              # User Authentication
 gem "omniauth", "~> 1.1.3"                            # omni-auth implementation for signing in from third party services (facebook, google, etc...)
@@ -12,6 +13,8 @@ gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for l
 gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
 
 gem "balanced", "~> 0.7.0"                            # balanced payments gateway
+
+gem "rqrcode", "~> 0.4.2"
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
@@ -31,4 +34,5 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem "jquery_mobile_rails", "~> 1.3.0"
 

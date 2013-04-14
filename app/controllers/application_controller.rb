@@ -1,15 +1,14 @@
 class ApplicationController < ActionController::Base
+  
   protect_from_forgery
+  
+  include Mobylette::RespondToMobileRequests
+  #before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end
   helper_method :bot_user?
-  
-  def mobile_device?
-    request.user_agent =~ /Mobile|webOS/
-  end
-  helper_method :mobile_device?
   
   # sets the current page as the back path for following pages to return to when back_path is redirected to
   def set_back_path
@@ -48,9 +47,5 @@ class ApplicationController < ActionController::Base
     @current_path ||= url_for(params.merge(:authenticity_token => nil, :utf8 => nil, :sort => nil, :sort_order => nil))
   end
   helper_method :current_path
-  
-  
-  
-  
   
 end
