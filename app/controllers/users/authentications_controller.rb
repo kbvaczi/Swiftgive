@@ -3,11 +3,15 @@ class Users::AuthenticationsController < ApplicationController
   include Mobylette::RespondToMobileRequests  
   
   before_filter :authenticate_user!, :only => [:add_authentication_to_existing_account, :remove_authentication_from_existing_account]
-  before_filter :require_no_authentication, :only => [:sign_in_to_existing_account, :register_new_account]
+  before_filter :require_no_authentication, :only => [:sign_in, :register_new_account, :prompt_to_register]
   
-  def sign_in_to_existing_account
+  def sign_in
     session['devise.authentication_reason'] = 'sign_in'
     redirect_to user_omniauth_authorize_path(params[:provider])
+  end
+  
+  def prompt_to_register
+    session['devise.authentication_reason'] = 'register'
   end
   
   def register_new_account

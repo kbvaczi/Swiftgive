@@ -3,6 +3,7 @@ Swiftgive::Application.routes.draw do
   devise_for :users, :path => '/account', :controllers => { :registrations => 'users/registrations', 
                                                             :sessions => 'users/sessions', 
                                                             :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get 'account/register_after_authenticated' => 'users/omniauth_callbacks#process_authentication_request', :as => :authentication_register_after_authenticated                                                              
     if Rails.env.development? or Rails.env.staging?                                                         
       get 'sign_in' => "users/sessions#sign_in_test" 
     end
@@ -14,7 +15,8 @@ Swiftgive::Application.routes.draw do
       resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]    
     end
     
-    get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in_to_existing_account', :as => :authentication_sign_in
+    get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in', :as => :authentication_sign_in
+    get 'account/prompt_to_register'                      => 'authentications#prompt_to_register', :as => :authentication_prompt_to_register
     get 'account/register_using_authentication/:provider' => 'authentications#register_new_account', :as => :authentication_register
     get 'account/add_authentication/:provider'            => 'authentications#add_authentication_to_existing_account', :as => :authentication_add        
     get 'account/remove_authentication/:provider'         => 'authentications#remove_authentication_from_existing_account', :as => :authentication_remove
