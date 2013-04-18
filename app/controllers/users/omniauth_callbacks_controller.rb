@@ -81,8 +81,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   protected
   
   def store_auth_data(standardized_data_hash=nil)
-    cookies['devise.standardized_omniauth_data'] = { :value => standardized_data_hash, :expires => 10.minutes.from_now }
-    cookies['devise.raw_omniauth_data'] = { :value => request.env['omniauth.auth'], :expires => 10.minutes.from_now } if request.env['omniauth.auth'].present?
+    cookies['devise.standardized_omniauth_data'] = standardized_data_hash
+    cookies['devise.raw_omniauth_data'] = request.env['omniauth.auth'] if request.env['omniauth.auth'].present?
   end
   
   def standardized_auth_data

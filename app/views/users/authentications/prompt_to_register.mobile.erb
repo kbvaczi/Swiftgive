@@ -5,9 +5,9 @@
 <br class='spacer'/>
 
 <div class='ui-grid-solo'>
-  <%= link_to 'Yes, please remember me', authentication_register_after_authenticated_path, :'data-role' => 'button', :'data-mini' => false, :'data-theme' => 'b', :'data-icon' => 'check'%>
+  <%= link_to 'Yes, please remember me', authentication_register_after_authenticated_path, :'data-role' => 'button', :'data-mini' => false, :'data-theme' => 'b', :'data-icon' => 'check', :remote => false %>
 </div>
 
 <div class='ui-grid-solo'>
-  <%= link_to 'No, I am returning', root_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'delete'%>
+  <%= link_to 'No, I am returning', root_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'delete', :remote => false %>
 </div>
