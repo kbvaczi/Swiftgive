@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(:version => 20130410214608) do
 
   create_table "bank_accounts", :force => true do |t|
-    t.string   "fund_id"
-    t.string   "user_id"
+    t.integer  "fund_id"
+    t.integer  "user_id"
     t.string   "uri"
     t.string   "bank_name"
     t.string   "owner_name"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(:version => 20130410214608) do
   add_index "funds", ["uid"], :name => "index_funds_on_uid"
 
   create_table "funds_memberships", :force => true do |t|
-    t.string  "user_id"
-    t.string  "fund_id"
+    t.integer "user_id"
+    t.integer "fund_id"
     t.boolean "is_owner", :default => false
   end
 
@@ -86,14 +86,17 @@ ActiveRecord::Schema.define(:version => 20130410214608) do
     t.string   "uid"
     t.string   "account_uri"
     t.integer  "account_balance"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "street_address"
+    t.string   "postal_code"
     t.string   "city"
     t.string   "state"
     t.string   "country"
     t.string   "image"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
@@ -103,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20130410214608) do
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
   create_table "users_authentications", :force => true do |t|
-    t.string   "user_id"
+    t.integer  "user_id"
     t.string   "provider"
     t.string   "provider_name"
     t.string   "uid"
