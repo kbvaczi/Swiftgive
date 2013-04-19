@@ -81,16 +81,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   protected
   
   def store_auth_data(standardized_data_hash=nil)
-    request.session['standardized_omniauth_data'] = standardized_data_hash
-    request.session['raw_omniauth_data'] = request.env['omniauth.auth'] if request.env['omniauth.auth'].present?
+    request.session['devise.standardized_omniauth_data'] = standardized_data_hash
+    request.session['devise.raw_omniauth_data'] = request.env['omniauth.auth'] if request.env['omniauth.auth'].present?
   end
   
   def standardized_auth_data
-    @standardized_auth_data ||= request.session['standardized_omniauth_data']
+    @standardized_auth_data ||= request.session['devise.standardized_omniauth_data']
   end
   
   def raw_auth_data
-    @raw_auth_data ||= request.session['raw_omniauth_data']
+    @raw_auth_data ||= request.session['devise.raw_omniauth_data']
   end
 
   def register_new_account
