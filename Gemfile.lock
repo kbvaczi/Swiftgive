@@ -44,6 +44,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    dalli (2.6.2)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -76,11 +77,13 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     mime-types (1.22)
     mobylette (3.3.2)
       actionpack (>= 3.0)
     multi_json (1.7.2)
     multipart-post (1.2.0)
+    newrelic_rpm (3.6.0.83)
     oauth (0.4.7)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -114,6 +117,8 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rack-www (1.5.0)
+      rack
     rails (3.2.12)
       actionmailer (= 3.2.12)
       actionpack (= 3.2.12)
@@ -170,15 +175,19 @@ DEPENDENCIES
   balanced (~> 0.7.0)
   carmen (~> 1.0.0.beta2)
   coffee-rails (~> 3.2.1)
+  dalli
   devise (~> 2.2.3)
   hooves
   jquery-rails
   jquery_mobile_rails (~> 1.3.0)
+  memcachier
   mobylette (~> 3.3.2)
+  newrelic_rpm
   omniauth (~> 1.1.3)
   omniauth-facebook (~> 1.4.1)
   omniauth-google-oauth2 (~> 0.1.13)
   omniauth-linkedin (~> 0.1.0)
+  rack-www
   rails (= 3.2.12)
   rqrcode (~> 0.4.2)
   sass-rails (~> 3.2.3)

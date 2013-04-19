@@ -28,7 +28,7 @@ end
 
 group :staging, :production do
   gem "activerecord-postgresql-adapter"               # PostgesQL Adapter for Heroku Database
-  gem 'newrelic-rpm'								  # Performance Monitoring / Dyno keepalive
+  gem 'newrelic_rpm'								  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										  # enable memcache for heroku
   gem 'memcachier'									  # use memcachier addon for heroku through dalli
   gem 'rack-www'									  # rack middleware to add www. to naked domain calls
