@@ -8,17 +8,20 @@ Swiftgive::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  # Set to true to disable Rails's static asset server (Apache or nginx will already do this)
+  config.serve_static_assets = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  # fallback to assets pipeline if a precompiled asset is missed
+  # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+  # Cache control for served assets
+  config.static_cache_control = "public, max-age=30758400"
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
@@ -41,6 +44,8 @@ Swiftgive::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
+  config.cache_store = :dalli_store
+  config.action_controller.perform_caching = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -52,7 +57,10 @@ Swiftgive::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
-  # config.threadsafe!
+  config.threadsafe!
+
+  # this is required to access model dependencies while running rake tasks From: http://stackoverflow.com/questions/2204936/dbseed-not-loading-models
+  config.dependency_loading = true if $rails_rake_task
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
@@ -66,5 +74,5 @@ Swiftgive::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   # Default Host required by Devise
-  config.action_mailer.default_url_options = { :host => 'www.SwiftGive.com' }
+  config.action_mailer.default_url_options = { :host => 'swiftgive.herokuapp.com' }
 end
