@@ -6,10 +6,10 @@ $(document).ready(function() {
 
 $.fn.initAutoNumeric = function(method){
   $(this).autoNumeric('init', {
-    aSign: 'Give $', 
+    aSign: '$ ', 
     vMin: '0', 
     vMax: '1000',
-    mDec: '0',
+    mDec: '2',
     wEmpty: 'empty'	
   });
 }

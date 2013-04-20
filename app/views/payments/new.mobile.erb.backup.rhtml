@@ -1,0 +1,60 @@
+<div class='center_wrap'><%= receiving_fund.name %></div>
+<!--
+<div style='margin-top:20px;margin-bottom:50px;' class='center_wrap'>
+  <h1 id='payment_amount_display'></h1>  
+</div>
+-->
+
+<%= form_for @payment do |f| %>
+    
+  <div class='ui-grid-solo'>
+    <%= f.text_field :amount, :class => 'currency_input large_input', :style => 'text-align:center;', :'data-theme' => 'e' %>      
+  </div>
+  
+  <fieldset data-role='controlgroup' data-type='horizontal'>
+    <div class='ui-grid-b'>
+      <div class='ui-block-a'><div data-role='button' id='payment_preset_1' class='payment_preset' data-value='2'>$ 2</div></div>
+      <div class='ui-block-b'><div data-role='button' id='payment_preset_2' class='payment_preset' data-value='5'>$ 5</div></div>
+      <div class='ui-block-c'><div data-role='button' id='payment_preset_3' class='payment_preset' data-value='10'>$ 10</div></div>
+    </div>
+  </fieldset>      
+
+
+  <div class='ui-grid-a'>
+    <div class='ui-block-a main' style='margin-top:15px;text-indent:5px;'>Anonymous Giving</div>
+    <div class='ui-block-b side' style='text-align:right;'><%= f.select :is_anonymous, [['off',false],["on",true]], {}, :'data-role' => 'slider', :'data-theme' => 'c' %></div>  
+  </div>
+
+  <div class='ui-grid-solo'>
+    <%= f.text_field :message, :'placeholder' => 'Optional Message' %>    
+  </div>
+  
+  <%= f.hidden_field :fund_id %>
+  
+  <div style='height:3px'></div>
+  <div class=''>
+    <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check'%>
+  </div>
+  
+  <div class=''>
+    <%= link_to 'Cancel', back_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'delete'%>
+  </div>
+  
+<% end %>
+
+<script type='text/javascript'>
+  $('#payment_amount').initAutoNumeric();
+  //$('#payment_amount_display').initAutoNumeric();  
+  updatePaymentAmountDisplay($('#payment_amount').autoNumeric('get'));
+
+  $('.payment_preset').click(function(){
+    updatePaymentAmountDisplay($(this).data('value'));
+  });
+
+  function updatePaymentAmountDisplay(value){
+    if (value) {
+      $('#payment_amount').autoNumeric('set', value);      
+      //$('#payment_amount_display').autoNumeric('set', value);
+    }
+  }
+</script>
