@@ -53,11 +53,12 @@
   <%= f.hidden_field :fund_id %>
   
   <div style='height:3px'></div>
-  <div class=''>
+
+  <div class='ui-grid-full'>
     <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check'%>
   </div>
   
-  <div class=''>
+  <div class='ui-grid-full'>
     <%= link_to 'Cancel', back_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'delete'%>
   </div>
   
@@ -83,12 +84,12 @@
 <script type='text/javascript'>
   $('#custom_amount_value').initAutoNumeric();
 
-  $('.custom_amount_button').click(function(){
+  $('.custom_amount_button').mousedown(function(){
     if ($(this).data('value') == 'clear'){
       $('#custom_amount_value').autoNumeric('set', 0);
     } else if($(this).data('value') == 'backspace') {
       var current_value = parseInt($('#custom_amount_value').autoNumeric('get'));
-      var new_value = parseInt(current_value / 10)  ;
+      var new_value = parseInt(current_value / 10);
       $('#custom_amount_value').autoNumeric('set', new_value);
     } else {
       var current_value = parseInt($('#custom_amount_value').autoNumeric('get'));

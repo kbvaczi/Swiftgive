@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   include Mobylette::RespondToMobileRequests
-  #before_filter Proc.new { session[:mobylette_override] = :force_mobile }
+  before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
