@@ -39,9 +39,11 @@
         <% end %>
         
         <script type="text/javascript" language="JavaScript">
-          $("#main_page").on("pageshow", function(event) {
-            $("#flash").popup("open");
-          });
+          if ($('#flash').html()){
+            $("#main_page").on("pageshow", function(event) {
+              $("#flash").popup("open", { history: false });
+            });
+          }
         </script>
 
         <%= yield %>
