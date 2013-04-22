@@ -1,43 +1,24 @@
 <div class='center_wrap mb-s'>
-  <i>Give to:</i>
+  Give to:
 </div>
 
-<div class='center_wrap mb'>
-  <b><%= receiving_fund.name %></b>
-</div>
+<div class='ui-grid-solo center_wrap mt-s mb'>
 
-<!--
-<div style='margin-top:20px;margin-bottom:50px;' class='center_wrap'>
-  <h1 id='payment_amount_display'></h1>  
-</div>
--->
-
-<%= form_for @payment do |f| %>
-    
-  <div class='ui-grid-solo'>
-    <%#= f.text_field :amount, :class => 'currency_input large_input', :style => 'text-align:center;', :'data-theme' => 'e' %>      
+  <div class='center' style='position:relative'>
+    <i><b><%= receiving_fund.name %></b></i>
+    <%= link_to 'profile', fund_path(receiving_fund), :class => 'center', :style => 'padding:0px;margin:0px;margin-left:5px;top:7px;', :'data-role' => 'button', :'data-icon' => 'info', :'data-iconpos' => 'notext' %>
   </div>
   
+</div>
 
-  <div class='ui-grid-full'>
-      <%#= f.select :amount, [['$ 2.00', 200], ['$ 5.00', 500], ['$ 10.00', 1000], ['Other', 'other']] %>
-  </div>
+<%= form_for @payment do |f| %>
 
   <div class='ui-grid-a' style='margin-right:-5px'>
     <div class='ui-block-a' style='margin-top:15px;text-indent:5px;'>Amount to give:</div>
     <div class='ui-block-b' style=''>
-      <div><%= f.select :amount, [['$ 2.00', 200], ['$ 5.00', 500], ['$ 10.00', 1000], ['Other', 'other']] %></div>
+      <div><%= f.select :amount, [['$ 2.00', 200], ['$ 5.00', 500], ['$ 10.00', 1000], ['Other', 'other']], { :selected => 500 }, :'data-native-menu' => 'false' %></div>
     </div>  
   </div>
-  <!--
-  <fieldset data-role='controlgroup' data-type='horizontal'>
-    <div class='ui-grid-b'>
-      <div class='ui-block-a'><div data-role='button' id='payment_preset_1' class='payment_preset' data-value='2'>$ 2</div></div>
-      <div class='ui-block-b'><div data-role='button' id='payment_preset_2' class='payment_preset' data-value='5'>$ 5</div></div>
-      <div class='ui-block-c'><div data-role='button' id='payment_preset_3' class='payment_preset' data-value='10'>$ 10</div></div>
-    </div>
-  </fieldset>      
-  -->
 
   <div class='ui-grid-a'>
     <div class='ui-block-a main' style='margin-top:15px;text-indent:5px;'>Anonymous giving:</div>
@@ -58,8 +39,8 @@
     <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check'%>
   </div>
   
-  <div class='ui-grid-full'>
-    <%= link_to 'Cancel', back_path, :'data-role' => 'button', :'data-mini' => false, :'data-icon' => 'delete'%>
+  <div class='ui-grid-full mt'>
+    <%= link_to 'Cancel', back_path, :'data-role' => 'button', :'data-mini' => true, :'data-icon' => 'delete'%>
   </div>
   
 <% end %>

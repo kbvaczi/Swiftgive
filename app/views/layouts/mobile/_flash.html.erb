@@ -1,0 +1,16 @@
+<div id="flash" class='flash_<%= flash_type %> pa' data-role="popup" data-position-to="window" data-overlay-theme="a">
+	<p><%= flash_message %></p>
+	<div class='ui-grid-b'>
+		<div class='ui-block-a'></div>
+		<div class='ui-block-b'>
+			<div class='close_flash_button' data-role='button'>OK</div>
+		</div>
+	</div>
+
+	<script type='text/javascript'>
+		$('.close_flash_button').click(function(){
+			$('#flash').popup('close');
+$('#flash').popup('close');			
+		});
+	</script>
+</div>

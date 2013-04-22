@@ -1,35 +1,44 @@
 <div data-role='page' id='custom_amount_dialog'>
-	<div data-role='header'>
-    <h3>&nbsp;</h3>
+  <div data-role='header'>
+    <h2>&nbsp;</h2>
   </div>
+  
   <div data-role='content'>
-
-    <div class='ui-grid-solo center_wrap'>
-    	<h1 id='custom_amount_value' class='mt mb'>$ 15.00</h1>
-    </div>
     
-    <div class='ui-grid-b'>
-      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='1'>1</div></div>
-      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='2'>2</div></div>
-      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='3'>3</div></div>
+    <div class='ui-grid-solo center_wrap'>
+    	<h2 id='custom_amount_value' class='mb' style='margin-top:-0px;'>$ 15.00</h2>
     </div>
-    <div class='ui-grid-b'>
-      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='4'>4</div></div>
-      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='5'>5</div></div>
-      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='6'>6</div></div>
+    <div data-role='controlgroup' data-type='horizontal'>
+      <div class='ui-grid-b'>
+        <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='1'>1</div></div>
+        <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='2'>2</div></div>
+        <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='3'>3</div></div>
+      </div>
     </div>
-    <div class='ui-grid-b'>
-      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='7'>7</div></div>
-      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='8'>8</div></div>
-      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='9'>9</div></div>
+    <div data-role='controlgroup' data-type='horizontal'>
+      <div class='ui-grid-b'>
+        <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='4'>4</div></div>
+        <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='5'>5</div></div>
+        <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='6'>6</div></div>
+      </div>
     </div>
-		<div class='ui-grid-b'>
-      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='clear'>Clear</div></div>
-      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='0'>0</div></div>
-      <div class='ui-block-c'><div id='custom_amount_ok_button' data-role='button' data-theme='b' data-icon='check'>OK</div></div>
-
-    </div>	    
-
+    <div data-role='controlgroup' data-type='horizontal'>
+      <div class='ui-grid-b'>
+        <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='7'>7</div></div>
+        <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='8'>8</div></div>
+        <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='9'>9</div></div>
+      </div>
+    </div>
+    <div data-role='controlgroup' data-type='horizontal'>
+  		<div class='ui-grid-b'>
+        <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='clear'>Clear</div></div>
+        <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='0'>0</div></div>
+        <div class='ui-block-c'><div id='custom_amount_ok_button' data-role='button' data-theme='b' data-icon='check'>OK</div></div>
+      </div>	    
+    </div>
+    <div class='ui-grid-solo'>
+      
+    </div>
    <!--
     <div class='ui-grid-solo'>
     	<div data-role='button' class='custom_amount_button' data-value='backspace' data-icon='arrow-l'>Back</div>

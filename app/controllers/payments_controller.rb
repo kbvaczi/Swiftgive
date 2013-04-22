@@ -6,7 +6,8 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new(params[:payment])
     @payment.fund_id ||= receiving_fund.id
-    @payment.amount = 5
+    @payment.amount = 500
+    flash[:notice] = 'hi this is a flash notice message that is really long ldkaslkfjlskdj'
     respond_to do |format|
       format.html { }
       format.mobile { }
