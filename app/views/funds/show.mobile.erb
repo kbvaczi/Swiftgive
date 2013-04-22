@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Name</h3>
+<div class='two-thirds column row'>
+  <%= current_fund.name %>
+</div>
+
+<h3>Description</h3>
+<div class='two-thirds column row'>
+  <%= current_fund.description %>
+</div>
+
+<h3>Profile</h3>
+<div class='two-thirds column row'>
+  <%= current_fund.profile %>
+</div>
+
+<h3>Funding Account</h3>
+<div class='two-thirds column row'>
+
+</div>
+
+<%= link_to 'Edit', edit_fund_path(@fund) %> |
+<%= link_to 'Back', funds_path %> |
+<%= link_to 'Give', new_payment_path(:fund_uid => current_fund.uid) %> |
+<%= link_to 'Give Code', give_code_fund_path(current_fund) %>

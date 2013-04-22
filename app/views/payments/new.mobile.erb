@@ -1,17 +1,15 @@
-<div class='center_wrap mb-s'>
-  Give to:
-</div>
-
-<div class='ui-grid-solo center_wrap mt-s mb'>
-
-  <div class='center' style='position:relative'>
-    <i><b><%= receiving_fund.name %></b></i>
-    <%= link_to 'profile', fund_path(receiving_fund), :class => 'center', :style => 'padding:0px;margin:0px;margin-left:5px;top:7px;', :'data-role' => 'button', :'data-icon' => 'info', :'data-iconpos' => 'notext' %>
-  </div>
-  
-</div>
-
 <%= form_for @payment do |f| %>
+
+  <div class='center_wrap mb-s'>
+    Give to:
+  </div>
+
+  <div class='ui-grid-solo center_wrap mt-s mb'>
+    <div class='center' style='position:relative'>
+      <i><b><%= receiving_fund.name %></b></i>
+      <%= link_to 'profile', fund_path(receiving_fund), :class => 'center', :style => 'padding:0px;margin:0px;margin-left:5px;top:7px;', :'data-role' => 'button', :'data-icon' => 'search', :'data-iconpos' => 'notext', :'data-shadow' => false %>
+    </div>
+  </div>
 
   <div class='ui-grid-a' style='margin-right:-5px'>
     <div class='ui-block-a' style='margin-top:15px;text-indent:5px;'>Amount to give:</div>
@@ -45,20 +43,69 @@
   
 <% end %>
 
+<div id="custom_amount_popup" class='pa' style='width:250px' data-role="popup" data-position-to="window" data-overlay-theme="a">
+  <div class='ui-grid-solo center_wrap'>
+    <h2 id='custom_amount_value' class='mb' style='margin-top:-0px;'>$ 15.00</h2>
+  </div>
+  <div data-role='controlgroup' data-type='horizontal'>
+    <div class='ui-grid-b'>
+      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='1'>1</div></div>
+      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='2'>2</div></div>
+      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='3'>3</div></div>
+    </div>
+  </div>
+  <div data-role='controlgroup' data-type='horizontal'>
+    <div class='ui-grid-b'>
+      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='4'>4</div></div>
+      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='5'>5</div></div>
+      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='6'>6</div></div>
+    </div>
+  </div>
+  <div data-role='controlgroup' data-type='horizontal'>
+    <div class='ui-grid-b'>
+      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='7'>7</div></div>
+      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='8'>8</div></div>
+      <div class='ui-block-c'><div data-role='button' class='custom_amount_button' data-value='9'>9</div></div>
+    </div>
+  </div>
+  <div data-role='controlgroup' data-type='horizontal'>
+    <div class='ui-grid-b'>
+      <div class='ui-block-a'></div>
+      <div class='ui-block-b'><div data-role='button' class='custom_amount_button' data-value='0'>0</div></div>
+      <div class='ui-block-c'></div>
+    </div>      
+  </div>
+
+    <div class='ui-grid-a'>
+      <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='clear'>Clear</div></div>
+      <div class='ui-block-b'><div id='custom_amount_ok_button' data-role='button' data-theme='b' data-icon='check'>OK</div></div>
+    </div>      
+  
+</div>
+
 <script type='text/javascript'>
+
   var other_amount_overlay_template = "<%= render(:partial => 'payments/other_amount', :formats => [:html]).gsub(/\n/,'').html_safe %>";
-  $('body').append(other_amount_overlay_template);
+  //$('body').append(other_amount_overlay_template);
 
   $('#payment_amount').mousedown(function(){
-    $(this).data('previous_value', $(this).val());
+    $('#payment_amount').data('previous_value', $('#payment_amount').val());
   });
 
-  $('#payment_amount').change(function(){
-    if ($(this).val() == 'other') {
-      $(this).val($(this).data('previous_value'));
-      $.mobile.changePage( "#custom_amount_dialog", { role: "dialog", transition: "slidedown",} );
-    }
+  $('#main_page').on( 'pageinit', function() {
+    
+    $('#payment_amount-listbox').on( "popupafterclose", function( event, ui ) {
+      if ($('#payment_amount').val() == 'other'){
+        $('#payment_amount').val($('#payment_amount').data('previous_value'));
+        $('#payment_amount').selectmenu( "refresh" );
+        //$.mobile.changePage( "#custom_amount_dialog", { role: "dialog", transition: "slidedown",} );
+        window.setTimeout ( function() { 
+          $('#custom_amount_popup').popup('open'); 
+        }, 100 );
+      }
+    });
   });
+  
 </script>
 
 
@@ -86,6 +133,7 @@
     $('#payment_amount option:eq(' + index_to_insert_before + ')').before("<option value=" + value_value + ">" + value_text + "</option>");
     $('#payment_amount').val(value_value);
     $('#payment_amount').selectmenu( "refresh" );
-    $('#custom_amount_dialog').dialog('close');
+    //$('#custom_amount_dialog').dialog('close');
+    $('#custom_amount_popup').popup('close'); 
   });
 </script>

@@ -1,7 +1,10 @@
 class HomeController < ApplicationController
 
   def index    
-    render :layout => "full"
+    respond_to do |format|
+      format.html {render :layout => "full"}
+      format.mobile
+    end
   end
   
   def robots
