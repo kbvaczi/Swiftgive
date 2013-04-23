@@ -103,9 +103,9 @@
       }
     });
 
-    if ('ontouchend' in document.documentElement) {
-      $('.custom_amount_button').bind('touchend', custom_amount_button_press);
-      $('#custom_amount_ok_button').bind('touchend', custom_amount_ok_button_press);
+    if ('ontouchstart' in document.documentElement) {
+      $('.custom_amount_button').bind('touchstart', custom_amount_button_press);
+      $('#custom_amount_ok_button').bind('touchstart', custom_amount_ok_button_press);
     } else {
       $('.custom_amount_button').bind('click', custom_amount_button_press);
       $('#custom_amount_ok_button').bind('click', custom_amount_ok_button_press);    
