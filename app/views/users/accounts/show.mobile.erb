@@ -1,0 +1,70 @@
+<h2>Personal Profile</h2>
+<h3>Picture</h3>
+<div class='two-thirds column row'>
+  <%= image_tag current_user.image, :height => '80px', :width => '80px' %>
+</div>
+
+<h3>Name</h3>
+<div class='two-thirds column row'>
+  <%= current_user.full_name %>
+</div>
+
+<h3>Email</h3>
+<div class='two-thirds column row'>
+  <%= current_user.email %>
+</div>
+
+<h3>Location</h3>
+<div class='two-thirds column row'>
+  <%= "#{current_user.city}, " if current_user.city.present? %>
+  <%= "#{Carmen::Country.coded(current_user.country).subregions.coded(current_user.state).name rescue current_user.state}" if current_user.state.present? %> 
+  <%= "(#{Carmen::Country.coded(current_user.country).name rescue current_user.country})" if current_user.country.present? %>
+</div>
+
+<h3>Credit Cards</h3>
+<div class='two-thirds column'>
+  <% payment_cards = current_user.payment_cards %>
+  <% if payment_cards.present? %>
+    <% payment_cards.each do |payment_card| %>
+      <ul>
+        <li><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to 'X delete', account_payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
+      </ul>
+    <% end %>
+  <% else %>
+    <%= render :partial => 'users/payment_cards/new' %>
+    <br class='spacer'/>
+  <% end %>
+</div>
+
+<script type='text/javascript'>
+  $('#add_new_card_button').click(function(){
+    $('#add_new_card_button').hide();
+    $('#payment_card_form').show();    
+  });
+</script>
+
+<h3>Bank Accounts</h3>
+<div class='two-thirds column'>
+  <% bank_accounts = current_user.bank_accounts %>
+  <% if bank_accounts.present? %>
+    <% bank_accounts.each do |bank_account| %>
+      <ul>
+        <li><%= bank_account.bank_name %> <%= bank_account.account_type %> ending in <%= bank_account.last_4_digits %> <%= link_to 'X delete', account_bank_account_path(bank_account), :method => :delete, :class => 'button2' %></li>
+      </ul>
+    <% end %>
+  <% else %>
+    <%= render :partial => 'bank_accounts/new' %>
+    <br class='spacer'/>
+  <% end %>
+</div>
+
+
+<h3>Social Networks Linked</h3>
+<div class='two-thirds column'>
+  <% current_user.authentications.each do |authentication| %>
+    <ul>
+      <li><%= authentication.provider_name %></li>
+    </ul>
+  <% end %>
+</div>
+

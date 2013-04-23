@@ -1,7 +1,7 @@
 function flashNow(message, type) {
-  var flash = "<div id='flash' class='flash_" + type + " pa' data-role='popup' data-position-to='window'><p>" + message + "<p></div>"
-  $('#flash').remove();
+  var flash = "<div class='flash_message flash_" + type + " pa' data-role='popup' data-position-to='window'><p>" + message + "<p></div>"
+  $('.flash_message').remove();
   $('#content').prepend(flash);
-  $('#flash').popup();
-  $("#flash", $(this)).popup("open");
+  $('.flash_message').popup();
+  $(".flash_message", $(this)).popup("open");
 }

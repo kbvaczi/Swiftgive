@@ -19,3 +19,21 @@ input.large_input {
 .ui-grid-a > .ui-block-a.main, .ui-grid-a > .ui-block-b.main  { width: 65% }
 .ui-grid-a > .ui-block-b.side, .ui-grid-a > .ui-block-a.side { width: 35%; }
 
+#nav_menu-popup {
+    
+}
+#nav_menu {
+    width: 200px;
+    border: 1px solid #000;
+    border-right: none;
+    background: rgba(0,0,0,.8);
+    margin: -1px 0;
+}
+#nav_menu .ui-btn {
+    margin: 1em 15px;
+}
+#nav_menu h3 {
+	color: #eee;
+	text-shadow:none;
+}
+

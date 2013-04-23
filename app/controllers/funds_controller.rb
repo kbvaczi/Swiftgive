@@ -6,6 +6,7 @@ class FundsController < ApplicationController
   # GET /funds
   # GET /funds.json
   def index
+    set_back_path
     @funds = Fund.all
 
     respond_to do |format|
@@ -17,6 +18,7 @@ class FundsController < ApplicationController
   # GET /funds/1
   # GET /funds/1.json
   def show
+    set_back_path
     @fund = Fund.find(params[:id])
 
     respond_to do |format|

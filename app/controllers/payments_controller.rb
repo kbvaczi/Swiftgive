@@ -8,8 +8,8 @@ class PaymentsController < ApplicationController
     @payment.fund_id ||= receiving_fund.id
     @payment.amount = 500
     respond_to do |format|
-      format.html { }
-      format.mobile { }
+      format.html
+      format.mobile
     end
   end
   
@@ -29,6 +29,10 @@ class PaymentsController < ApplicationController
   
   protected
   
+  def set_redirect_path
+    request.session['devise.redirect_path'] = curent_path
+  end
+
   def receiving_fund
     @receiving_fund ||= Fund.find_by_uid(params[:fund_uid])
   end

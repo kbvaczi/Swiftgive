@@ -2,9 +2,13 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
+  # Mobile functionality
   include Mobylette::RespondToMobileRequests
-  before_filter Proc.new { session[:mobylette_override] = :force_mobile }
-  
+  before_filter Proc.new { session[:mobylette_override] = :force_mobile } # force every request to be treated as mobile (for testing purposes only!)
+  mobylette_config do |config|
+    config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
+  end
+    
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end
@@ -20,8 +24,11 @@ class ApplicationController < ActionController::Base
         flash[:notice] = nil # erase any notice so that error can be displayed
         root_path
       else
-        flash[:notice] = "Welcome back!"
-        back_path
+        if request.session['devise.redirect_path'].present?
+          request.session['devise.redirect_path']
+        else
+          back_path
+        end
       end
     else
       super
@@ -38,7 +45,7 @@ class ApplicationController < ActionController::Base
       end                                                                 
       @new_back_path_queue.push(current_path)
       @new_back_path_queue.shift if @new_back_path_queue.length > 5                                                   # manage queue size maximum
-      session[:back_path]     = @new_back_path_queue unless @new_back_path_queue == current_back_path_queue           # don't hit database again if back path queue hasn't changed
+      session[:back_path] = @new_back_path_queue unless @new_back_path_queue == current_back_path_queue               # don't hit session again if back path queue hasn't changed
     end
   end
   helper_method :set_back_path  
