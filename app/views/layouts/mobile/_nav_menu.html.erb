@@ -2,5 +2,6 @@
 	<div class='center_wrap'>
 		<h3 data-theme='a'>Menu</h3>
 		<%= link_to 'My Profile', show_user_profile_path(current_user), :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a' %>   	
+		<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a'%>
 	</div>
 </div>
