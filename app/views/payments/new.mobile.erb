@@ -14,7 +14,7 @@
   <div class='ui-grid-a' style='margin-right:-5px'>
     <div class='ui-block-a' style='margin-top:15px;text-indent:5px;'>Amount to give:</div>
     <div class='ui-block-b' style=''>
-      <div><%= f.select :amount, [['$ 2.00', 200], ['$ 5.00', 500], ['$ 10.00', 1000], ['Other', 'other']], { :selected => 500 }, :'data-native-menu' => 'false' %></div>
+      <div><%= f.select :amount, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
     </div>  
   </div>
 
@@ -43,9 +43,9 @@
   
 <% end %>
 
-<div id="custom_amount_popup" class='pa-m' style='width:250px' data-role="popup" data-position-to="window" data-overlay-theme="a">
+<div data-id="custom_amount_popup" class='custom_amount_popup pa-m' style='width:250px' data-role="popup" data-position-to="window" data-overlay-theme="a">
   <div class='ui-grid-solo center_wrap'>
-    <h1 id='custom_amount_value' class='mb' style='margin-top:-0px;'>$ 15.00</h1>
+    <h1 data-id='custom_amount_value' class='mb' style='margin-top:-0px;'>$ 15</h1>
   </div>
   <div data-role='controlgroup' data-type='horizontal'>
     <div class='ui-grid-b'>
@@ -77,67 +77,69 @@
   </div>
   <div class='ui-grid-a'>
     <div class='ui-block-a'><div data-role='button' class='custom_amount_button' data-value='clear'>Clear</div></div>
-    <div class='ui-block-b'><div id='custom_amount_ok_button' data-role='button' data-theme='b' data-icon='check'>OK</div></div>
+    <div class='ui-block-b'><div data-id='custom_amount_ok_button' data-role='button' data-theme='b' data-icon='check'>OK</div></div>
   </div>      
   
 </div>
 
 <script type='text/javascript'>
 
-  $('#custom_amount_value').initAutoNumeric();
+  $("[data-id='custom_amount_value']").initAutoNumeric();
 
   $('.main_page').on( 'pageinit', function() {    
     
-    $('#payment_amount').mousedown(function(){
-      alert('hi');
-      $('#payment_amount').data('previous_value', $('#payment_amount').val());
+    $("#payment_amount-listbox").mousedown(function(){
+      $(this).data('previous_value', $(this).val());
     });
 
     $('#payment_amount-listbox').on( "popupafterclose", function( event, ui ) {
-      if ($('#payment_amount').val() == 'other'){
-        $('#payment_amount').val($('#payment_amount').data('previous_value'));
-        $('#payment_amount').selectmenu( "refresh" );
+      var target = $("[data-id='payment_amount']");
+      if (target.val() == 'other'){
+        target.val(target.data('previous_value'));
+        target.selectmenu( "refresh" );
         window.setTimeout ( function() { 
-          $('#custom_amount_popup').popup('open', {transition: 'slidedown'}); 
+          $("[data-id='custom_amount_popup']").popup('open', {transition: 'slidedown'}); 
         }, 300 );
       }
     });
 
     if ('ontouchstart' in document.documentElement) {
       $('.custom_amount_button').bind('touchstart', custom_amount_button_press);
-      $('#custom_amount_ok_button').bind('touchstart', custom_amount_ok_button_press);
+      $("[data-id='custom_amount_ok_button']").bind('touchstart', custom_amount_ok_button_press);
     } else {
       $('.custom_amount_button').bind('click', custom_amount_button_press);
-      $('#custom_amount_ok_button').bind('click', custom_amount_ok_button_press);    
+      $("[data-id='custom_amount_ok_button']" ).bind('click', custom_amount_ok_button_press);    
     } 
 
   });
   
-  function custom_amount_button_press() {    
-    if ($(this).data('value') == 'clear'){
-      $('#custom_amount_value').autoNumeric('set', 0);
-    } else if($(this).data('value') == 'backspace') {
-      var current_value = parseInt($('#custom_amount_value').autoNumeric('get'));
+  function custom_amount_button_press() {
+    var target = $("[data-id='custom_amount_value']");
+    var source_button = $(this);
+    if (source_button.data('value') == 'clear'){
+      target.autoNumeric('set', 0);
+    } else if(source_button.data('value') == 'backspace') {
+      var current_value = parseInt(target.val().autoNumeric('get'));
       var new_value = parseInt(current_value / 10);
-      $('#custom_amount_value').autoNumeric('set', new_value);
+      target.autoNumeric('set', new_value);
     } else {
-      var current_value = parseInt($('#custom_amount_value').autoNumeric('get'));
+      var current_value = parseInt(target.autoNumeric('get'));
       var new_value = current_value * 10 + parseInt($(this).data('value'));
-      $('#custom_amount_value').autoNumeric('set', new_value);
+      target.autoNumeric('set', new_value);
     }
   }
 
   function custom_amount_ok_button_press() {
-    var value_text  = $('#custom_amount_value').html();
-    var value_value = $('#custom_amount_value').autoNumeric('get');
-    if ($('#payment_amount option').length == 5 ) {
-      $('#payment_amount option:eq(3)').remove();
+    var value_text  = $("[data-id='custom_amount_value']").html();
+    var value_value = $("[data-id='custom_amount_value']").autoNumeric('get') * 100; 
+    if ($("[data-id='payment_amount'] option").length == 5 ) {
+      $("[data-id='payment_amount'] option:eq(3)").remove();
     } 
-    var index_to_insert_before = $('#payment_amount option').length - 1;
-    $('#payment_amount option:eq(' + index_to_insert_before + ')').before("<option value=" + value_value + ">" + value_text + "</option>");  
-    $('#payment_amount').val(value_value);
-    $('#payment_amount').selectmenu( "refresh" );
-    $('#custom_amount_popup').popup('close'); 
+    var index_to_insert_before = $("[data-id='payment_amount'] option").length - 1;
+    $("[data-id='payment_amount'] option:eq(" + index_to_insert_before + ")").before("<option value=" + value_value + ">" + value_text + "</option>");  
+    $("[data-id='payment_amount']").val(value_value);
+    $("[data-id='payment_amount']").selectmenu( "refresh" );
+    $("[data-id='custom_amount_popup']").popup('close'); 
   }
 
 </script>

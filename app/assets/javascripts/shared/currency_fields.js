@@ -9,7 +9,7 @@ $.fn.initAutoNumeric = function(method){
     aSign: '$ ', 
     vMin: '0', 
     vMax: '1000',
-    mDec: '2',
+    mDec: '0',
     wEmpty: 'empty'	
   });
 }
