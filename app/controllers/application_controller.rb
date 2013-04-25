@@ -74,5 +74,10 @@ class ApplicationController < ActionController::Base
     #@current_path ||= url_for(params.merge(:authenticity_token => nil, :utf8 => nil, :sort => nil, :sort_order => nil))
   end
   helper_method :current_path
+
+  def current_page_id
+    Rails.application.routes.recognize_path(request.path).inspect.parameterize('_')
+  end
+  helper_method :current_page_id
   
 end

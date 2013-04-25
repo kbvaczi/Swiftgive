@@ -90,7 +90,7 @@ class FundsController < ApplicationController
   
   def give_code
     code_url = new_payment_url(:fund_uid => current_fund.uid)
-    render :partial => 'funds/give_code', :locals => {:message => code_url}    
+    render :partial => 'funds/give_code', :foramts => [:html], :locals => {:message => code_url}    
   end
   
   protected

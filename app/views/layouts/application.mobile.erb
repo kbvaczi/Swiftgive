@@ -16,9 +16,13 @@
     
     <%# ajax loading spinner %>
     <div id="loader"></div>  
-  
-    <div data-role="page" class='main_page' data-id='main_page'> 
-      
+    
+    <% unless content_for?(:page_id) %>
+      <% provide :page_id, current_page_id %>
+    <% end %>
+
+    <div data-role="page" class='main_page' id='<%= yield(:page_id) %>'> 
+    
       <div data-role="header" data-id='header' data-fullscreen='true' data-theme='d'>
         
         <div class='center_wrap'>
@@ -32,7 +36,6 @@
       </div>
 
       <div class='content' data-role="content">
-
         <% if flash[:notice] %> 
           <%= render :partial => 'layouts/mobile/flash', :locals => { :flash_type => 'notice', :flash_message => flash[:notice] } %>
         <% elsif flash[:alert] %>
@@ -44,8 +47,9 @@
         <% end %>
         
         <script type="text/javascript" language="JavaScript">          
-          $(".main_page").on("pageshow", function(event) {
-            $('.flash_message').popup("open");
+          var current_page = $('#'+'<%= current_page_id %>');
+          current_page.on("pageshow", function(event) {
+            $(this).find('.flash_message').first().popup("open");
           });
         </script>
 
