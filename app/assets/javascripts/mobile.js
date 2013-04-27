@@ -11,8 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require application
-//= require jquery.mobile
 //= require_tree ./shared
 //= require_tree ./mobile
+//= require jquery.mobile
 
 

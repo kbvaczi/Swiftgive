@@ -6,10 +6,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     
     <%= render :partial => 'layouts/shared/html_head' %>
+
     <%= stylesheet_link_tag "mobile", :media => "all" %>
     <%= javascript_include_tag "mobile" %>
     
-    <%= yield(:header) %>  
+    <%= yield(:header) %>      
   </head>
 
   <body>
@@ -21,38 +22,24 @@
       <% provide :page_id, current_page_id %>
     <% end %>
 
-    <div data-role="page" class='main_page' id='<%= yield(:page_id) %>'> 
-    
+    <div data-role="page" class='main_page' id='<%= yield(:page_id) %>' data-url='<%= current_path %>' data-transition="slide"> 
+      
+      <%= render :partial => 'layouts/mobile/flash', :locals => {:flash => flash} %>
+
       <div data-role="header" data-id='header' data-fullscreen='true' data-theme='d'>
         
         <div class='center_wrap'>
-          <div class='left ml-m'><%= link_to 'back', back_path, :'data-role' => 'button', :'data-icon' => 'arrow-l', :'data-iconpos' => 'notext', :'data-shadow' => 'false' %></div>
+          <div class='left ml-m'><%= link_to 'back', back_path, :'data-role' => 'button', :'data-icon' => 'arrow-l', :'data-iconpos' => 'notext', :'data-shadow' => 'false', :'data-rel' => 'back' %></div>
           <div class='center'><%= link_to content_tag(:div, '', :id => 'logo', :class => 'center'), root_path %></div>
           <div class='right mr-m'><a data-role='button' data-transition="slide" data-icon='bars' data-iconpos='notext' data-shadow='false' data-rel='popup' href='#nav_menu' data-tolerance="0,0"> menu </a> </div>
         </div>
-        
+  
         <%= render :partial => 'layouts/mobile/nav_menu' %>
 
       </div>
-
+      
       <div class='content' data-role="content">
-        <% if flash[:notice] %> 
-          <%= render :partial => 'layouts/mobile/flash', :locals => { :flash_type => 'notice', :flash_message => flash[:notice] } %>
-        <% elsif flash[:alert] %>
-          <%= render :partial => 'layouts/mobile/flash', :locals => { :flash_type => 'alert', :flash_message => flash[:alert] } %>
-        <% elsif flash[:error] %>
-          <%= render :partial => 'layouts/mobile/flash', :locals => { :flash_type => 'error', :flash_message => flash[:error] } %>
-        <% elsif flash[:warning] %>
-          <%= render :partial => 'layouts/mobile/flash', :locals => { :flash_type => 'warning', :flash_message => flash[:warning] } %>
-        <% end %>
         
-        <script type="text/javascript" language="JavaScript">          
-          var current_page = $('#'+'<%= current_page_id %>');
-          current_page.on("pageshow", function(event) {
-            $(this).find('.flash_message').first().popup("open");
-          });
-        </script>
-
         <%= yield %>
 
       </div>

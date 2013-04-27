@@ -1,3 +1,12 @@
 .flash_message {
+	color: #FFF;
 	min-width:250px;
+  border: 1px solid #000;
+  background: rgba(0,0,0,.9);
+  margin: -1px 0;
+}
+
+.flash_message p {
+	color: #eee;
+	text-shadow:none;
 }

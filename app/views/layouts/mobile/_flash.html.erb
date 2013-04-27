@@ -1,10 +1,21 @@
-<div class='center_wrap flash_message flash_<%= flash_type %> pa-m' data-role="popup" data-position-to="window" data-overlay-theme="a">
-	<div><p class='center'><%= flash_message %></p></div>
-	<div class='close_flash_button center' data-role='button'>OK</div>	
-</div>
+<% 
 
-<script type='text/javascript'>
-	$('.close_flash_button').click(function(){
-		$('.flash_message').popup('close');
-	});
-</script>
+is_message_present = false
+if flash[:notice].present?
+	is_message_present = true
+  flash_type = 'notice'
+  flash_message = flash[:notice]
+elsif flash[:error].present?
+	is_message_present = true
+  flash_type = 'error'
+  flash_message = flash[:error]
+end
+
+%>
+
+<% if is_message_present %>
+	<div class='center_wrap flash_message flash_<%= flash_type %> pa-m' data-role="popup" data-position-to="window" data-theme='none' data-transition='fade'>
+		<div><p class='center'><%= flash_message %></p></div>
+		<div class='close_flash_button center' data-role='button' data-theme='a'>OK</div>
+	</div>
+<% end %>

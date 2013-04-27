@@ -43,10 +43,10 @@
   
 <% end %>
 
-<div id="custom_amount_popup" class='pa-m' style='width:250px' data-role="popup" data-history='false' data-position-to="window" data-overlay-theme="a">
+<div id="custom_amount_popup" class='pa-m' style='width:250px' data-role="popup" data-history='false' data-position-to="window" data-overlay-theme="a" data-transition='slide'>
 
   <div class='ui-grid-solo center_wrap'>
-    <h1 id='custom_amount_value' class='mb' style='margin-top:-0px;'>$ 15</h1>
+    <h1 id='custom_amount_value' class='mb' style='margin-top:5px;'>$ 15</h1>
   </div>
   <div data-role='controlgroup' data-type='horizontal'>
     <div class='ui-grid-b'>
@@ -102,7 +102,7 @@
         target.val(target.data('previous_value'));
         target.selectmenu( "refresh" );
         window.setTimeout ( function() { 
-          $('#custom_amount_popup').popup('open', {history: false}); 
+          $('#custom_amount_popup').popup('open'); 
         }, 300 );
       }
     });

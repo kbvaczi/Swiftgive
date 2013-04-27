@@ -1,3 +1,19 @@
+$(document).bind("pageinit", function(){
+	
+  $('.close_flash_button').click(function(){
+		$('.flash_message').popup('close');
+	});
+
+});
+
+$(document).delegate('.main_page', 'pageshow', function () {
+	// FLASH MESSAGES
+  $(this).find('.flash_message').first().popup("open");
+  window.setTimeout ( function() { 
+    $('.flash_message').popup('close'); 
+  }, 7000 );
+});
+
 function flashNow(message, type) {
   var flash = "<div class='flash_message flash_" + type + " pa' data-role='popup' data-position-to='window'><p>" + message + "<p></div>"
   $('.flash_message').remove();

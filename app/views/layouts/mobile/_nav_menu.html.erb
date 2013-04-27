@@ -1,7 +1,10 @@
 <div id='nav_menu' data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme='none'>
 	<div class='center_wrap'>
 		<h3 data-theme='a'>Menu</h3>
-		<%= link_to 'My Profile', show_user_profile_path(current_user), :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a' %>   	
-		<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a'%>
+		<%= link_to 'View Profile', show_user_profile_path(current_user), :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a' %>
+		<%= link_to 'Refer a friend', show_user_profile_path(current_user), :'data-role' => 'button', :'data-icon' => 'forward', :'data-mini' => 'true', :'data-theme' => 'a' %>
+
+		<br class='spacer'/>
+		<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'delete', :'data-mini' => 'true', :'data-theme' => 'a'%>
 	</div>
 </div>

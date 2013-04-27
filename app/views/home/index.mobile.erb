@@ -6,5 +6,7 @@
 
 <ul data-role="listview" data-inset="true">
 	<li data-role="list-divider" data-theme='d'>Funds</li>
-				<li data-theme="c"><%= link_to 'yay', fund_path(Fund.first) %></li>
-		</ul>
+	<% Fund.limit(10).each do |fund| %>
+		<li data-theme="c"><%= link_to fund.name, fund_path(fund) %></li>
+	<% end %>
+</ul>
