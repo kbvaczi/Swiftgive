@@ -1,0 +1,37 @@
+<div id="account_edit_location" class='pa-m' style='width:250px' data-role="popup" data-history='false' data-position-to="window" data-overlay-theme="a" data-transition='slide'>
+    
+  <div class='center_wrap'><h3>Edit Location Info</h3></div>
+  
+  <% location = Users::Location.new(params[:users_location] || current_user.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
+
+  <%= form_for location, :url => users_location_path, :method => :get do |f| %>
+
+    <div class='ui-grid-solo'>
+      <%= f.text_field :street_address, :placeholder => 'Street Address' %>    
+    </div>
+
+    <div class='ui-grid-solo'>
+      <%= f.text_field :city, :placeholder => 'City' %>    
+    </div>
+
+    <div class='ui-grid-solo'>
+      <%= f.text_field :state, :placeholder => 'State' %>    
+    </div>
+
+    <div class='ui-grid-solo'>
+      <%= f.text_field :postal_code, :placeholder => 'Postal Code' %>    
+    </div>
+
+    <div class='ui-grid-solo'>
+      <%= f.text_field :country, :placeholder => 'Country' %>    
+    </div>
+    
+    <div class='ui-grid-a'>
+      <div class='ui-block-a'><a href='#' data-role='button' data-rel='back' data-icon='delete'>Cancel</a></div>
+
+      <div class='ui-block-b'><%= f.submit 'Update', :'data-icon' => 'check' %></div>
+    </div>
+
+  <% end %>
+
+</div>

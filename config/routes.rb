@@ -12,7 +12,7 @@ Swiftgive::Application.routes.draw do
   scope :module => 'users' do
     namespace :account do
       resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]
-      resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]    
+      resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]      
     end
     
     get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in', :as => :authentication_sign_in
@@ -22,6 +22,7 @@ Swiftgive::Application.routes.draw do
     get 'account/remove_authentication/:provider'         => 'authentications#remove_authentication_from_existing_account', :as => :authentication_remove
 
     get 'account/profile' => 'accounts#show', :as => :show_user_profile
+    match 'account/location' => 'account/locations#update', :as => :users_location
   end 
 
   resources :funds do

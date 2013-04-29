@@ -6,4 +6,4 @@ class Users::AccountsController < ApplicationController
     set_back_path
   end
 
-end
+ end
