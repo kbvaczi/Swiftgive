@@ -15,6 +15,7 @@ gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for l
 gem "balanced", "~> 0.7.0"                            # balanced payments gateway
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
+gem "imgkit", "~> 1.3.9"                              # convert html to images
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information

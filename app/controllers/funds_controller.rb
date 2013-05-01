@@ -19,7 +19,7 @@ class FundsController < ApplicationController
   # GET /funds/1.json
   def show
     set_back_path
-    @fund = Fund.find(params[:id])
+    current_fund
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,7 +40,7 @@ class FundsController < ApplicationController
 
   # GET /funds/1/edit
   def edit
-    @fund = Fund.find(params[:id])
+    current_fund
   end
 
   # POST /funds
@@ -63,7 +63,7 @@ class FundsController < ApplicationController
   # PUT /funds/1
   # PUT /funds/1.json
   def update
-    @fund = Fund.find(params[:id])
+    current_fund
 
     respond_to do |format|
       if @fund.update_attributes(params[:fund])
@@ -79,18 +79,13 @@ class FundsController < ApplicationController
   # DELETE /funds/1
   # DELETE /funds/1.json
   def destroy
-    @fund = Fund.find(params[:id])
+    current_fund
     @fund.destroy
 
     respond_to do |format|
       format.html { redirect_to funds_url }
       format.json { head :no_content }
     end
-  end
-  
-  def give_code
-    code_url = new_payment_url(:fund_uid => current_fund.uid)
-    render :partial => 'funds/give_code', :foramts => [:html], :locals => {:message => code_url}    
   end
   
   protected
@@ -103,7 +98,7 @@ class FundsController < ApplicationController
   end
   
   def current_fund
-    @fund ||= Fund.find(params[:id])
+    @fund ||= Fund.find_by_uid(params[:id])
   end
   helper_method :current_fund
   

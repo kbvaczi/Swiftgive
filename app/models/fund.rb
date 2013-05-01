@@ -15,6 +15,10 @@ class Fund < ActiveRecord::Base
   
   attr_accessible :name, :description, :profile
 
+  def to_param
+    self.uid.parameterize
+  end
+
   # ----- Validations ----- #
 
   validates_presence_of :uid, :name, :description

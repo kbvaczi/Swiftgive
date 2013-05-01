@@ -26,7 +26,9 @@ Swiftgive::Application.routes.draw do
   end 
 
   resources :funds do
-    get  'give_code', :on => :member
+    get 'give_code' => 'funds/give_codes#show', :on => :member
+    get 'give_code_html' => 'funds/give_codes#give_code_html', :on => :member    
+    get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member
     scope :module => 'funds' do
       resources :bank_accounts, :only => [:new, :destroy]
     end
