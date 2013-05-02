@@ -16,6 +16,9 @@ gem "balanced", "~> 0.7.0"                            # balanced payments gatewa
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 gem "imgkit", "~> 1.3.9"                              # convert html to images
+gem "carrierwave", "~> 0.8"                           # image_scan uploader
+gem "fog", "~> 1.10"                                  # supports amazon s3
+gem "mini_magick", "~> 3.5"                           # image manipulation for ckeditor
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
@@ -29,10 +32,10 @@ end
 
 group :staging, :production do
   gem "activerecord-postgresql-adapter"               # PostgesQL Adapter for Heroku Database
-  gem 'newrelic_rpm'								  # Performance Monitoring / Dyno keepalive
-  gem 'dalli'										  # enable memcache for heroku
-  gem 'memcachier'									  # use memcachier addon for heroku through dalli
-  gem 'rack-www'									  # rack middleware to add www. to naked domain calls
+  gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
+  gem 'dalli'										                      # enable memcache for heroku
+  gem 'memcachier'									                  # use memcachier addon for heroku through dalli
+  gem 'rack-www'									                    # rack middleware to add www. to naked domain calls
 end
 
 # Gems used only for assets and not required in production environments by default.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410214608) do
+ActiveRecord::Schema.define(:version => 20130501235643) do
 
   create_table "bank_accounts", :force => true do |t|
     t.integer  "fund_id"
@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(:version => 20130410214608) do
     t.string   "name"
     t.string   "description"
     t.text     "profile"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "give_code",   :default => ""
   end
 
   add_index "funds", ["name"], :name => "index_funds_on_name"
