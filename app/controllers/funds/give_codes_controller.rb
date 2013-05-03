@@ -6,14 +6,6 @@ class Funds::GiveCodesController < ApplicationController
 
   def give_code_html
     code_url = new_payment_url(:fund_uid => current_fund.uid)
-    Rails.logger.info "test"
-    Rails.logger.info current_fund
-    Rails.logger.info "test"
-    Rails.logger.info Fund.find_by_uid(params[:id])
-    Rails.logger.info "test"
-    Rails.logger.info code_url
-    Rails.logger.info "test"
-
     render :partial => 'funds/give_codes/give_code', :layout => false, :foramts => [:html], :locals => {:message => code_url, :include_header => true}
     return
   end
