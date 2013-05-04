@@ -1,73 +1,86 @@
 <% 
 message ||= 'test' 
-qr_code = RQRCode::QRCode.new(message, :size => 7)
+qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
 %>
 <% if (include_header rescue false) %>
   <!DOCTYPE html>
   <head>
-    <meta name="imgkit-height" content="700">
-    <meta name="imgkit-width" content="700">
+    <meta name="imgkit-height" content="720">
+    <meta name="imgkit-width" content="600">
   </head>
 <% end %>
 
 <style type="text/css">
- body, html {
-  height:600px;
-  width:600px;
-  padding:0px;
-  margin:0px;
-  text-align:center;
- }
- table {
-  border-width: 0;
-  border-style: none;
-  border-color: #0000ff;
-  border-collapse: collapse;
- }
- td {
-   border-width: 0;
-   border-style: none;
-   border-color: #0000ff;
-   border-collapse: collapse;
-   padding: 0;
-   margin: 0;
-   width: 10px;
-   height: 10px;
- }
- td.black { background-color: #000; }
- td.white { background-color: #fff; }
+  body, html {
+    height:600px;
+    width:600px;
+    padding:0px;
+    margin:0px;
+    text-align:center;
+  }
+  table {
+    border-width: 0;
+    border-style: none;
+    border-color: #000;
+    border-collapse: collapse;
+  }
+  td {
+    border-width: 0;
+    border-style: none;
+    border-color: #000;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+    width: 10px;
+    height: 10px;
+  }
+  td.black { background-color: #000; }
+  td.white { background-color: #fff; }
 
- div.code_wrapper {
-  border-radius: 50px;
-  border: 8px solid #000;
-  margin:55px auto 25px auto;
-  padding:60px 45px 35px 45px;
-  width:450px;
-  text-align: center;
-  vertical-align: middle;
- }
- p.scan_now {
-  font-size:40px;
-  font-weight:bold;
-  padding:0px;
-  margin:5px 0px -10px 0px;
-  font-family: arial, 'sans sarif';
- }
- .code_logo {
-  position:absolute;
-  top:0px;
-  left:85px;
-  background-color: #fff;
-  padding:10px 20px 0px 10px;
-  margin:0px;
- }
- .code_logo img {
-  height:100px;
-  width:400px;
- }
+  div.code_wrapper {
+    border-radius: 50px;
+    border: 8px solid #000;
+    margin:55px auto 25px auto;
+    padding:60px 45px 35px 45px;
+    width:450px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  p.scan_now {
+    text-shadow: 0px -1px #000;
+    color: rgb(33%, 43%, 33%);
+    font-size:46px;
+    font-weight:bold;
+    letter-spacing:-1px;
+    padding:0px;
+    margin:0px 0px 0px 0px;
+    font-family: "Helvetica Neue", 'sans sarif';
+  }
+  p.fund_name {
+    color:#333;
+    font-size:30px;
+    font-weight:100;
+    font-style: italic;
+    padding:0px;
+    margin:5px 0px -10px 0px;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+    
+  }
+  .code_logo_wrapper {
+    position:absolute;
+    top:0px;
+    left:85px;
+    background-color: #fff;
+    padding:10px 20px 0px 10px;
+    margin:0px;
+  }
+  img.code_logo {
+    height:100px;
+    width:400px;
+  }
 </style>
 
-<div class='code_logo'><%= image_tag 'logo_text_lg.png' %></div>
+<div class='code_logo_wrapper'><%= image_tag 'logo_text_lg.png', :class => 'code_logo' %></div>
 <div class='code_wrapper'>
   <table>
    <% qr_code.modules.each_index do |x| -%>
@@ -82,7 +95,12 @@ qr_code = RQRCode::QRCode.new(message, :size => 7)
      </tr>
    <% end -%>
   </table>
-  <p class='scan_now clearfix'>
-    SCAN NOW AND GIVE
-  </p>
+  <div class='center_wrap'>
+    <p class='scan_now clearfix'>
+      scan now and give to
+    </p>
+    <p class='fund_name'>
+      <%= current_fund.name %>
+    </p>
+  </div>
 </div>
