@@ -29,19 +29,20 @@ class Fund < ActiveRecord::Base
 
   before_validation :generate_and_assign_uid, :on => :create
   after_commit :generate_and_upload_give_code, :on => :create, :if => Proc.new { not give_code? }
+  #TODO: update givecode if necessary
     
   # ----- Member Methods ----- #
 
   def generate_and_upload_give_code
     temp_dir = Rails.root.join('tmp')
-    Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir)
-    file = Tempfile.new(["give_code_#{self.uid.to_s}", '.png'], 'tmp', :encoding => 'ascii-8bit')
+    Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir) # creates temp directory in heroku, which is not automatically created
+    give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s}", '.png'], 'tmp', :encoding => 'ascii-8bit')
     generated_code_image = IMGKit.new(Rails.application.routes.url_helpers.give_code_html_fund_url(:id => self.uid, :host => ENV['HOST']), :quality => 50, :height => 700, :width => 600, :'disable-smart-width' => true, :zoom => 1).to_img(:png)
-    file.write(generated_code_image)
-    file.flush
-    self.give_code = file
+    give_code_image_tempfile.write(generated_code_image)
+    give_code_image_tempfile.flush
+    self.give_code = give_code_image_tempfile
     self.save
-    file.unlink
+    give_code_image_tempfile.unlink
   end
 
   # ----- Class Methods ----- #

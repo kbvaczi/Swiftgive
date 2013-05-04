@@ -9,4 +9,5 @@
 	<% Fund.limit(10).each do |fund| %>
 		<li data-theme="c"><%= link_to fund.name, fund_path(fund) %></li>
 	<% end %>
+	<li data-theme='c' data-icon='plus'> <%= link_to 'Create new fund', new_fund_path %> </li>
 </ul>

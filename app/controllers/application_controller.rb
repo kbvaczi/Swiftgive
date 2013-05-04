@@ -2,13 +2,14 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  # Mobile functionality
+  # Mobile web functionality (mobylette gem)
   include Mobylette::RespondToMobileRequests
   before_filter Proc.new { session[:mobylette_override] = :force_mobile } # force every request to be treated as mobile (for testing purposes only!)
   mobylette_config do |config|
     config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
   end
-    
+  
+  # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end
