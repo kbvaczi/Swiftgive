@@ -5,7 +5,7 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
 <% if (include_header rescue false) %>
   <!DOCTYPE html>
   <head>
-    <meta name="imgkit-height" content="720">
+    <meta name="imgkit-height" content="730">
     <meta name="imgkit-width" content="600">
   </head>
 <% end %>
@@ -75,9 +75,8 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
   p.scan_now {    
     color: rgb(33%, 43%, 33%);
     text-shadow: 0px -1px #000;
-    font-size:45px;
+    font-size:42px;
     font-weight:bold;
-    letter-spacing:-2px;
     padding:0px;
     margin:0px;
     font-family: "Helvetica Neue", 'sans sarif';
@@ -97,30 +96,30 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
 <div class='code_logo_wrapper'><%= image_tag 'logo_text_lg.png', :class => 'code_logo' %></div>
 <div class='give_code_wrapper'>
   <div class='give_code'>
-  <div class='give_code_content'>
-    <div class='qr_code'>  
-      <table>
-        <% qr_code.modules.each_index do |x| %>
-          <tr>
-            <% qr_code.modules.each_index do |y| %>
-              <% if qr_code.dark?(x,y) %>
-                <td class="black"/>
-              <% else %>
-                <td class="white"/>
+    <div class='give_code_content'>
+      <div class='qr_code'>  
+        <table>
+          <% qr_code.modules.each_index do |x| %>
+            <tr>
+              <% qr_code.modules.each_index do |y| %>
+                <% if qr_code.dark?(x,y) %>
+                  <td class="black"/>
+                <% else %>
+                  <td class="white"/>
+                <% end %>
               <% end %>
-            <% end %>
-          </tr>
-        <% end %>
-      </table>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class='scan_now_wrapper'>
+        <p class='scan_now'>
+          scan now and give to
+        </p>
+        <p class='fund_name'>
+          <%= current_fund.name %>
+        </p>
+      </div>
     </div>
-    <div class='scan_now_wrapper'>
-      <p class='scan_now'>
-        scan now and give to
-      </p>
-      <p class='fund_name'>
-        <%= current_fund.name %>
-      </p>
-    </div>
-  </div>
   </div>
 </div>
