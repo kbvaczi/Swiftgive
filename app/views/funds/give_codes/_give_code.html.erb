@@ -1,14 +1,6 @@
 <% 
-message ||= 'test' 
 qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
 %>
-<% if (include_header rescue false) %>
-  <!DOCTYPE html>
-  <head>
-    <meta name="imgkit-height" content="730">
-    <meta name="imgkit-width" content="600">
-  </head>
-<% end %>
 
 <style type="text/css">
   body, html {
@@ -21,7 +13,7 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
     margin:60px 25px 25px 25px;
     padding:50px 45px 10px 45px;
     width:450px;
-    height:575px;
+    height:550px;
     display:block;
   }
   div.give_code {
@@ -43,6 +35,7 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
     margin:0px;
   }
   img.code_logo {
+    padding-top:-5px;
     height:100px;
     width:400px;
   }
@@ -83,7 +76,8 @@ qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
   }
   p.fund_name {
     color:#333;
-    font-size:30px;
+    font-size:28px;
+    line-height:95%;
     font-style: italic;
     padding:0px;
     margin:3px 0px 0px 0px;

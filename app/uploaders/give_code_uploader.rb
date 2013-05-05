@@ -17,7 +17,7 @@ class GiveCodeUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "funds/#{model.uid}/give_codes"
+    "funds/#{model.uid}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -29,7 +29,8 @@ class GiveCodeUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  # process :resize_to_fit => [600, 730]
+  # process :scale => [600, 750]
   #
   # def scale(width, height)
   #   # do something

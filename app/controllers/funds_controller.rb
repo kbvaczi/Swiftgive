@@ -42,15 +42,11 @@ class FundsController < ApplicationController
     @fund = Fund.new(params[:fund])
     @fund.owners << current_user # creator of fund is automatically an owner
     
-    respond_to do |format|
-      if @fund.save
-        format.html   { redirect_to @fund, notice: 'Fund was successfully created.' }
-        format.mobile { redirect_to @fund, notice: 'Fund was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
-    end
-    return
+    if @fund.save
+      redirect_to @fund, notice: 'Fund was successfully created.'
+    else
+      render action: "new"
+    end    
   end
 
   # PUT /funds/1
@@ -68,11 +64,11 @@ class FundsController < ApplicationController
 
   # DELETE /funds/1
   def destroy
-    current_fund
-    @fund.destroy
-
-    respond_to do |format|
-      format.html { redirect_to funds_url }
+    if current_fund.destroy
+      redirect_to root_path, :notice => 'fund deleted'
+    else
+      flash[:error] = 'fund cound not be deleted'
+      redirect_to back_path
     end
   end
   
