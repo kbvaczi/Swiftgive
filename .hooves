@@ -1,7 +1,7 @@
 ## SETUP file for unicorn webserver
 
 timeout 30 # number is in seconds... 20 minutes for development for uploading sets  
-worker_processes 2
+worker_processes 3
 
 # our sidekick worker
 @sidekiq_pid = nil
