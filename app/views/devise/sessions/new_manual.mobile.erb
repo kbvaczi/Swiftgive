@@ -1,0 +1,21 @@
+<ul data-role="listview" data-inset="true">
+	<li>
+		<div class='center_wrap'><h1>Returning User</h1></div>
+
+		<%= form_for @user, :url => user_session_path, :html => { :honeypot => true } do |f| %>
+		  
+		  <%= f.text_field :email , :required => 'true', :placeholder => 'Email' %>
+		  <%= f.password_field :password, :required => 'true', :placeholder => 'Password'  %>
+		  
+		  
+		  <%# if devise_mapping.rememberable? -%>
+		    <div><%#= f.label :remember_me %> <%#= f.check_box :remember_me %> </div>
+		  <%# end -%>
+
+		  <br class = "spacer"/>
+		  <div class="center_wrap"><%= f.submit 'Sign In' , :class => 'center'%></div>
+
+		<% end %>
+	</li>
+</ul>
+<%#= render :partial => "devise/shared/links" %>

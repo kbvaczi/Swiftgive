@@ -15,14 +15,15 @@ class User < ActiveRecord::Base
   
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
   has_many    :payment_cards,     :class_name => 'Users::PaymentCard',    :dependent => :destroy
-  has_many    :payments,          :class_name => 'Payment',       :foreign_key => :sender_id
+  has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id
   has_many    :bank_accounts,     :class_name => 'BankAccount',           :dependent => :destroy
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   
   # ----- Validations ----- #
   
-  validates_presence_of :uid, :email, :account_uri
+  validates_presence_of :uid, :email
+  validates_presence_of :account_uri, :message => 'We could not verify you with our payment processor'
   
   # ----- Callbacks ----- #
   
@@ -95,9 +96,8 @@ class User < ActiveRecord::Base
       user = new(options[:standardized_auth_data].slice(:email, :first_name, :last_name, :city, :state, :country, :image))
       user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
       user.build_authentication(options)
-      ActiveRecord::Base.transaction do
-        return user if user.save
-      end
+      user.password = SecureRandom.hex(10) # set a random password so user's account cannot be accessed manually
+      return user if user.save
     end
     return nil
   end

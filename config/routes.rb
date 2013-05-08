@@ -4,6 +4,7 @@ Swiftgive::Application.routes.draw do
                                                             :sessions => 'users/sessions', 
                                                             :omniauth_callbacks => "users/omniauth_callbacks" } do
     get 'account/register_after_authenticated' => 'users/omniauth_callbacks#process_authentication_request', :as => :authentication_register_after_authenticated                                                              
+    get 'account/manual_sign_in' => 'users/sessions#new_manual'
     if Rails.env.development? or Rails.env.staging?                                                         
       get 'sign_in' => "users/sessions#sign_in_test" 
     end

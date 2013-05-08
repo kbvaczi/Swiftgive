@@ -1,6 +1,11 @@
+# Hack to get devise to respond to mobile
+# http://stackoverflow.com/questions/8146590/devise-sign-in-issue-with-jquery-mobile-and-rails
+ActionController::Responder.class_eval do alias :to_mobile :to_html end
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
@@ -98,7 +103,7 @@ Devise.setup do |config|
   # their account can't be confirmed with the token any more.
   # Default is nil, meaning there is no restriction on how long a user can take
   # before confirming their account.
-  config.confirm_within = 0.days
+  config.confirm_within = 5.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email

@@ -1,4 +1,17 @@
-<h1>New Users</h1>
+<% if resource.errors.present? %>
+
+<% flash[:error] = "<p>There were problems with your request</p><ul>".html_safe %>
+<% resource.errors.full_messages.each do |message| %>
+  <% flash[:error] << "<li>#{message}</li>".html_safe %>
+<% end %>
+<% flash[:error] << "</ul>".html_safe %>
+
+<% end %>
+
+<ul data-role="listview" data-inset="true">
+  <li class='center_wrap'>
+    <h1 class='mb'>New Users</h1>
+
     <%= form_for(resource, :url => registration_path(resource), :html => { :honeypot => true } ) do |f| %>
         
       <%= f.text_field :email ,                 :required => true,
@@ -14,3 +27,5 @@
       
     <% end %>
 
+  </li>
+</ul>

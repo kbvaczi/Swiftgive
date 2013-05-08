@@ -71,13 +71,13 @@ class ApplicationController < ActionController::Base
   
   def current_path(options = {})
     options = request.params.symbolize_keys.merge(options).merge(:format => nil)
-    @current_path ||= url_for Rails.application.routes.recognize_path(request.path).merge(options)
+    @current_path ||= (url_for Rails.application.routes.recognize_path(request.path).merge(options)) rescue root_path
     #@current_path ||= url_for(params.merge(:authenticity_token => nil, :utf8 => nil, :sort => nil, :sort_order => nil))
   end
   helper_method :current_path
 
   def current_page_id
-    Rails.application.routes.recognize_path(request.path).inspect.parameterize('_')
+    Rails.application.routes.recognize_path(request.path).inspect.parameterize('_') rescue root_path
   end
   helper_method :current_page_id
   
