@@ -1,4 +1,5 @@
 <%= render :partial => 'users/accounts/edit_location', :formats => [:mobile] %>
+<%= render :partial => 'users/payment_cards/new', :formats => [:mobile] %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" data-theme='a'>My Profile</li>  
@@ -49,8 +50,7 @@
           </ul>
         <% end %>
       <% else %>
-      <%#= render :partial => 'users/payment_cards/new' %>
-      <h3>Please add a payment card</h3>
+        <a href="#new_payment_card_form" data-rel="popup" data-position-to="window">Setup Payment Info</a>
       <% end %>
     </li>
   </li>

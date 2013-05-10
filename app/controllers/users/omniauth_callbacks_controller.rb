@@ -99,12 +99,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
       remember_me(user)
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated      
-    #TODO - do we want to allow manual authentication?
-    elsif user.present? # there were errors creating the user
-      session["devise.user_attributes"] = user.attributes
-      redirect_to new_user_registration_path
     else # user is nil, meaning the authentication already exists
-      flash[:error] = "This #{standardized_auth_data[:provider_name]} account is already linked with another user profile..."
+      flash[:error] = "There was a problem authenticating with this #{standardized_auth_data[:provider_name]} account..."
       redirect_to back_path
     end
   end

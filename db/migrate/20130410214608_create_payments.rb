@@ -4,6 +4,7 @@ class CreatePayments < ActiveRecord::Migration
       create_table :payments do |t|
         t.integer :fund_id
         t.integer :sender_id
+        t.integer :payment_card_used_id
         
         t.string  :uid
         t.integer :amount
@@ -14,7 +15,8 @@ class CreatePayments < ActiveRecord::Migration
       end
         add_index :payments, :uid
         add_index :payments, :fund_id
-        add_index :payments, :sender_id        
+        add_index :payments, :sender_id
+        add_index :payments, :payment_card_used_id        
     end
   end
 

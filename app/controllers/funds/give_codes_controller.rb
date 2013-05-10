@@ -12,8 +12,7 @@ class Funds::GiveCodesController < ApplicationController
 
   def give_code_image
     code_image = IMGKit.new(give_code_html_fund_url(current_fund), :quality => 50, :height => 700, :width => 600, :zoom => 1).to_img(:png)
-    send_data(code_image, :type => 'image/png', :disposition => 'inline')
-    
+    send_data(code_image, :type => 'image/png', :disposition => 'inline') 
     return
   end
   

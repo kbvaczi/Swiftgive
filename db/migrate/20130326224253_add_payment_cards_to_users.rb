@@ -4,6 +4,7 @@ class AddPaymentCardsToUsers < ActiveRecord::Migration
       create_table :users_payment_cards do |t|
         t.integer :user_id
 
+        t.string  :name_on_card
         t.string  :card_type
         t.string  :last_4_digits
         t.string  :uri    # balanced payments unique identifier

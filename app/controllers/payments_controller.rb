@@ -1,7 +1,6 @@
 class PaymentsController < ApplicationController
 
   before_filter :set_back_path, :only => [:new]
-  before_filter :authenticate_user!
 
   def new
     @payment = Payment.new(params[:payment])
@@ -15,10 +14,16 @@ class PaymentsController < ApplicationController
   
   def create
     payment = Payment.new(params[:payment])
-    payment.sender_id = current_user.id
+    building_new_payment_card = params[:payment_card_used].present?
+    if building_new_payment_card
+      payment.build_payment_card_used(params[:payment_card_used]) 
+    elsif user_signed_in?
+      payment.payment_card_used = current_user.payment_cards.first
+    end
     if payment.save
       redirect_to root_path, :notice => 'Thanks for giving!'
     else
+      Rails.logger.debug payment.errors.full_messages
       flash[:error] = 'Error trying to give...'
       redirect_to back_path
     end

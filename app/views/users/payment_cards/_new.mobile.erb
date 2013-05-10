@@ -1,0 +1,84 @@
+<div data-role="popup" id='new_payment_card_form' data-history='false' data-position-to="window" data-overlay-theme="a" data-transition='slide'>
+
+  <div data-role="header" data-theme='a'>
+      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+      <h4 style='margin:10px 0px;'>Add Payment Card</h4>
+  </div>
+  
+  <div class='pa'>
+     
+    <form id="paymentCardForm">
+        <div>
+          <input type="text" name="name_on_card" autocomplete="off" placeholder='Cardholder Name'></input>
+        </div>        
+        <div>
+          <input type="text" name="card_number" value="4111111111111111" autocomplete="off" placeholder='Card Number'></input>
+        </div>        
+        <div class='ui-grid-b'>
+          <div class='ui-block-a pt-m pl-s'>Expires</div>
+          <div class='ui-block-b pl-s'>
+            <select type="select" data-mini='true' name="expiration_month" value="1">
+              <% 12.times do |index| %>
+                <%= "<option value=\'#{index+1}\'>#{index+1}</option>".html_safe %>
+              <% end %>
+            </select>
+          </div> 
+          <div class='ui-block-c'>
+            <select type="select" data-mini='true' name="expiration_year" selected="2020">
+              <% 10.times do |index| %>
+                <% year = index + Time.now.year %>
+                <%= "<option value=\'#{year}\' #{"selected=\'selected\'" if (Rails.env.development? and year == 2020)}>#{year}</option>".html_safe %>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class='ui-grid-a'>
+          <div class='ui-block-a pr'>
+            <input type="text" data-mini='true' name="security_code" placeholder='Security Code' autocomplete="off" <%= "value=123" if Rails.env.development? %>>
+          </div>
+          <div class='ui-block-b'>
+            <input type="text" data-mini='true' name="zip_code" placeholder='Postal Code' autocomplete="off">
+          </div>                        
+        </div>
+        <button data-icon='check' data-theme='b'>Validate Card</button>        
+    </form>
+
+  </div>
+    
+  <div id="result"></div>
+
+</div>
+
+<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+<script type="text/javascript">
+
+  var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
+ 
+  var debug = function (tag, content) {
+     console.log('<' + tag + '>' + content + '</' + tag + '>');
+  };
+ 
+  var tokenizeCard = function() {
+    try {
+      balanced.init(marketplaceUri);
+    } catch (e) {
+      debug('code', 'You need to set the marketplaceUri variable');
+    }
+    var $form = $('form#paymentCardForm');
+    var cardData = {
+      name: $form.find('[name="name_on_card"]').val(),            
+      card_number: $form.find('[name="card_number"]').val(),
+      expiration_month: $form.find('[name="expiration_month"]').val(),
+      expiration_year: $form.find('[name="expiration_year"]').val(),
+      security_code: $form.find('[name="security_code"]').val(),
+      postal_code: $form.find('[name="postal_code"]').val(),
+    }; 
+    balanced.card.create(cardData, balancedAddCardCallback);
+  };
+
+  $('form#paymentCardForm button').click(function(e){
+    e.preventDefault();
+    tokenizeCard();
+  });
+
+</script>

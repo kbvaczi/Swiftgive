@@ -1,6 +1,8 @@
 <% 
 
-is_message_present = false
+flash_type = nil
+flash_message = nil
+
 if flash[:notice].present?
 	is_message_present = true
   flash_type = 'notice'
@@ -13,9 +15,8 @@ end
 
 %>
 
-<% if is_message_present %>
-	<div class='center_wrap flash_message flash_<%= flash_type %> pa-m' data-role="popup" data-position-to="window" data-theme='none' data-transition='fade'>
-		<div><p class='center'><%= flash_message %></p></div>
-		<div class='close_flash_button center' data-role='button' data-theme='a'>OK</div>
+<% if defined?(is_message_present) and is_message_present %>
+	<div class='center_wrap flash_message <%= "flash_#{flash_type}" %> pa-m' data-role="popup" data-position-to="window" data-theme='none' data-transition='fade'>
+		<p class='center'><%= flash_message %></p>
 	</div>
 <% end %>
