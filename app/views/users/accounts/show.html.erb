@@ -27,7 +27,7 @@
   <% if payment_cards.present? %>
     <% payment_cards.each do |payment_card| %>
       <ul>
-        <li><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to 'X delete', account_payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
+        <li><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to 'X delete', users_payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
       </ul>
     <% end %>
   <% else %>

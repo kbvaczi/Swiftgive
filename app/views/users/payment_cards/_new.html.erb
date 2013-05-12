@@ -20,7 +20,7 @@
 </div>
 <div id="result"></div>
 
-<%= form_tag account_payment_cards_path, :id => 'cardData', :method => :post do %>  
+<%= form_tag payment_cards_path, :id => 'cardData', :method => :post do %>  
 
   <%= hidden_field_tag 'cardData[uri]' %>
   <%= hidden_field_tag 'cardData[card_type]' %>  

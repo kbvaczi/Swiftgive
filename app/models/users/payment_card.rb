@@ -19,7 +19,7 @@ class Users::PaymentCard < ActiveRecord::Base
   def validate_card_with_balanced
     card_data_from_balanced = self.associated_balanced_card
     if card_data_from_balanced.present?
-      self.assign_attributes(:card_type => card_data_from_balanced.card_type, 
+      self.assign_attributes(:card_type => card_data_from_balanced.brand, 
                              :last_4_digits => card_data_from_balanced.last_four, 
                              :is_valid => card_data_from_balanced.is_valid)
     else

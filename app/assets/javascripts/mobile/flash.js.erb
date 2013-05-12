@@ -1,25 +1,40 @@
 $(document).delegate('.main_page', 'pageshow', function () {
-  $(this).find('.flash_message').first().popup("open");
-  window.setTimeout ( function() { 
-    $('.flash_message').popup('close');
-  }, 7000 );
+  target = $(this).find('.flash_message').first()
+  target.on( "popupafteropen", function( event, ui ) {
+    window.setTimeout(function() { 
+      if (target.is(":visible")) {
+        target.popup('close'); 
+      }
+    }, 5000 ); 
+  });
+  target.popup("open");
 });
 
 $(document).on('click', '.flash_message', function () {
   $(this).popup('close');  
 });
 
-function flashNow(message, type) {
-  var flash_message = "<div class='center_wrap flash_message pa-m' data-role='popup' data-position-to='window' data-theme='none' data-transition='fade'><p class='flash_message_content center'></p></div>";
+function flashNow(message, message_type, popup_to_open_after_close) {
+  message_type = message_type || 'notice';
+  var flash_message = "<div class='center_wrap flash_message pa-m flash_" + message_type + "' data-role='popup' data-position-to='window' data-theme='none' data-transition='fade'><p class='flash_message_content center'></p></div>";
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message);
     var target = $.mobile.activePage.find('.flash_message');
-    target.find('.flash_message_content').html(message);
-    target.popup().popup("open");
-    window.setTimeout ( function() {
-      target.popup('close'); 
+    target.find('.flash_message_content').html(message);    
+    target.on('popupafterclose', function() {
       target.remove();
-    }, 7000 ); 
+      if (popup_to_open_after_close) {
+        window.setTimeout(function() { popup_to_open_after_close.popup('open'); }, 500 ); 
+      }
+    });      
+    target.on( "popupafteropen", function( event, ui ) {
+      window.setTimeout(function() { 
+        if (target.is(":visible")) {
+          target.popup('close'); 
+        }
+      }, 5000 ); 
+    });
+    target.popup().popup("open");
   }
 }

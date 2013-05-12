@@ -7,51 +7,42 @@
     </li>    
   </ul>
 
-  <ul data-role="listview" data-inset="true" data-theme"a">
-    
+  <ul data-role="listview" data-inset="true" data-theme"a">    
     <li style='margin:0px;padding:0px;'>
-      <div class='ui-grid-a pr-s pl'>
-        <div class='ui-block-a' style='margin-top:18px;font-size:14px'>Amount:</div>
+      <div class='ui-grid-a pa-s'>
+        <div class='ui-block-a pt-m pl-m t-s'>Amount:</div>
         <div class='ui-block-b'>
-          <div><%= f.select :amount, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => false, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
+          <div><%= f.select :amount, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => true, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
         </div>  
       </div>
     </li>
     <li style='margin:0px;padding:0px;'>
-        <div class='ui-grid-a pl pr-m'>
-          <div class='ui-block-a' style='margin-top:15px;font-size:14px'>Anonymous:</div>
-          <div class='ui-block-b' style='text-align:right;'>
-            <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-theme' => 'c' %>
-          </div>  
-        </div>
-      </li>
-    
+      <div class='ui-grid-a pa-s'>
+        <div class='ui-block-a pt-m pl-m t-s'>Anonymous:</div>
+        <div class='ui-block-b pr-s' style='text-align:right;'>
+          <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true, :'data-theme' => 'c' %>
+        </div>  
+      </div>
+    </li>
     <li style='margin:0px;padding:8px;'>
       <%= f.text_field :message, :'placeholder' => 'Optional Message', :'data-mini' => true, :'data-theme' => 'b' %>    
     </li>
   </ul>
 
-  <ul data-role="listview" data-inset="true" data-theme"a">
-    
-    
-      <% payment_card = current_user.payment_cards.first rescue nil %>
-
-      <% if user_signed_in? and payment_card.present? %>
-        <li>
-          <%= "#{payment_card.card_type} Ending in #{payment_card.last_4_digits}" %>
-        </li>
-      <% else %>
-        <li id='payment_card_list_item'>
-          <a href='#new_payment_card_form' data-rel="popup">Setup Payment Info</a>
-        </li>
-
-        <%= fields_for :payment_card_used do |c| %>
-          <%= c.hidden_field :uri %>
-        <% end %>
-
+  <ul data-role="listview" data-inset="true" data-theme"a">      
+    <% payment_card = current_user.payment_cards.first rescue nil %>
+    <% if user_signed_in? and payment_card.present? %>
+      <li data-icon='gear'>
+        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Using <%= "#{payment_card.card_type} (x#{payment_card.last_4_digits})" %></a>        
+      </li>
+    <% else %>
+      <li data-icon='plus' id='payment_card_list_item' >
+        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Setup Payment Info</a>
+      </li>
+      <%= fields_for :payment_card_used do |c| %>
+        <%= c.hidden_field :uri %>
       <% end %>
-    
-    
+    <% end %>  
   </ul>
   
   <%= f.hidden_field :fund_id %>
@@ -62,20 +53,14 @@
 
 <% end %>
 
-<%= render :partial => 'users/payment_cards/new', :formats => [:mobile] %>
+<%= render :partial => 'users/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 
-
-
 <script type='text/javascript'>
-
-  var current_page_id = '<%= current_page_id %>';
-  var current_page = $('#'+current_page_id);
   
+  $( document ).delegate("#<%= current_page_id %>", "pageinit", function() {
 
-  $('#custom_amount_value').initAutoNumeric();
-
-  current_page.on( 'pageinit', function() {    
+    $('#custom_amount_value').initAutoNumeric();
 
     $("#payment_amount-listbox").on('click', function(){
       $('#payment_amount').data('previous_value', $(this).val());
@@ -86,7 +71,7 @@
       if (target.val() == 'other'){
         target.val(target.data('previous_value'));
         target.selectmenu( "refresh" );
-        window.setTimeout ( function() { 
+        window.setTimeout(function() { 
           $('#custom_amount_popup').popup('open'); 
         }, 300 );
       }
@@ -98,10 +83,18 @@
     } else {
       $('.custom_amount_button').on('click', custom_amount_button_press);
       $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);    
-    } 
+    }
 
+    $(this).delegate("form#new_payment input[type='submit']", 'click', function(e){
+      if(!$(this).closest('form#new_payment').find('input#payment_card_used_uri').val()) {
+        e.preventDefault();
+        flashNow('Please setup payment information before giving', 'error');
+      }
+    });
   });
+
   
+
   function custom_amount_button_press() {
     var target = $('#custom_amount_value');
     var source_button = $(this);
@@ -119,7 +112,6 @@
   }
 
   function custom_amount_ok_button_press() {
-
     var value_text  = $('#custom_amount_value').html();
     var value_value = $('#custom_amount_value').autoNumeric('get') * 100; 
     if ($('#payment_amount option').length == 5 ) {
@@ -133,17 +125,16 @@
     $('#custom_amount_popup').popup('close');
   }
 
-  function balancedAddCardCallback(response) {
+  function balancedAddCardToGiveCallback(response) {
     var tag = (response.status < 300) ? 'pre' : 'code';
     debug(tag, JSON.stringify(response));
     switch (response.status) {
       case 201:
         $('#payment_card_used_uri').val(response.data.uri);                               
-        $('#payment_card_list_item').find('.ui-btn-text a').html(response.data.brand + ' ending in ' + response.data.last_four);
-        $("#new_payment_card_form").popup("close");
+        $('#payment_card_list_item').find('.ui-btn-text a').html('Using ' + response.data.brand + ' (x' + response.data.last_four + ')');
         window.setTimeout ( function() {                  
           flashNow('Your card was successfully validated', 'notice');
-        }, 500 );
+        }, 300 );
         break;
       case 400:
       case 403: // missing/malformed data - check response.error for details
@@ -155,13 +146,14 @@
         error_message += "<p>Please try again...</p>";
         window.setTimeout ( function() {                  
           flashNow(error_message, 'error');
-        }, 500 );                
+        }, 1000 );
+        break;                
       case 402: // we couldn't authorize the buyer's credit card - check response.error for details
         $("#new_payment_card_form").popup("close");
         var error_message = '<h3>Could not validate your card</h3><p>The card entered was declined</p><p>Please try another card...</p>';
         window.setTimeout ( function() {                  
           flashNow(error_message, 'error');
-        }, 500 );
+        }, 1000 );
         break;
       case 404: // your marketplace URI is incorrect
         break;

@@ -11,8 +11,8 @@ Swiftgive::Application.routes.draw do
   end 
   
   scope :module => 'users' do
-    namespace :account do
-      resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]
+    resources :payment_cards, :path => 'payment_cards', :as => 'users_payment_cards', :only => [:create, :destroy]
+    namespace :account do   
       resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]      
     end
     

@@ -1,12 +1,12 @@
+
 class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
   # Mobile web functionality (mobylette gem)
   include Mobylette::RespondToMobileRequests
-  before_filter Proc.new { session[:mobylette_override] = :force_mobile } # force every request to be treated as mobile (for testing purposes only!)
   mobylette_config do |config|
-    config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
+    config[:skip_xhr_requests] = false #this is needed for jquery mobile framework which sends requests via xhr
   end
   
   # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
@@ -80,5 +80,12 @@ class ApplicationController < ActionController::Base
     Rails.application.routes.recognize_path(request.path).inspect.parameterize('_') rescue root_path
   end
   helper_method :current_page_id
+
+  private
+
+  # assumes every request is a mobile request (for testing purposes only!)
+  def is_mobile_request?
+    true 
+  end
   
 end
