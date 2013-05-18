@@ -1,8 +1,7 @@
 class PaymentsController < ApplicationController
 
-  before_filter :set_back_path, :only => [:new]
-
   def new
+    set_back_path
     @payment = Payment.new(params[:payment])
     @payment.fund_id ||= receiving_fund.id
     @payment.amount = 500

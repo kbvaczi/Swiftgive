@@ -105,7 +105,7 @@
   }
 
 var createPaymentCard = function( payment_card_uri ) {
-  var path = "<%= payment_cards_path %>";
+  var path = "<%= users_payment_cards_path %>";
   var params = [{ name: 'format',            value: 'json' },
                 { name: 'skip_mobile',       value: 'true' },
                 { name: 'payment_card[uri]', value: payment_card_uri }];

@@ -1,10 +1,14 @@
+<%= render :partial => 'payments/login_or_guest_prompt', :formats => [:mobile] unless user_signed_in? %>
+<%= render :partial => 'users/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
+<%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
+
 <%= form_for @payment do |f| %>
 
   <ul data-role="listview" data-inset="true" data-theme"a">
     <li data-role="list-divider" data-theme='a'>Giving To</li>  
     <li data-icon='info'>
       <%= link_to "#{receiving_fund.name}", fund_path(receiving_fund) %>
-    </li>    
+    </li>
   </ul>
 
   <ul data-role="listview" data-inset="true" data-theme"a">    
@@ -53,9 +57,6 @@
 
 <% end %>
 
-<%= render :partial => 'users/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
-<%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
-
 <script type='text/javascript'>
   
   $( document ).delegate("#<%= current_page_id %>", "pageinit", function() {
@@ -92,8 +93,6 @@
       }
     });
   });
-
-  
 
   function custom_amount_button_press() {
     var target = $('#custom_amount_value');
