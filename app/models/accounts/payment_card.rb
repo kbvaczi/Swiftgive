@@ -1,15 +1,16 @@
-class Users::PaymentCard < ActiveRecord::Base
+class Accounts::PaymentCard < ActiveRecord::Base
 
   # ----- Table Setup ----- #
 
-  self.table_name = 'users_payment_cards'
+  self.table_name = 'accounts_payment_cards'
   
-  belongs_to :user
-  has_many   :payments
+  belongs_to :account,  :class_name => 'Account'
+  has_many   :payments, :class_name => 'Accounts::Payment'
 
-  attr_accessible :uri, :card_type, :last_4_digits, :is_valid
+  attr_accessible :balanced_uri, :card_type, :last_4_digits, :is_valid
   
-  attr_accessor :is_valid
+  #check is_valid from balanced prior to creating, but no need to store this value in model
+  attr_accessor :is_valid 
   
   # ----- Validations ----- #
   

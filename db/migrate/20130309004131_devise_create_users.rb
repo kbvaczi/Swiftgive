@@ -33,25 +33,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Token authenticatable
       # t.string :authentication_token
       
-      ## Custom Fields for Swiftgive
-      t.string   :uid
-      t.string   :account_uri
-      t.integer  :account_balance
-
-      t.string   :first_name
-      t.string   :last_name
-      t.string   :phone_number
-      t.string   :street_address
-      t.string   :postal_code
-      t.string   :city
-      t.string   :state
-      t.string   :country
-
-      t.string   :image
-      
       t.timestamps
     end
-    add_index :users, :uid,                  :unique => true
+    
     add_index :users, :email,                :unique => true
     add_index :users, :reset_password_token, :unique => true
     add_index :users, :confirmation_token,   :unique => true

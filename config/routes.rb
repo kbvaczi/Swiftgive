@@ -10,21 +10,21 @@ Swiftgive::Application.routes.draw do
     end
   end 
   
-  scope :module => 'users' do
-    resources :payment_cards, :path => 'payment_cards', :as => 'users_payment_cards', :only => [:create, :destroy]
-    namespace :account do   
-      resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]      
-    end
-    
+  scope :module => 'users' do   
     get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in', :as => :authentication_sign_in
     get 'account/prompt_to_register'                      => 'authentications#prompt_to_register', :as => :authentication_prompt_to_register
     get 'account/register_using_authentication/:provider' => 'authentications#register_new_account', :as => :authentication_register
     get 'account/add_authentication/:provider'            => 'authentications#add_authentication_to_existing_account', :as => :authentication_add        
     get 'account/remove_authentication/:provider'         => 'authentications#remove_authentication_from_existing_account', :as => :authentication_remove
-
-    get 'account/profile' => 'accounts#show', :as => :show_user_profile
-    match 'account/location' => 'account/locations#update', :as => :users_location
   end 
+
+  get 'profile' => 'accounts#show', :as => :show_user_profile
+  
+  namespace :account do       
+    match 'location' => 'locations#update', :as => :users_location
+    resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]
+    resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]      
+  end
 
   resources :funds do
     get 'give_code' => 'funds/give_codes#show', :on => :member

@@ -15,13 +15,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @standardized_auth_data = { :provider => @raw_auth_data.provider,
                                 :provider_name => 'Facebook', 
                                 :uid => @raw_auth_data.uid,
-                                :email => @raw_auth_data.info.email, 
-                                :first_name => (@raw_auth_data.info.first_name rescue nil), 
-                                :last_name => (@raw_auth_data.info.last_name rescue nil),
-                                :city => city_name, 
-                                :state => state_code,
-                                :country => country_code,
-                                :image => (@raw_auth_data.info.image rescue nil) }                               
+                                :email => @raw_auth_data.info.email,
+                                :account_attributes => { 
+                                  :first_name => (@raw_auth_data.info.first_name rescue nil), 
+                                  :last_name => (@raw_auth_data.info.last_name rescue nil),
+                                  :city => city_name, 
+                                  :state => state_code,
+                                  :country => country_code,
+                                  :avatar => (@raw_auth_data.info.image rescue nil) 
+                                } 
+                              }
 
     store_auth_data(@standardized_auth_data)
     process_authentication_request
@@ -32,10 +35,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @standardized_auth_data = { :provider => @raw_auth_data.provider,
                                 :provider_name => 'Google',
                                 :uid => @raw_auth_data.uid,
-                                :email => @raw_auth_data.info.email, 
-                                :first_name => (@raw_auth_data.info.first_name rescue nil), 
-                                :last_name => (@raw_auth_data.info.last_name rescue nil),
-                                :image => (@raw_auth_data.info.image rescue nil) }
+                                :email => @raw_auth_data.info.email,
+                                :account_attributes => { 
+                                  :first_name => (@raw_auth_data.info.first_name rescue nil), 
+                                  :last_name => (@raw_auth_data.info.last_name rescue nil),
+                                  :avatar => (@raw_auth_data.info.image rescue nil) 
+                                }
+                              }
  
     store_auth_data(@standardized_auth_data)                                
     process_authentication_request
@@ -51,12 +57,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                 :provider_name => 'LinkedIn',
                                 :uid => @raw_auth_data.uid,
                                 :email => @raw_auth_data.info.email, 
-                                :first_name => (@raw_auth_data.info.first_name rescue nil), 
-                                :last_name => (@raw_auth_data.info.last_name rescue nil),
-                                :country => country_code,                                
-                                :city => city_name, 
-                                :state => state_code,
-                                :image => (@raw_auth_data.info.image rescue nil) }
+                                :account_attributes => { 
+                                  :first_name => (@raw_auth_data.info.first_name rescue nil), 
+                                  :last_name => (@raw_auth_data.info.last_name rescue nil),
+                                  :country => country_code,                                
+                                  :city => city_name, 
+                                  :state => state_code,
+                                  :avatar => (@raw_auth_data.info.image rescue nil) 
+                                }
+                              }
 
     store_auth_data(@standardized_auth_data)                                
     process_authentication_request

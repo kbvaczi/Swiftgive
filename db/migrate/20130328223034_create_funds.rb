@@ -16,12 +16,12 @@ class CreateFunds < ActiveRecord::Migration
     
     unless table_exists? :funds_memberships
       create_table :funds_memberships do |t|
-        t.integer  :user_id
+        t.integer  :account_id
         t.integer  :fund_id
         
         t.boolean :is_owner, :default => false
       end
-      add_index   :funds_memberships, :user_id
+      add_index   :funds_memberships, :account_id
       add_index   :funds_memberships, :fund_id
     end
   end

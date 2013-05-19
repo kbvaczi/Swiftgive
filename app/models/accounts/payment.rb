@@ -1,10 +1,12 @@
-class Payment < ActiveRecord::Base
+class Accounts::Payment < ActiveRecord::Base
 
   # ----- Table Setup ----- #
 
+  self.table_name = 'accounts_payments'
+
   belongs_to  :fund,               :class_name => 'Fund'
-  belongs_to  :sender,             :class_name => 'User'
-  belongs_to  :payment_card_used,  :class_name => 'Users::PaymentCard'
+  belongs_to  :sender,             :class_name => 'Account'
+  belongs_to  :payment_card_used,  :class_name => 'Accounts::PaymentCard'
   
   attr_accessible :uid, :amount, :message, :is_anonymous, :fund_id, :payment_card_used_attributes
 

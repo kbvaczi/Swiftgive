@@ -7,7 +7,7 @@ class CreateUsersAuthentications < ActiveRecord::Migration
         
         t.string :provider
         t.string :provider_name
-        t.string :uid
+        t.string :uid #from authentication remote
         t.text   :omniauth_data
         
         t.timestamps

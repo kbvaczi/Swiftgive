@@ -10,46 +10,30 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,
-                  :first_name, :last_name, :city, :state, :country, :image
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :account_attributes
   
+  has_one     :account
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
-  has_many    :payment_cards,     :class_name => 'Users::PaymentCard',    :dependent => :destroy
-  has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id
-  has_many    :bank_accounts,     :class_name => 'BankAccount',           :dependent => :destroy
-  has_many    :fund_memberships,  :class_name => 'Funds::Membership'
-  has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   
+  # allow form for accounts nested inside user signup/edit forms
+  accepts_nested_attributes_for :account
+
   # ----- Validations ----- #
   
-  validates_presence_of :uid, :email
-  validates_presence_of :account_uri, :message => 'We could not verify you with our payment processor'
-  
+  validates_presence_of :email
+    
   # ----- Callbacks ----- #
-  
-  before_validation :generate_and_assign_uid, :on => :create
-  before_validation :create_balanced_payments_account_and_set_balance, :on => :create
 
-  def create_balanced_payments_account_and_set_balance
-    begin
-      account = Balanced::Marketplace.my_marketplace.create_account(:email_address => self.email, :name => self.full_name)
-    rescue Balanced::Error => error
-      Rails.logger.info("ERROR CREATING BALANCE ACCOUNT: #{error}")
-      account = Balanced::Account.where(:email_address => self.email).first rescue nil
+  after_initialize :build_account_when_creating_new_user, :on => :create # if => Proc.new { self.new_record? }
+
+  def build_account_when_creating_new_user
+    unless self.account.present?
+      self.build_account
+      self.account.user = self # setup back reference so account can access email prior to creation
     end
-    self.account_uri = account.uri if account.present?
-    self.account_balance = 0
   end
-  
+   
   # ----- Member Methods ----- #
-  
-  def full_name
-    "#{self.first_name} #{self.last_name}"
-  end
-  
-  def balanced_account
-    Balanced::Account.find(self.account_uri)
-  end
   
   def self.new_with_session(params, session)
     if session["devise.user_attributes"]
@@ -62,6 +46,7 @@ class User < ActiveRecord::Base
     end    
   end
   
+  # used to determine if password is required to update account info.  Omniauth authenticated users will have a randomly generated password.
   def password_required?
     super && self.authentications.nil?
   end
@@ -93,7 +78,7 @@ class User < ActiveRecord::Base
     options = {:standardized_auth_data => nil, :raw_auth_data => nil}.merge(options)    
     existing_authentication = Users::Authentication.where(options[:standardized_auth_data].slice(:provider, :uid)).first    
     unless existing_authentication.present?
-      user = new(options[:standardized_auth_data].slice(:email, :first_name, :last_name, :city, :state, :country, :image))
+      user = new(options[:standardized_auth_data].slice(:email, :account_attributes))
       user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
       user.build_authentication(options)
       user.password = SecureRandom.hex(10) # set a random password so user's account cannot be accessed manually
@@ -110,16 +95,6 @@ class User < ActiveRecord::Base
       return user
     end
     return nil
-  end
-  
-  # ----- Protected Methods ----- #
-  protected
-
-  def generate_and_assign_uid
-    self.uid = loop do
-      random_uid = 'u_' + SecureRandom.hex(4)
-      break random_uid unless User.where(uid: random_uid).exists?
-    end
   end
   
 end

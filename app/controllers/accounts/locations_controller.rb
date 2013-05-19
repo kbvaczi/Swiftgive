@@ -1,4 +1,4 @@
-class Users::Account::LocationsController < Users::AccountsController
+class Accounts::LocationsController < Users::AccountsController
 
   def edit
 

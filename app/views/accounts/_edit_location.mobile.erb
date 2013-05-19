@@ -2,7 +2,7 @@
     
   <div class='center_wrap'><h3>Edit Location Info</h3></div>
   
-  <% location = Users::Location.new(params[:users_location] || current_user.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
+  <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
 
   <%= form_for location, :url => users_location_path, :method => :get do |f| %>
 

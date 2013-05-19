@@ -1,4 +1,4 @@
-class Users::PaymentCardsController < ApplicationController
+class Accounts::PaymentCardsController < ApplicationController
 
   before_filter :authenticate_user!
   

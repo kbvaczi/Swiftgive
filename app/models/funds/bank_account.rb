@@ -2,7 +2,7 @@ class BankAccount < ActiveRecord::Base
 
   # ----- Table Setup ----- #
 
-  belongs_to :user
+  belongs_to :account
   belongs_to :fund
 
   attr_accessible :uri, :account_type, :bank_name, :owner_name, :last_4_digits, :is_debitable, :is_valid

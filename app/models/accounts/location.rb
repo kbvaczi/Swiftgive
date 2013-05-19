@@ -1,4 +1,4 @@
-class Users::Location
+class Accounts::Location
   include ActiveModel::Validations 
 
   validates_presence_of :street_address, :postal_code, :city, :state, :country

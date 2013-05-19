@@ -1,4 +1,4 @@
-class Users::Account::BankAccountsController < ApplicationController
+class Accounts::BankAccountsController < ApplicationController
 
   before_filter :authenticate_user!
       

@@ -13,6 +13,58 @@
 
 ActiveRecord::Schema.define(:version => 20130501235643) do
 
+  create_table "accounts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "uid"
+    t.string   "balanced_uri"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "street_address"
+    t.string   "zipcode"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "avatar"
+    t.integer  "current_balance"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
+  add_index "accounts", ["user_id"], :name => "index_accounts_on_user_id"
+
+  create_table "accounts_payment_cards", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name_on_card"
+    t.string   "card_type"
+    t.string   "last_4_digits"
+    t.string   "balanced_uri"
+    t.boolean  "is_default",    :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "accounts_payment_cards", ["account_id"], :name => "index_accounts_payment_cards_on_account_id"
+
+  create_table "accounts_payments", :force => true do |t|
+    t.integer  "fund_id"
+    t.integer  "sender_id"
+    t.integer  "payment_card_used_id"
+    t.string   "uid"
+    t.string   "balanced_uri"
+    t.integer  "amount"
+    t.text     "message"
+    t.boolean  "is_anonymous",         :default => true
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "accounts_payments", ["fund_id"], :name => "index_accounts_payments_on_fund_id"
+  add_index "accounts_payments", ["payment_card_used_id"], :name => "index_accounts_payments_on_payment_card_used_id"
+  add_index "accounts_payments", ["sender_id"], :name => "index_accounts_payments_on_sender_id"
+  add_index "accounts_payments", ["uid"], :name => "index_accounts_payments_on_uid"
+
   create_table "bank_accounts", :force => true do |t|
     t.integer  "fund_id"
     t.integer  "user_id"
@@ -43,13 +95,13 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
   add_index "funds", ["uid"], :name => "index_funds_on_uid"
 
   create_table "funds_memberships", :force => true do |t|
-    t.integer "user_id"
+    t.integer "account_id"
     t.integer "fund_id"
-    t.boolean "is_owner", :default => false
+    t.boolean "is_owner",   :default => false
   end
 
+  add_index "funds_memberships", ["account_id"], :name => "index_funds_memberships_on_account_id"
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
-  add_index "funds_memberships", ["user_id"], :name => "index_funds_memberships_on_user_id"
 
   create_table "payments", :force => true do |t|
     t.integer  "fund_id"
@@ -86,18 +138,6 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.integer  "failed_attempts",        :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.string   "uid"
-    t.string   "account_uri"
-    t.integer  "account_balance"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "street_address"
-    t.string   "postal_code"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "image"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end
@@ -105,7 +145,6 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["uid"], :name => "index_users_on_uid", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
   create_table "users_authentications", :force => true do |t|
