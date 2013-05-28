@@ -20,10 +20,13 @@ Swiftgive::Application.routes.draw do
 
   get 'profile' => 'accounts#show', :as => :show_user_profile
   
-  namespace :account do       
-    match 'location' => 'locations#update', :as => :users_location
+  resources :accounts, :only => [:show]
+
+  namespace :accounts do
     resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]
-    resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]      
+    resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]
+    get 'location' => 'locations#edit', :as => :location
+    put 'location' => 'locations#update', :as => :location
   end
 
   resources :funds do
@@ -36,6 +39,7 @@ Swiftgive::Application.routes.draw do
   end
   
   resources :payments, :only => [:new, :create]
+
   
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?

@@ -26,11 +26,11 @@
 
     <li data-icon='gear'>
       
-        <% if current_user.account.city.present? and current_user.account.state.present? and current_user.account.postal_code.present? %>
+        <% if current_user.account.city.present? and current_user.account.state.present? and current_user.account.zipcode.present? %>
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">
             <div class='mt-m'>
               <p><b><%= current_user.account.street_address %></b></p>
-              <p><%= current_user.account.city %>, <%= current_user.account.state %> <%= current_user.account.postal_code %></p>        
+              <p><%= current_user.account.city %>, <%= current_user.account.state %> <%= current_user.account.zipcode %></p>        
               <p><%= current_user.account.country %></p>
             </div>
           </a>
@@ -42,11 +42,11 @@
   </li>
   <li data-role="list-divider" data-theme='a'>Payment Cards</li>  
     <% current_user.account.payment_cards.each do |payment_card| %>
-      <li data-icon='delete'><%= link_to "#{payment_card.card_type} ending in #{payment_card.last_4_digits}", users_payment_card_path(payment_card), :method => :delete, :confirm => 'are you sure you want to delete this card?' %> </li>         
+      <li data-icon='delete'><%= link_to "#{payment_card.card_type} ending in #{payment_card.last_4_digits}", accounts_payment_card_path(payment_card), :method => :delete, :confirm => 'are you sure you want to delete this card?' %> </li>         
     <% end %> 
     <li data-icon='plus'>
       <a href="#new_payment_card_form" data-rel="popup" data-position-to="window">Add a payment card</a>
-      <%= form_for Accounts::PaymentCard.new(params[:payment_card]), :url => account_payment_cards_path, :method => :post do |f| %>
+      <%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
         <%= f.hidden_field :balanced_uri %>
       <% end %>
     </li>
@@ -75,8 +75,8 @@
       case 201:
         //createPaymentCard(response.data.uri); // No Longer handling this via ajax
         $.mobile.activePage.find("#new_payment_card_form").popup("close");
-        $.mobile.activePage.find("input[name='users_payment_card[uri]']").val(response.data.uri);
-        $.mobile.activePage.find('form#new_users_payment_card').submit();
+        $.mobile.activePage.find("input[name='accounts_payment_card[balanced_uri]']").val(response.data.uri);
+        $.mobile.activePage.find('form#new_accounts_payment_card').submit();
         break;
       case 400:
       case 403: // missing/malformed data - check response.error for details
@@ -105,7 +105,7 @@
   }
 
 var createPaymentCard = function( payment_card_uri ) {
-  var path = "<%= users_payment_cards_path %>";
+  var path = "<%= accounts_payment_cards_path %>";
   var params = [{ name: 'format',            value: 'json' },
                 { name: 'skip_mobile',       value: 'true' },
                 { name: 'payment_card[uri]', value: payment_card_uri }];

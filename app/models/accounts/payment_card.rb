@@ -5,7 +5,7 @@ class Accounts::PaymentCard < ActiveRecord::Base
   self.table_name = 'accounts_payment_cards'
   
   belongs_to :account,  :class_name => 'Account'
-  has_many   :payments, :class_name => 'Accounts::Payment'
+  has_many   :payments, :class_name => 'Payment'
 
   attr_accessible :balanced_uri, :card_type, :last_4_digits, :is_valid
   
@@ -15,7 +15,7 @@ class Accounts::PaymentCard < ActiveRecord::Base
   # ----- Validations ----- #
   
   validate :validate_card_with_balanced
-  validates_presence_of :uri, :card_type, :last_4_digits
+  validates_presence_of :balanced_uri, :card_type, :last_4_digits
   
   def validate_card_with_balanced
     card_data_from_balanced = self.associated_balanced_card
@@ -35,7 +35,7 @@ class Accounts::PaymentCard < ActiveRecord::Base
   # ----- Member Methods ----- #
   
   def associated_balanced_card
-    Balanced::Card.find(self.uri)
+    Balanced::Card.find(self.balanced_uri)
   end
   
   # ----- Class Methods ----- #
@@ -43,7 +43,7 @@ class Accounts::PaymentCard < ActiveRecord::Base
   protected
   
   def add_associated_balanced_card_to_account
-    self.user.balanced_account.add_card(self.uri) if self.user.present?
+    self.account.associated_balanced_account.add_card(self.balanced_uri) if self.account.present?
   end
 
   

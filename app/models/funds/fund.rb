@@ -11,7 +11,7 @@ class Fund < ActiveRecord::Base
   
   has_many    :bank_accounts,   :class_name => 'BankAccount',       :dependent => :destroy
   
-  has_many    :payments,        :class_name => 'Accounts::Payment', :dependent => :destroy
+  has_many    :payments,        :class_name => 'Payment',           :dependent => :destroy
   
   attr_accessible :name, :description, :profile
 
@@ -53,7 +53,7 @@ class Fund < ActiveRecord::Base
   def generate_and_assign_uid
     self.uid = loop do
       random_uid = 'f_' + SecureRandom.hex(3)
-      break random_uid unless User.where(uid: random_uid).exists?
+      break random_uid unless Fund.where(uid: random_uid).exists?
     end
   end
   

@@ -2,9 +2,9 @@
     
   <div class='center_wrap'><h3>Edit Location Info</h3></div>
   
-  <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
+  <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'zipcode', 'country')) %> 
 
-  <%= form_for location, :url => users_location_path, :method => :get do |f| %>
+  <%= form_for location, :url => accounts_location_path, :method => :put do |f| %>
 
     <div class='ui-grid-solo'>
       <%= f.text_field :street_address, :placeholder => 'Street Address' %>    
@@ -19,7 +19,7 @@
     </div>
 
     <div class='ui-grid-solo'>
-      <%= f.text_field :postal_code, :placeholder => 'Postal Code' %>    
+      <%= f.text_field :zipcode, :placeholder => 'Postal Code' %>    
     </div>
 
     <div class='ui-grid-solo'>

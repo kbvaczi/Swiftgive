@@ -1,5 +1,5 @@
 <%= render :partial => 'payments/login_or_guest_prompt', :formats => [:mobile] unless user_signed_in? %>
-<%= render :partial => 'users/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
+<%= render :partial => 'accounts/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 
 <%= form_for @payment do |f| %>
@@ -34,19 +34,23 @@
   </ul>
 
   <ul data-role="listview" data-inset="true" data-theme"a">      
-    <% payment_card = current_user.payment_cards.first rescue nil %>
+    <% payment_card = current_user.account.payment_cards.first rescue nil %>
     <% if user_signed_in? and payment_card.present? %>
       <li data-icon='gear'>
         <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Using <%= "#{payment_card.card_type} (x#{payment_card.last_4_digits})" %></a>        
       </li>
+      <%= fields_for :payment_card_used do |c| %>
+        <%= c.hidden_field :balanced_uri, :value => payment_card.balanced_uri %>
+      <% end %>
     <% else %>
       <li data-icon='plus' id='payment_card_list_item' >
         <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Setup Payment Info</a>
       </li>
       <%= fields_for :payment_card_used do |c| %>
-        <%= c.hidden_field :uri %>
+        <%= c.hidden_field :balanced_uri %>
       <% end %>
     <% end %>  
+
   </ul>
   
   <%= f.hidden_field :fund_id %>
@@ -87,7 +91,7 @@
     }
 
     $(this).delegate("form#new_payment input[type='submit']", 'click', function(e){
-      if(!$(this).closest('form#new_payment').find('input#payment_card_used_uri').val()) {
+      if(!$(this).closest('form#new_payment').find('input#payment_card_used_balanced_uri').val()) {
         e.preventDefault();
         flashNow('Please setup payment information before giving', 'error');
       }
@@ -129,7 +133,7 @@
     debug(tag, JSON.stringify(response));
     switch (response.status) {
       case 201:
-        $('#payment_card_used_uri').val(response.data.uri);                               
+        $('#payment_card_used_balanced_uri').val(response.data.uri);                               
         $('#payment_card_list_item').find('.ui-btn-text a').html('Using ' + response.data.brand + ' (x' + response.data.last_four + ')');
         window.setTimeout ( function() {                  
           flashNow('Your card was successfully validated', 'notice');

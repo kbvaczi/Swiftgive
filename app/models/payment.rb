@@ -1,8 +1,6 @@
-class Accounts::Payment < ActiveRecord::Base
+class Payment < ActiveRecord::Base
 
   # ----- Table Setup ----- #
-
-  self.table_name = 'accounts_payments'
 
   belongs_to  :fund,               :class_name => 'Fund'
   belongs_to  :sender,             :class_name => 'Account'
@@ -34,7 +32,7 @@ class Accounts::Payment < ActiveRecord::Base
   def generate_and_assign_uid
     self.uid = loop do
       random_uid = 'p_' + SecureRandom.hex(5)
-      break random_uid unless User.where(uid: random_uid).exists?
+      break random_uid unless Payment.where(uid: random_uid).exists?
     end
   end
   

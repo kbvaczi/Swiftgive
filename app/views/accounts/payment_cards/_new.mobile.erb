@@ -86,7 +86,7 @@
       expiration_month: $form.find('[name="expiration_month"]').val(),
       expiration_year: $form.find('[name="expiration_year"]').val(),
       security_code: $form.find('[name="security_code"]').val(),
-      postal_code: $form.find('[name="postal_code"]').val(),
+      zipcode: $form.find('[name="zipcode"]').val(),
     }; 
     balanced.card.create(cardData, <%= defined?(callback_function) ? callback_function : 'balancedAddCardCallback' %>);
   };

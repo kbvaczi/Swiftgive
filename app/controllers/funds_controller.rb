@@ -40,7 +40,7 @@ class FundsController < ApplicationController
   # POST /funds
   def create
     @fund = Fund.new(params[:fund])
-    @fund.owners << current_user # creator of fund is automatically an owner
+    @fund.owners << current_user.account # creator of fund is automatically an owner
     
     if @fund.save
       redirect_to @fund, notice: 'Fund was successfully created.'
@@ -75,7 +75,7 @@ class FundsController < ApplicationController
   protected
   
   def authenticate_fund_owner
-    unless current_fund.owners.include? current_user
+    unless current_fund.owners.include? current_user.account
       flash[:error] = 'You are not an owner of this fund...'
       redirect_to back_path 
     end
