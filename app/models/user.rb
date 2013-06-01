@@ -24,27 +24,10 @@ class User < ActiveRecord::Base
     
   # ----- Callbacks ----- #
 
-  after_initialize :build_account_when_creating_new_user, :on => :create # if => Proc.new { self.new_record? }
+  after_initialize  :build_account_when_creating_new_user, :on => :create
+  before_validation :set_email_on_account, :on => :create
 
-  def build_account_when_creating_new_user
-    unless self.account.present?
-      self.build_account
-      self.account.user = self # setup back reference so account can access email prior to creation
-    end
-  end
-   
   # ----- Member Methods ----- #
-  
-  def self.new_with_session(params, session)
-    if session["devise.user_attributes"]
-      new(session["devise.user_attributes"], without_protection: true) do |user|
-        user.attributes = params
-        user.valid?
-      end
-    else
-      super
-    end    
-  end
   
   # used to determine if password is required to update account info.  Omniauth authenticated users will have a randomly generated password.
   def password_required?
@@ -74,6 +57,17 @@ class User < ActiveRecord::Base
   
   # ----- Class Methods ----- #
   
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
   def self.create_from_omniauth(options={})
     options = {:standardized_auth_data => nil, :raw_auth_data => nil}.merge(options)    
     existing_authentication = Users::Authentication.where(options[:standardized_auth_data].slice(:provider, :uid)).first    
@@ -81,7 +75,7 @@ class User < ActiveRecord::Base
       user = new(options[:standardized_auth_data].slice(:email, :account_attributes))
       user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
       user.build_authentication(options)
-      user.password = SecureRandom.hex(10) # set a random password so user's account cannot be accessed manually
+      user.password = SecureRandom.hex(10).to_s # set a random password so user's account cannot be accessed manually
       return user if user.save
     end
     return nil
@@ -95,6 +89,19 @@ class User < ActiveRecord::Base
       return user
     end
     return nil
+  end
+
+  protected 
+
+  def build_account_when_creating_new_user
+    unless self.account.present?
+      self.build_account
+      self.account.user = self # setup back reference so account can access email prior to creation
+    end
+  end
+
+  def set_email_on_account
+    self.account.email_from_user = self.email
   end
   
 end

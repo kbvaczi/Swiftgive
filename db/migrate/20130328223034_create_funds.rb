@@ -8,10 +8,22 @@ class CreateFunds < ActiveRecord::Migration
         t.string  :description
         t.text    :profile
         
+        t.string  :merchant_name
+        t.string  :merchant_date_of_birth
+        t.string  :merchant_phone_number
+        t.string  :merchant_street_address
+        t.string  :merchant_postal_code
+        t.string  :merchant_tax_id
+
+        t.string  :fund_type
+        t.string  :balanced_uri
+        t.boolean :is_active, :default => true
+        
         t.timestamps
       end
         add_index :funds, :uid
         add_index :funds, :name
+        add_index :funds, :fund_type
     end
     
     unless table_exists? :funds_memberships

@@ -10,6 +10,7 @@ class AddPaymentCardsToAccounts < ActiveRecord::Migration
         
         t.string  :balanced_uri    # balanced payments unique identifier
         t.boolean :is_default, :default => false
+        t.boolean :is_active, :default => true
     
         t.timestamps
       end
@@ -19,5 +20,6 @@ class AddPaymentCardsToAccounts < ActiveRecord::Migration
   
   def down
     drop_table :accounts_payment_cards if table_exists? :accounts_payment_cards
+    drop_table :users_payment_cards if table_exists? :users_payment_cards
   end
 end

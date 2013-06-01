@@ -1,0 +1,40 @@
+<%= form_for @fund do |f| %>
+  
+  <ul data-role="listview" data-inset="true" data-theme"a">
+    <li data-role="list-divider" data-theme='a'>Create a New Fund</li>  
+    <li>
+      <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true %>
+    </li>
+    <li>
+      <%= f.select :fund_type, [['Personal','person'],['Business / Non-	Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c' %>
+    </li>
+    <li>
+	    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
+    </li>
+    <li>
+		  <%= f.text_area :profile, :placeholder => 'Profile for this fund', :'data-mini' => true, :style => "resize:none;" %>
+    </li>
+  </ul>
+    
+  <ul data-role="listview" data-inset="true" data-theme"a">
+  	<li data-role="list-divider" data-theme='a'>Your Information</li>
+		<li>
+	    <%= f.text_field :merchant_name, :placeholder => 'Your Name', :'data-mini' => true %>
+    </li>
+    <li>
+	    <%= f.text_field :merchant_date_of_birth, :placeholder => 'Your Date of Birth (YYYY-MM-DD)', :'data-mini' => true %>
+    </li>
+		<li>
+	    <%= f.text_field :merchant_phone_number, :placeholder => 'Phone Number (xxx-xxx-xxx)', :'data-mini' => true %>
+    </li>
+    <li>
+	    <%= f.text_field :merchant_street_address, :placeholder => 'Street Address', :'data-mini' => true %>
+    </li>
+    <li>
+	    <%= f.text_field :merchant_postal_code, :placeholder => 'Zipcode', :'data-mini' => true %>
+    </li>        
+  </ul>
+
+  <%= f.submit "Create Fund" %>
+
+<% end %>

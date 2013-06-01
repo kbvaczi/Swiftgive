@@ -4,8 +4,7 @@ class Accounts::PaymentCardsController < ApplicationController
   
   def create    
     card = current_user.account.payment_cards.build(params[:accounts_payment_card])
-    is_card_default = current_user.account.payment_cards.where(:is_default => true).present? ? false : true
-    card.is_default = is_card_default
+    card.is_default = current_user.account.payment_cards.where(:is_default => true).present? ? false : true
     if card.save
       flash[:notice] = "Payment card added successfully..."
     else

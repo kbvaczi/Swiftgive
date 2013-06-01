@@ -11,6 +11,8 @@
     </li>
   </ul>
 
+  <%= f.hidden_field :fund_id %>
+
   <ul data-role="listview" data-inset="true" data-theme"a">    
     <li style='margin:0px;padding:0px;'>
       <div class='ui-grid-a pa-s'>
@@ -34,13 +36,13 @@
   </ul>
 
   <ul data-role="listview" data-inset="true" data-theme"a">      
-    <% payment_card = current_user.account.payment_cards.first rescue nil %>
-    <% if user_signed_in? and payment_card.present? %>
+    <% current_user_default_payment_card = current_user.account.payment_cards.first rescue nil %>
+    <% if user_signed_in? and current_user_default_payment_card.present? %>
       <li data-icon='gear'>
-        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Using <%= "#{payment_card.card_type} (x#{payment_card.last_4_digits})" %></a>        
+        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Using <%= "#{current_user_default_payment_card.card_type} (x#{current_user_default_payment_card.last_4_digits})" %></a>        
       </li>
       <%= fields_for :payment_card_used do |c| %>
-        <%= c.hidden_field :balanced_uri, :value => payment_card.balanced_uri %>
+        <%= c.hidden_field :balanced_uri, :value => current_user_default_payment_card.balanced_uri %>
       <% end %>
     <% else %>
       <li data-icon='plus' id='payment_card_list_item' >
@@ -49,11 +51,8 @@
       <%= fields_for :payment_card_used do |c| %>
         <%= c.hidden_field :balanced_uri %>
       <% end %>
-    <% end %>  
-
+    <% end %>
   </ul>
-  
-  <%= f.hidden_field :fund_id %>
   
   <div class='ui-grid-full'>
     <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check' %>

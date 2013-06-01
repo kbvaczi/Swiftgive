@@ -41,29 +41,12 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.string   "last_4_digits"
     t.string   "balanced_uri"
     t.boolean  "is_default",    :default => false
+    t.boolean  "is_active",     :default => true
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end
 
   add_index "accounts_payment_cards", ["account_id"], :name => "index_accounts_payment_cards_on_account_id"
-
-  create_table "accounts_payments", :force => true do |t|
-    t.integer  "fund_id"
-    t.integer  "sender_id"
-    t.integer  "payment_card_used_id"
-    t.string   "uid"
-    t.string   "balanced_uri"
-    t.integer  "amount"
-    t.text     "message"
-    t.boolean  "is_anonymous",         :default => true
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "accounts_payments", ["fund_id"], :name => "index_accounts_payments_on_fund_id"
-  add_index "accounts_payments", ["payment_card_used_id"], :name => "index_accounts_payments_on_payment_card_used_id"
-  add_index "accounts_payments", ["sender_id"], :name => "index_accounts_payments_on_sender_id"
-  add_index "accounts_payments", ["uid"], :name => "index_accounts_payments_on_uid"
 
   create_table "bank_accounts", :force => true do |t|
     t.integer  "fund_id"
@@ -74,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.string   "last_4_digits"
     t.string   "account_type"
     t.boolean  "is_debitable",  :default => false
+    t.boolean  "is_active",     :default => true
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end
@@ -86,11 +70,21 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.string   "name"
     t.string   "description"
     t.text     "profile"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.string   "give_code",   :default => ""
+    t.string   "merchant_name"
+    t.string   "merchant_date_of_birth"
+    t.string   "merchant_phone_number"
+    t.string   "merchant_street_address"
+    t.string   "merchant_postal_code"
+    t.string   "merchant_tax_id"
+    t.string   "fund_type"
+    t.string   "balanced_uri"
+    t.boolean  "is_active",               :default => true
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "give_code",               :default => ""
   end
 
+  add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
   add_index "funds", ["name"], :name => "index_funds_on_name"
   add_index "funds", ["uid"], :name => "index_funds_on_uid"
 
@@ -108,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.integer  "sender_id"
     t.integer  "payment_card_used_id"
     t.string   "uid"
+    t.string   "balanced_uri"
     t.integer  "amount"
     t.text     "message"
     t.boolean  "is_anonymous",         :default => true
@@ -160,17 +155,5 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
   add_index "users_authentications", ["provider"], :name => "index_users_authentications_on_provider"
   add_index "users_authentications", ["uid"], :name => "index_users_authentications_on_uid"
   add_index "users_authentications", ["user_id"], :name => "index_users_authentications_on_user_id"
-
-  create_table "users_payment_cards", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "card_type"
-    t.string   "last_4_digits"
-    t.string   "uri"
-    t.boolean  "is_default",    :default => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "users_payment_cards", ["user_id"], :name => "index_users_payment_cards_on_user_id"
 
 end

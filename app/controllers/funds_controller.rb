@@ -43,8 +43,9 @@ class FundsController < ApplicationController
     @fund.owners << current_user.account # creator of fund is automatically an owner
     
     if @fund.save
-      redirect_to @fund, notice: 'Fund was successfully created.'
+      redirect_to fund_path(@fund), notice: 'Fund was successfully created.'
     else
+      flash[:error] = @fund.errors.full_messages.to_s
       render action: "new"
     end    
   end

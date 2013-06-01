@@ -22,10 +22,7 @@
 
 <%= form_tag account_payment_cards_path, :id => 'cardData', :method => :post do %>  
 
-  <%= hidden_field_tag 'cardData[uri]' %>
-  <%= hidden_field_tag 'cardData[card_type]' %>  
-  <%= hidden_field_tag 'cardData[last_4_digits]' %>  
-  <%= hidden_field_tag 'cardData[is_valid]' %>    
+  <%= hidden_field_tag 'cardData[uri]' %> 
 
 <% end %>
 
@@ -49,12 +46,8 @@
         switch (response.status) {
             case 201:
                 // response.data.uri == uri of the card resource, submit to your server
-                //$.post('<%= test2_path %>', response.data);                     
-                $('#cardData_uri').val(response.data.uri);
-                $('#cardData_card_type').val(response.data.card_type);                
-                $('#cardData_last_4_digits').val(response.data.last_four);
-                $('#cardData_is_valid').val(response.data.is_valid);                
-                $('form#cardData').submit();                
+                $('#cardData_uri').val(response.data.uri);               
+                $('form#cardData').submit();               
             case 400:
             case 403:
                 // missing/malformed data - check response.error for details

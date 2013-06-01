@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
   def new
     set_back_path
     @payment = Payment.new(params[:payment])
-    @payment.fund_id ||= receiving_fund.id
+    @payment.fund ||= receiving_fund
     @payment.amount = 500
     respond_to do |format|
       format.html
@@ -13,16 +13,23 @@ class PaymentsController < ApplicationController
   
   def create
     payment = Payment.new(params[:payment])
-    building_new_payment_card = params[:payment_card_used].present?
-    if building_new_payment_card
-      payment.build_payment_card_used(params[:payment_card_used]) 
-    elsif user_signed_in?
-      payment.payment_card_used = current_user.payment_cards.first
+    if user_signed_in?
+      payment.sender = current_user.account
+      #TODO: more intelligent way of selecting payment cards for logged in users
+      payment.payment_card_used = payment.sender.payment_cards.where(params[:payment_card_used]).first_or_initialize
+    else
+      #TODO: prevent guests from hyjacking existing users credit cards by stealing balanced uri
+      payment_card = Accounts::PaymentCard.new(:balanced_uri => params[:payment_card_used][:balanced_uri])
+      account = Account.new
+      payment_card.account = account
+      payment.payment_card_used = payment_card
+      payment.sender = account
     end
     if payment.save
       redirect_to root_path, :notice => 'Thanks for giving!'
     else
       Rails.logger.debug payment.errors.full_messages
+      
       flash[:error] = 'Error trying to give...'
       redirect_to back_path
     end

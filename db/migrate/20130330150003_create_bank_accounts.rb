@@ -12,6 +12,7 @@ class CreateBankAccounts < ActiveRecord::Migration
         t.string   :last_4_digits
         t.string   :account_type
         t.boolean  :is_debitable, :default => false
+        t.boolean  :is_active, :default => true
         
         t.timestamps
       end
