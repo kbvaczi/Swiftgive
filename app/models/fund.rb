@@ -13,8 +13,10 @@ class Fund < ActiveRecord::Base
   
   has_many    :payments,        :class_name => 'Payment',           :dependent => :destroy
   
-  attr_accessible :name, :description, :profile, :fund_type, :merchant_name, :merchant_phone_number, 
-                  :merchant_street_address, :merchant_postal_code, :merchant_date_of_birth
+  attr_accessible :name, :description, :profile, :fund_type, 
+                  :merchant_name, :merchant_phone_number, :merchant_street_address, :merchant_postal_code, :merchant_date_of_birth,
+                  :business_name, :business_phone_number, :business_street_address, :business_postal_code, :business_tax_id
+                  
   attr_accessor   :associated_balanced_account
 
   mount_uploader :give_code, GiveCodeUploader
@@ -66,16 +68,15 @@ class Fund < ActiveRecord::Base
   def create_associated_balanced_account
     Rails.logger.debug "External call: Creating Balanced Payments Account"
     @associated_balanced_account = Balanced::Marketplace.my_marketplace.create_account(:name => self.name)
+    self.promote_associated_balanced_account_to_merchant  
+    self.balanced_uri = @associated_balanced_account.uri    
+  end
+
+  def promote_associated_balanced_account_to_merchant
     begin    
-      merchant_data = { :type => self.fund_type,
-                        :name => self.merchant_name,
-                        :dob => self.merchant_date_of_birth,
-                        :phone_number => self.merchant_phone_number,
-                        :street_address => self.merchant_street_address,
-                        :postal_code => self.merchant_postal_code }
+      merchant_data = (self.fund_type == 'person' ? merchant_personal_data : merchant_business_data)
       Rails.logger.debug "External call: Promoting Balanced Payment Account to Merchant Account"
-      @associated_balanced_account.promote_to_merchant(merchant_data)
-      self.balanced_uri = @associated_balanced_account.uri
+      @associated_balanced_account.promote_to_merchant(merchant_data)            
     rescue Balanced::MoreInformationRequired => error
       # could not identify this account.
       puts 'redirect merchant to: ' + error.redirect_uri
@@ -85,6 +86,25 @@ class Fund < ActiveRecord::Base
       errors.add(:balanced_uri, "error trying to authorize merchant account")
       raise
     end
+  end
+
+  def merchant_personal_data
+    { :type           => 'person',
+      :name           => self.merchant_name,
+      :dob            => self.merchant_date_of_birth,
+      :phone_number   => self.merchant_phone_number,
+      :street_address => self.merchant_street_address,
+      :postal_code    => self.merchant_postal_code }
+  end
+
+  def merchant_business_data
+    { :type           => 'business',
+      :name           => self.business_name,
+      :tax_id         => self.business_tax_id,
+      :phone_number   => self.business_phone_number,
+      :street_address => self.business_street_address,
+      :postal_code    => self.business_postal_code, 
+      :person         => merchant_personal_data }
   end
 
   def generate_and_assign_uid

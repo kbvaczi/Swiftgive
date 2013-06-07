@@ -13,7 +13,12 @@ class CreateFunds < ActiveRecord::Migration
         t.string  :merchant_phone_number
         t.string  :merchant_street_address
         t.string  :merchant_postal_code
-        t.string  :merchant_tax_id
+        
+        t.string  :business_name
+        t.string  :business_phone_number
+        t.string  :business_street_address
+        t.string  :business_postal_code
+        t.string  :business_tax_id
 
         t.string  :fund_type
         t.string  :balanced_uri
