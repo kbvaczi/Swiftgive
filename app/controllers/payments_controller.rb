@@ -18,18 +18,25 @@ class PaymentsController < ApplicationController
       #TODO: more intelligent way of selecting payment cards for logged in users
       payment.payment_card_used = payment.sender.payment_cards.where(params[:payment_card_used]).first_or_initialize
     else
-      #TODO: prevent guests from hyjacking existing users credit cards by stealing balanced uri
       payment_card = Accounts::PaymentCard.new(:balanced_uri => params[:payment_card_used][:balanced_uri])
-      account = Account.new
+      payment_card.validated_card_with_balanced
+      Balanced::Card.where(:hash => payment_card.balanced_hash).each do |duplicate_balanced_card|
+        duplicate_card = Accounts::PaymentCard.where(:uri => duplicate_balanced_card.uri)
+        if duplicate_card.present? and duplicate_card.account.user_id.nil?
+          duplicate_card_without_user = duplicate_card 
+          break
+        end
+      end
+      account = duplicate_card_without_user.present? ? duplicate_card_without_user.account : Account.new
       payment_card.account = account
       payment.payment_card_used = payment_card
       payment.sender = account
     end
     if payment.save
+      payment_card.invalidate unless user_signed_in?
       redirect_to root_path, :notice => 'Thanks for giving!'
     else
       Rails.logger.debug payment.errors.full_messages
-      
       flash[:error] = 'Error trying to give...'
       redirect_to back_path
     end

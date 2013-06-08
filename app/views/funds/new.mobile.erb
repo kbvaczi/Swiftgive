@@ -9,7 +9,7 @@
 	    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
     </li>
     <li>
-      <%= f.select :fund_type, [['Personal Fund','person'],['Business / Non-Profit Fund','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c' %>
+      <%= f.select :fund_type, [['Personal Fund','person'],['Business / Non-Profit Fund','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c', :onchange => "refreshFormNewFund()" %>
     </li>
   </ul>
     
@@ -32,7 +32,7 @@
     </li>        
   </ul>
 
-  <ul data-role="listview" data-inset="true" data-theme"a">
+  <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='hidden'>
     <li data-role="list-divider" data-theme='a'>Business Information</li>
     <li>
       <%= f.text_field :business_name, :placeholder => 'Business Name', :'data-mini' => true %>
@@ -54,3 +54,16 @@
   <%= f.submit "Create This Fund" %>
 
 <% end %>
+
+<script type='text/javascript'>
+  
+  function refreshFormNewFund() {
+    var trigger_value = $.mobile.activePage.find("select#fund_fund_type").val();
+    if (trigger_value == 'person') {
+      $.mobile.activePage.find("ul[name='business_information_inputs']").hide();
+    } else {
+      $.mobile.activePage.find("ul[name='business_information_inputs']").show();
+    }
+  }
+
+</script>

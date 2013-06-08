@@ -20,7 +20,19 @@ class Payment < ActiveRecord::Base
 
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }
+  before_validation :set_amounts,             :on => :create, :unless => Proc.new { self.amount_to_receiver.present? }
       
+  # ----- Scopes ----- #
+
+  scope :credited, where("#{self.table_name}.id > 0")
+  #TODO: implemented credited scope for payment    
+  #where(:is_outstanding => false)
+
+  scope :credit_outstanding, where("#{self.table_name}.id > 0")
+  #TODO: implemented credit outstanding scope for payment
+  #where(:is_outstanding => true)
+  
+
   # ----- Member Methods ----- #
 
   def associated_balanced_payment
@@ -41,6 +53,13 @@ class Payment < ActiveRecord::Base
     end
   end
   
+  def set_amounts
+    self.balanced_fee       = (30 + 0.029 * self.amount).ceil
+    self.commission_percent = self.fund.commission_percent || 0.05
+    self.commission         = (self.commission_percent * self.amount).ceil
+    self.amount_to_receiver = self.amount - self.balanced_fee - self.commission
+  end
+
   def create_balanced_payment
     begin
       Rails.logger.debug "External Call: Creating Debit in Balanced Payment System"
@@ -49,7 +68,7 @@ class Payment < ActiveRecord::Base
         :amount => self.amount,
         :description => "Swiftgive to #{self.fund.name} for #{self.amount}",
         :source_uri => self.payment_card_used.balanced_uri,
-        #TODO: add functionality for on_behalf_of_uri and meta information
+        #TODO: add functionality for meta information
         :meta => nil,
         :on_behalf_of_uri => self.fund.balanced_uri
       )

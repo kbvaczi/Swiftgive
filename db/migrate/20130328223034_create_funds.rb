@@ -21,6 +21,8 @@ class CreateFunds < ActiveRecord::Migration
         t.string  :business_tax_id
 
         t.string  :fund_type
+        t.float   :commission_percent
+        
         t.string  :balanced_uri
         t.boolean :is_active, :default => true
         

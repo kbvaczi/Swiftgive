@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.string   "business_postal_code"
     t.string   "business_tax_id"
     t.string   "fund_type"
+    t.float    "commission_percent"
     t.string   "balanced_uri"
     t.boolean  "is_active",               :default => true
     t.datetime "created_at",                                :null => false
@@ -105,16 +106,22 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.integer  "fund_id"
     t.integer  "sender_id"
     t.integer  "payment_card_used_id"
-    t.string   "uid"
-    t.string   "balanced_uri"
-    t.integer  "amount"
     t.text     "message"
     t.boolean  "is_anonymous",         :default => true
+    t.integer  "amount"
+    t.integer  "commission"
+    t.float    "commission_percent"
+    t.integer  "balanced_fee"
+    t.integer  "amount_to_receiver"
+    t.boolean  "is_outstanding"
+    t.string   "uid"
+    t.string   "balanced_uri"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end
 
   add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"
+  add_index "payments", ["is_outstanding"], :name => "index_payments_on_is_outstanding"
   add_index "payments", ["payment_card_used_id"], :name => "index_payments_on_payment_card_used_id"
   add_index "payments", ["sender_id"], :name => "index_payments_on_sender_id"
   add_index "payments", ["uid"], :name => "index_payments_on_uid"

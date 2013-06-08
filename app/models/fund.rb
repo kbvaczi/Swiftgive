@@ -34,10 +34,19 @@ class Fund < ActiveRecord::Base
   # ----- Callbacks ----- #    
 
   before_validation :generate_and_assign_uid,       :on => :create, :unless => Proc.new { self.uid.present? }
+  before_create     :set_commission_percent
   after_commit      :generate_and_upload_give_code, :on => :create, :if => Proc.new { not give_code? }
   #TODO: update givecode if necessary  
     
   # ----- Member Methods ----- #
+
+  def is_personal_fund?
+    self.fund_type == 'person'
+  end
+
+  def is_business_fund?
+    self.fund_type == 'business'
+  end
 
   def associated_balanced_account
     if @associated_balanced_account.present?
@@ -64,6 +73,11 @@ class Fund < ActiveRecord::Base
   
   # ----- Protected Methods ----- #
   protected
+
+  def set_commission_percent
+    #TODO: global variable for determining default commission without re-pushing
+    self.commission_percent = 0.05
+  end
 
   def create_associated_balanced_account
     Rails.logger.debug "External call: Creating Balanced Payments Account"
