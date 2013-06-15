@@ -24,14 +24,8 @@ class Payment < ActiveRecord::Base
       
   # ----- Scopes ----- #
 
-  scope :credited, where("#{self.table_name}.id > 0")
-  #TODO: implemented credited scope for payment    
-  #where(:is_outstanding => false)
-
-  scope :credit_outstanding, where("#{self.table_name}.id > 0")
-  #TODO: implemented credit outstanding scope for payment
-  #where(:is_outstanding => true)
-  
+  scope :credited, where(:is_outstanding => false)
+  scope :credit_outstanding, where(:is_outstanding => true)  
 
   # ----- Member Methods ----- #
 
@@ -42,6 +36,10 @@ class Payment < ActiveRecord::Base
 
   # ----- Class Methods ----- #
   
+  def self.mark_as_credited(relation_of_payments_to_be_marked)
+    relation_of_payments_to_be_marked.update_all(:updated_at => Time.zone.now, :is_outstanding => false)
+  end
+
   # ----- Protected Methods ----- #
 
   protected
@@ -58,6 +56,7 @@ class Payment < ActiveRecord::Base
     self.commission_percent = self.fund.commission_percent || 0.05
     self.commission         = (self.commission_percent * self.amount).ceil
     self.amount_to_receiver = self.amount - self.balanced_fee - self.commission
+    self.is_outstanding     = true
   end
 
   def create_balanced_payment

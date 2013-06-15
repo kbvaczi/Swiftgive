@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
       payment_card = Accounts::PaymentCard.new(:balanced_uri => params[:payment_card_used][:balanced_uri])
       payment_card.validated_card_with_balanced
       Balanced::Card.where(:hash => payment_card.balanced_hash).each do |duplicate_balanced_card|
-        duplicate_card = Accounts::PaymentCard.where(:uri => duplicate_balanced_card.uri)
+        duplicate_card = Accounts::PaymentCard.where(:balanced_uri => duplicate_balanced_card.uri)
         if duplicate_card.present? and duplicate_card.account.user_id.nil?
           duplicate_card_without_user = duplicate_card 
           break

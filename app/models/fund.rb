@@ -40,6 +40,10 @@ class Fund < ActiveRecord::Base
     
   # ----- Member Methods ----- #
 
+  def balance
+    self.payments.credit_outstanding.sum(:amount_to_receiver)
+  end
+
   def is_personal_fund?
     self.fund_type == 'person'
   end

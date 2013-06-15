@@ -1,3 +1,5 @@
+<%= render :partial => 'bank_accounts/new', :formats => [:mobile], :locals => {:callback_function => 'balancedAddBankAccountToFundCallback'} %>
+
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user.account)) %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
@@ -18,10 +20,10 @@
 	  <li data-role="list-divider" data-theme='a'>Bank Account</li>  
 	  <% this_bank_account = current_fund.bank_account %>
 	  <% if this_bank_account.present? %>
-	    <li data-icon='delete'><%= "#{this_bank_account.account_type} ending in #{this_bank_account.last_4_digits}" %> </li>         
+	    <li data-icon='delete'><%= link_to "#{this_bank_account.account_type} ending in #{this_bank_account.last_4_digits}", fund_bank_account_path(:fund_id => current_fund), :method => :delete, :confirm => 'are you sure you want to remove this account?' %> </li>         
 	  <% else %>
 	  	<li data-icon='plus'>
-	      <a href="#new_payment_card_form" data-rel="popup" data-position-to="window">Add Bank Account</a>
+	      <a href="#new_bank_account_form_popup" data-rel="popup" data-position-to="window">Add Bank Account</a>
 	      <%#= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
 	      <%#= f.hidden_field :balanced_uri %>    
 	    </li>

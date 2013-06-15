@@ -6,7 +6,7 @@ class CreateBankAccounts < ActiveRecord::Migration
         t.integer  :fund_id
         t.integer  :user_id        
 
-        t.string   :uri # balanced payments unique identifier
+        t.string   :balanced_uri # balanced payments unique identifier
         t.string   :bank_name
         t.string   :owner_name
         t.string   :last_4_digits

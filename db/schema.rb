@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501235643) do
+ActiveRecord::Schema.define(:version => 20130609132554) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
   create_table "bank_accounts", :force => true do |t|
     t.integer  "fund_id"
     t.integer  "user_id"
-    t.string   "uri"
+    t.string   "balanced_uri"
     t.string   "bank_name"
     t.string   "owner_name"
     t.string   "last_4_digits"
@@ -102,6 +102,25 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
   add_index "funds_memberships", ["account_id"], :name => "index_funds_memberships_on_account_id"
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
 
+  create_table "funds_withdraws", :force => true do |t|
+    t.integer  "fund_id"
+    t.integer  "bank_account_id"
+    t.integer  "amount_in_cents"
+    t.integer  "commission_in_cents"
+    t.integer  "balanced_fee_in_cents"
+    t.integer  "amount_to_receiver_in_cents"
+    t.string   "status"
+    t.string   "uid"
+    t.string   "balanced_uri"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "funds_withdraws", ["bank_account_id"], :name => "index_funds_withdraws_on_bank_account_id"
+  add_index "funds_withdraws", ["fund_id"], :name => "index_funds_withdraws_on_fund_id"
+  add_index "funds_withdraws", ["status"], :name => "index_funds_withdraws_on_status"
+  add_index "funds_withdraws", ["uid"], :name => "index_funds_withdraws_on_uid"
+
   create_table "payments", :force => true do |t|
     t.integer  "fund_id"
     t.integer  "sender_id"
@@ -113,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20130501235643) do
     t.float    "commission_percent"
     t.integer  "balanced_fee"
     t.integer  "amount_to_receiver"
-    t.boolean  "is_outstanding"
+    t.boolean  "is_outstanding",       :default => true
     t.string   "uid"
     t.string   "balanced_uri"
     t.datetime "created_at",                             :null => false
