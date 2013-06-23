@@ -1,6 +1,7 @@
 class FundsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [:show]
+  before_filter :verify_creator_info_present, :only => [:new, :create]
   before_filter :authenticate_fund_owner, :only => [:edit, :update, :destroy]
 
   # GET /funds
@@ -25,8 +26,7 @@ class FundsController < ApplicationController
 
   # GET /funds/new
   def new
-    @fund = Fund.new
-
+    @fund = Fund.new(@creator_account.attributes.slice('street_address', 'city', 'state', 'postal_code'))
     respond_to do |format|
       format.html # new.html.erb
     end
@@ -40,8 +40,8 @@ class FundsController < ApplicationController
   # POST /funds
   def create
     @fund = Fund.new(params[:fund])
-    @fund.owners << current_user.account # creator of fund is automatically an owner
-    
+    @fund.creator = @creator_account
+    @fund.creator_info = @creator_info
     if @fund.save
       redirect_to fund_path(@fund), notice: 'Fund was successfully created.'
     else
@@ -53,7 +53,6 @@ class FundsController < ApplicationController
   # PUT /funds/1
   def update
     current_fund
-
     respond_to do |format|
       if @fund.update_attributes(params[:fund])
         format.html { redirect_to @fund, notice: 'Fund was successfully updated.' }
@@ -75,6 +74,18 @@ class FundsController < ApplicationController
   
   protected
   
+  def verify_creator_info_present
+    @creator_account = current_user.account
+    required_attributes = %w(first_name last_name date_of_birth street_address city state postal_code)
+    required_attributes.each do |this_attribute|
+      unless @creator_account[this_attribute].present?
+        flash[:error] = 'Please complete your profile before creating a fund...'
+        redirect_to show_user_profile_path
+        return
+      end
+    end    
+  end
+
   def authenticate_fund_owner
     unless current_fund.owners.include? current_user.account
       flash[:error] = 'You are not an owner of this fund...'

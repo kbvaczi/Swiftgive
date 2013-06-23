@@ -62,7 +62,7 @@ class Payment < ActiveRecord::Base
   def create_balanced_payment
     begin
       Rails.logger.debug "External Call: Creating Debit in Balanced Payment System"
-      balanced_payment = self.sender.associated_balanced_account.debit(
+      balanced_payment = self.sender.associated_balanced_customer.debit(
         :appears_on_statement_as => "Swiftgive: #{self.fund.name.first(11)}",
         :amount => self.amount,
         :description => "Swiftgive to #{self.fund.name} for #{self.amount}",

@@ -8,17 +8,15 @@ class CreateFunds < ActiveRecord::Migration
         t.string  :description
         t.text    :profile
         
-        t.string  :merchant_name
-        t.string  :merchant_date_of_birth
-        t.string  :merchant_phone_number
-        t.string  :merchant_street_address
-        t.string  :merchant_postal_code
-        
+        t.string  :creator_name
+        t.string  :street_address
+        t.string  :city
+        t.string  :state
+        t.string  :postal_code
+
         t.string  :business_name
+        t.string  :business_ein
         t.string  :business_phone_number
-        t.string  :business_street_address
-        t.string  :business_postal_code
-        t.string  :business_tax_id
 
         t.string  :fund_type
         t.float   :commission_percent
@@ -38,7 +36,8 @@ class CreateFunds < ActiveRecord::Migration
         t.integer  :account_id
         t.integer  :fund_id
         
-        t.boolean :is_owner, :default => false
+        t.boolean  :is_owner, :default => false
+        t.boolean  :is_creator, :default => false
       end
       add_index   :funds_memberships, :account_id
       add_index   :funds_memberships, :fund_id

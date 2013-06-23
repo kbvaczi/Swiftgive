@@ -19,7 +19,7 @@ class BankAccount < ActiveRecord::Base
   
   before_validation       Proc.new { Rails.logger.debug "Validating #{self.class.name}" }  
   before_destroy          :invalidate_associated_balanced_bank_account
-  before_create           :add_balanced_account_to_merchant_account
+  before_create           :add_balanced_customer_to_merchant_account
     
   # ----- Member Methods ----- #
   
@@ -46,8 +46,8 @@ class BankAccount < ActiveRecord::Base
 
   protected
 
-  def add_balanced_account_to_merchant_account
-    self.fund.associated_balanced_account.add_bank_account(self.associated_balanced_bank_account.uri)
+  def add_balanced_customer_to_merchant_account
+    self.fund.associated_balanced_customer.add_bank_account(self.associated_balanced_bank_account.uri)
   end
   
   def invalidate_associated_balanced_bank_account

@@ -13,7 +13,7 @@ gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for l
 gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
 gem "honeypot-captcha", "~> 0.0.2"                    # alternative to capcha without the complexity  
 
-gem "balanced", "~> 0.7.0"                            # balanced payments gateway
+gem "balanced", "~> 0.7.1"                            # balanced payments gateway
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 gem "imgkit", "~> 1.3.9"                              # convert html to images

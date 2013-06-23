@@ -9,10 +9,10 @@ class Account < ActiveRecord::Base
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
 
-  attr_accessible :first_name, :last_name, :country, :state, :city, :street_address, :zipcode, :avatar, :email_from_user
+  attr_accessible :first_name, :last_name, :date_of_birth, :country, :state, :city, :street_address, :postal_code, :avatar, :email_from_user
 
   attr_accessor :email_from_user
-  attr_accessor :associated_balanced_account
+  attr_accessor :associated_balanced_customer
 
   # ----- Validations ----- #
            
@@ -20,14 +20,14 @@ class Account < ActiveRecord::Base
 
   #TODO: add validations for location information
   #validates             :state, :format => { :with => /\A[A-Z]{2}\z/, :message => "Please enter a valid State Abbreviation" }  
-  #validates             :zipcode, :format => { :with => /\A\d{5}\z/, :message => "Please enter a valid 5 digit zipcode" } # matches 5-digit US zipcodes only
+  #validates             :postal_code, :format => { :with => /\A\d{5}\z/, :message => "Please enter a valid 5 digit postal_code" } # matches 5-digit US postal_codes only
   #validates             :country, :format => { :with => /\A[a-zA-Z .]+\z/, :message => "Only letters allowed" }
 
   # ----- Callbacks ----- #              
 
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid,           :on => :create, :unless => Proc.new { self.uid.present? }
-  before_validation :create_balanced_payments_account,  :on => :create, :unless => Proc.new { self.balanced_uri.present? }
+  before_validation :create_balanced_payments_customer, :on => :create, :unless => Proc.new { self.balanced_uri.present? }
   before_validation :set_balance_to_zero,               :on => :create
    
   # ----- Member Methods ----- #
@@ -37,12 +37,12 @@ class Account < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
-  def associated_balanced_account
-    if @associated_balanced_account.present?
-      @associated_balanced_account
+  def associated_balanced_customer
+    if @associated_balanced_customer.present?
+      @associated_balanced_customer
     else
-      Rails.logger.debug "External call: Finding Account"
-      @associated_balanced_account = Balanced::Account.find(self.balanced_uri)
+      Rails.logger.debug "External call: Finding Customer"
+      @associated_balanced_customer = Balanced::Customer.find(self.balanced_uri)
     end
   end
   
@@ -62,18 +62,18 @@ class Account < ActiveRecord::Base
   end
 
   def set_balance_to_zero
-    self.current_balance = 0
+    self.current_balance_in_cents = 0
   end
 
-  def create_balanced_payments_account
-    Rails.logger.debug "External call: Creating Balanced Payments Account"
+  def create_balanced_payments_customer
+    Rails.logger.debug "External call: Creating Balanced Payments Customer Object"
     begin
-      @associated_balanced_account = Balanced::Marketplace.my_marketplace.create_account(:email_address => self.email_from_user, :name => self.full_name)
+      @associated_balanced_customer = Balanced::Marketplace.my_marketplace.create_customer(:email => self.email_from_user, :name => self.full_name)
     rescue Balanced::Error => error
-      Rails.logger.info("ERROR CREATING BALANCE ACCOUNT: #{error}")
-      @associated_balanced_account = Balanced::Account.where(:email_address => self.email_from_user).first rescue nil
+      Rails.logger.info("ERROR CREATING BALANCED CUSTOMER: #{error}")
+      @associated_balanced_customer = Balanced::Customer.where(:email => self.email_from_user).first rescue nil
     end
-    self.balanced_uri = @associated_balanced_account.uri if @associated_balanced_account.present?
+    self.balanced_uri = @associated_balanced_customer.uri if @associated_balanced_customer.present?
   end
 
 end

@@ -19,9 +19,9 @@ Swiftgive::Application.routes.draw do
   end 
 
   get 'profile' => 'accounts#show', :as => :show_user_profile
+  put 'profile/update' => 'accounts#update', :as => :update_user_profile
   
   resources :accounts, :only => [:show]
-  
 
   namespace :accounts do
     resources :payment_cards, :path => 'payment_cards', :only => [:create, :destroy]    

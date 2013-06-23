@@ -1,36 +1,39 @@
+<%= render :partial => 'accounts/edit_personal_info', :formats => [:mobile] %>
 <%= render :partial => 'accounts/edit_location', :formats => [:mobile] %>
 <%= render :partial => 'accounts/payment_cards/new', :formats => [:mobile], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" data-theme='a'>My Profile</li>  
-    <li>
-      <div class='ui-grid-a'>
-        <div class='ui-block-a side'>
-          <% if current_user.account.avatar.present? %>
-            <%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
-          <% else %>
-            <div style='height:80px;width:80px'>Add Image</div>
-          <% end %>
+    <li data-icon='gear'>
+      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
+        <div class='ui-grid-a'>
+          <div class='ui-block-a side'>
+            <% if current_user.account.avatar.present? %>
+              <%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
+            <% else %>
+              <div style='height:80px;width:80px'>Add Image</div>
+            <% end %>
+          </div>
+          <div class='ui-block-b ui-block-c main'>
+            <h3 class='mt-s mb-s'><%= current_user.account.first_name %></h3>
+            <h3 class='mt-s'><%= current_user.account.last_name %></h3>
+            <p><%= current_user.email %></p>
+            <% if current_user.account.date_of_birth.present? %>
+              <p><i>Birthday: <%= display_time current_user.account.date_of_birth, :format => 'long' %></i></p>
+            <% else %>
+              <p><i>No birthday entered</i></p>
+            <% end %>
+          </div>          
         </div>
-        <div class='ui-block-b ui-block-c main'>
-          <h3><%= current_user.account.full_name %></h3>
-          <p><%= current_user.email %></p>
-          <% if current_user.account.phone_number.present? %>
-            <p><%= current_user.account.phone_number %></p>
-          <% else %>
-            <p><i>no phone number</i></p>
-          <% end %>
-        </div>          
-      </div>
+      </a>
     </li>
 
-    <li data-icon='gear'>
-      
-        <% if current_user.account.city.present? and current_user.account.state.present? and current_user.account.zipcode.present? %>
+    <li data-icon='gear'>      
+        <% if current_user.account.city.present? and current_user.account.state.present? and current_user.account.postal_code.present? %>
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">
             <div class='mt-m'>
               <p><b><%= current_user.account.street_address %></b></p>
-              <p><%= current_user.account.city %>, <%= current_user.account.state %> <%= current_user.account.zipcode %></p>        
+              <p><%= current_user.account.city %>, <%= current_user.account.state %> <%= current_user.account.postal_code %></p>        
               <p><%= current_user.account.country %></p>
             </div>
           </a>

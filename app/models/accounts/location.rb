@@ -1,10 +1,10 @@
 class Accounts::Location
   include ActiveModel::Validations 
 
-  validates_presence_of :street_address, :zipcode, :city, :state, :country
+  validates_presence_of :street_address, :postal_code, :city, :state, :country
                         
   # to deal with form, you must have an id attribute
-  attr_accessor :id, :street_address, :zipcode, :city, :state, :country
+  attr_accessor :id, :street_address, :postal_code, :city, :state, :country
 
   def initialize(attributes = {})
     if attributes.present?
@@ -27,7 +27,7 @@ class Accounts::Location
   end
 
   def attributes
-    {:street_address => self.street_address, :city => self.city, :state => self.state, :zipcode => self.zipcode, :country => self.country}
+    {:street_address => self.street_address, :city => self.city, :state => self.state, :postal_code => self.postal_code, :country => self.country}
   end
 
   def to_key; end

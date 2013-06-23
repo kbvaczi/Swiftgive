@@ -4,50 +4,25 @@
     <li data-role="list-divider" data-theme='a'>Create a New Fund</li>  
     <li>
       <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true %>
-    </li>  
-    <li>
-	    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
+      <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
     </li>
     <li>
-      <%= f.select :fund_type, [['Personal Fund','person'],['Business / Non-Profit Fund','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c', :onchange => "refreshFormNewFund()" %>
+      <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c', :onchange => "refreshFormNewFund()" %>
     </li>
   </ul>
     
-  <ul data-role="listview" data-inset="true" data-theme"a">
-  	<li data-role="list-divider" data-theme='a'>Your Information</li>
-		<li>
-	    <%= f.text_field :merchant_name, :placeholder => 'Your Name', :value => current_user.account.full_name, :'data-mini' => true %>
-    </li>
-    <li>
-	    <%= f.text_field :merchant_date_of_birth, :placeholder => 'Your Date of Birth (yyyy-mm-dd)', :'data-mini' => true %>
-    </li>
-		<li>
-	    <%= f.text_field :merchant_phone_number, :placeholder => 'Phone Number (xxx-xxx-xxxx)', :value => current_user.account.phone_number, :'data-mini' => true %>
-    </li>
-    <li>
-	    <%= f.text_field :merchant_street_address, :placeholder => 'Street Address', :value => current_user.account.street_address, :'data-mini' => true %>
-    </li>
-    <li>
-	    <%= f.text_field :merchant_postal_code, :placeholder => 'Zipcode', :value => current_user.account.zipcode, :'data-mini' => true %>
-    </li>        
-  </ul>
-
   <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='hidden'>
-    <li data-role="list-divider" data-theme='a'>Business Information</li>
+    <li data-role="list-divider" data-theme='a'>Business / Non-Profit Information</li>
     <li>
       <%= f.text_field :business_name, :placeholder => 'Business Name', :'data-mini' => true %>
+      <%= f.text_field :business_ein, :placeholder => 'Business EIN', :'data-mini' => true %>
+      <%= f.text_field :business_phone_number, :placeholder => 'Business Phone Number', :'data-mini' => true %>
     </li>
     <li>
-      <%= f.text_field :business_tax_id, :placeholder => 'Business Tax ID', :'data-mini' => true %>
-    </li>
-    <li>
-      <%= f.text_field :business_phone_number, :placeholder => 'Phone Number (xxx-xxx-xxxx)', :'data-mini' => true %>
-    </li>
-    <li>
-      <%= f.text_field :business_street_address, :placeholder => 'Street Address', :'data-mini' => true %>
-    </li>
-    <li>
-      <%= f.text_field :business_postal_code, :placeholder => 'Zipcode', :'data-mini' => true %>
+      <%= f.text_field :street_address, :placeholder => 'Street Address', :'data-mini' => true %>
+      <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>    
+      <%= f.text_field :state, :placeholder => 'State', :'data-mini' => true  %>    
+      <%= f.text_field :postal_code, :placeholder => 'Zipcode', :'data-mini' => true %>
     </li>        
   </ul>
 

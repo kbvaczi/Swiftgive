@@ -1,8 +1,8 @@
 
-
 $(document).bind("mobileinit", function(){
 	// GLOBAL DEFAULTS
 	$.extend(  $.mobile , {
+		//ajaxEnabled: false,
     defaultPageTransition: 'flip',
     loadingMessageTextVisible: 'true'
   });
@@ -14,10 +14,22 @@ $(document).bind("mobileinit", function(){
 
 });
 
+//remove previous page when page is changed
+$(document).on("pagehide", "div[data-role=page]", function(event){
+  $(event.target).remove();
+});
 
-$(document).delegate('.main_page', 'pageshow', function () {
-
-	// HIDDEN SLIDER INPUT
+// HIDDEN SLIDER INPUT
+$(document).delegate('.main_page', 'pageshow', function () {	
 	$('input.hidden-field.ui-slider-input').siblings().addClass('hidden-field');
+});
 
+// Load the spinner if an ajaxStart occurs; stop when it is finished
+$(document).on({
+  ajaxStart: function() { 
+    $.mobile.loading('show');
+  },
+  ajaxStop: function() {
+    $.mobile.loading('hide');
+  }    
 });

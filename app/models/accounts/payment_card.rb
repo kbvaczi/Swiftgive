@@ -9,19 +9,19 @@ class Accounts::PaymentCard < ActiveRecord::Base
 
   attr_accessible :balanced_uri
   
-  attr_accessor :is_validated_by_balanced, :associated_balanced_card, :is_added_to_balanced_account, :balanced_hash
+  attr_accessor :is_validated_by_balanced, :associated_balanced_card, :is_added_to_balanced_customer, :balanced_hash
   
   # ----- Validations ----- #
   
   validates_presence_of   :balanced_uri
   validates_uniqueness_of :balanced_uri
-  validate                :add_associated_balanced_card_to_account, :on => :create, :unless => Proc.new { self.is_added_to_balanced_account }  
+  validate                :add_associated_balanced_card_to_customer, :on => :create, :unless => Proc.new { self.is_added_to_balanced_customer }  
   validate                :validate_card_with_balanced,             :on => :create, :unless => Proc.new { self.is_validated_by_balanced }
 
   # ----- Callbacks ----- #  
   
   before_validation       Proc.new { Rails.logger.debug "Validating #{self.class.name}" }  
-  after_destroy           :invalidate
+  before_destroy           :invalidate
     
   # ----- Member Methods ----- #
   
@@ -56,18 +56,18 @@ class Accounts::PaymentCard < ActiveRecord::Base
   
   protected 
 
-  def add_associated_balanced_card_to_account
+  def add_associated_balanced_card_to_customer
     if self.account.new_record?
       sender_first_name = self.name_on_card.split.first
       sender_last_name  = self.name_on_card.split.last
       self.account.assign_attributes(:first_name => sender_first_name, :last_name => sender_last_name) 
     end
     if self.account.valid?
-      Rails.logger.debug "External call: Adding Payment Card to Balanced Account"
-      if self.account.associated_balanced_account.add_card(self.balanced_uri)
-        self.is_added_to_balanced_account = true
+      Rails.logger.debug "External call: Adding Payment Card to Balanced Customer"
+      if self.account.associated_balanced_customer.add_card(self.balanced_uri)
+        self.is_added_to_balanced_customer = true
       else
-        errors.add(:account_id, "Could not add card to account")
+        errors.add(:account_id, "Could not add card to customer")
       end
     end
   end

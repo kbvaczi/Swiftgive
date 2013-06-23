@@ -20,15 +20,16 @@ ActiveRecord::Schema.define(:version => 20130609132554) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone_number"
+    t.date     "date_of_birth"
     t.string   "street_address"
-    t.string   "zipcode"
+    t.string   "postal_code"
     t.string   "city"
     t.string   "state"
     t.string   "country"
     t.string   "avatar"
-    t.integer  "current_balance"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "current_balance_in_cents"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
@@ -70,23 +71,21 @@ ActiveRecord::Schema.define(:version => 20130609132554) do
     t.string   "name"
     t.string   "description"
     t.text     "profile"
-    t.string   "merchant_name"
-    t.string   "merchant_date_of_birth"
-    t.string   "merchant_phone_number"
-    t.string   "merchant_street_address"
-    t.string   "merchant_postal_code"
+    t.string   "creator_name"
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
     t.string   "business_name"
+    t.string   "business_ein"
     t.string   "business_phone_number"
-    t.string   "business_street_address"
-    t.string   "business_postal_code"
-    t.string   "business_tax_id"
     t.string   "fund_type"
     t.float    "commission_percent"
     t.string   "balanced_uri"
-    t.boolean  "is_active",               :default => true
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "give_code",               :default => ""
+    t.boolean  "is_active",             :default => true
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "give_code",             :default => ""
   end
 
   add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
@@ -97,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20130609132554) do
     t.integer "account_id"
     t.integer "fund_id"
     t.boolean "is_owner",   :default => false
+    t.boolean "is_creator", :default => false
   end
 
   add_index "funds_memberships", ["account_id"], :name => "index_funds_memberships_on_account_id"
