@@ -123,27 +123,27 @@ ActiveRecord::Schema.define(:version => 20130609132554) do
 
   create_table "payments", :force => true do |t|
     t.integer  "fund_id"
+    t.integer  "withdraw_id"
     t.integer  "sender_id"
     t.integer  "payment_card_used_id"
     t.text     "message"
-    t.boolean  "is_anonymous",         :default => true
-    t.integer  "amount"
-    t.integer  "commission"
+    t.boolean  "is_anonymous",                :default => true
+    t.integer  "amount_in_cents"
+    t.integer  "commission_in_cents"
     t.float    "commission_percent"
-    t.integer  "balanced_fee"
-    t.integer  "amount_to_receiver"
-    t.boolean  "is_outstanding",       :default => true
+    t.integer  "balanced_fee_in_cents"
+    t.integer  "amount_to_receiver_in_cents"
     t.string   "uid"
     t.string   "balanced_uri"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"
-  add_index "payments", ["is_outstanding"], :name => "index_payments_on_is_outstanding"
   add_index "payments", ["payment_card_used_id"], :name => "index_payments_on_payment_card_used_id"
   add_index "payments", ["sender_id"], :name => "index_payments_on_sender_id"
   add_index "payments", ["uid"], :name => "index_payments_on_uid"
+  add_index "payments", ["withdraw_id"], :name => "index_payments_on_withdraw_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

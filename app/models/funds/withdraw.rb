@@ -6,8 +6,7 @@ class Funds::Withdraw < ActiveRecord::Base
 
   belongs_to :bank_account
   belongs_to :fund
-
-  attr_accessible :amount_in_cents
+  has_many   :payments
     
   # ----- Validations ----- #
 
@@ -21,7 +20,7 @@ class Funds::Withdraw < ActiveRecord::Base
   before_validation      Proc.new { Rails.logger.debug "Validating #{self.class.name}" }  
   before_validation      :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }  
   before_validation      :set_amounts, :on => :create
-  before_create          :mark_payments_as_credited
+  after_create           :mark_payments_as_credited
        
   # ----- Member Methods ----- #
   
@@ -36,7 +35,9 @@ class Funds::Withdraw < ActiveRecord::Base
   protected
 
   def mark_payments_as_credited
-    Payment.mark_as_credited(self.fund.payments.credit_outstanding)
+    unless Payment.mark_as_credited(self.fund.payments.credit_outstanding, self.id)
+      raise ActiveRecord::Rollback, "Error, Payments could not be marked as credited..."
+    end
   end
 
   def create_credit_in_balanced
@@ -60,6 +61,7 @@ class Funds::Withdraw < ActiveRecord::Base
   def set_amounts
     self.balanced_fee_in_cents = 25
     self.commission_in_cents   = 0
+    self.amount_in_cents = self.fund.payments.credit_outstanding.sum(:amount_to_receiver_in_cents)
     self.amount_to_receiver_in_cents = self.amount_in_cents
   end
             

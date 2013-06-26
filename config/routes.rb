@@ -35,6 +35,7 @@ Swiftgive::Application.routes.draw do
     get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member
     scope :module => 'funds' do
       resource :bank_account, :only => [:create, :destroy]
+      resources :withdraws, :only => [:create]
     end
   end
   

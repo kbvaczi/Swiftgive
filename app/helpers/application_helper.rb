@@ -13,6 +13,8 @@ module ApplicationHelper
       time.strftime("%m/%Y")
     elsif options[:format] == 'long'
       time.strftime("%B #{time.day.ordinalize}, %Y")
+    elsif options[:format] == 'spelled'
+      time.strftime("%B %Y")
     else
       time.strftime("%m/%d/%y")
     end

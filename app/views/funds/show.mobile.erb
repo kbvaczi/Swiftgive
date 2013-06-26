@@ -13,7 +13,7 @@
 	<% if is_current_fund_owner %>
 	  <li data-role="list-divider" data-theme='a'>Outstanding Payments</li>
 	  <li><%= current_fund.payments.credit_outstanding.count %></li>
-	  <li><%= current_fund.payments.credit_outstanding.sum(:amount_to_receiver) %></li>
+	  <li><%= current_fund.payments.credit_outstanding.sum(:amount_to_receiver_in_cents) %></li>
 	<% end %>
   
   <% if is_current_fund_owner %>
@@ -34,6 +34,8 @@
   <% end %>
    
 </ul>
+
+<%= link_to 'Withdraw Your Balance', fund_withdraws_path(current_fund), :method => :post, :'data-role' => 'button', :'data-theme' => 'b', :'data-mini' => true %>
 
 <%= link_to 'Edit', edit_fund_path(@fund) %> |
 <%= link_to 'Delete', fund_path(@fund), :method => :delete %> |

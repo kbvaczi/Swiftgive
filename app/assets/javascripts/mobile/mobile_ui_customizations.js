@@ -24,6 +24,11 @@ $(document).delegate('.main_page', 'pageshow', function () {
 	$('input.hidden-field.ui-slider-input').siblings().addClass('hidden-field');
 });
 
+//Show loading spinner when clicking non-xhr links
+$(document).delegate('a.link:not([data-rel])', 'click', function () {  
+  $.mobile.loading('show');
+});
+
 // Load the spinner if an ajaxStart occurs; stop when it is finished
 $(document).on({
   ajaxStart: function() { 

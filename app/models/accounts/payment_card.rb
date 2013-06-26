@@ -21,7 +21,7 @@ class Accounts::PaymentCard < ActiveRecord::Base
   # ----- Callbacks ----- #  
   
   before_validation       Proc.new { Rails.logger.debug "Validating #{self.class.name}" }  
-  before_destroy           :invalidate
+  before_destroy          :invalidate
     
   # ----- Member Methods ----- #
   

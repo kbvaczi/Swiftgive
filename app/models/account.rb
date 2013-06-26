@@ -29,6 +29,7 @@ class Account < ActiveRecord::Base
   before_validation :generate_and_assign_uid,           :on => :create, :unless => Proc.new { self.uid.present? }
   before_validation :create_balanced_payments_customer, :on => :create, :unless => Proc.new { self.balanced_uri.present? }
   before_validation :set_balance_to_zero,               :on => :create
+  before_update     :update_balanced_payments_customer
    
   # ----- Member Methods ----- #
   
@@ -74,6 +75,14 @@ class Account < ActiveRecord::Base
       @associated_balanced_customer = Balanced::Customer.where(:email => self.email_from_user).first rescue nil
     end
     self.balanced_uri = @associated_balanced_customer.uri if @associated_balanced_customer.present?
+  end
+
+  def update_balanced_payments_customer
+    associated_balanced_customer.name    = self.full_name
+    associated_balanced_customer.email   = self.user.email
+    associated_balanced_customer.dob     = self.date_of_birth
+    associated_balanced_customer.address = { :line1 => self.street_address, :city => self.city, :state => self.state, :postal_code => self.postal_code, :country => self.country }
+    associated_balanced_customer.save
   end
 
 end

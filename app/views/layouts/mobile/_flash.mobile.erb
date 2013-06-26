@@ -6,11 +6,11 @@ flash_message = nil
 if flash[:notice].present?
 	is_message_present = true
   flash_type = 'notice'
-  flash_message = flash[:notice].html_safe
+  flash_message = flash[:notice].html_safe rescue nil
 elsif flash[:error].present?
 	is_message_present = true
   flash_type = 'error'
-  flash_message = flash[:error].html_safe
+  flash_message = flash[:error].html_safe rescue nil
 end
 
 %>

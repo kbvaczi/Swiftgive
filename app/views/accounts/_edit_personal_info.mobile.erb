@@ -18,15 +18,15 @@
       </div>
 
       <h4>Date of Birth</h4>
-      
+      <div class='ui-grid-solo'>
         <%= f.date_select :date_of_birth, {:order => [:month, :day, :year],
                                           :prompt => true,
-                                          :use_short_month => true,
+                                          :discard_day => true,
+                                          :use_short_month => false,
                                           :include_blank => false, 
                                           :start_year => Time.now.year - 100, 
-                                          :end_year => (Time.now.year - 10)} %>    
-      
-      
+                                          :end_year => (Time.now.year - 10)} %>          
+      </div>
       <div class='ui-grid-solo mt'>
         <%= f.submit 'Update', :'data-icon' => 'check', :'data-theme' => 'b' %>
       </div>

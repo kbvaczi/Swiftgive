@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
     set_back_path
     @payment = Payment.new(params[:payment])
     @payment.fund ||= receiving_fund
-    @payment.amount = 500
+    @payment.amount_in_cents = 500
     respond_to do |format|
       format.html
       format.mobile

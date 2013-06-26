@@ -5,7 +5,7 @@
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" data-theme='a'>My Profile</li>  
     <li data-icon='gear'>
-      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
+      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window" style='padding:10px;'>
         <div class='ui-grid-a'>
           <div class='ui-block-a side'>
             <% if current_user.account.avatar.present? %>
@@ -14,12 +14,12 @@
               <div style='height:80px;width:80px'>Add Image</div>
             <% end %>
           </div>
-          <div class='ui-block-b ui-block-c main'>
+          <div class='ui-block-b main pr-m'>
             <h3 class='mt-s mb-s'><%= current_user.account.first_name %></h3>
             <h3 class='mt-s'><%= current_user.account.last_name %></h3>
             <p><%= current_user.email %></p>
             <% if current_user.account.date_of_birth.present? %>
-              <p><i>Birthday: <%= display_time current_user.account.date_of_birth, :format => 'long' %></i></p>
+              <p><i>Born: <%= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
             <% else %>
               <p><i>No birthday entered</i></p>
             <% end %>

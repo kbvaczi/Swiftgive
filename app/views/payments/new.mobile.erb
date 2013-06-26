@@ -18,7 +18,7 @@
       <div class='ui-grid-a pa-s'>
         <div class='ui-block-a pt-m pl-m t-s'>Amount:</div>
         <div class='ui-block-b'>
-          <div><%= f.select :amount, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => true, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
+          <div><%= f.select :amount_in_cents, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => true, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
         </div>  
       </div>
     </li>
@@ -66,12 +66,12 @@
 
     $('#custom_amount_value').initAutoNumeric();
 
-    $("#payment_amount-listbox").on('click', function(){
-      $('#payment_amount').data('previous_value', $(this).val());
+    $("#payment_amount_in_cents-listbox").on('click', function(){
+      $('#payment_amount_in_cents').data('previous_value', $(this).val());
     });
 
-    $('#payment_amount-listbox').on( "popupafterclose", function( event, ui ) {
-      var target = $('#payment_amount');
+    $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
+      var target = $('#payment_amount_in_cents');
       if (target.val() == 'other'){
         target.val(target.data('previous_value'));
         target.selectmenu( "refresh" );
@@ -116,13 +116,13 @@
   function custom_amount_ok_button_press() {
     var value_text  = $('#custom_amount_value').html();
     var value_value = $('#custom_amount_value').autoNumeric('get') * 100; 
-    if ($('#payment_amount option').length == 5 ) {
-      $('#payment_amount option:eq(3)').remove();
+    if ($('#payment_amount_in_cents option').length == 5 ) {
+      $('#payment_amount_in_cents option:eq(3)').remove();
     } 
-    var index_to_insert_before = $('#payment_amount option').length - 1;
-    $("#payment_amount option:eq(" + index_to_insert_before + ")").before("<option value=" + value_value + ">" + value_text + "</option>");  
-    $('#payment_amount').val(value_value);
-    $('#payment_amount').selectmenu( "refresh" );
+    var index_to_insert_before = $('#payment_amount_in_cents option').length - 1;
+    $("#payment_amount_in_cents option:eq(" + index_to_insert_before + ")").before("<option value=" + value_value + ">" + value_text + "</option>");  
+    $('#payment_amount_in_cents').val(value_value);
+    $('#payment_amount_in_cents').selectmenu( "refresh" );
     //$('.ui-popup-screen.in').trigger('click');
     $('#custom_amount_popup').popup('close');
   }
