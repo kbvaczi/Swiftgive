@@ -4,20 +4,30 @@
 
 <ul data-role="listview" data-inset="true" data-theme"a">
  
-  <li data-role="list-divider" data-theme='a'><%= current_fund.name %></li>
+  <li data-role="list-divider" data-theme='d'><%= current_fund.name %></li>
  	
   <li>
-		<p><%= current_fund.description %></p>
+		<p class='mt-s'><%= current_fund.description %></p>
   </li>
 
 	<% if is_current_fund_owner %>
-	  <li data-role="list-divider" data-theme='a'>Outstanding Payments</li>
-	  <li><%= current_fund.payments.credit_outstanding.count %></li>
-	  <li><%= current_fund.payments.credit_outstanding.sum(:amount_to_receiver_in_cents) %></li>
+	  <li data-role="list-divider" data-theme='c'>Givings</li>
+	  <li>
+	  	<div class='ui-grid-a'>
+		  	<div class='ui-block-a'> Current Balance </div>
+		  	<div class='ui-block-b' style='text-align:right;'> <%= number_to_currency current_fund.balance %> </div>
+		  </div>
+	  </li>
+	  <li>
+	  	<div class='ui-grid-a'>
+		  	<div class='ui-block-a main'> Givings This Month </div>
+		  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_this_month %> </div>
+		  </div>
+	  </li>
 	<% end %>
   
   <% if is_current_fund_owner %>
-	  <li data-role="list-divider" data-theme='a'>Bank Account</li>  
+	  <li data-role="list-divider" data-theme='c'>Bank Account</li>  
 	  <% this_bank_account = current_fund.bank_account %>
 	  <% if this_bank_account.present? %>
 	    <li data-icon='delete'><%= link_to "#{this_bank_account.account_type} ending in #{this_bank_account.last_4_digits}", fund_bank_account_path(:fund_id => current_fund), :method => :delete, :confirm => 'are you sure you want to remove this account?' %> </li>         
@@ -29,15 +39,19 @@
 	    </li>
 	  <% end %>
   <% else %>
-	  <li data-role="list-divider" data-theme='a'>Name on Account</li>
-	  <li><%= current_fund.is_personal_fund? ? current_fund.merchant_name : current_fund.business_name %></li>
+	  <li data-role="list-divider" data-theme='c'>Name on Account</li>
+	  <li><%= current_fund.is_personal_fund? ? current_fund.creator_name : current_fund.business_name %></li>
   <% end %>
    
 </ul>
 
-<%= link_to 'Withdraw Your Balance', fund_withdraws_path(current_fund), :method => :post, :'data-role' => 'button', :'data-theme' => 'b', :'data-mini' => true %>
+<% if is_current_fund_owner %>
+	<%= link_to 'Withdraw Your Balance', fund_withdraws_path(current_fund), :method => :post, :'data-role' => 'button', :'data-theme' => 'b', :'data-mini' => true %>
+<% end %>
 
-<%= link_to 'Edit', edit_fund_path(@fund) %> |
-<%= link_to 'Delete', fund_path(@fund), :method => :delete %> |
-<%= link_to 'Give', new_payment_path(:fund_uid => current_fund.uid) %> |
-<%= link_to 'Give Code', give_code_fund_path(current_fund) %>
+<div class='center_wrap mt'>
+	<%= link_to 'Edit', edit_fund_path(@fund) %> |
+	<%= link_to 'Delete', fund_path(@fund), :method => :delete %> |
+	<%= link_to 'Give', new_payment_path(:fund_uid => current_fund.uid) %> |
+	<%= link_to 'Give Code', give_code_fund_path(current_fund) %>
+</div>

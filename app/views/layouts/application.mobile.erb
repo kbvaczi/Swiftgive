@@ -19,7 +19,7 @@
       <%= render :partial => 'layouts/mobile/flash', :locals => {:flash => flash} %>
       <div data-role="header" data-id='header' data-fullscreen='true' data-theme='d'>
         <div class='center_wrap'>
-          <div class='left ml-m'><%= link_to 'back', back_path, :'data-role' => 'button', :'data-icon' => 'arrow-l', :'data-iconpos' => 'notext', :'data-shadow' => 'false', :'data-rel' => 'back' %></div>
+          <div class='left ml-m'><%= link_to 'back', back_path, :'data-role' => 'button', :'data-icon' => 'arrow-l', :'data-iconpos' => 'notext', :'data-shadow' => 'false', :class => "#{'ui-disabled' if current_path == root_url}" %></div>
           <div class='center'><%= link_to content_tag(:div, '', :id => 'logo', :class => 'center'), root_path %></div>
           <div class='right mr-m'><a data-role='button' data-transition="slide" data-icon='bars' data-iconpos='notext' data-shadow='false' data-rel='popup' href='#nav_menu' data-tolerance="0,0"> menu </a> </div>
         </div>  

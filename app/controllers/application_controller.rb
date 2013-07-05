@@ -13,28 +13,7 @@ class ApplicationController < ActionController::Base
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end
-  helper_method :bot_user?
-  
-  # do this after a user signs in
-  #TODO: implement banned funcationality for users
-  def after_sign_in_path_for(resource) 
-    if resource.is_a?(User)
-      if false # resource.banned?
-        sign_out resource
-        flash[:error]  = "This account has been suspended..."
-        flash[:notice] = nil # erase any notice so that error can be displayed
-        root_path
-      else
-        if request.session['devise.redirect_path'].present?
-          request.session['devise.redirect_path']
-        else
-          back_path
-        end
-      end
-    else
-      super
-    end
-  end
+  helper_method :bot_user? 
   
   # sets the current page as the back path for following pages to return to when back_path is redirected to
   def set_back_path

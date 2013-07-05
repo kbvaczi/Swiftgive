@@ -43,7 +43,19 @@ class Fund < ActiveRecord::Base
     
   # ----- Member Methods ----- #
 
+  def number_payments_today
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_day).count
+  end
+
+  def number_payments_this_month
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_month).count
+  end
+
   def balance
+    balance_in_cents.to_f / 100
+  end
+
+  def balance_in_cents
     self.payments.credit_outstanding.sum(:amount_to_receiver_in_cents)
   end
 

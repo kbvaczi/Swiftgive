@@ -1,5 +1,7 @@
 class PaymentsController < ApplicationController
 
+  before_filter :verify_fund_present
+
   def new
     set_back_path
     @payment = Payment.new(params[:payment])
@@ -19,7 +21,7 @@ class PaymentsController < ApplicationController
       payment.payment_card_used = payment.sender.payment_cards.where(params[:payment_card_used]).first_or_initialize
     else
       payment_card = Accounts::PaymentCard.new(:balanced_uri => params[:payment_card_used][:balanced_uri])
-      payment_card.validated_card_with_balanced
+      payment_card.validate_card_with_balanced
       Balanced::Card.where(:hash => payment_card.balanced_hash).each do |duplicate_balanced_card|
         duplicate_card = Accounts::PaymentCard.where(:balanced_uri => duplicate_balanced_card.uri)
         if duplicate_card.present? and duplicate_card.account.user_id.nil?
@@ -27,7 +29,7 @@ class PaymentsController < ApplicationController
           break
         end
       end
-      account = duplicate_card_without_user.present? ? duplicate_card_without_user.account : Account.new
+      account = defined?(duplicate_card_without_user) ? duplicate_card_without_user.account : Account.new
       payment_card.account = account
       payment.payment_card_used = payment_card
       payment.sender = account
@@ -46,14 +48,17 @@ class PaymentsController < ApplicationController
   end
   
   protected
-  
-  def set_redirect_path
-    request.session['devise.redirect_path'] = curent_path
-  end
 
   def receiving_fund
     @receiving_fund ||= Fund.find_by_uid(params[:fund_uid])
   end
   helper_method :receiving_fund
+
+  def verify_fund_present
+    unless receiving_fund.present?
+      flash[:error] = 'This fund does not exist...'
+      redirect_to back_path
+    end
+  end
 
 end

@@ -74,12 +74,15 @@
   };
  
   var tokenizeCard = function( $form ) {
+    $.mobile.loading('show');
+
     try {
       balanced.init(marketplaceUri);
     } catch (e) {
       debug('code', 'You need to set the marketplaceUri variable');
     }
-    //var $form = $('form#paymentCardForm');
+
+    var new_card_popup = $form.closest("[data-role='popup']");
     var cardData = {
       name: $form.find('[name="name_on_card"]').val(),            
       card_number: $form.find('[name="card_number"]').val(),
@@ -88,6 +91,7 @@
       security_code: $form.find('[name="security_code"]').val(),
       postal_code: $form.find('[name="postal_code"]').val(),
     }; 
+
     balanced.card.create(cardData, <%= defined?(callback_function) ? callback_function : 'balancedAddCardCallback' %>);
   };
 

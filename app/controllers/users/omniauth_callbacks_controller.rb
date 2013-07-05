@@ -118,7 +118,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.find_from_omniauth(:standardized_auth_data => standardized_auth_data)
     if user.present? and user.persisted?
       user.update_authentication_raw_data(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data)
-      set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?      
+      #TODO: Why does the page go back after closing flash message upon authentication?
+      #set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
       remember_me(user)      
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
     else

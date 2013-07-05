@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
   def index    
+    set_back_path
     respond_to do |format|
       format.html {render :layout => "full"}
       format.mobile

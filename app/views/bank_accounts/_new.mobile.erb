@@ -37,46 +37,46 @@
 <script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
 
 <script type="text/javascript">
+
   var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
 
   var debug = function (tag, content) {
-     console.log('<' + tag + '>' + content + '</' + tag + '>');
+    console.log('<' + tag + '>' + content + '</' + tag + '>');
   };
 
-  try {
-      balanced.init(marketplaceUri);
-  } catch (e) {
-      debug('code', 'You need to set the marketplaceUri variable');
-  }
-
   function balancedAccountAddCallback(response) {
-      var tag = (response.status < 300) ? 'pre' : 'code';
-      debug(tag, JSON.stringify(response));
-      switch (response.status) {
-          case 201:
-            // response.data.uri == uri of the bank account resource, submit to your server
-            $('#accountData_balanced_uri').val(response.data.uri);                           
-            $('form#accountData').submit();              
-          case 400:
-          case 403:
-              // missing/malformed data - check response.error for details
-              break;
-          case 404:
-              // your marketplace URI is incorrect
-              break;
-          default:
-              // we did something unexpected - check response.error for details
-              break;
-      }
+    var tag = (response.status < 300) ? 'pre' : 'code';
+    debug(tag, JSON.stringify(response));
+    switch (response.status) {
+      case 201:
+        // response.data.uri == uri of the bank account resource, submit to your server
+        $('#accountData_balanced_uri').val(response.data.uri);                           
+        $('form#accountData').submit();              
+      case 400:
+      case 403:
+        // missing/malformed data - check response.error for details
+        break;
+      case 404:
+        // your marketplace URI is incorrect
+        break;
+      default:
+        // we did something unexpected - check response.error for details
+        break;
+    }
   }
 
   var tokenizeBankAccount = function( $form ) {
-      var bankAccountData = {
-          name: $form.find('[name="name"]').val(),
-          account_number: $form.find('[name="account_number"]').val(),
-          bank_code: $form.find('[name="bank_code"]').val()
-      };
-      balanced.bankAccount.create(bankAccountData, balancedAccountAddCallback);
+    var bankAccountData = {
+      name: $form.find('[name="name"]').val(),
+      account_number: $form.find('[name="account_number"]').val(),
+      bank_code: $form.find('[name="bank_code"]').val()
+    };    
+    try {
+      balanced.init(marketplaceUri);
+    } catch (e) {
+      debug('code', 'You need to set the marketplaceUri variable');
+    }
+    balanced.bankAccount.create(bankAccountData, balancedAccountAddCallback);
   };
  
   $('form#bankAccountForm button').click(function(e){

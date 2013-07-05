@@ -25,13 +25,13 @@ $(document).delegate('.main_page', 'pageshow', function () {
 });
 
 //Show loading spinner when clicking non-xhr links
-$(document).delegate('a.link:not([data-rel])', 'click', function () {  
+$(document).delegate("a[rel='external']", 'click', function () {  
   $.mobile.loading('show');
 });
 
 // Load the spinner if an ajaxStart occurs; stop when it is finished
 $(document).on({
-  ajaxStart: function() { 
+  ajaxStart: function() {
     $.mobile.loading('show');
   },
   ajaxStop: function() {

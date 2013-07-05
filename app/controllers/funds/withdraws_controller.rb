@@ -19,7 +19,7 @@ class Funds::WithdrawsController < ApplicationController
   def verify_bank_account_present
     unless current_fund.bank_account.present?
       flash[:error] = 'You must link your fund to a bank account to withdraw your balance...'
-      redirect_to back_path 
+      redirect_to fund_path(current_fund) 
     end
   end
 
