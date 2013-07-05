@@ -45,7 +45,6 @@ Swiftgive::Application.routes.draw do
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?
     match 'test' => 'home#test'
-    match 'test2' => 'home#test2'
   end
   
   # dynamic robots.txt per environment

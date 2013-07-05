@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '3.2.12'
-gem "skeleton-rails", "~> 0.0.2"                      # Grid 960 CSS foundation
+
 gem "mobylette", "~> 3.3.2"                           # adds mobile mime type and ability to display separate mobile views
 
 gem "devise", "~> 2.2.3"                              # User Authentication
@@ -47,5 +47,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem "jquery-ui-rails", "~> 4.0.3"
 gem "jquery_mobile_rails", "~> 1.3.0"
 

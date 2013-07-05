@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   # Mobile web functionality (mobylette gem)
-  include Mobylette::RespondToMobileRequests
+  include Mobylette::RespondToMobileRequests  
   mobylette_config do |config|
     config[:skip_xhr_requests] = false #this is needed for jquery mobile framework which sends requests via xhr
   end
@@ -59,12 +59,5 @@ class ApplicationController < ActionController::Base
     Rails.application.routes.recognize_path(request.path).inspect.parameterize('_') rescue root_path
   end
   helper_method :current_page_id
-
-  private
-
-  # assumes every request is a mobile request (for testing purposes only!)
-  def is_mobile_request?
-    true 
-  end
   
 end

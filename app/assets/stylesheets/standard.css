@@ -10,6 +10,5 @@
  *
  *= require application
  *= require_self
- *= require skeleton
  *= require_tree ./standard
  */
