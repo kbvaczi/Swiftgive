@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
 
-  before_filter :verify_fund_present
+  before_filter :verify_fund_present, :only => [:new]
 
   def new
     set_back_path
