@@ -1,6 +1,15 @@
-<% Fund.all.each do |fund| %>
-  <%= link_to fund.name, fund_path(fund) %>
-  <br class='spacer'/>
-<% end %>
-<br class='spacer'/>
-<%= link_to 'Create new fund', new_fund_path %>
+<h3>My Funds</h3>
+<table class='table table-striped'>
+	<% current_user.account.funds.each do |fund| %>
+	  <tr>
+	  	<td>
+		  	<%= link_to "#{fund.name} <i class='icon-chevron-right'></i>".html_safe, fund_path(fund) %>
+		  </td>
+	  </tr>	  
+	<% end %>
+</table>
+<div class='clearfix'>
+	<%= link_to "<i class='icon-plus'></i> Create new fund".html_safe, new_fund_path, :class => 'btn pull-right' %>
+</div>
+
+<hr>

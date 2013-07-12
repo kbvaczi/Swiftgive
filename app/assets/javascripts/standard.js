@@ -11,6 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require application
+//= require twitter/bootstrap
 //= require_tree ./standard
 //= require_tree ./shared
+//= require spin
 

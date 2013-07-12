@@ -1,40 +1,65 @@
-<h2>Personal Profile</h2>
-<h3>Picture</h3>
-<div class='two-thirds column row'>
-  <%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
-</div>
+<h2>My Profile</h2>
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <td><%= current_user.account.full_name %></td>
+    <td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_name' %>
+  </tr>
+  <tr>
+    <th>Picture</th>
+    <td><%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %></td>
+    <td><a href="#edit_avatar_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_avatar' %>
+  </tr>
+  <tr>
+    <th>Email Address</th>
+    <td><%= current_user.email %></td>
+    <td><a href="#edit_email_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_email' %>
+  </tr>
+  <tr>
+    <th>Date of Birth</th>
+    <td><%= display_time current_user.account.date_of_birth, :day => false %></td>
+    <td><a href="#edit_dob_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_birthdate' %>
+  </tr>
+  <tr>
+    <th>Location</th>
+    <td>   
+      <%= current_user.account.street_address if current_user.account.street_address.present? %><br>
+      <%= "#{current_user.account.city.capitalize}, " if current_user.account.city.present? %> <%= "#{Carmen::Country.coded(current_user.account.country).subregions.coded(current_user.account.state).name rescue current_user.account.state}" if current_user.account.state.present? %>
+      <%= current_user.account.postal_code if current_user.account.postal_code.present?%>      
+    </td>
+    <td><a href="#edit_location_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_location' %>
+  </tr>
+  <tr>
+    <th>Payment Cards</th>
+    <td>
+      <% payment_cards = current_user.account.payment_cards %>
+      <% if payment_cards.present? %>
+        <% payment_cards.each do |payment_card| %>
+          <div><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to "<i class='icon-remove-sign'></i> Remove".html_safe, accounts_payment_card_path(payment_card), :method => :delete, :class => 'btn-small', :confirm => 'Are you sure you want to permenantly remove this card?' %></div>
+        <% end %>
+      <% else %>
+        <i>None Linked to This Account</i>
+      <% end %>
+    </td>
+    <td><a href="#add_payment_card_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a></td>
+    <%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
+  </tr>
+  <tr>
+    <th>Social Networks Linked</th>
+    <td>
+      <% current_user.authentications.each do |authentication| %>
+        <div><%= authentication.provider_name %></div>
+      <% end %>
+    </td>
+    <td><div class='btn-small'><i class="icon-wrench"></i> Edit</div></td>
+  </tr>
+</table>
 
-<h3>Name</h3>
-<div class='two-thirds column row'>
-  <%= current_user.account.full_name %>
-</div>
-
-<h3>Email</h3>
-<div class='two-thirds column row'>
-  <%= current_user.email %>
-</div>
-
-<h3>Location</h3>
-<div class='two-thirds column row'>
-  <%= "#{current_user.account.city}, " if current_user.account.city.present? %>
-  <%= "#{Carmen::Country.coded(current_user.account.country).subregions.coded(current_user.account.state).name rescue current_user.account.state}" if current_user.account.state.present? %> 
-  <%= "(#{Carmen::Country.coded(current_user.account.country).name rescue current_user.account.country})" if current_user.account.country.present? %>
-</div>
-
-<h3>Credit Cards</h3>
-<div class='two-thirds column'>
-  <% payment_cards = current_user.account.payment_cards %>
-  <% if payment_cards.present? %>
-    <% payment_cards.each do |payment_card| %>
-      <ul>
-        <li><%= payment_card.card_type %> ending in <%= payment_card.last_4_digits %> <%= link_to 'X delete', users_payment_card_path(payment_card), :method => :delete, :class => 'button2' %></li>
-      </ul>
-    <% end %>
-  <% else %>
-    <%= render :partial => 'accounts/payment_cards/new' %>
-    <br class='spacer'/>
-  <% end %>
-</div>
 
 <script type='text/javascript'>
   $('#add_new_card_button').click(function(){
@@ -43,28 +68,6 @@
   });
 </script>
 
-<h3>Bank Accounts</h3>
-<div class='two-thirds column'>
-  <% bank_accounts = current_user.account.bank_accounts %>
-  <% if bank_accounts.present? %>
-    <% bank_accounts.each do |bank_account| %>
-      <ul>
-        <li><%= bank_account.bank_name %> <%= bank_account.account_type %> ending in <%= bank_account.last_4_digits %> <%= link_to 'X delete', account_bank_account_path(bank_account), :method => :delete, :class => 'button2' %></li>
-      </ul>
-    <% end %>
-  <% else %>
-    <%= render :partial => 'bank_accounts/new' %>
-    <br class='spacer'/>
-  <% end %>
-</div>
 
 
-<h3>Social Networks Linked</h3>
-<div class='two-thirds column'>
-  <% current_user.account.authentications.each do |authentication| %>
-    <ul>
-      <li><%= authentication.provider_name %></li>
-    </ul>
-  <% end %>
-</div>
 

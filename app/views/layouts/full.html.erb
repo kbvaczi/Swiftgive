@@ -14,25 +14,25 @@
 
     <%= render :partial => 'layouts/shared/flash', :locals => {:flash => flash} %>
       
-    <div id='page'>
+    <div id='page' class='container'>
       
-      <div id='header' class='container row'>
-        <%= render :partial => 'layouts/standard/header' %>
+      <div id='header'>
+        <%= render :partial => 'layouts/standard/header' %>  
       </div>
 
-      <div id="main" class='container row'>        
+      <div id="main" class='row'>        
         
-        <div id="mainbar" class='columns sixteen'>
+        <div id="mainbar" class='span12'>
           <%= yield %>
         </div>
            
       </div>
 
-      <div id="bottomnav" class='container row'>
+      <div id="bottomnav" class='row'>
         <%= render :partial => 'layouts/standard/bottomnav' %>
       </div>
       
-      <div id="footer" class='container'>
+      <div id="footer" class='row'>
         <%= render :partial => 'layouts/standard/footer' %>
       </div>
       

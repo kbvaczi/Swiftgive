@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function flashNow(message, type) {
-  var flash ="<div id='flash' class='flash_" + type + "' style='display: none;'>" + message + "</div>";
+  var flash ="<div id='flash' class='alert alert_" + type + "' style='display: none;'>" + message + "</div>";
   $('#flash').remove();
   $('body').prepend(flash);
   showFlash();
@@ -11,8 +11,6 @@ function flashNow(message, type) {
 
 function showFlash() {
   if ( $('#flash').length ) {
-    var closeButton = '<div class="closeButton right">X</div>';
-    $(closeButton).appendTo($('#flash'));
     $('#flash').delay(30).fadeIn('normal', function() {
       $(this).delay(6000).fadeOut();
     });

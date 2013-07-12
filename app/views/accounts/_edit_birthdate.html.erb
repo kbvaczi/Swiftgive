@@ -1,0 +1,21 @@
+<div id="edit_dob_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Your Name</h3>
+  </div>  
+  <%= form_for current_user.account, :url => update_user_profile_path, :method => :put do |f| %>
+    <div class="modal-body">
+      <%= f.date_select :date_of_birth, {:order => [:month, :day, :year],
+                                          :prompt => true,
+                                          :discard_day => true,
+                                          :use_short_month => false,
+                                          :include_blank => false, 
+                                          :start_year => Time.now.year - 100, 
+                                          :end_year => (Time.now.year - 10)} %>          
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <%= f.submit 'Update', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>  
+</div>

@@ -1,18 +1,14 @@
 <% # DISPLAY FLASH NOTICES --------------------------------------- %>  
 <% if flash[:notice] %> 
-  <div id="flash" class="flash_notice">
+  <div id="flash" class="alert alert-success">
     <%= flash[:notice] %>
   </div>
-<% elsif flash[:alert] %>
-  <div id="flash" class="flash_alert">
-    <%= flash[:alert] %>
-  </div>
 <% elsif flash[:error] %>
-  <div id="flash" class="flash_error">
+  <div id="flash" class="alert alert-error">
     <%= flash[:error] %>
   </div>
 <% elsif flash[:warning] %>
-  <div id="flash" class="flash_warning">
+  <div id="flash" class="alert alert-warning">
     <%= flash[:warning] %>
   </div>
 <% end %>

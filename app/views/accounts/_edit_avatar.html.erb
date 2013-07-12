@@ -1,0 +1,15 @@
+<div id="edit_avatar_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Change Your Picture</h3>
+  </div>  
+  <%= form_for current_user.account, :url => update_user_profile_path, :method => :put do |f| %>
+    <div class="modal-body">
+      <%= f.file_field :avatar %>          
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <%= f.submit 'Update', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>  
+</div>

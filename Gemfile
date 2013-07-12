@@ -19,7 +19,7 @@ gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 gem "imgkit", "~> 1.3.9"                              # convert html to images
 gem "carrierwave", "~> 0.8"                           # image_scan uploader
 gem "fog", "~> 1.10"                                  # supports amazon s3
-gem "mini_magick", "~> 3.5"                           # image manipulation for ckeditor
+gem "mini_magick", "~> 3.6"                           # image manipulation for ckeditor
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
@@ -42,11 +42,13 @@ end
 # Gems used only for assets and not required in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  #gem "therubyracer"
+  #gem "less-rails"    #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
+  gem "twitter-bootstrap-rails", "~> 2.2.7"   
 end
 
 gem 'jquery-rails'
-gem "jquery-ui-rails", "~> 4.0.3"
 gem "jquery_mobile_rails", "~> 1.3.0"
 

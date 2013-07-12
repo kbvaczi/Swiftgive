@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   attr_accessor :email_from_user
   attr_accessor :associated_balanced_customer
 
+  mount_uploader :avatar, AccountAvatarUploader
+
   # ----- Validations ----- #
            
   validates_presence_of  :balanced_uri, :message => 'We could not verify you with our payment processor'

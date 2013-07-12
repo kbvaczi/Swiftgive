@@ -1,0 +1,16 @@
+<div id="edit_name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Your Name</h3>
+  </div>  
+  <%= form_for current_user.account, :url => update_user_profile_path, :method => :put do |f| %>
+    <div class="modal-body">
+      <%= f.text_field :first_name, :placeholder => 'First Name' %>    
+      <%= f.text_field :last_name, :placeholder => 'Last Name' %>    
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <%= f.submit 'Update', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>  
+</div>
