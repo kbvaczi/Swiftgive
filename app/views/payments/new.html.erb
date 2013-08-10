@@ -1,0 +1,106 @@
+<% title receiving_fund.name %>
+
+<%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'AddCardToGiveFormCallback'} %>
+
+<h3>Complete this form to give</h3>
+<p class='lead'>Your Generosity is greatly appreciated</p>
+
+<%= simple_form_for @payment, :html => {:class => 'form-horizontal'} do |f| %>
+
+  <%= f.hidden_field :fund_id, :value => (params[:payment][:fund_id] rescue receiving_fund.id) %>
+  <hr>
+  <%= f.input :amount_in_cents,   :label => "Amount", 
+                                  :collection => [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']],
+                                  :include_blank => false,
+                                  :required => true %>
+  <hr>
+  <%= f.input :is_anonymous, :label => "Anonymous",
+  							 :collection => [['No',false],["Yes",true]] %>
+  <hr>
+  <%= f.input :message, :label => 'Optional Message',
+  						:as => :string,
+  						:placeholder => 'ex. "Thanks!"' %>    
+  <hr>
+  <%= simple_fields_for :payment_card_used do |payment_card_form| %>
+  	<% signed_in_user_cards = user_signed_in? ?  current_user.account.payment_cards.collect {|card| ["#{card.card_type} (x#{card.last_4_digits})", card.balanced_uri]} : nil %>
+  	<% new_card_option = ['New Card', 'new'] %>
+  	<% card_select_options = user_signed_in? ? [new_card_option].append([signed_in_user_cards]) : [new_card_option] %>
+
+    <%= payment_card_form.input :balanced_uri, :label => "Payment Card",
+		  													 :as => :select,
+		  													 :collection => card_select_options,
+		  													 :selected => (user_signed_in? ? current_user.account.payment_cards.first.id : nil) ,
+		  													 :include_blank => false,
+		  													 :prompt => 'Select Payment Card' %>
+  <% end %>
+  <hr>
+  
+  <div class="control-group">
+    <div class="controls">
+      <%= f.button :submit, :value => 'Give',:class => 'btn-primary' %>
+      <%= submit_tag 'Cancel', :type => :reset, :class => "btn btn-danger" %>
+    </div>
+  </div>
+
+<% end %>
+
+<script type='text/javascript'>
+
+	$('select#payment_card_used_balanced_uri').change(function (){
+		if ($(this).val() == 'new') {
+			$('#add_payment_card_modal').modal('show');
+			$(this).val('');
+		}		
+	});
+
+	function addPaymentCardToSelect(new_label, new_value) {
+		var target_select = $('select#payment_card_used_balanced_uri');	  
+	  var index_to_insert_before = 1;//$("select#payment_card_used_balanced_uri option[value='new']").index('option');
+	  target_select.find("option:eq(" + index_to_insert_before + ")").before("<option value=" + new_value + ">" + new_label + "</option>");
+	  target_select.val(new_value);
+	  //$('#custom_amount_popup').popup('close');
+	}
+
+	function AddCardToGiveFormCallback(response) {
+	  var tag = (response.status < 300) ? 'pre' : 'code';
+	  debug(tag, JSON.stringify(response));
+	  switch (response.status) {
+	    case 201: // OK
+	    	// Get Balanced URI from validated card
+	    	var uri_for_validated_card 	 = response.data.uri;
+	    	var label_for_validated_card = response.data.brand + ' (x' + response.data.last_four + ')';
+	    	// Set Balanced URI select in payment form to validated card 
+	    	addPaymentCardToSelect(label_for_validated_card, uri_for_validated_card);
+	    	// Alert the user their card has been validated
+	      window.setTimeout ( function() {                  
+	        flashNow('Your card was successfully validated', 'notice');
+	      }, 300 );                               
+	      break;
+	    case 400:
+	    case 403: // missing/malformed data - check response.error for details
+	      $("#add_payment_card_modal").modal("hide");
+	      var error_message = '<h3>Could not validate your card</h3>';
+	      $.each( response.error, function( key, value ) {
+	        error_message += ( key + ": " + "is not valid" + "<br/>");
+	      });
+	      error_message += "<p>Please try again...</p>";
+	      flashNow(error_message, 'error');
+	      window.setTimeout ( function() {                  
+	      	$('#add_payment_card_modal').modal('show');  
+	      }, 3000 );
+	      break;                
+	    case 402: // we couldn't authorize the buyer's credit card - check response.error for details
+	      $("#add_payment_card_modal").modal("hide");
+	      var error_message = '<h3>Could not validate your card</h3><p>The card entered was declined</p><p>Please try another card...</p>';
+	      flashNow(error_message, 'error');
+	      window.setTimeout ( function() {                  
+	      	$('#add_payment_card_modal').modal('show');  
+	      }, 3000 );	      
+	      break;
+	    case 404: // your marketplace URI is incorrect
+	      break;
+	    default: // we did something unexpected - check response.error for details
+	      break;
+	  }
+	}
+</script>

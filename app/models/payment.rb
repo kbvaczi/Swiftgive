@@ -28,7 +28,7 @@ class Payment < ActiveRecord::Base
   scope :credit_outstanding, where(:withdraw_id => nil)
   scope :credited, where('withdraw_id IS NOT null')  
 
-  # ----- Member Methods ----- #
+  # ----- Member Methods ----- #  
 
   def associated_balanced_payment
     Rails.logger.debug "External Call: Finding Balanced Payment"

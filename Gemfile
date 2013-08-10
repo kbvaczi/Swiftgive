@@ -16,10 +16,14 @@ gem "honeypot-captcha", "~> 0.0.2"                    # alternative to capcha wi
 gem "balanced", "~> 0.7.1"                            # balanced payments gateway
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
+gem 'rqrcode-rails3'
+
 gem "imgkit", "~> 1.3.9"                              # convert html to images
 gem "carrierwave", "~> 0.8"                           # image_scan uploader
 gem "fog", "~> 1.10"                                  # supports amazon s3
-gem "mini_magick", "~> 3.6"                           # image manipulation for ckeditor
+gem "mini_magick", "~> 3.6"                           # image manipulation
+
+gem "simple_form", "~> 2.1.0"                         # standardized form helpers
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information
@@ -42,8 +46,8 @@ end
 # Gems used only for assets and not required in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  #gem "therubyracer"
-  #gem "less-rails"    #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
+  gem "therubyracer"
+  gem "less-rails"    #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem "twitter-bootstrap-rails", "~> 2.2.7"   

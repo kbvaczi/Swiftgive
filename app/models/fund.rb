@@ -4,11 +4,13 @@ class Fund < ActiveRecord::Base
 
   self.table_name = 'funds'
   
-  has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy
+  has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => false }
   has_many    :members,         :class_name => "Account",           :through => :memberships,  :source => :member
-  has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :conditions => { :is_owner => true }  
+  
+  has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => true }  
   has_many    :owners,          :class_name => "Account",           :through => :ownerships,   :source => :member
-  has_one     :creatorship,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :conditions => { :is_creator => true, :is_owner => true }  
+  
+  has_one     :creatorship,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_creator => true, :is_owner => true }  
   has_one     :creator,         :class_name => "Account",           :through => :creatorship,  :source => :member
 
   has_one     :bank_account,    :class_name => 'BankAccount',       :conditions => { :is_active => true }
@@ -47,8 +49,36 @@ class Fund < ActiveRecord::Base
     self.payments.where('created_at > ?', Time.zone.now.beginning_of_day).count
   end
 
+  def amount_payments_today_in_cents
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_day).sum(:amount_in_cents)
+  end
+
   def number_payments_this_month
     self.payments.where('created_at > ?', Time.zone.now.beginning_of_month).count
+  end
+
+  def amount_payments_this_month_in_cents
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_month).sum(:amount_in_cents)
+  end
+
+  def number_payments_this_year
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_year).count
+  end
+
+  def amount_payments_this_year_in_cents
+    self.payments.where('created_at > ?', Time.zone.now.beginning_of_year).sum(:amount_in_cents)
+  end
+
+  def number_payments
+    self.payments.count
+  end
+
+  def amount_payments_in_cents
+    self.payments.sum(:amount_in_cents)
+  end
+
+  def recent_payments
+    self.payments.last(10)
   end
 
   def balance
@@ -80,11 +110,17 @@ class Fund < ActiveRecord::Base
     temp_dir = Rails.root.join('tmp')
     Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir) # creates temp directory in heroku, which is not automatically created
     give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s}", '.png'], 'tmp', :encoding => 'ascii-8bit')
-    generated_code_image = IMGKit.new(Rails.application.routes.url_helpers.give_code_html_fund_url(:id => self.uid, :host => ENV['HOST'], :format => :png), :quality => 50, :height => 700, :width => 600, :'disable-smart-width' => true, :zoom => 1).to_img(:png)
-    give_code_image_tempfile.write(generated_code_image)
+    
+    code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
+    code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 2000}
+    code_image_blob = IMGKit.new(code_html, :quality => 50, :height => 2400, :width => 2000, :zoom => 1).to_img(:png)
+
+    give_code_image_tempfile.write(code_image_blob)
     give_code_image_tempfile.flush
+    
     self.give_code = give_code_image_tempfile
     self.save
+    
     give_code_image_tempfile.unlink
   end
 

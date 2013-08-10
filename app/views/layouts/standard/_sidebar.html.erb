@@ -1,15 +1,49 @@
-<h3>My Funds</h3>
-<table class='table table-striped'>
-	<% current_user.account.funds.each do |fund| %>
-	  <tr>
-	  	<td>
-		  	<%= link_to "#{fund.name} <i class='icon-chevron-right'></i>".html_safe, fund_path(fund) %>
-		  </td>
-	  </tr>	  
-	<% end %>
-</table>
-<div class='clearfix'>
-	<%= link_to "<i class='icon-plus'></i> Create new fund".html_safe, new_fund_path, :class => 'btn pull-right' %>
-</div>
+<%= yield(:sidebar) %>
 
-<hr>
+<% if user_signed_in? %>
+	<h3>My Funds</h3>
+	<table class='table table-striped'>
+		<% current_user.account.funds.each do |fund| %>
+		  <tr>
+		  	<td>
+			  	<%= link_to "#{fund.name} <i class='icon-chevron-right'></i>".html_safe, fund_path(fund) %>
+			  </td>
+		  </tr>	  
+		<% end %>
+	</table>
+	<div class='clearfix'>
+		<%= link_to "<i class='icon-plus'></i> Create new fund".html_safe, new_fund_path, :class => 'btn pull-right' %>
+	</div>
+	<hr>
+<% else %>
+
+	<div class='center_wrap'>
+		<!-- <h3 style='margin-top:0px'>New to <%= image_tag 'logo_text_md.png', :height => '30px', :style => 'position:relative;top:8px;' %> ?</h3> -->
+	  <h3>Express sign-in through your preferred network:</h3>
+	</div>
+
+	<div class='center_wrap'>
+	  <%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
+	  <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
+	  <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:google_oauth2), :rel => 'external' %>
+	  <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
+	</div>
+	<div class='center_wrap mt' style='font-size:90%'>
+		or <a data-transition="slide" data-rel='popup' href='#new_or_returning_user_prompt' data-tolerance="0,0"> sign-in manually </a> 
+	</div>
+
+	<br class='spacer'/>
+
+	<div class='mt'>
+		<%#= link_to 'Current Member Sign in', root_path, :'data-role' => 'button', :'data-mini' => false, :'data-theme' => 'b', :'data-icon' => 'check'%>
+	 <%= link_to 'Learn more about us', root_path, :'data-role' => 'button', :'data-mini' => true, :'data-icon' => 'info'%>
+	</div>
+
+	<div id='new_or_returning_user_prompt' data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme='a'>
+		<div class='center_wrap pa' style='min-width:150px'>
+			<%= link_to 'New User', new_user_registration_path, :'data-role' => 'button', :'data-icon' => 'plus', :'data-mini' => 'false', :'data-theme' => 'a' %>
+			<%= link_to 'Returning User', account_manual_sign_in_path, :'data-role' => 'button', :'data-icon' => 'forward', :'data-mini' => 'false', :'data-theme' => 'a' %>
+		</div>
+	</div>
+
+<% end %>

@@ -20,7 +20,13 @@
   </tr>
   <tr>
     <th>Date of Birth</th>
-    <td><%= display_time current_user.account.date_of_birth, :day => false %></td>
+    <td>
+      <% if current_user.account.date_of_birth.present? %>
+        <%= display_time current_user.account.date_of_birth, :day => false  %>
+      <% else %>
+        <i>Please enter date-of-birth</i>
+      <% end %>
+    </td>
     <td><a href="#edit_dob_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
     <%= render :partial => 'edit_birthdate' %>
   </tr>

@@ -30,8 +30,10 @@ Swiftgive::Application.routes.draw do
   end
 
   resources :funds do
+    get 'manage/(:section)' => 'funds#manage', :on => :member, :as => 'manage'
+    put 'toggle_active_status', :on => :member, :as => 'toggle_active_status'
     get 'give_code' => 'funds/give_codes#show', :on => :member
-    get 'give_code_html' => 'funds/give_codes#give_code_html', :on => :member    
+    get 'give_code_html/(:product)' => 'funds/give_codes#give_code_html', :on => :member, :as => :give_code_html
     get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member
     scope :module => 'funds' do
       resource :bank_account, :only => [:create, :destroy]
@@ -39,7 +41,9 @@ Swiftgive::Application.routes.draw do
     end
   end
   
-  resources :payments, :only => [:new, :create]
+  resources :payments, :only => [:create]
+  get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
+    
   resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]
   
   # routes for testing (not for production)  

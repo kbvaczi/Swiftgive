@@ -6,12 +6,21 @@ class Funds::GiveCodesController < ApplicationController
 
   def give_code_html
     code_url = new_payment_url(:fund_uid => current_fund.uid)
-    render :partial => 'funds/give_codes/give_code', :layout => false, :formats => [:html], :locals => {:message => code_url, :include_header => true}
+    
+    case params[:product]
+      when 'businesscard'
+        render :partial => 'funds/give_codes/business_card', :layout => false, :formats => [:html], :locals => {:message => code_url, :include_header => true}
+      else
+        render :partial => 'funds/give_codes/give_code', :layout => false, :formats => [:html], :locals => {:message => code_url, :include_header => true}    
+    end
+
     return
   end
 
   def give_code_image
-    code_image = IMGKit.new(give_code_html_fund_url(current_fund), :quality => 50, :height => 700, :width => 600, :zoom => 1).to_img(:png)
+    code_url = new_payment_url(:fund_uid => current_fund.uid)
+    code_image_html = render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 1000}
+    code_image = IMGKit.new(code_image_html, :quality => 90, :height => 1200, :width => 1000, :zoom => 1).to_img(:png)
     send_data(code_image, :type => 'image/png', :disposition => 'inline') 
     return
   end

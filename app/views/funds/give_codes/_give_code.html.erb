@@ -1,118 +1,40 @@
-<% 
-qr_code = RQRCode::QRCode.new(message, :size => 7, :level => :h)
-%>
+<% width ||= 500.to_f %>
+<% height = 6/5.to_f * width.to_f %>
 
 <style type="text/css">
   body, html {
     padding:0px;
     margin:0px;
   }
-  div.give_code_wrapper {
-    border-radius: 50px;
-    border: 8px solid #000;
-    margin:60px 25px 25px 25px;
-    padding:50px 45px 10px 45px;
-    width:450px;
-    height:550px;
-    display:block;
+  .give_code_wrapper {
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    width: <%= width %>px;
+    height: <%= height %>px;  
   }
-  div.give_code {
-    width:100%;
-    height:100%;
-    display:table;
-  }
-  div.give_code_content {
-    display: table-cell; 
-    vertical-align: middle;  
-    text-align: center; 
-  }
-  .code_logo_wrapper {
+  .give_code_wrapper_image {
     position:absolute;
-    top:0px;
-    left:85px;
-    background-color: #fff;
-    padding:10px 20px 0px 10px;
-    margin:0px;
+    z-index: 5;
+    width: <%= width %>px;   
+    height: <%= height %>px;   
   }
-  img.code_logo {
-    padding-top:-5px;
-    height:100px;
-    width:400px;
-  }
-  div.code {
+  .qr_code {
     display:inline-block;
-  }
-  table {
-    border-width: 0;
-    border-style: none;
-    border-color: #000;
-    border-collapse: collapse;
-  }
-  td {
-    border-width: 0;
-    border-style: none;
-    border-color: #000;
-    border-collapse: collapse;
-    padding: 0;
-    margin: 0;
-    width: 10px;
-    height: 10px;
-  }
-  td.black { background-color: #000; }
-  td.white { background-color: #fff; }
-  .scan_now_wrapper {
-    display: block; 
-    vertical-align: middle;  
-    text-align: center; 
-  }
-  p.scan_now {    
-    color: rgb(33%, 43%, 33%);
-    text-shadow: 0px -1px #000;
-    font-size:35px;
-    font-weight:bold;
-    padding:0px;
-    margin:0px;
-    font-family: "Helvetica Neue", 'sans sarif';
-  }
-  p.fund_name {
-    color:#333;
-    font-size:26px;
-    font-style: italic;
-    padding:0px;
-    margin:3px 0px 0px 0px;
-    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
-    max-height:70px;
-    overflow:hidden;
+    position: absolute;
+    top:<%= height.to_f * 0.5 %>px;
+    left:<%= width.to_f * 0.5 %>px;
+    height:<%= width.to_f * 0.8 %>px;
+    width: <%= width.to_f * 0.8 %>px;
+    margin-left: -<%= width.to_f * 0.4 %>px;
+    margin-top: -<%= width.to_f * 0.36 %>px;    
   }
 </style>
 
-<div class='code_logo_wrapper'><%= image_tag 'logo_text_lg.png', :class => 'code_logo' %></div>
-<div class='give_code_wrapper'>
-  <div class='give_code'>
-    <div class='give_code_content'>
-      <div class='qr_code'>  
-        <table>
-          <% qr_code.modules.each_index do |x| %>
-            <tr>
-              <% qr_code.modules.each_index do |y| %>
-                <% if qr_code.dark?(x,y) %>
-                  <td class="black"/>
-                <% else %>
-                  <td class="white"/>
-                <% end %>
-              <% end %>
-            </tr>
-          <% end %>
-        </table>
-      </div>
-      <div class='scan_now_wrapper'>
-        <p class='scan_now'>
-          scan now and give to
-        </p>
-        <p class='fund_name'>
-          <%= current_fund.name %>
-        </p>
-      </div>
-    </div>
+
+<div class='div_code_wrapper'>
+  <%= image_tag asset_path('give_code_wrapper.svg', :only_path => false), :class => 'give_code_wrapper_image' %>
+  <div class='qr_code'>
+    <%= render :partial => 'funds/give_codes/qr_code', :locals => {:message => message, :size => width * 0.82} %>
   </div>
 </div>

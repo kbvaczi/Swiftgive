@@ -1,4 +1,5 @@
 <%= form_for @fund do |f| %>
+ 
   <% if @fund.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@fund.errors.count, "error") %> prohibited this fund from being saved:</h2>
@@ -11,14 +12,36 @@
     </div>
   <% end %>
 
-  <div class='inputs'>
-    <%= f.text_field :name, :placeholder => 'Name' %>
-    <%= f.text_field :description, :placeholder => 'Description' %>
-    <%= f.text_area :profile, :placeholder => 'Profile for this fund' %>
-    <%= %>
-  </div>
+  <%= f.text_field :name, :placeholder => 'Fund Name' %>
+  <%= f.text_field :description,  :placeholder => 'Description' %>
+  <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :onchange => "refreshFormNewFund()" %>
+    
+  <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
+    
+    <%= f.text_field :business_name, :placeholder => 'Business Name' %>
+    <%= f.text_field :business_ein, :placeholder => 'Business EIN' %>
+    <%= f.text_field :business_phone_number, :placeholder => 'Business Phone Number' %>
   
-  <div class="actions">
-    <%= f.submit %>
+    <%= f.text_field :street_address, :placeholder => 'Street Address' %>
+    <%= f.text_field :city, :placeholder => 'City' %>    
+    <%= f.text_field :state, :placeholder => 'State' %>    
+    <%= f.text_field :postal_code, :placeholder => 'Zipcode' %>
+    
   </div>
+
+  <%= f.submit "Create This Fund" %>
+
 <% end %>
+
+<script type='text/javascript'>
+  
+  function refreshFormNewFund() {
+    var trigger_value = $("select#fund_fund_type").val();
+    if (trigger_value == 'person') {
+      $("div#business_information_inputs").hide();
+    } else {
+      $("div#business_information_inputs").show();
+    }
+  }
+
+</script>

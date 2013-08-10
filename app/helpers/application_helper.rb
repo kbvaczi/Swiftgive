@@ -2,6 +2,7 @@ module ApplicationHelper
 
   def title(page_title)
     provide :title, " | #{page_title.gsub(/[\[\]\^\$\.\|\?\*\+\\~`\!@#%\+={}'"<>;,]{1,}/, "").gsub("&", "and")}"
+    provide :page_title, page_title
   end
   
   def page_description(page_description = nil)

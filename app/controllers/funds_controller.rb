@@ -2,7 +2,7 @@ class FundsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [:show]
   before_filter :verify_creator_info_present, :only => [:new, :create]
-  before_filter :authenticate_fund_owner, :only => [:edit, :update, :destroy]
+  before_filter :authenticate_fund_owner, :only => [:edit, :manage, :toggle_active_status, :update, :destroy]
 
   # GET /funds
   def index
@@ -21,6 +21,15 @@ class FundsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+    end
+  end
+
+  def manage
+    set_back_path
+    current_fund
+
+    respond_to do |format|
+      format.html
     end
   end
 
@@ -55,10 +64,19 @@ class FundsController < ApplicationController
     current_fund
     respond_to do |format|
       if @fund.update_attributes(params[:fund])
-        format.html { redirect_to @fund, notice: 'Fund was successfully updated.' }
+        format.html { redirect_to back_path, notice: 'Fund was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
+    end
+  end
+
+  def toggle_active_status
+    if current_fund.update_attribute(:is_active, !current_fund.is_active)
+      redirect_to back_path, :notice => 'Successfully updated active status...'
+    else
+      flash[:error] = 'Could not update status...'
+      redirect_to back_path
     end
   end
 

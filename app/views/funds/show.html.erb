@@ -1,23 +1,85 @@
-<h3>Name</h3>
-<div class='two-thirds column row'>
-  <%= current_fund.name %>
-</div>
+<% title current_fund.name  %>
+<% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user.account)) %>
 
-<h3>Description</h3>
-<div class='two-thirds column row'>
-  <%= current_fund.description %>
-</div>
+<p class='lead'><%= current_fund.description %></p>
 
-<h3>Profile</h3>
-<div class='two-thirds column row'>
-  <%= current_fund.profile %>
-</div>
+<h3>Info</h3>
+<table class="table table-striped">
+  <tr>
+    <th>Based From</th>
+    <td><p><%= "#{current_fund.city.capitalize}, #{current_fund.state}" %></p></td>
+  </tr>
+  <tr>
+    <th>Created</th>
+    <td><p><%= display_time current_fund.created_at, :day => false %></p></td>
+  </tr>
+  <tr>
+    <th>Owners</th>
+    <td>
+    	<% current_fund.owners.each do |owner| %>
+    		<div>
+    			<div class='left' ><%= image_tag owner.avatar %></div>
+    			<div class='left pl'>
+    				<b><%= owner.full_name %></b><br/>
+    				<%= "#{owner.city.capitalize}, " if owner.city.present? %> <%= "#{Carmen::Country.coded(owner.country).subregions.coded(owner.state).name rescue owner.state}" if owner.state.present? %>
+    			</div>
+    		</div>
+    	<% end %>    	
+    </td>
+  </tr>
+</table>
 
-<h3>Funding Account</h3>
-<div class='two-thirds column row'>
+<% if current_fund.recent_payments.present? %>
+	<h3>Recent Donations</h3>
+	<table class='table'>
+		<% current_fund.recent_payments.each do |payment| %>
+			<tr>
+				<td>
+				<div>
+					<div class='left' ><%= image_tag payment.sender.avatar unless payment.is_anonymous %></div>
+					<div class='left pl'>
+						<b><%= payment.is_anonymous ? 'Anonymous Donor' : payment.sender.full_name %></b><br/>
+						<%= "#{payment.sender.city.capitalize}, " if payment.sender.city.present? %> <%= "#{Carmen::Country.coded(payment.sender.country).subregions.coded(payment.sender.state).name rescue payment.sender.state}" if payment.sender.state.present? %>
+					</div>
+				</div>
+				</td>
+				<td>
+					<p><%= "\"#{payment.message}\"" if payment.message.present? %></p>
+				</td>
+				<td class='lead t-b'>
+					<%= number_to_currency payment.amount_in_cents / 100 %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
 
-</div>
+<%= content_for :sidebar do %>
+	
+	
+	<% if is_current_fund_owner %>
+		<div class='center_wrap content_box'>
+			<h5>You are an owner of this fund</h5>
+			<div >
+				<%= link_to "<i class='icon-wrench'></i> Manage this fund".html_safe, manage_fund_path(current_fund), :class => 'btn' %>
+			</div>
+		</div>
+	<% end %>
 
-<%= link_to 'Edit', edit_fund_path(@fund) %> |
-<%= link_to 'Give', new_payment_path(:fund_uid => current_fund.uid) %> |
-<%= link_to 'Give Code', give_code_fund_path(current_fund) %>
+	<div class='content_box'>
+		<table class='table table-borderless'>
+			<tr>
+				<th>Donations This Month</th>
+				<td><%= current_fund.number_payments_this_month %></td>
+			</tr>
+			<tr>
+				<th>Donated This Month</th>
+				<td><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></td>
+			</tr>
+		</table>
+		<div class='center_wrap'>
+			<%= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, new_payment_path(:fund_uid => current_fund), :class => 'btn btn-primary' %>
+		</div>
+	</div>
+	
+<% end %>

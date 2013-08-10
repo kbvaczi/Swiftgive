@@ -3,7 +3,24 @@ $(document).ready(function() {
 });
 
 function flashNow(message, type) {
-  var flash ="<div id='flash' class='alert alert_" + type + "' style='display: none;'>" + message + "</div>";
+
+  switch (type) {
+    case 'notice':
+      filtered_type = 'success';
+      break;
+    case 'error':
+      filtered_type = 'error';
+      break;
+    case 'warning':
+      filtered_type = '';
+      break;
+    case 'info':
+      filtered_type = 'info';
+      break;
+
+  }
+
+  var flash ="<div id='flash' class='alert alert-" + filtered_type + "' style='display: none;'>  <button type='button' class='close' data-dismiss='alert'>&times;</button>" + message + "</div>";
   $('#flash').remove();
   $('body').prepend(flash);
   showFlash();
