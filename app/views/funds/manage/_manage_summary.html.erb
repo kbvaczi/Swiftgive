@@ -1,0 +1,23 @@
+<table class='table'>
+	<tr>
+		<th></th>
+		<th>Today</th>
+		<th>This Month</th>
+		<th>This Year</th>
+		<th>All Time</th>
+	</tr>	
+	<tr>
+		<th>Number of Donations</th>
+		<td><%= current_fund.number_payments_today %></td>
+		<td><%= current_fund.number_payments_this_month %></td>
+		<td><%= current_fund.number_payments_this_year %></td>
+		<td><%= current_fund.number_payments %></td>
+	<tr>
+	<tr>
+		<th>Amount Donated</th>
+		<td><%= number_to_currency current_fund.amount_payments_today_in_cents / 100 %></td>
+		<td><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></td>
+		<td><%= number_to_currency current_fund.amount_payments_this_year_in_cents / 100 %></td>
+		<td><%= number_to_currency current_fund.amount_payments_in_cents / 100 %></td>
+	<tr>	
+</table>

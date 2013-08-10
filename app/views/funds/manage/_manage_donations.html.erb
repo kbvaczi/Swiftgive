@@ -1,0 +1,47 @@
+<h3>Donations</h3>
+<table class='table'>
+	<tr>
+		<th>Net Amount</th>
+		<th>Sender</th>
+		<th>Location</th>
+		<th>Donated On</th>
+	</tr>
+	<% Payment.includes(:sender).all.each do |payment| %>
+		<tr>	
+			<td>
+				<%= number_to_currency payment.amount_to_receiver_in_cents / 100 %>
+			</td>
+			<td>
+				<%= display_accountholder_name(payment.sender, payment.is_anonymous) %>
+			</td>
+			<td>
+				<%= display_accountholder_location(payment.sender) %>
+			</td>
+			<td>
+				<%= display_time(payment.created_at) %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+
+<h3>Withdraws</h3>
+<table class='table'>
+	<tr>
+		<th>Amount</th>
+		<th>Status</th>
+		<th>Withdrawn At</th>	
+	</tr>
+	<% Funds::Withdraw.all.each do |withdraw| %>
+		<tr>	
+			<td>
+				<%= number_to_currency withdraw.amount_to_receiver_in_cents / 100 %>
+			</td>
+			<td>
+				<%= withdraw.status %>
+			</td>
+			<td>
+				<%= display_time(withdraw.created_at) %>
+			</td>
+		</tr>
+	<% end %>
+</table>

@@ -1,0 +1,39 @@
+<% qr_code = RQRCode::QRCode.new(message, :size => 6, :level => :h) %>
+<% size ||= 10 * qr_code.modules.count %>
+
+<style type="text/css">
+  table {
+    display:inline-block;
+    border-width: 0;
+    border-style: none;
+    border-color: #000;
+    border-collapse: collapse;
+  }
+  td {
+    border-width: 0;
+    border-style: none;
+    border-color: #000;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+    width: <%= size.to_f / qr_code.modules.count %>px;
+    height: <%= size.to_f / qr_code.modules.count %>px;
+
+  }
+  td.black { background-color: #000; }
+  td.white { background-color: none; }
+</style>
+
+<table>
+  <% qr_code.modules.each_index do |x| %>
+    <tr>
+      <% qr_code.modules.each_index do |y| %>
+        <% if qr_code.dark?(x,y) %>
+          <td class="black"/>
+        <% else %>
+          <td class="white"/>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

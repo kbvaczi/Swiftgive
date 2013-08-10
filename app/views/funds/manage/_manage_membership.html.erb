@@ -1,0 +1,21 @@
+<h3>Owners</h3>
+<table class='table'>
+	<% current_fund.owners.each do |owner| %>
+		<tr>
+			<td>
+				<%= owner.full_name %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+
+<h3>Members</h3>
+<table class='table'>
+	<% current_fund.members.each do |member| %>		
+		<tr>
+			<td>
+				<%= member.full_name %>
+			</td>
+		</tr>
+	<% end %>
+</table>

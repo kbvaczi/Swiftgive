@@ -1,0 +1,72 @@
+<table class='table'>
+	<tr>
+		<th>Name</th>
+		<td><p> <%= current_fund.name %> </p></td>
+		<td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+	<tr>
+	<tr>
+		<th>Description</th>
+		<td><p style='display:inline-block;max-width:350px;'> <%= current_fund.description %> </p></td>
+		<td><a href="#edit_description_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+	<tr>
+  <tr>
+    <th>Bank Account</th>  
+    <% this_bank_account = current_fund.bank_account %>
+    <% if this_bank_account.present? %>
+      <td>
+        <%= "#{this_bank_account.account_type} ending in #{this_bank_account.last_4_digits}" %>
+      </td>
+      <td>
+        <a href="#add_bank_account_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a>
+      </td>
+    <% else %>
+      <td>
+        No Bank Account Linked        
+      </td>
+      <td>
+        <a href="#add_bank_account_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a>
+      </td>
+    <% end %>    
+    <%= render :partial => 'bank_accounts/new' %>
+  </tr>  
+	<tr>
+		<th>Status</th>
+		<td><p>
+			<%= current_fund.is_active ? 'Currently Active' : 'Currently Inactive' %>
+		</p></td>
+		<td><a href="<%= toggle_active_status_fund_path(current_fund) %>" role="button" class="btn-small" data-method='put'><i class="icon-off"></i> <%= current_fund.is_active ? 'Set Inactive' : 'Set Active' %></a></td>
+	<tr>		
+</table>
+
+
+<div id="edit_name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Fund Name</h3>
+  </div>  
+  <%= form_for current_fund, :method => :put do |f| %>
+    <div class="modal-body">     
+      <%= f.text_field :name, :placeholder => 'Fund Name' %>    
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <%= f.submit 'Update', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>  
+</div>
+
+<div id="edit_description_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Fund Description</h3>
+  </div>  
+  <%= form_for current_fund, :method => :put do |f| %>
+    <div class="modal-body">     
+      <%= f.text_area :description, :placeholder => 'Fund Description' %>    
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <%= f.submit 'Update', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>  
+</div>
