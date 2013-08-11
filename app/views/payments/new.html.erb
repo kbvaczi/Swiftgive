@@ -22,14 +22,14 @@
   						:placeholder => 'ex. "Thanks!"' %>    
   <hr>
   <%= simple_fields_for :payment_card_used do |payment_card_form| %>
-  	<% signed_in_user_cards = user_signed_in? ?  current_user.account.payment_cards.collect {|card| ["#{card.card_type} (x#{card.last_4_digits})", card.balanced_uri]} : nil %>
+  	<% signed_in_user_cards = user_signed_in? ? current_user.account.payment_cards.collect {|card| ["#{card.card_type} (x#{card.last_4_digits})", card.balanced_uri]} : nil %>
   	<% new_card_option = ['New Card', 'new'] %>
-  	<% card_select_options = user_signed_in? ? [new_card_option].append([signed_in_user_cards]) : [new_card_option] %>
+  	<% card_select_options = signed_in_user_cards.present? ? [new_card_option].append([signed_in_user_cards]) : [new_card_option] %>
 
     <%= payment_card_form.input :balanced_uri, :label => "Payment Card",
 		  													 :as => :select,
 		  													 :collection => card_select_options,
-		  													 :selected => (user_signed_in? ? current_user.account.payment_cards.first.id : nil) ,
+		  													 :selected => ((user_signed_in? and current_user.account.payment_cards.first.present?) ? current_user.account.payment_cards.first.id : nil) ,
 		  													 :include_blank => false,
 		  													 :prompt => 'Select Payment Card' %>
   <% end %>
