@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <%= render :partial => 'layouts/shared/html_head' %>
+    <%= stylesheet_link_tag "mobile", :media => "all" %>
+    <%= javascript_include_tag "mobile" %>   
+    <%= yield(:header) %>      
+  </head>
+
+  <body>    
+    <div id="loader"></div>  <%# ajax loading spinner %>
+    <% unless content_for?(:page_id) %>
+      <% provide :page_id, current_page_id %>
+    <% end %>
+    <div data-role="page" class='main_page' id='<%= yield(:page_id) %>' data-url='<%= current_path %>' data-transition="slide">       
+      <%= render :partial => 'layouts/mobile/flash', :locals => {:flash => flash} %>
+      <div class='content' data-role="content" style='padding-top:0px;'>        
+        <%= yield %>
+      </div>
+    </div>
+    <%= yield(:body) %>
+  </body>
+
+</html>

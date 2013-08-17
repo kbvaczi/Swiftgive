@@ -53,5 +53,5 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem "jquery_mobile_rails", "~> 1.3.0"
+gem "jquery_mobile_rails", "~> 1.3.2"
 

@@ -42,7 +42,7 @@ $headerHeight: 50px;
   min-height:30px;
   margin-top:5px;
   margin-left:0px;
-  background-image: image-url("swiftgive_logo.png");  
+  background-image: asset-url("swiftgive_logo.png", image);  
   background-repeat: no-repeat;
   background-position: top left; 
   background-size: 100%;

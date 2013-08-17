@@ -10,6 +10,6 @@
   width:180px;
   height:40px;
   background-size: auto 100%;
-  background-image: image-url("swiftgive_logo.png");  
+  background-image: asset-url("swiftgive_logo.png", image);  
   background-repeat: no-repeat;
 }

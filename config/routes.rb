@@ -43,9 +43,12 @@ Swiftgive::Application.routes.draw do
   
   resources :payments, :only => [:create]
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
+  get 'payments/guest_splash'  => 'payments#guest_splash', :as => 'guest_splash'
     
   resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]
   
+  match 'about' => 'home#about', :as => 'about'
+
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?
     match 'test' => 'home#test'

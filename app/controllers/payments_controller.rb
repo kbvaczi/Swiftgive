@@ -1,9 +1,14 @@
 class PaymentsController < ApplicationController
 
   before_filter :verify_fund_present, :only => [:new]
+  before_filter :set_back_path, :only => [:new]  
+  before_filter :set_referring_fund_and_redirect_to_splash, :only => [:new]
+
+  def guest_splash
+    render :layout => 'full'
+  end
 
   def new
-    set_back_path
     @payment = Payment.new(params[:payment])
     @payment.fund ||= receiving_fund
     @payment.amount_in_cents = 500
@@ -58,6 +63,13 @@ class PaymentsController < ApplicationController
     unless receiving_fund.present?
       flash[:error] = 'This fund does not exist...'
       redirect_to back_path
+    end
+  end
+
+  def set_referring_fund_and_redirect_to_splash
+    session[:referring_fund_uid] = receiving_fund.uid
+    unless !is_mobile_request? or user_signed_in? or params[:guest_payment].present?
+      redirect_to guest_splash_path
     end
   end
 

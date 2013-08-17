@@ -112,8 +112,8 @@ class Fund < ActiveRecord::Base
     give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s}", '.png'], 'tmp', :encoding => 'ascii-8bit')
     
     code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
-    code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 2000}
-    code_image_blob = IMGKit.new(code_html, :quality => 50, :height => 2400, :width => 2000, :zoom => 1).to_img(:png)
+    code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 3000}
+    code_image_blob = IMGKit.new(code_html, :quality => 50, :height => 3600, :width => 3000, :zoom => 1).to_img(:png)
 
     give_code_image_tempfile.write(code_image_blob)
     give_code_image_tempfile.flush

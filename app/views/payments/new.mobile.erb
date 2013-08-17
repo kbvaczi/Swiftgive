@@ -1,11 +1,11 @@
-<%= render :partial => 'payments/login_or_guest_prompt', :formats => [:mobile] unless user_signed_in? %>
+<%#= render :partial => 'payments/login_or_guest_prompt', :formats => [:mobile] unless user_signed_in? %>
 <%= render :partial => 'accounts/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 
 <%= form_for @payment do |f| %>
 
   <ul data-role="listview" data-inset="true" data-theme"a">
-    <li data-role="list-divider" data-theme='a'>Giving To</li>  
+    <li data-role="list-divider" data-theme='a'>You are giving to</li>  
     <li data-icon='info'>
       <%= link_to "#{receiving_fund.name}", fund_path(receiving_fund) %>
     </li>
