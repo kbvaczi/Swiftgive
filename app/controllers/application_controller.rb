@@ -3,6 +3,23 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
+  #TODO: figure out why after_sign_in_path_for method doesnt work in sessions controller, remove from here
+  def after_sign_in_path_for(resource)
+    Rails.logger.info "AFTER SIGN IN PATH CALLED"
+    if resource.is_a?(User)
+      if false # resource.banned?
+        sign_out resource
+        flash[:error]  = "This account has been suspended..."
+        flash[:notice] = nil # erase any notice so that error can be displayed
+        root_path
+      else
+        back_path
+      end
+    else
+      super
+    end
+  end
+
   # Mobile web functionality (mobylette gem)
   include Mobylette::RespondToMobileRequests  
   mobylette_config do |config|
