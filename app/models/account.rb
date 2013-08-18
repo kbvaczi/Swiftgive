@@ -37,7 +37,11 @@ class Account < ActiveRecord::Base
   
   # returns full name of user
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    if self.last_name.present? 
+      "#{self.first_name} #{self.last_name}"
+    else
+      self.user.email
+    end
   end
 
   def associated_balanced_customer

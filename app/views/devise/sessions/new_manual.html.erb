@@ -1,0 +1,23 @@
+<h1>Returning User</h1>
+
+<div>
+	<%= simple_form_for @user, :url => user_session_path, :html => { :honeypot => true, :class => 'form-horizontal ma' } do |f| %>
+	  
+	  <%= f.input :email , :required => 'true', :placeholder => 'Email' %>
+	  <%= f.input :password, :required => 'true', :placeholder => 'Password'  %>
+	  
+	  
+	  <% if devise_mapping.rememberable? -%>
+	    <%= f.input :remember_me, :as => :boolean, :label => false, :inline_label => 'Remember me' %>
+	  <% end -%>
+
+	  <%= f.label ' ' %> 
+	  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+	    <i class="icon-ok icon-white"></i> Save
+	  <% end %>
+
+	<% end %>
+
+	<%= render :partial => "devise/shared/links" %>
+</div>
+

@@ -13,7 +13,6 @@ class Users::SessionsController < Devise::SessionsController
   # do this after a user signs in
   #TODO: implement banned funcationality for users
   def after_sign_in_path_for(resource)
-    Rails.logger.info "AFTER SIGN IN PATH CALLED"
     if resource.is_a?(User)
       if false # resource.banned?
         sign_out resource

@@ -3,28 +3,13 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  #TODO: figure out why after_sign_in_path_for method doesnt work in sessions controller, remove from here
-  def after_sign_in_path_for(resource)
-    Rails.logger.info "AFTER SIGN IN PATH CALLED"
-    if resource.is_a?(User)
-      if false # resource.banned?
-        sign_out resource
-        flash[:error]  = "This account has been suspended..."
-        flash[:notice] = nil # erase any notice so that error can be displayed
-        root_path
-      else
-        back_path
-      end
-    else
-      super
-    end
-  end
-
   # Mobile web functionality (mobylette gem)
   include Mobylette::RespondToMobileRequests  
   mobylette_config do |config|
-    config[:skip_xhr_requests] = false #this is needed for jquery mobile framework which sends requests via xhr
+    config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
   end
+  # Uncomment the next line to force all requests to be treated as mobile requests (for testing)
+  # before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
   # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
   def bot_user?
@@ -72,6 +57,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_path
 
+  # Used to create unique page ID for mobile pages
   def current_page_id
     Rails.application.routes.recognize_path(request.path).inspect.parameterize('_') rescue root_path
   end

@@ -3,6 +3,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Mobylette::RespondToMobileRequests  
   include Devise::Controllers::Rememberable # allows us to use remember_me helper to persist sessions
   
+  # TODO: enable banned user functionality
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(User)
+      if false # resource.banned?
+        sign_out resource
+        flash[:error]  = "This account has been suspended..."
+        flash[:notice] = nil # erase any notice so that error can be displayed
+        root_path
+      else
+        back_path
+      end
+    else
+      super
+    end
+  end
+
   def facebook
     @raw_auth_data   = request.env["omniauth.auth"]
     city_name    = @raw_auth_data.info.location.partition(', ')[0].titleize rescue nil
