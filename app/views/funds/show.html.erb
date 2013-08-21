@@ -3,31 +3,9 @@
 
 <p class='lead'><%= current_fund.description %></p>
 
-<h3>Info</h3>
-<table class="table table-striped">
-  <tr>
-    <th>Based From</th>
-    <td><p><%= "#{current_fund.city.capitalize}, #{current_fund.state}" %></p></td>
-  </tr>
-  <tr>
-    <th>Created</th>
-    <td><p><%= display_time current_fund.created_at, :day => false %></p></td>
-  </tr>
-  <tr>
-    <th>Owners</th>
-    <td>
-    	<% current_fund.owners.each do |owner| %>
-    		<div>
-    			<div class='left' ><%= image_tag owner.avatar %></div>
-    			<div class='left pl'>
-    				<b><%= owner.full_name %></b><br/>
-    				<%= "#{owner.city.capitalize}, " if owner.city.present? %> <%= "#{Carmen::Country.coded(owner.country).subregions.coded(owner.state).name rescue owner.state}" if owner.state.present? %>
-    			</div>
-    		</div>
-    	<% end %>    	
-    </td>
-  </tr>
-</table>
+<%= render :partial => 'funds/show/marketing_products' if is_current_fund_owner %>
+<%= render :partial => 'funds/show/info' unless is_current_fund_owner %>
+
 
 <% if current_fund.recent_payments.present? %>
 	<h3>Recent Donations</h3>

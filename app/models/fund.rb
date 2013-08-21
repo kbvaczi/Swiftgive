@@ -33,6 +33,7 @@ class Fund < ActiveRecord::Base
 
   validates_presence_of :uid, :name, :description
   validates             :fund_type, :inclusion => { :in => %w(business person), :message => "%{value} is not valid" }
+  validates             :name, :format => { :with => /\A[\s\w\d().'!?]+\z/, :message => "No special characters" } 
   validate              :create_associated_balanced_customer, :on => :create, :unless => Proc.new { self.balanced_uri.present? }
                         
   # ----- Callbacks ----- #    

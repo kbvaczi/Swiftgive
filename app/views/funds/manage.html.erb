@@ -2,20 +2,22 @@
 
   <ul class="nav nav-pills">  	
     <li <%= "class=active" if not params[:section].present? %>><a href=<%= url_for params.merge(:section => nil) %>><i class="icon-eye-open"></i>&nbsp; Summary</a></li>
+    <li <%= "class=active" if params[:section] == 'marketing' %>><a href=<%= url_for params.merge(:section => 'marketing') %>><i class="icon-globe"></i>&nbsp; Marketing</a></li>
     <li <%= "class=active" if params[:section] == 'donations' %>><a href=<%= url_for params.merge(:section => 'donations') %>><i class="icon-gift"></i>&nbsp; Donations</a></li>
-    <li <%= "class=active" if params[:section] == 'membership' %>><a href=<%= url_for params.merge(:section => 'membership') %>><i class="icon-user"></i>&nbsp; Membership</a></li>
-    <li <%= "class=active" if params[:section] == 'properties' %>><a href=<%= url_for params.merge(:section => 'properties') %>><i class="icon-wrench"></i>&nbsp; Properties</a></li>
+    <li <%= "class=active" if params[:section] == 'setup' %>><a href=<%= url_for params.merge(:section => 'setup') %>><i class="icon-wrench"></i>&nbsp; Setup</a></li>
   </ul>
 
   <%= case params[:section]
   	when 'donations'
 			render :partial => 'funds/manage/manage_donations'
+		when 'marketing'
+			render :partial => 'funds/manage/manage_marketing'
 		when 'membership'
 			render :partial => 'funds/manage/manage_membership'
-		when 'properties'
-			render :partial => 'funds/manage/manage_properties'
+		when 'setup'
+			render :partial => 'funds/manage/manage_setup'
 		else 
-			render :partial => 'funds/manage/manage_summary'  		
+			render :partial => 'funds/manage/manage_summary' 		
   end %>
 
 <%= content_for :sidebar do %>

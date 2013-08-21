@@ -1,13 +1,5 @@
 CarrierWave.configure do |config|
 
-  if Rails.env.production?
-    directory = 'swiftgive'
-  elsif Rails.env.staging?
-    directory = 'swiftgive-staging'
-  else
-    directory = 'swiftgive-development'
-  end
-
   config.cache_dir = "#{Rails.root}/tmp/uploads"                    # this is required for heroku to work properly
 
   config.fog_credentials = {
@@ -20,7 +12,7 @@ CarrierWave.configure do |config|
 
   config.storage        = :fog
   config.fog_attributes = {'Cache-Control'=>'public, max-age=315576000'}  # set cache-control headers for uploaded files
-  config.fog_directory      = directory
+  config.fog_directory  = ENV['AWS_BUCKET']
   
   
   

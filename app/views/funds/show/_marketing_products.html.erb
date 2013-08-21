@@ -1,0 +1,10 @@
+
+<h3>Market Your Fund</h3>
+<div class='center_wrap marketing_products clearfix'>
+	<% MarketingProduct.scoped.each do |product| %>
+		<span style='display:inline-block;width:150px'>
+			<%= link_to image_tag(product.picture_url, :width => '100px'), product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix', :target => '_blank' %>
+			<h5><%= product.name %></h5>
+		</span>
+	<% end %>
+</div>

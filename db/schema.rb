@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609132554) do
+ActiveRecord::Schema.define(:version => 20130818141052) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -120,6 +120,19 @@ ActiveRecord::Schema.define(:version => 20130609132554) do
   add_index "funds_withdraws", ["fund_id"], :name => "index_funds_withdraws_on_fund_id"
   add_index "funds_withdraws", ["status"], :name => "index_funds_withdraws_on_status"
   add_index "funds_withdraws", ["uid"], :name => "index_funds_withdraws_on_uid"
+
+  create_table "marketing_products", :force => true do |t|
+    t.string   "name"
+    t.integer  "price_in_cents"
+    t.string   "zazzle_template_id"
+    t.string   "picture_url"
+    t.boolean  "is_active",          :default => true
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "marketing_products", ["name"], :name => "index_marketing_products_on_name"
+  add_index "marketing_products", ["zazzle_template_id"], :name => "index_marketing_products_on_zazzle_template_id"
 
   create_table "payments", :force => true do |t|
     t.integer  "fund_id"

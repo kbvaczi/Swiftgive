@@ -3,19 +3,12 @@
 	<% current_fund.owners.each do |owner| %>
 		<tr>
 			<td>
-				<%= owner.full_name %>
+				<b><%= owner.full_name %></b>
 			</td>
-		</tr>
-	<% end %>
-</table>
-
-<h3>Members</h3>
-<table class='table'>
-	<% current_fund.members.each do |member| %>		
-		<tr>
 			<td>
-				<%= member.full_name %>
+				<%= link_to "<i class='icon-remove-sign'> </i>&nbsp; Remove".html_safe, root_path, :class => 'btn-small' %>
 			</td>
 		</tr>
 	<% end %>
 </table>
+<%= link_to "<i class='icon-plus'> </i>&nbsp; Add New Owner".html_safe, root_path, :class => 'btn-small' %>
