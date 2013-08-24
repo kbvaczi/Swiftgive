@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
   end
   # Uncomment the next line to force all requests to be treated as mobile requests (for testing)
-  before_filter Proc.new { session[:mobylette_override] = :force_mobile }
+  # before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
   # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
   def bot_user?
