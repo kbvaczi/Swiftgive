@@ -1,0 +1,19 @@
+<div id="add_social_network_form" data-role="popup" data-history='false' data-position-to="window" data-overlay-theme="a" data-transition='pop'>
+    
+  <div data-role="header" data-theme='a'>
+      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+      <h4 style='margin:10px 0px;'>Add a Social Network</h4>
+  </div>
+    
+  <div class="pa center_wrap">
+    
+    <div>
+      <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_add_path(:facebook), :rel => 'external' %>
+      <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_add_path(:google_oauth2), :rel => 'external' %>
+      <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_add_path(:linkedin), :rel => 'external' %>   
+    </div>
+
+    <p>Quickly sign in through your social network of choice without entering your Swiftgive password every time</p>
+  </div>
+
+</div>

@@ -1,33 +1,45 @@
 <%= render :partial => 'accounts/edit_personal_info', :formats => [:mobile] %>
 <%= render :partial => 'accounts/edit_location', :formats => [:mobile] %>
 <%= render :partial => 'accounts/payment_cards/new', :formats => [:mobile], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
+<%= render :partial => 'accounts/add_social_network', :formats => [:mobile] %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" data-theme='a'>My Profile</li>  
     <li data-icon='gear'>
-      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window" style='padding:10px;'>
+      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
+        <!-- 
+        <%# remove avatar for now %>
         <div class='ui-grid-a'>
           <div class='ui-block-a side'>
-            <% if current_user.account.avatar.present? %>
-              <%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
-            <% else %>
+            <%# if current_user.account.avatar.present? %>
+              <%#= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
+            <%# else %>
               <div style='height:80px;width:80px'>Add Image</div>
-            <% end %>
+            <%# end %>
           </div>
           <div class='ui-block-b main pr-m'>
-            <h3 class='mt-s mb-s'><%= current_user.account.first_name %></h3>
-            <h3 class='mt-s'><%= current_user.account.last_name %></h3>
+            <h3 class='mt-s mb-s'><%#= current_user.account.first_name %></h3>
+            <h3 class='mt-s'><%#= current_user.account.last_name %></h3>
+            <p><%#= current_user.email %></p>
+            <%# if current_user.account.date_of_birth.present? %>
+              <p><i>Born: <%#= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
+            <%# else %>
+              <p><i>No birthday entered</i></p>
+            <%# end %>
+          </div>          
+        </div>
+        -->
+        <div>
+            <h3 class='mt-s mb-s'><%= current_user.account.full_name %></h3>            
             <p><%= current_user.email %></p>
             <% if current_user.account.date_of_birth.present? %>
               <p><i>Born: <%= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
             <% else %>
               <p><i>No birthday entered</i></p>
             <% end %>
-          </div>          
-        </div>
+          </div>     
       </a>
     </li>
-
     <li data-icon='gear'>      
         <% if current_user.account.city.present? and current_user.account.state.present? and current_user.account.postal_code.present? %>
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">
@@ -41,33 +53,37 @@
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">Setup Location Info</a>
         <% end %>
     </li>
-
-  </li>
-  <li data-role="list-divider" data-theme='a'>Payment Cards</li>  
-    <% current_user.account.payment_cards.each do |payment_card| %>
-      <li data-icon='delete'><%= link_to "#{payment_card.card_type} ending in #{payment_card.last_4_digits}", accounts_payment_card_path(payment_card), :method => :delete, :confirm => 'are you sure you want to delete this card?' %> </li>         
-    <% end %> 
-    <li data-icon='plus'>
-      <a href="#new_payment_card_form" data-rel="popup" data-position-to="window">Add a payment card</a>
-      <%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
-        <%= f.hidden_field :balanced_uri %>
-      <% end %>
-    </li>
-  </li>
-
-  <li data-role="list-divider" data-theme='a'>Social Networks Linked</li>  
-    <li>
-      <div class='center_wrap'>
-        <% current_user.authentications.each do |authentication| %>
-          <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
-          <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
-          <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
-        <% end %>
-      </div>
-    </li>
   </li>
 </ul>
 
+<ul data-role="listview" data-inset="true" data-theme"a">
+  <li data-role="list-divider" data-theme='a'>My Payment Cards</li>  
+  <% current_user.account.payment_cards.each do |payment_card| %>
+    <li data-icon='delete'><%= link_to "#{payment_card.card_type} ending in #{payment_card.last_4_digits}", accounts_payment_card_path(payment_card), :method => :delete, :confirm => 'are you sure you want to delete this card?' %> </li>         
+  <% end %>
+  <li data-icon='plus'>
+    <a href="#new_payment_card_form" data-rel="popup" data-position-to="window">Add a payment card</a>
+    <%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
+      <%= f.hidden_field :balanced_uri %>
+    <% end %>
+  </li>
+</ul>
+
+<ul data-role="listview" data-inset="true" data-theme"a">
+  <li data-role="list-divider" data-theme='a'>My Social Networks</li>  
+  <li>
+    <div class='center_wrap'>
+      <% current_user.authentications.each do |authentication| %>
+        <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
+        <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
+        <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
+      <% end %>
+    </div>
+  </li>
+  <li data-icon='plus'>
+    <a href="#add_social_network_form" data-rel="popup" data-position-to="window">Add Social Network</a>
+  </li>
+</ul>
 
 <script type='text/javascript'>
 

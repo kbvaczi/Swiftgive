@@ -8,15 +8,15 @@ Swiftgive::Application.routes.draw do
     if Rails.env.development? or Rails.env.staging?                                                         
       get 'sign_in' => "users/sessions#sign_in_test" 
     end
-  end 
+  end
   
-  scope :module => 'users' do   
+  scope :module => 'users' do
     get 'account/sign_in_using_authentication/:provider'  => 'authentications#sign_in', :as => :authentication_sign_in
     get 'account/prompt_to_register'                      => 'authentications#prompt_to_register', :as => :authentication_prompt_to_register
     get 'account/register_using_authentication/:provider' => 'authentications#register_new_account', :as => :authentication_register
     get 'account/add_authentication/:provider'            => 'authentications#add_authentication_to_existing_account', :as => :authentication_add        
     get 'account/remove_authentication/:provider'         => 'authentications#remove_authentication_from_existing_account', :as => :authentication_remove
-  end 
+  end
 
   get 'profile' => 'accounts#show', :as => :show_user_profile
   put 'profile/update' => 'accounts#update', :as => :update_user_profile

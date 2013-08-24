@@ -3,9 +3,9 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Edit Your Email</h3>
   </div>  
-  <%= form_for current_user, :url => user_registration_path, :method => :put do |f| %>
+  <%= simple_form_for current_user, :url => user_registration_path, :html => {:class => 'form-horizontal'}, :method => :put do |f| %>
     <div class="modal-body">     
-      <%= f.text_field :email, :placeholder => 'Last Name' %>    
+      <%= f.input :email, :label => false, :placeholder => 'example@domain.com' %>    
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

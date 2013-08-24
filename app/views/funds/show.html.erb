@@ -14,7 +14,6 @@
 			<tr>
 				<td>
 				<div>
-					<div class='left' ><%= image_tag payment.sender.avatar unless payment.is_anonymous %></div>
 					<div class='left pl'>
 						<b><%= payment.is_anonymous ? 'Anonymous Donor' : payment.sender.full_name %></b><br/>
 						<%= "#{payment.sender.city.capitalize}, " if payment.sender.city.present? %> <%= "#{Carmen::Country.coded(payment.sender.country).subregions.coded(payment.sender.state).name rescue payment.sender.state}" if payment.sender.state.present? %>

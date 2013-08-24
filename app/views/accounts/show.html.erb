@@ -6,12 +6,15 @@
     <td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
     <%= render :partial => 'edit_name' %>
   </tr>
+<!-- 
+  <%# take out avatar for now %>
   <tr>
     <th>Picture</th>
-    <td><%= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %></td>
+    <td><%#= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %></td>
     <td><a href="#edit_avatar_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_avatar' %>
+    <%#= render :partial => 'edit_avatar' %>
   </tr>
+-->
   <tr>
     <th>Email Address</th>
     <td><%= current_user.email %></td>
@@ -22,7 +25,7 @@
     <th>Date of Birth</th>
     <td>
       <% if current_user.account.date_of_birth.present? %>
-        <%= display_time current_user.account.date_of_birth, :day => false  %>
+        <%= display_time current_user.account.date_of_birth, :format => 'spelled'  %>
       <% else %>
         <i>Please enter date-of-birth</i>
       <% end %>
@@ -40,8 +43,13 @@
     <td><a href="#edit_location_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
     <%= render :partial => 'edit_location' %>
   </tr>
+</table>
+
+<br class='spacer'/>
+
+<h2>My Payment Cards</h2>
+<table class='table'>
   <tr>
-    <th>Payment Cards</th>
     <td>
       <% payment_cards = current_user.account.payment_cards %>
       <% if payment_cards.present? %>
@@ -55,16 +63,25 @@
     <td><a href="#add_payment_card_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a></td>
     <%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
   </tr>
+</table>
+
+<br class='spacer'/>
+
+<h2>My Social Networks</h2>
+<table class='table'>
   <tr>
-    <th>Social Networks Linked</th>
     <td>
       <% current_user.authentications.each do |authentication| %>
-        <div><%= authentication.provider_name %></div>
+        <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
+        <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
+        <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
       <% end %>
     </td>
-    <td><div class='btn-small'><i class="icon-wrench"></i> Edit</div></td>
+    <td><a href="#add_social_network" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a></td>
+    <%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
   </tr>
 </table>
+
 
 
 <script type='text/javascript'>

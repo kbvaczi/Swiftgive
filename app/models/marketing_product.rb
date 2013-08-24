@@ -17,12 +17,21 @@ class MarketingProduct < ActiveRecord::Base
   # ----- Member Methods ----- #
 
   def link_to_product(params = {})
-  	URI::HTTP.build({:host  => 'www.zazzle.com',
-  				 	 :path  => "/#{self.zazzle_template_id}",
-  				 	 :query => params.present? ? params.to_query : nil}).to_s
+    #TODO: figure out what characters are not allowed
+    
+    default_params = { :rf => '238963925078453068',
+               :tc => '',
+               :ic => '',
+               :ax => 'Linkover', 
+               :pd => self.zazzle_template_id, # zazzle template ID
+               :fwd => 'ProductPage',  # this is a link to product page
+               :ed => 'true' } # user can customize the product
+
+    URI::HTTP.build({ :host  => 'www.zazzle.com',
+              :path  => "/api/create/at-238963925078453068",
+              :query => params.present? ? params.merge(default_params).to_query : default_params.to_query}).to_s
   end
 
   # ----- Class Methods ----- #
-  
   
 end

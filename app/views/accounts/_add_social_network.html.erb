@@ -1,0 +1,17 @@
+<div id="add_social_network" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addSocialNetwork" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Add a Social Network</h3>
+  </div>
+  <div class="modal-body center_wrap">
+    <p>Quickly sign in through your social network of choice without entering your swiftgive password every time</p>
+    <div>
+      <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_add_path(:facebook), :rel => 'external' %>
+      <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_add_path(:google_oauth2), :rel => 'external' %>
+      <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_add_path(:linkedin), :rel => 'external' %>   
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

@@ -11,9 +11,14 @@ module ApplicationHelper
   
   def display_time(time, options = {})
     if options[:day] == false
-      time.strftime("%m/%Y")
+      day = nil
+    else
+      day = time.day.ordinalize
+    end
+    if options[:format] == 'long'
+      time.strftime("%B #{day}, %Y")
     elsif options[:format] == 'long'
-      time.strftime("%B #{time.day.ordinalize}, %Y")
+      time.strftime("%B #{day}, %Y")
     elsif options[:format] == 'spelled'
       time.strftime("%B %Y")
     else
