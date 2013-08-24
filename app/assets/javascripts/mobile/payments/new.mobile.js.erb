@@ -2,14 +2,10 @@ $( document ).delegate("[data-role='page']", "pageinit", function() {
 
   $('#custom_amount_value').initAutoNumeric();
 
-  $("#payment_amount_in_cents-listbox").on('click', function(){
-    $('#payment_amount_in_cents').data('previous_value', $(this).val());
-  });
-
   $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
     var target = $('#payment_amount_in_cents');
     if (target.val() == 'other'){
-      target.val(target.data('previous_value'));
+      target.val(target.children('option:first-child').attr('value'));
       target.selectmenu( "refresh" );
       window.setTimeout(function() { 
         $('#custom_amount_popup').popup('open'); 
