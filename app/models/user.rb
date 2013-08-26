@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :account_attributes
+  attr_accessible :email, :password, :password_confirmation, :current_password, :remember_me, :account_attributes
   
   has_one     :account
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   
   # used to determine if password is required to update account info.  Omniauth authenticated users will have a randomly generated password.
   def password_required?
-    super && self.authentications.nil?
+    super && self.is_password_set
   end
   
   def build_authentication(options={})
@@ -72,11 +72,12 @@ class User < ActiveRecord::Base
     options = {:standardized_auth_data => nil, :raw_auth_data => nil}.merge(options)    
     existing_authentication = Users::Authentication.where(options[:standardized_auth_data].slice(:provider, :uid)).first    
     unless existing_authentication.present?
-      user = new(options[:standardized_auth_data].slice(:email, :account_attributes))
-      user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
-      user.build_authentication(options)
-      user.password = SecureRandom.hex(10).to_s # set a random password so user's account cannot be accessed manually
-      return user if user.save
+      new_user = new(options[:standardized_auth_data].slice(:email, :account_attributes))
+      new_user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
+      new_user.build_authentication(options)
+      new_user.password = SecureRandom.base64(10).to_s # set a random strong password so user's account cannot be accessed manually
+      new_user.is_password_set = false # this lets us know that the user does not have a password
+      return new_user if new_user.save
     end
     return nil
   end

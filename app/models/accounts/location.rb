@@ -30,6 +30,10 @@ class Accounts::Location
     {:street_address => self.street_address, :city => self.city, :state => self.state, :postal_code => self.postal_code, :country => self.country}
   end
 
+  def self.required_inputs
+    [ :street_address, :city, :state, :postal_code, :country ]
+  end
+
   def to_key; end
 
   def save

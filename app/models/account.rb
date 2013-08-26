@@ -53,6 +53,14 @@ class Account < ActiveRecord::Base
     end
   end
   
+  def location
+    inputs_list = {}
+    Accounts::Location.required_inputs.each do |input_symbol|
+      inputs_list.merge!(input_symbol => self[input_symbol])
+    end
+    location = Accounts::Location.new(inputs_list)
+  end
+  
   # ----- Class Methods ----- #
 
   # ----- Protected Methods ----- #

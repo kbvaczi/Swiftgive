@@ -9,13 +9,13 @@ class ApplicationController < ActionController::Base
     config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
   end
   # Uncomment the next line to force all requests to be treated as mobile requests (for testing)
-  before_filter Proc.new { session[:mobylette_override] = :force_mobile }
+  # before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
   # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end
-  helper_method :bot_user? 
+  helper_method :bot_user?
   
   # sets the current page as the back path for following pages to return to when back_path is redirected to
   def set_back_path
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
       session[:back_path] = @new_back_path_queue unless @new_back_path_queue == @current_back_path_queue               # don't hit session again if back path queue hasn't changed
     end
   end
-  helper_method :set_back_path  
+  helper_method :set_back_path
     
   # returns to the url where set_back_path has last been set and clears back_path
   def back_path

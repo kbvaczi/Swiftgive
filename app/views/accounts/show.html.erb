@@ -1,5 +1,8 @@
 <h2>My Profile</h2>
 <table class="table">
+  <col width='25%' />
+  <col width='55%' />
+  <col width='20%' />
   <tr>
     <th>Name</th>
     <td><%= current_user.account.full_name %></td>
@@ -35,13 +38,29 @@
   </tr>
   <tr>
     <th>Location</th>
-    <td>   
-      <%= current_user.account.street_address if current_user.account.street_address.present? %><br>
-      <%= "#{current_user.account.city.capitalize}, " if current_user.account.city.present? %> <%= "#{Carmen::Country.coded(current_user.account.country).subregions.coded(current_user.account.state).name rescue current_user.account.state}" if current_user.account.state.present? %>
-      <%= current_user.account.postal_code if current_user.account.postal_code.present?%>      
+    <td>
+      <% if current_user.account.location.valid? %>
+        <%= current_user.account.street_address if current_user.account.street_address.present? %><br>
+        <%= "#{current_user.account.city.capitalize}, " if current_user.account.city.present? %> <%= "#{Carmen::Country.coded(current_user.account.country).subregions.coded(current_user.account.state).name rescue current_user.account.state}" if current_user.account.state.present? %>
+        <%= current_user.account.postal_code if current_user.account.postal_code.present?%>      
+      <% else %>
+        <i>Please enter your location information</i>
+      <% end %>
+      
     </td>
     <td><a href="#edit_location_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
     <%= render :partial => 'edit_location' %>
+  </tr>
+  <tr>
+    <th>Password</th>
+    
+      <% if current_user.is_password_set %>
+        <td>Your password is set</td>
+      <% else %>
+        <td><i>You currently have no password</i></td>
+      <% end %>
+    <td><a href="#edit_password_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
+    <%= render :partial => 'edit_password' %>
   </tr>
 </table>
 
@@ -49,6 +68,8 @@
 
 <h2>My Payment Cards</h2>
 <table class='table'>
+  <col width='80%' />
+  <col width='20%' />
   <tr>
     <td>
       <% payment_cards = current_user.account.payment_cards %>
@@ -69,6 +90,8 @@
 
 <h2>My Social Networks</h2>
 <table class='table'>
+  <col width='80%' />
+  <col width='20%' />
   <tr>
     <td>
       <% current_user.authentications.each do |authentication| %>

@@ -1,4 +1,4 @@
-<%= form_for @fund do |f| %>
+<%= simple_form_for @fund, :html => {:class => 'form-horizontal'} do |f| %>
  
   <% if @fund.errors.any? %>
     <div id="error_explanation">
@@ -12,24 +12,30 @@
     </div>
   <% end %>
 
-  <%= f.text_field :name, :placeholder => 'Fund Name' %>
-  <%= f.text_field :description,  :placeholder => 'Description' %>
-  <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :onchange => "refreshFormNewFund()" %>
+  <%= f.input :name, :placeholder => 'Fund Name' %>
+  <%= f.input :description,  :placeholder => 'Description' %>
+  <%= f.input :fund_type, :as => :select,
+                          :include_blank => false,
+                          :collection => [['Personal','person'],['Business / Non-Profit','business']],
+                          :input_html => {:onchange => "refreshFormNewFund()"} %>
     
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
     
-    <%= f.text_field :business_name, :placeholder => 'Business Name' %>
-    <%= f.text_field :business_ein, :placeholder => 'Business EIN' %>
-    <%= f.text_field :business_phone_number, :placeholder => 'Business Phone Number' %>
+    <%= f.input :business_name, :placeholder => 'Business Name' %>
+    <%= f.input :business_ein, :placeholder => 'Business EIN' %>
+    <%= f.input :business_phone_number, :placeholder => 'Business Phone Number' %>
   
-    <%= f.text_field :street_address, :placeholder => 'Street Address' %>
-    <%= f.text_field :city, :placeholder => 'City' %>    
-    <%= f.text_field :state, :placeholder => 'State' %>    
-    <%= f.text_field :postal_code, :placeholder => 'Zipcode' %>
+    <%= f.input :street_address, :placeholder => 'Street Address' %>
+    <%= f.input :city, :placeholder => 'City' %>    
+    <%= f.input :state, :placeholder => 'State' %>    
+    <%= f.input :postal_code, :placeholder => 'Zipcode' %>
     
   </div>
-
-  <%= f.submit "Create This Fund" %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to 'Cancel', back_path, :class => "btn" %>
+  </div>
+  
 
 <% end %>
 

@@ -32,6 +32,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       ## Token authenticatable
       # t.string :authentication_token
+
+      ## Custom
+      t.boolean :is_password_set, :default => true
       
       t.timestamps
     end

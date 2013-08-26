@@ -14,6 +14,7 @@ class Users::AuthenticationsController < ApplicationController
   
   def prompt_to_register
     session['devise.authentication_reason'] = 'register'
+    render :layout => 'full'
   end
   
   def register_new_account
