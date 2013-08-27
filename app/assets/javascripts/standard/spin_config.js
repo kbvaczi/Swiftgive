@@ -18,7 +18,8 @@ $(document).ready(function() {
     left: 'auto' // Left position relative to parent in px
   };
 
-  $('#main').bind('ajaxStart', function(){
+  $('#page').bind('ajaxStart', function(){
+      alert('hi');
       $(this).spin(opts);
       $('.spinner').css({
         display:'none',
@@ -31,7 +32,7 @@ $(document).ready(function() {
         marginTop:'0px',             // half of height
         marginLeft:'0px'            // half of width
       });
-      $('.spinner').delay(1500).fadeIn();
+      $('.spinner').delay(2000).fadeIn();
   }).bind('ajaxStop', function(){
       $('.spinner').stop(1);
       $(this).spin(false);
@@ -39,7 +40,24 @@ $(document).ready(function() {
         
 });
 
-$.fn.spin = function(opts) {
+$.fn.spin = function(options) {
+    var opts = {
+    lines: 10, // The number of lines to draw
+    length: 7, // The length of each line
+    width: 8, // The line thickness
+    radius: 20, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 0, // The rotation offset
+    color: '#000', // #rgb or #rrggbb
+    speed: 1, // Rounds per second
+    trail: 60, // Afterglow percentage
+    shadow: true, // Whether to render a shadow
+    hwaccel: true, // Whether to use hardware acceleration
+    className: 'spinner', // The CSS class to assign to the spinner
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    top: 'auto', // Top position relative to parent in px
+    left: 'auto' // Left position relative to parent in px
+  };
   this.each(function() {
     var $this = $(this),
         data = $this.data();
