@@ -1,51 +1,34 @@
-<div id="add_payment_card_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="new_card_modal" aria-hidden="true">
+<div id="add_payment_card_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="add_payment_card_modal_label" aria-hidden="true" keyboard='false'>
   
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Add a Payment Card</h3>
+    <h3 id="add_payment_card_modal_label">Add a Payment Card</h3>
   </div>  
   
-  <div class="modal-body">
-    <div id='new_card_inputs'>
-      <input type="text" name="name_on_card" autocomplete="off" placeholder='Cardholder Name' <%= "value=Bob" unless Rails.env.production? %> />
-      <input type="text" name="card_number" <%= "value=4111111111111111" unless Rails.env.production? %> autocomplete="off" placeholder='Card Number' />
-      <div>
-        <select type="select"  name="expiration_month" value="1">
-          <% 12.times do |index| %>
-            <%= "<option value=\'#{index+1}\'>#{index+1}</option>".html_safe %>
-          <% end %>
-        </select>
-      </div> 
-      <div>
-        <select type="select"  name="expiration_year" selected="2020">
-          <% 10.times do |index| %>
-            <% year = index + Time.now.year %>
-            <%= "<option value=\'#{year}\' #{"selected=\'selected\'" unless (Rails.env.production? or year != 2020)} >#{year}</option>".html_safe %>
-          <% end %>
-        </select>
-      </div>      
-      <div>
-        <input type="text"  name="security_code" placeholder='XXX' autocomplete="off" <%= "value=123" unless Rails.env.production? %> />
-      </div>
-      <div>
-        <input type="text"  name="zip_code" placeholder='XXXXX' autocomplete="off" <%= "value=12345" unless Rails.env.production? %> /> 
-      </div>
-      <% if user_signed_in? %>
-        <div>
-          <select name='remember_card'>
-            <option value='false'>No</option>
-            <option value='true' selected='selected'>Yes</option>
-          </select>                    
-        </div>
-      <% end %>          
-    </div>      
-  </div>
-  
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button id='payment_card_submit' class='btn btn-primary'>Validate Card</button>            
-  </div>
+  <% payment_card_submission = Rails.env.production? ? Accounts::PaymentCardSubmission.new : Accounts::PaymentCardSubmission.new(Accounts::PaymentCardSubmission.default_values_for_testing) %>
 
+  <%= simple_form_for payment_card_submission, :url => '', :validate => true, :html => {:id => 'payment_card_submission_form', :class => 'form-horizontal modal-form'} do |f| %>
+    <div class='modal-body'>
+      <div class='center_wrap mb'><%= image_tag 'credit_cards_accepted.png', :width => '400px;' %></div>
+      <%= f.input :name_on_card, :label => 'Cardholder Name', :input_html => {:name => 'name_on_card'} %>
+      <%= f.input :card_number, :input_html => {:name => 'card_number'} %>
+      <%= f.label 'Expiration Date', :required => true %>
+      <div class='control-group required'>
+        <div class='controls clearfix'>
+          <%= f.select :expiration_month, 1..12, {:include_blank => false}, :style => 'width:60px;', :name => 'expiration_month' %>
+          <%= f.select :expiration_year, Date.today.year..(Date.today.year+10), {:include_blank => false}, :style => 'width:80px;', :name => 'expiration_year' %>
+        </div>                     
+      </div>                 
+      <%= f.input :security_code, :input_html => {:style => 'width:70px;'}, :input_html => {:name => 'security_code'} %>
+      <%= f.input :postal_code, :input_html => {:style => 'width:70px;'}, :input_html => {:name => 'postal_code'} %>
+      <%= f.input :remember_card, :as => :boolean, :label => false, :checked => true, :inline_label => 'Remember This Card' %>
+    </div>
+
+    <div class='modal-footer mt'>
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+      <%= f.submit 'Validate Card', :class => 'btn btn-primary', :id => 'payment_card_submit' %>
+    </div>
+  <% end %>
 </div>
 
 <%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
@@ -56,7 +39,7 @@
 <script type="text/javascript">
 
   var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
- 
+
   var debug = function (tag, content) {
      console.log('<' + tag + '>' + content + '</' + tag + '>');
   };
@@ -77,11 +60,24 @@
       security_code: $form.find('[name="security_code"]').val(),
       postal_code: $form.find('[name="postal_code"]').val(),
     }; 
+    
+    //$form.closest("[role='dialog']").modal('hide');  
     $('#main').spin();
     balanced.card.create(cardData, <%= defined?(callback_function) ? callback_function : 'balancedAddCardCallback' %>);
   };
 
-  $('#payment_card_submit').click(function(e){
+  window.ClientSideValidations.callbacks.form.pass = function(form, eventData) {
+    if (form.attr('id') == 'payment_card_submission_form') {
+      tokenizeCard(form);      
+    }
+  };
+
+  $('#payment_card_submission_form').submit(function(e){
+    e.preventDefault();
+    return false;
+  });
+
+/*  $('#payment_card_submit').click(function(e){
     e.preventDefault();
     var new_card_popup = $(this).closest("[role='dialog']");
     var is_all_data_populated = true;
@@ -101,6 +97,6 @@
       }, 2000);      
       
     }    
-  });
+  });*/
 
 </script>

@@ -1,4 +1,4 @@
-<div id="edit_location_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="edit_location_modal" class="modal hide fade" role="dialog" data-keyboard='false'>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Edit Your Location</h3>
@@ -6,30 +6,19 @@
   <div class="modal-body">
     <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
 
-    <%= form_for location, :url => accounts_location_path, :method => :put do |f| %>
+    <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
 
-      <div class='ui-grid-solo'>
-        <%= f.text_field :street_address, :placeholder => 'Street Address' %>    
+      <div class='form-horizontal'>
+        <%= f.input :street_address, :placeholder => 'Street Address' %>    
+        <%= f.input :city, :placeholder => 'City' %>    
+        <%= f.input :state, :placeholder => 'State' %>    
+        <%= f.input :postal_code, :placeholder => 'Postal Code' %>    
+        <%= f.input :country, :as => :string, :placeholder => 'Country' %>    
       </div>
 
-      <div class='ui-grid-solo'>
-        <%= f.text_field :city, :placeholder => 'City' %>    
-      </div>
-
-      <div class='ui-grid-solo'>
-        <%= f.text_field :state, :placeholder => 'State' %>    
-      </div>
-
-      <div class='ui-grid-solo'>
-        <%= f.text_field :postal_code, :placeholder => 'Postal Code' %>    
-      </div>
-
-      <div class='ui-grid-solo'>
-        <%= f.text_field :country, :placeholder => 'Country' %>    
-      </div>    
     </div>
     <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
       <%= f.submit 'Update', :class => 'btn btn-primary' %>
     </div>
   <% end %>  

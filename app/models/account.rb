@@ -18,13 +18,12 @@ class Account < ActiveRecord::Base
 
   # ----- Validations ----- #
            
-  validates_presence_of  :balanced_uri, :message => 'We could not verify you with our payment processor'
-
-  #TODO: add validations for location information
-  #validates             :state, :format => { :with => /\A[A-Z]{2}\z/, :message => "Please enter a valid State Abbreviation" }  
-  #validates             :postal_code, :format => { :with => /\A\d{5}\z/, :message => "Please enter a valid 5 digit postal_code" } # matches 5-digit US postal_codes only
-  #validates             :country, :format => { :with => /\A[a-zA-Z .]+\z/, :message => "Only letters allowed" }
-
+  validates_presence_of   :balanced_uri,  :message => 'We could not verify you with our payment processor'
+  validates_presence_of   :first_name,    :if => 'self.first_name_changed? and self.persisted?'
+  validates_presence_of   :last_name,     :if => 'self.last_name_changed? and self.persisted?'
+  validates_presence_of   :date_of_birth, :if => 'self.date_of_birth_changed? and self.persisted?'
+  validates               :date_of_birth, :inclusion => { :in => Proc.new { 90.years.ago.to_date..15.years.ago.to_date }, :message => 'Minimum age is 15 years' }
+  
   # ----- Callbacks ----- #              
 
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
@@ -37,11 +36,7 @@ class Account < ActiveRecord::Base
   
   # returns full name of user
   def full_name
-    if self.last_name.present? 
-      "#{self.first_name} #{self.last_name}"
-    else
-      self.user.email
-    end
+    "#{self.first_name} #{self.last_name}"
   end
 
   def associated_balanced_customer

@@ -1,4 +1,4 @@
-<%= simple_form_for @fund, :html => {:class => 'form-horizontal'} do |f| %>
+<%= simple_form_for @fund, :validate => true, :html => {:class => 'form-horizontal'} do |f| %>
  
   <% if @fund.errors.any? %>
     <div id="error_explanation">
@@ -21,7 +21,7 @@
     
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
     
-    <%= f.input :business_name, :placeholder => 'Business Name' %>
+    <%= f.input :business_name, :placeholder => 'Business Name', :required => true %>
     <%= f.input :business_ein, :placeholder => 'Business EIN' %>
     <%= f.input :business_phone_number, :placeholder => 'Business Phone Number' %>
   

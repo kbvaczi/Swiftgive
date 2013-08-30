@@ -12,7 +12,11 @@
 //
 //= require application
 //= require twitter/bootstrap
+//= require rails.validations
+//= require rails.validations.simple_form
+//= require spin
+
 //= require_tree ./standard
 //= require_tree ./shared
-//= require spin
+
 

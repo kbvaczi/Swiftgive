@@ -20,8 +20,11 @@ class User < ActiveRecord::Base
 
   # ----- Validations ----- #
   
-  validates_presence_of :email
-    
+  validates_presence_of   :email
+  validates_uniqueness_of :email
+  validates_length_of :password, :minimum => 8
+  validates_length_of :password_confirmation, :minimum => 8
+
   # ----- Callbacks ----- #
 
   after_initialize  :build_account_when_creating_new_user, :on => :create

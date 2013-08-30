@@ -1,1 +1,8 @@
-<%= link_to 'Add Social Network', authentication_add_path(:facebook) %>
+<%= render :partial => 'accounts/edit_name' %>
+<%= render :partial => 'accounts/edit_location' %>
+<%= render :partial => 'accounts/edit_email' %>
+<%= render :partial => 'accounts/edit_password' %>
+
+<script>
+	$('#edit_name_modal').modal('show');
+</script>

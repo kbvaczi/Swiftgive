@@ -36,6 +36,10 @@ class Accounts::Location
 
   def to_key; end
 
+  def persisted? 
+    false
+  end
+  
   def save
     if self.valid? and current_user.account.update_attributes(self.attributes)
       return true

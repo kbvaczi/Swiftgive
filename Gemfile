@@ -11,18 +11,19 @@ gem "omniauth", "~> 1.1.3"                            # omni-auth implementation
 gem "omniauth-facebook", "~> 1.4.1"                   # omni-auth plugin for logging in from facebook
 gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for logging in with google
 gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
-gem "honeypot-captcha", "~> 0.0.2"                    # alternative to capcha without the complexity  
+
+gem "honeypot-captcha", "~> 0.0.2"                    # alternative to capcha without the complexity 
+gem "simple_form", "~> 2.1.0"                         # standardized form helpers
+gem "client_side_validations", "~> 3.2.6"
+gem "client_side_validations-simple_form", "~> 2.1.0" # client-side validations plugin to use simple form CSS
 
 gem "balanced", "~> 0.7.1"                            # balanced payments gateway
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
-
 gem "imgkit", "~> 1.3.9"                              # convert html to images
 gem "carrierwave", "~> 0.8"                           # image_scan uploader
 gem "fog", "~> 1.10"                                  # supports amazon s3
 gem "mini_magick", "~> 3.6"                           # image manipulation
-
-gem "simple_form", "~> 2.1.0"                         # standardized form helpers
 
 gem "carmen", "~> 1.0.0.beta2"
 #gem "carmen-rails", "~> 1.0.0.beta3"                  # country and state information

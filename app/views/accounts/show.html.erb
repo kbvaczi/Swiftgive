@@ -1,3 +1,11 @@
+<%= render :partial => 'edit_name' %>
+<%= render :partial => 'edit_email' %>
+<%= render :partial => 'edit_birthdate' %>
+<%= render :partial => 'edit_location' %>
+<%= render :partial => 'edit_password' %>
+<%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
+<%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
+
 <h2>My Profile</h2>
 <table class="table">
   <col width='25%' />
@@ -7,7 +15,7 @@
     <th>Name</th>
     <td><%= current_user.account.full_name %></td>
     <td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_name' %>
+    
   </tr>
 <!-- 
   <%# take out avatar for now %>
@@ -22,19 +30,19 @@
     <th>Email Address</th>
     <td><%= current_user.email %></td>
     <td><a href="#edit_email_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_email' %>
+    
   </tr>
   <tr>
     <th>Date of Birth</th>
     <td>
       <% if current_user.account.date_of_birth.present? %>
-        <%= display_time current_user.account.date_of_birth, :format => 'spelled'  %>
+        <%= display_time current_user.account.date_of_birth, :format => 'long'  %>
       <% else %>
         <i>Please enter date-of-birth</i>
       <% end %>
     </td>
     <td><a href="#edit_dob_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_birthdate' %>
+    
   </tr>
   <tr>
     <th>Location</th>
@@ -49,7 +57,7 @@
       
     </td>
     <td><a href="#edit_location_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_location' %>
+    
   </tr>
   <tr>
     <th>Password</th>
@@ -60,7 +68,7 @@
         <td><i>You currently have no password</i></td>
       <% end %>
     <td><a href="#edit_password_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    <%= render :partial => 'edit_password' %>
+    
   </tr>
 </table>
 
@@ -82,7 +90,7 @@
       <% end %>
     </td>
     <td><a href="#add_payment_card_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a></td>
-    <%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
+    
   </tr>
 </table>
 
@@ -101,7 +109,7 @@
       <% end %>
     </td>
     <td><a href="#add_social_network" role="button" class="btn-small" data-toggle="modal"><i class="icon-plus"></i> Add</a></td>
-    <%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
+    
   </tr>
 </table>
 
