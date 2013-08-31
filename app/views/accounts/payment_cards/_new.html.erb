@@ -9,7 +9,7 @@
 
   <%= simple_form_for payment_card_submission, :url => '', :validate => true, :html => {:id => 'payment_card_submission_form', :class => 'form-horizontal modal-form'} do |f| %>
     <div class='modal-body'>
-      <div class='center_wrap mb'><%= image_tag 'credit_cards_accepted.png', :width => '400px;' %></div>
+      <div class='center_wrap mb'><%= image_tag 'credit_cards_accepted.png', :width => '300px;' %></div>
       <%= f.input :name_on_card, :label => 'Cardholder Name', :input_html => {:name => 'name_on_card'} %>
       <%= f.input :card_number, :input_html => {:name => 'card_number'} %>
       <%= f.label 'Expiration Date', :required => true %>
@@ -19,12 +19,12 @@
           <%= f.select :expiration_year, Date.today.year..(Date.today.year+10), {:include_blank => false}, :style => 'width:80px;', :name => 'expiration_year' %>
         </div>                     
       </div>                 
-      <%= f.input :security_code, :input_html => {:style => 'width:70px;'}, :input_html => {:name => 'security_code'} %>
-      <%= f.input :postal_code, :input_html => {:style => 'width:70px;'}, :input_html => {:name => 'postal_code'} %>
+      <%= f.input :security_code, :input_html => {:style => 'width:70px', :name => 'security_code'} %>
+      <%= f.input :postal_code, :input_html => {:style => 'width:70px;', :name => 'postal_code'} %>
       <%= f.input :remember_card, :as => :boolean, :label => false, :checked => true, :inline_label => 'Remember This Card' %>
     </div>
 
-    <div class='modal-footer mt'>
+    <div class='modal-footer'>
       <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
       <%= f.submit 'Validate Card', :class => 'btn btn-primary', :id => 'payment_card_submit' %>
     </div>
@@ -61,42 +61,24 @@
       postal_code: $form.find('[name="postal_code"]').val(),
     }; 
     
-    //$form.closest("[role='dialog']").modal('hide');  
-    $('#main').spin();
+    $('.modal.in').spin();
     balanced.card.create(cardData, <%= defined?(callback_function) ? callback_function : 'balancedAddCardCallback' %>);
   };
 
   window.ClientSideValidations.callbacks.form.pass = function(form, eventData) {
-    if (form.attr('id') == 'payment_card_submission_form') {
+    if ( form.attr('id') == 'payment_card_submission_form' && form.data('submit_status') != true ) {
+      form.data('submit_status', true);
       tokenizeCard(form);      
     }
+    window.setTimeout ( function() {                  
+      form.data('submit_status', false);
+    }, 5000 );
+    return false;
   };
 
   $('#payment_card_submission_form').submit(function(e){
     e.preventDefault();
     return false;
   });
-
-/*  $('#payment_card_submit').click(function(e){
-    e.preventDefault();
-    var new_card_popup = $(this).closest("[role='dialog']");
-    var is_all_data_populated = true;
-    $.each(new_card_popup.find('input'), function(){
-      if (!$(this).val()) {
-        is_all_data_populated = false;
-      }
-    });
-    if (is_all_data_populated) {
-      new_card_popup.modal('hide');
-      tokenizeCard($('#new_card_inputs'));
-    } else {
-      new_card_popup.modal('hide');
-      flashNow('Please completely fill out card information', 'error', new_card_popup);
-      window.setTimeout(function() {
-        new_card_popup.modal('show');
-      }, 2000);      
-      
-    }    
-  });*/
 
 </script>

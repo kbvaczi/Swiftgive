@@ -32,6 +32,9 @@
 		  													 :selected => ((user_signed_in? and current_user.account.payment_cards.first.present?) ? current_user.account.payment_cards.first.id : nil) ,
 		  													 :include_blank => false,
 		  													 :prompt => 'Select Payment Card' %>
+
+	<%= payment_card_form.input :remember_card, :as => :hidden %>	
+		  													 
   <% end %>
   <hr>
   
@@ -47,55 +50,58 @@
 <script type='text/javascript'>
 
 	$('select#payment_card_used_balanced_uri').change(function (){
+		var parent_modal = $('#add_payment_card_modal')
+		var remember_card_input = $('#payment_card_used_remember_card');
+		remember_card_input.val(false); // we dont remember cards by default
 		if ($(this).val() == 'new') {
-			$('#add_payment_card_modal').modal('show');
+			parent_modal.modal('show');
 			$(this).val('');
+			updateRememberCardInput();
 		}		
 	});
 
+	$("[name='accounts_payment_card_submission[remember_card]']").change(function (){
+		updateRememberCardInput();
+	});
+
+	function updateRememberCardInput(){
+		var remember_card_input = $('#payment_card_used_remember_card');
+		var rembmer_card_submission_input = $("[name='accounts_payment_card_submission[remember_card]']");
+		remember_card_input.val(rembmer_card_submission_input.is(':checked'));
+	}			
+
 	function addPaymentCardToSelect(new_label, new_value) {
-		var target_select = $('select#payment_card_used_balanced_uri');	  
-	  var index_to_insert_before = 1;//$("select#payment_card_used_balanced_uri option[value='new']").index('option');
-	  target_select.find("option:eq(" + index_to_insert_before + ")").before("<option value=" + new_value + ">" + new_label + "</option>");
-	  target_select.val(new_value);
-	  //$('#custom_amount_popup').popup('close');
+		var target_select = $('select#payment_card_used_balanced_uri');
+	 	var index_to_insert_before = 1;//$("select#payment_card_used_balanced_uri option[value='new']").index('option');
+		target_select.find("option:eq(" + index_to_insert_before + ")").before("<option value=" + new_value + ">" + new_label + "</option>");
+		target_select.val(new_value);
 	}
 
 	function AddCardToGiveFormCallback(response) {
 	  var tag = (response.status < 300) ? 'pre' : 'code';
 	  debug(tag, JSON.stringify(response));
+	  $('.modal.in').spin(false);
 	  switch (response.status) {
 	    case 201: // OK
+	    	$('.modal.in').modal("hide");
 	    	// Get Balanced URI from validated card
 	    	var uri_for_validated_card 	 = response.data.uri;
 	    	var label_for_validated_card = response.data.brand + ' (x' + response.data.last_four + ')';
 	    	// Set Balanced URI select in payment form to validated card 
 	    	addPaymentCardToSelect(label_for_validated_card, uri_for_validated_card);
 	    	// Alert the user their card has been validated
-	      window.setTimeout ( function() {                  
-	        flashNow('Your card was successfully validated', 'notice');
-	      }, 300 );                               
-	      break;
+			window.setTimeout ( function() {                  
+				flashNow('Your card was successfully validated', 'notice');
+			}, 300 );                   
+			break;
 	    case 400:
-	    case 403: // missing/malformed data - check response.error for details
-	      $("#add_payment_card_modal").modal("hide");
-	      var error_message = '<h3>Could not validate your card</h3>';
+	    case 403: // missing/malformed data - check response.error for details	    
 	      $.each( response.error, function( key, value ) {
-	        error_message += ( key + ": " + "is not valid" + "<br/>");
+	        $("input[name='"+key+"']").trigger('element:validate:fail', value).data('valid', false);	      
 	      });
-	      error_message += "<p>Please try again...</p>";
-	      flashNow(error_message, 'error');
-	      window.setTimeout ( function() {                  
-	      	$('#add_payment_card_modal').modal('show');  
-	      }, 3000 );
-	      break;                
+	      break;
 	    case 402: // we couldn't authorize the buyer's credit card - check response.error for details
-	      $("#add_payment_card_modal").modal("hide");
-	      var error_message = '<h3>Could not validate your card</h3><p>The card entered was declined</p><p>Please try another card...</p>';
-	      flashNow(error_message, 'error');
-	      window.setTimeout ( function() {                  
-	      	$('#add_payment_card_modal').modal('show');  
-	      }, 3000 );	      
+	        $("input[name='card_number']").trigger('element:validate:fail', 'Could not authorize card').data('valid', false);	      
 	      break;
 	    case 404: // your marketplace URI is incorrect
 	      break;

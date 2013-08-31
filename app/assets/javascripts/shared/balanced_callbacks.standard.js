@@ -1,32 +1,25 @@
 function balancedAddCardToProfileCallback(response) {
   var tag = (response.status < 300) ? 'pre' : 'code';
-  debug(tag, JSON.stringify(response));
+  debug(tag, JSON.stringify(response));  
   switch (response.status) {
     case 201:
       //createPaymentCard(response.data.uri); // No Longer handling this via ajax
-      $("#add_payment_card_modal").modal("hide");
+      //$("#add_payment_card_modal").modal("hide");
       $("input[name='accounts_payment_card[balanced_uri]']").val(response.data.uri);
       $('form#new_accounts_payment_card').submit();
       break;
     case 400:
-    case 403: // missing/malformed data - check response.error for details
-      $("#add_payment_card_modal").modal("hide");
-      var error_message = '<h3>Could not validate your card</h3>';
-      $.each( response.error, function( key, value ) {
-        error_message += ( key + ": " + "is not valid" + "<br/>");
-      });
-      error_message += "<p>Please try again...</p>";
-      window.setTimeout ( function() {                  
-        flashNow(error_message, 'error');
-      }, 500 );
-      break;               
-    case 402: // we couldn't authorize the buyer's credit card - check response.error for details
-      var error_message = '<h3>Could not validate your card</h3><p>The card entered was declined</p><p>Please try another card...</p>';
-      window.setTimeout ( function() {                  
-        flashNow(error_message, 'error');
-      }, 500 );
-      break;
-    case 404: // your marketplace URI is incorrect
+    case 403: // missing/malformed data - check response.error for details      
+        $('.modal.in').spin(false);
+        $.each( response.error, function( key, value ) {
+          $("input[name='"+key+"']").trigger('element:validate:fail', value).data('valid', false);        
+        });
+        break;
+      case 402: // we couldn't authorize the buyer's credit card - check response.error for details
+          $('.modal.in').spin(false);
+          $("input[name='card_number']").trigger('element:validate:fail', 'Could not authorize card').data('valid', false);       
+        break;
+      case 404: // your marketplace URI is incorrect
       break;
     default: // we did something unexpected - check response.error for details
       break;

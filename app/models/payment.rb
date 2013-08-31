@@ -7,6 +7,8 @@ class Payment < ActiveRecord::Base
   belongs_to  :sender,             :class_name => 'Account'
   belongs_to  :payment_card_used,  :class_name => 'Accounts::PaymentCard'
   
+  attr_accessor :remember_card
+
   attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :payment_card_used_attributes
 
   accepts_nested_attributes_for :payment_card_used
