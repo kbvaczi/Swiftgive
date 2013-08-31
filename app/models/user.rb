@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
   validates_presence_of   :email
   validates_uniqueness_of :email
   validates_length_of :password, :minimum => 8
-  validates_length_of :password_confirmation, :minimum => 8
 
   # ----- Callbacks ----- #
 
@@ -80,7 +79,10 @@ class User < ActiveRecord::Base
       new_user.build_authentication(options)
       new_user.password = SecureRandom.base64(10).to_s # set a random strong password so user's account cannot be accessed manually
       new_user.is_password_set = false # this lets us know that the user does not have a password
+      Rails.logger.info new_user.errors.full_messages
+      Rails.logger.info new_user.account.errors.full_messages
       return new_user if new_user.save
+
     end
     return nil
   end

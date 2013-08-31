@@ -22,7 +22,7 @@ class Account < ActiveRecord::Base
   validates_presence_of   :first_name,    :if => 'self.first_name_changed? and self.persisted?'
   validates_presence_of   :last_name,     :if => 'self.last_name_changed? and self.persisted?'
   validates_presence_of   :date_of_birth, :if => 'self.date_of_birth_changed? and self.persisted?'
-  validates               :date_of_birth, :inclusion => { :in => Proc.new { 90.years.ago.to_date..15.years.ago.to_date }, :message => 'Minimum age is 15 years' }
+  #validates               :date_of_birth, :inclusion => { :in => Proc.new { 90.years.ago.to_date..15.years.ago.to_date }, :message => 'Minimum age is 15 years' }, :if => Proc.new {self.date_of_birth.present?}
   
   # ----- Callbacks ----- #              
 

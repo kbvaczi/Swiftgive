@@ -125,7 +125,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       remember_me(user)
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated      
     else # user is nil, meaning the authentication already exists
-      flash[:error] = "There was a problem authenticating with this #{standardized_auth_data[:provider_name]} account..."
+      flash[:error] = "There was a problem authenticating with this #{standardized_auth_data[:provider_name]} account..."      
       redirect_to back_path
     end
   end
