@@ -9,20 +9,26 @@ class Accounts::PaymentCard < ActiveRecord::Base
 
   attr_accessible :balanced_uri
   
-  attr_accessor :is_validated_by_balanced, :associated_balanced_card, :is_added_to_balanced_customer, :balanced_hash
+  attr_accessor :is_validated_by_balanced, :associated_balanced_card, :is_added_to_balanced_customer, :balanced_hash, :remember_card
   
   # ----- Validations ----- #
   
-  validates_presence_of   :balanced_uri
-  validates_uniqueness_of :balanced_uri
+  validates_presence_of   :balanced_uri, :message => 'please select a payment card'
+  validates_uniqueness_of :balanced_uri # necessary to prevent card stealing from someone obtaining a card's balanced_uri
+  validate                :validate_card_with_balanced,              :on => :create, :unless => Proc.new { self.is_validated_by_balanced }
   validate                :add_associated_balanced_card_to_customer, :on => :create, :unless => Proc.new { self.is_added_to_balanced_customer }  
-  validate                :validate_card_with_balanced,             :on => :create, :unless => Proc.new { self.is_validated_by_balanced }
 
   # ----- Callbacks ----- #  
   
   before_validation       Proc.new { Rails.logger.debug "Validating #{self.class.name}" }  
   before_destroy          :invalidate
     
+  # ----- Scopes ----- #
+
+  scope :active, where(:is_active => true)
+  scope :inactive, where(:is_active => false)
+  default_scope active
+
   # ----- Member Methods ----- #
   
   def associated_balanced_card
@@ -54,6 +60,10 @@ class Accounts::PaymentCard < ActiveRecord::Base
   
   # ----- Class Methods ----- #
   
+  def self.column_keys 
+    self.column_names.collect { |c| c.to_sym }
+  end
+
   protected 
 
   def add_associated_balanced_card_to_customer
@@ -69,6 +79,8 @@ class Accounts::PaymentCard < ActiveRecord::Base
       else
         errors.add(:account_id, "Could not add card to customer")
       end
+    else
+      errors.add(:account_id, "Could not add card to customer")
     end
   end
   

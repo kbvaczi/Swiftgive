@@ -5,43 +5,53 @@
 <h3>Complete this form to give</h3>
 <p class='lead'>Your Generosity is greatly appreciated</p>
 
-<%= simple_form_for @payment, :html => {:class => 'form-horizontal'} do |f| %>
+<%= simple_form_for @payment, :html => {:class => 'form-horizontal'}, :validate => true do |f| %>
 
   <%= f.hidden_field :fund_id, :value => (params[:payment][:fund_id] rescue receiving_fund.id) %>
-  <hr>
-  <%= f.input :amount_in_cents,   :label => "Amount", 
+  
+  <%#= f.input :amount_in_cents,   :label => "Amount", 
                                   :collection => [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']],
                                   :include_blank => false,
                                   :required => true %>
-  <hr>
+  <%= f.input :amount_in_dollars, :required => true, :wrapper => :prepend_append, :label => 'Amount', :input_html => {:style => 'width:50px'} do %>
+    <%= content_tag :span, "$", :class => "add-on" %>
+	<%= f.input_field :amount_in_dollars, :class => 'currency_input span1', :style => 'text-align:right;' %>
+    <%= content_tag :span, ".00", :class => "add-on add-on-append" %>
+    
+  <% end %>
+
+  <%= f.input :amount_in_cents,   :as => :hidden %>
+  
+
   <%= f.input :is_anonymous, :label => "Anonymous",
-  							 :collection => [['No',false],["Yes",true]] %>
-  <hr>
+  							:include_blank => false,
+  							 :collection => [['Give Publically',false],["Give Anonymously",true]] %>
+  
   <%= f.input :message, :label => 'Optional Message',
   						:as => :string,
-  						:placeholder => 'ex. "Thanks!"' %>    
-  <hr>
-  <%= simple_fields_for :payment_card_used do |payment_card_form| %>
+  						:placeholder => 'ex. "Thanks!"' %>   
+
+  <%= simple_fields_for :payment_card_used, Accounts::PaymentCard.new, :validate => true do |payment_card_form| %>
+
   	<% signed_in_user_cards = user_signed_in? ? current_user.account.payment_cards.collect {|card| ["#{card.card_type} (x#{card.last_4_digits})", card.balanced_uri]} : nil %>
   	<% new_card_option = ['New Card', 'new'] %>
-  	<% card_select_options = signed_in_user_cards.present? ? [new_card_option].append([signed_in_user_cards]) : [new_card_option] %>
-
-    <%= payment_card_form.input :balanced_uri, :label => "Payment Card",
+  	<% card_select_options = signed_in_user_cards.present? ? signed_in_user_cards.append(new_card_option) : [new_card_option] %>
+ 
+    <%= payment_card_form.input :balanced_uri, :validate => {:uniqueness => false}, :label => "Payment Card",
 		  													 :as => :select,
 		  													 :collection => card_select_options,
 		  													 :selected => ((user_signed_in? and current_user.account.payment_cards.first.present?) ? current_user.account.payment_cards.first.id : nil) ,
 		  													 :include_blank => false,
 		  													 :prompt => 'Select Payment Card' %>
 
-	<%= payment_card_form.input :remember_card, :as => :hidden %>	
+	<%= payment_card_form.input :remember_card, :as => :hidden if user_signed_in? %>	
 		  													 
   <% end %>
-  <hr>
   
   <div class="control-group">
     <div class="controls">
-      <%= f.button :submit, :value => 'Give',:class => 'btn-primary' %>
-      <%= submit_tag 'Cancel', :type => :reset, :class => "btn btn-danger" %>
+      <%= f.button :submit, :value => 'Give',:class => 'btn-primary' %>      
+      <%= submit_tag 'Cancel', :type => :reset, :class => "btn" %>      
     </div>
   </div>
 
@@ -60,6 +70,10 @@
 		}		
 	});
 
+	$("input[name='payment[amount_in_dollars]']").change(function(){
+		$("input[name='payment[amount_in_cents]']").val($(this).val() * 100);
+	});
+
 	$("[name='accounts_payment_card_submission[remember_card]']").change(function (){
 		updateRememberCardInput();
 	});
@@ -75,6 +89,7 @@
 	 	var index_to_insert_before = 1;//$("select#payment_card_used_balanced_uri option[value='new']").index('option');
 		target_select.find("option:eq(" + index_to_insert_before + ")").before("<option value=" + new_value + ">" + new_label + "</option>");
 		target_select.val(new_value);
+		target_select.trigger('element:validate:pass').data('valid', true);  
 	}
 
 	function AddCardToGiveFormCallback(response) {

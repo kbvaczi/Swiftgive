@@ -3,7 +3,7 @@
 <%= render :partial => 'edit_birthdate' %>
 <%= render :partial => 'edit_location' %>
 <%= render :partial => 'edit_password' %>
-<%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:callback_function => 'balancedAddCardToProfileCallback'} %>
+<%= render :partial => 'accounts/payment_cards/new', :formats => [:html], :locals => {:remember_card_input => false, :callback_function => 'balancedAddCardToProfileCallback'} %>
 <%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
 
 <h2>My Profile</h2>

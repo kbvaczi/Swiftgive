@@ -2,7 +2,7 @@
   
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="add_payment_card_modal_label">Add a Payment Card</h3>
+    <h3 id="add_payment_card_modal_label">Payment Card Information</h3>
   </div>  
   
   <% payment_card_submission = Rails.env.production? ? Accounts::PaymentCardSubmission.new : Accounts::PaymentCardSubmission.new(Accounts::PaymentCardSubmission.default_values_for_testing) %>
@@ -21,7 +21,9 @@
       </div>                 
       <%= f.input :security_code, :input_html => {:style => 'width:70px', :name => 'security_code'} %>
       <%= f.input :postal_code, :input_html => {:style => 'width:70px;', :name => 'postal_code'} %>
-      <%= f.input :remember_card, :as => :boolean, :label => false, :checked => true, :inline_label => 'Remember This Card' %>
+      <% if user_signed_in? and (defined?(remember_card_input) ? remember_card_input != false : true) %>
+        <%= f.input :remember_card, :as => :boolean, :label => false, :checked => true, :inline_label => 'Remember This Card' %>
+      <% end %>
     </div>
 
     <div class='modal-footer'>

@@ -7,17 +7,21 @@ class Payment < ActiveRecord::Base
   belongs_to  :sender,             :class_name => 'Account'
   belongs_to  :payment_card_used,  :class_name => 'Accounts::PaymentCard'
   
-  attr_accessor :remember_card
+  attr_accessor :amount_in_dollars
 
-  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :payment_card_used_attributes
+  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :payment_card_used_attributes, :amount_in_dollars
 
   accepts_nested_attributes_for :payment_card_used
   
   # ----- Validations ----- #
   
-  validates_presence_of :uid, :sender, :fund, :payment_card_used, :amount_in_cents
-  validates_associated  :payment_card_used, :sender
-  validate              :create_balanced_payment, :on => :create, :unless => Proc.new { self.balanced_uri.present? }  
+  validates_presence_of   :uid, :sender, :fund, :payment_card_used, :amount_in_cents
+  validate                Proc.new {self.amount_in_dollars = self.amount_in_dollars.to_i} if 'self.amount_in_dollars.present?'
+  validates_inclusion_of  :amount_in_dollars, :in => 2..1000, :allow_nil => true, :message => 'Must be between $2 and $1000'
+  validates_inclusion_of  :amount_in_cents, :in => 200..100000, :message => 'Must be between $2 and $1000', :allow_nil => false
+  validates_associated    :payment_card_used, :sender
+  validate                :create_balanced_payment, :on => :create, :unless => Proc.new { self.balanced_uri.present? }  
+
                           
   # ----- Callbacks ----- #
 
@@ -37,10 +41,20 @@ class Payment < ActiveRecord::Base
     Balanced::Debit.find(self.balanced_uri)
   end
 
+  def amount_in_dollars=(value)
+    # overwrite assignment to ensure that amount_in_dollars is stored as an integer instead of string... required to pass validations
+    #TODO: figure out how to do this without throwing depreication warning
+    #write_attribute :amount_in_dollars, value.to_i
+  end
+
   # ----- Class Methods ----- #
   
   def self.mark_as_credited(relation_of_payments_to_be_marked, associated_withdraw_id)
     relation_of_payments_to_be_marked.update_all(:updated_at => Time.zone.now, :withdraw_id => associated_withdraw_id)
+  end
+
+  def self.column_keys 
+    self.column_names.collect { |c| c.to_sym }
   end
 
   # ----- Protected Methods ----- #

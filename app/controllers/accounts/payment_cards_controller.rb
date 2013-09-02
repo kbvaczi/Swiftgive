@@ -25,7 +25,7 @@ class Accounts::PaymentCardsController < ApplicationController
   
   def destroy
     payment_card_to_destroy = current_user.account.payment_cards.where(:id => params[:id]).first
-    if payment_card_to_destroy.present? and payment_card_to_destroy.destroy
+    if payment_card_to_destroy.present? and payment_card_to_destroy.invalidate
       redirect_to back_path, :notice => 'Payment card successfully removed...'
     else
       flash[:error] = 'Error removing payment card...'
