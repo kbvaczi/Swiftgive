@@ -1,0 +1,6 @@
+<div class='mt center_wrap'>
+	<h1>Thanks for your generosity!</h1>
+	<h3 class='mt'>You gave:</h3>
+	<h3 class='pb pr pl t-s'><%= @payment.fund.name %></h3>  
+	<h1 class='mt'><%= number_to_currency @payment.amount_in_dollars %></h1>
+</div>

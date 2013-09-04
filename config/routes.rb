@@ -42,7 +42,7 @@ Swiftgive::Application.routes.draw do
     end
   end
   
-  resources :payments, :only => [:create]
+  resources :payments, :only => [:create, :show]
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
   get 'payments/guest_splash'  => 'payments#guest_splash', :as => 'guest_splash'
     

@@ -4,10 +4,6 @@ class PaymentsController < ApplicationController
   before_filter :set_back_path, :only => [:new]  
   before_filter :set_referring_fund_and_redirect_to_splash, :only => [:new]
 
-  def guest_splash
-    render :layout => 'full'
-  end
-
   def new
     @payment = Payment.new(params[:payment])
     @payment.fund ||= receiving_fund
@@ -43,14 +39,27 @@ class PaymentsController < ApplicationController
     end
     if payment.save
       payment_card.invalidate if payment_card.account.user_id.nil? or payment_card.remember_card == false
-      redirect_to root_path, :notice => 'Thanks for giving!'
+      if is_mobile_request?
+        redirect_to payment_path(payment)
+      else
+        redirect_to fund_path(payment.fund), :notice => 'We appreciate your generosity!'
+      end
     else
       flash[:error] = 'Error trying to give...'
       redirect_to back_path
     end
   end
 
-  def destroy
+  def show
+    @payment = current_user.account.payments.find_by_uid(params[:id])
+    unless @payment.present?
+      flash[:error] = 'Error viewing payment...'
+      redirect_to back_path 
+    end
+  end
+
+  def guest_splash
+    render :layout => 'full'
   end
   
   protected

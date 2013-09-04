@@ -13,6 +13,10 @@ class Payment < ActiveRecord::Base
 
   accepts_nested_attributes_for :payment_card_used
   
+  def to_param
+    self.uid.parameterize
+  end
+  
   # ----- Validations ----- #
   
   validates_presence_of   :uid, :sender, :fund, :payment_card_used, :amount_in_cents
@@ -21,10 +25,10 @@ class Payment < ActiveRecord::Base
   validates_inclusion_of  :amount_in_cents, :in => 200..100000, :message => 'Must be between $2 and $1000', :allow_nil => false
   validates_associated    :payment_card_used, :sender
   validate                :create_balanced_payment, :on => :create, :unless => Proc.new { self.balanced_uri.present? }  
-
-                          
+                        
   # ----- Callbacks ----- #
 
+  after_initialize  Proc.new { self.amount_in_dollars = self.amount_in_cents.to_f / 100 }
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }
   before_validation :set_amounts,             :on => :create, :unless => Proc.new { self.amount_to_receiver_in_cents.present? }
@@ -39,12 +43,6 @@ class Payment < ActiveRecord::Base
   def associated_balanced_payment
     Rails.logger.debug "External Call: Finding Balanced Payment"
     Balanced::Debit.find(self.balanced_uri)
-  end
-
-  def amount_in_dollars=(value)
-    # overwrite assignment to ensure that amount_in_dollars is stored as an integer instead of string... required to pass validations
-    #TODO: figure out how to do this without throwing depreication warning
-    #write_attribute :amount_in_dollars, value.to_i
   end
 
   # ----- Class Methods ----- #
