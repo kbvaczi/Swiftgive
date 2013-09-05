@@ -51,7 +51,7 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    @payment = current_user.account.payments.find_by_uid(params[:id])
+    @payment = Payment.find_by_uid(params[:id])
     unless @payment.present?
       flash[:error] = 'Error viewing payment...'
       redirect_to back_path 

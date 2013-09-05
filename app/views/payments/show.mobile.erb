@@ -3,4 +3,6 @@
 	<h3 class='mt'>You gave:</h3>
 	<h3 class='pb pr pl t-s'><%= @payment.fund.name %></h3>  
 	<h1 class='mt'><%= number_to_currency @payment.amount_in_dollars %></h1>
+	<br class='spacer'/>
+	<%= link_to "Sign up", new_user_session_path,  :'data-role' => 'button', :'data-icon' => 'check', :'data-mini' => 'true', :'data-theme' => 'c'%>
 </div>
