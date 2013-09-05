@@ -51,7 +51,11 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    @payment = Payment.find_by_uid(params[:id])
+    if user_signed_in?
+      @payment = current_user.account.payments.where(:uid => params[:id]).first
+    else
+      @payment = Payment.where(:uid => params[:id]).where("updated_at > '#{30.minutes.ago}'").first
+    end
     unless @payment.present?
       flash[:error] = 'Error viewing payment...'
       redirect_to back_path 

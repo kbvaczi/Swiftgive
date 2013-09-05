@@ -15,7 +15,7 @@
                                   :required => true %>
   <%= f.input :amount_in_dollars, :required => true, :wrapper => :prepend_append, :label => 'Amount', :input_html => {:style => 'width:50px'} do %>
     <%= content_tag :span, "$", :class => "add-on" %>
-	<%= f.input_field :amount_in_dollars, :class => 'currency_input span1', :style => 'text-align:right;' %>
+	<%= f.input_field :amount_in_dollars, :class => 'currency_input no_sign span1', :style => 'text-align:right;' %>
     <%= content_tag :span, ".00", :class => "add-on add-on-append" %>
     
   <% end %>
