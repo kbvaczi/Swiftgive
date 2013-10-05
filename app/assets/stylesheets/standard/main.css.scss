@@ -6,6 +6,7 @@ body {
   margin-bottom: 25px;
   padding: 0px;
   color: $fontColor;
+  background-color: rgba(100,150,100,0.05);
 }  
 a:hover {
   background-color: #03c;
@@ -13,39 +14,60 @@ a:hover {
   text-decoration: none;
 }
 #title {
-  margin:20px 0px 40px 0px;
+  margin:20px 0px 20px 0px;
 }
 #page {
- margin-top: 10px;
+ margin-top: 10px; 
+
 }
 #main {
+  border-radius: 5px;
+  border: 1px solid #D4D4D4;
+  margin: 10px -12px 10px -12px;
+  box-shadow: rgba(0, 0, 0, 0.0627451) 0px 1px 4px 0px;//0px 0px 1px 4px rgba(212,212,212,0.1);
+  padding:10px;
+  background-color: #fff;
 }
 #mainbar {
+  margin-left:0px;
 }
 #sidebar {
 }
 #bottomnav {
   height:20px;
+  margin:0px;
 }
 #footer {
+  margin:0px;
   height:20px;
 }
 
 // # ----- Header ----- #
-$headerHeight: 50px;
 #header {
+  width:960px;
   height: $headerHeight;
 }
+#header #logo_wrapper {
+  position:relative;
+}
 #header #logo {
-  width:100%;
-  max-width:120px;  
-  min-height:30px;
-  margin-top:5px;
-  margin-left:0px;
+  left:-10px;
+  top:2px;
+  position: absolute;  
+  width:150px;
+  height:40px;
   background-image: asset-url("swiftgive_logo.png", image);  
   background-repeat: no-repeat;
   background-position: top left; 
   background-size: 100%;
+}
+#navbar {
+  height: $headerHeight;
+  position:relative;
+  top:5px;
+}
+#navbar .navbar-inner {
+  height: $headerHeight;
 }
 #sidebar {
   

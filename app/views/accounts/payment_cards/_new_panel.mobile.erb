@@ -1,0 +1,118 @@
+<div data-role="panel" id='new_payment_card_form' data-theme="b" data-position="right" data-display="overlay" style='width:100%'>
+  
+  <%= image_tag 'credit_cards_accepted.png', :width => '100%' %>
+     
+  <% payment_card_submission = Rails.env.production? ? Accounts::PaymentCardSubmission.new : Accounts::PaymentCardSubmission.new(Accounts::PaymentCardSubmission.default_values_for_testing) %>
+
+  <%= simple_form_for payment_card_submission, :url => '', :validate => true, :html => {:id => 'payment_card_submission_form', :class => 'noDelay'} do |f| %>     
+    <%= f.input :name_on_card, :label => false, :input_html => {:name => 'name_on_card', :placeholder => 'Cardholder Name'} %>
+    <%= f.input :card_number, :label => false, :input_html => {:name => 'card_number', :placeholder => 'Card Number'} %>
+    <div class='ui-grid-b pb-s'>
+        <div class='ui-block-a pt-m pl-s'>Expires</div>
+        <div class='ui-block-b pl-s'>    
+          <%= f.select :expiration_month, 1..12, {:include_blank => false}, :style => 'width:60px;', :name => 'expiration_month', :'data-mini' => true %>    
+        </div>
+        <div class='ui-block-c'>
+          <%= f.select :expiration_year, Date.today.year..(Date.today.year+10), {:include_blank => false}, :style => 'width:80px;', :name => 'expiration_year', :'data-mini' => true  %>
+        </div>
+    </div>
+    <div class='ui-grid-a'>
+      <div class='ui-block-a pt-m pl-s main'>Security Code</div>
+      <div class='ui-block-b side'>
+        <%= f.input :security_code, :label => false, :input_html => {:autocomplete => 'off', :name => 'security_code', :placeholder => 'xxx', :'data-mini' => true } %>
+      </div>                        
+    </div>
+    <div class='ui-grid-a'>
+      <div class='ui-block-a pt-m pl-s main'>Billing Zipcode</div>
+      <div class='ui-block-b side'>
+        <%= f.input :postal_code, :label => false, :input_html => {:name => 'postal_code', :placeholder => 'xxxxx', :autocomplete => 'off', :'data-mini' => true} %>      
+      </div>                        
+    </div>
+
+    <%= f.submit 'Validate Card', :class => 'btn btn-primary', :id => 'payment_card_submit', :'data-icon' => 'check', :'data-theme' => 'b' %>
+  <a href="#" data-rel="close" data-role="button" data-mini='true' data-theme="c" data-icon="delete">Cancel</a>
+
+  <% end %>
+    
+</div>
+
+<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+<script type="text/javascript">
+
+  var marketplaceUri = '<%= ENV['BALANCED_MARKETPLACE_URI'] %>';
+ 
+  var debug = function (tag, content) {
+     console.log('<' + tag + '>' + content + '</' + tag + '>');
+  };
+ 
+  var tokenizeCard = function( $form ) {
+    $.mobile.loading('show');
+
+    try {
+      balanced.init(marketplaceUri);
+    } catch (e) {
+      debug('code', 'You need to set the marketplaceUri variable');
+    }
+
+    var cardData = {
+      name: $form.find('[name="name_on_card"]').val(),            
+      card_number: $form.find('[name="card_number"]').val(),
+      expiration_month: $form.find('[name="expiration_month"]').val(),
+      expiration_year: $form.find('[name="expiration_year"]').val(),
+      security_code: $form.find('[name="security_code"]').val(),
+      postal_code: $form.find('[name="postal_code"]').val(),
+    }; 
+    
+    balanced.card.create(cardData, AddCardToGiveFormCallback);    
+  };
+
+  window.ClientSideValidations.callbacks.form.pass = function(form, eventData) {
+    if ( form.attr('id') == 'payment_card_submission_form' && form.data('submit_status') != true ) {
+      form.data('submit_status', true);
+      tokenizeCard(form);
+    }
+    window.setTimeout ( function() {                  
+      form.data('submit_status', false);
+    }, 5000 );
+    return false;
+  };
+
+  $('#payment_card_submission_form').submit(function(e){
+    e.preventDefault();
+    return false;
+  });
+
+  function AddCardToGiveFormCallback(response) {
+    $.mobile.loading('hide');
+    var tag = (response.status < 300) ? 'pre' : 'code';
+    debug(tag, JSON.stringify(response));
+    switch (response.status) {
+      case 201: // OK
+        $('#new_payment_card_form').panel('close');        
+        // Get Balanced URI from validated card
+        //var uri_for_validated_card   = response.data.uri;
+        //var label_for_validated_card = response.data.brand + ' (x' + response.data.last_four + ')';        
+        // Set Balanced URI select in payment form to validated card 
+        $('#payment_card_used_balanced_uri').val(response.data.uri);                               
+        $('#payment_card_list_item').find('.ui-btn-text a').html('Using ' + response.data.brand + ' (x' + response.data.last_four + ')');
+        // addPaymentCardToSelect(label_for_validated_card, uri_for_validated_card);
+        // Alert the user their card has been validated
+        flashNow('Your card was successfully validated', 'notice');
+        break;
+      case 400:
+      case 403: // missing/malformed data - check response.error for details      
+        $.each( response.error, function( key, value ) {
+          $("input[name='"+key+"']").trigger('element:validate:fail', value).data('valid', false);        
+        });
+        break;
+      case 402: // we couldn't authorize the buyer's credit card - check response.error for details
+          $("input[name='card_number']").trigger('element:validate:fail', 'Could not authorize card').data('valid', false);       
+        break;
+      case 404: // your marketplace URI is incorrect
+        break;
+      default: // we did something unexpected - check response.error for details
+        break;
+    }
+  }
+
+</script>

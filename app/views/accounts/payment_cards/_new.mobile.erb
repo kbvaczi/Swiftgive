@@ -92,6 +92,8 @@
       postal_code: $form.find('[name="postal_code"]').val(),
     }; 
 
+    console.log(cardData);
+
     balanced.card.create(cardData, <%= defined?(callback_function) ? callback_function : 'balancedAddCardCallback' %>);
   };
 

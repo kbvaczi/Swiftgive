@@ -14,5 +14,9 @@
 //= require_tree ./shared
 //= require_tree ./mobile
 //= require jquery.mobile
+//= require rails.validations
+//= require rails.validations.simple_form
+
+
 
 

@@ -31,11 +31,12 @@
       <%= f.submit 'Validate Card', :class => 'btn btn-primary', :id => 'payment_card_submit' %>
     </div>
   <% end %>
-</div>
 
-<%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
-  <%= f.hidden_field :balanced_uri %>
-<% end %>
+  <%= form_for Accounts::PaymentCard.new(params[:accounts_payment_card]), :method => :post do |f| %>
+    <%= f.hidden_field :balanced_uri %>
+  <% end %>
+
+</div>
 
 <script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
 <script type="text/javascript">

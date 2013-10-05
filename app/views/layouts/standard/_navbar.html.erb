@@ -1,6 +1,6 @@
-<div class="navbar">
+<div id='navbar' class="navbar">
   <div class="navbar-inner">
-    <%= link_to content_tag(:div, '', :id => 'logo', :class => 'left'), root_path %>
+    <%= link_to content_tag(:div, '', :id => 'logo'), root_path, :id => 'logo_wrapper' %>
     <form class="navbar-search pull-right">
 		  <input type="text" class="search-query" placeholder="Search">
 		</form>
