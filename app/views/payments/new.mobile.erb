@@ -50,7 +50,7 @@
       <% end %>
     <% else %>
       <li data-icon='plus' id='payment_card_list_item' >
-        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Setup Payment Info</a>
+        <a href='#new_payment_card_form' data-rel="panel" class='t-s'>Setup Payment Info</a>
       </li>
       <%= fields_for :payment_card_used do |c| %>
         <%= c.hidden_field :balanced_uri %>
