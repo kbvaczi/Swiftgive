@@ -28,18 +28,5 @@
 			<%= link_to "<i class='icon-eye-open'></i> Public View".html_safe, fund_path(current_fund), :class => 'btn' %>
 		</div>
 	</div>
-
-	<div class='content_box'>
-		<table class='table table-borderless'>
-			<tr>
-				<th>Current Balance</th>
-				<th><%= number_to_currency current_fund.balance %></th>
-			</tr>
-		</table>
-		<div class='center_wrap'>
-			
-			<%= link_to "<i class='icon-download'></i>&nbsp; Withdraw Your Balance".html_safe, fund_withdraws_path(current_fund), :method => :post, :class => 'btn btn-primary' %>
-		</div>
-	</div>	
 	
 <% end %>

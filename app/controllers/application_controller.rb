@@ -8,10 +8,11 @@ class ApplicationController < ActionController::Base
   mobylette_config do |config|
     config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
   end
-  # Uncomment the next line to force all requests to be treated as mobile requests (for testing)
+
+  # Uncomment the next line to force all requests to be treated as mobile requests (for testing).  Alternatively you can set the user agent in chrome to a mobile device.
   # before_filter Proc.new { session[:mobylette_override] = :force_mobile }
   
-  # Attempts to determines if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
+  # Attempts to determine if user is a bot (used so we can not give sessions or cookies to bots, also disallow bots to create accounts)
   def bot_user?
     request.user_agent =~ /\b(NewRelicPinger|Baidu|Gigabot|Googlebot|libwww-perl|lwp-trivial|msnbot|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)\b/i
   end

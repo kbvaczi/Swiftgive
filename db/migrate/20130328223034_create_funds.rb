@@ -7,21 +7,15 @@ class CreateFunds < ActiveRecord::Migration
 
         t.string  :description
         t.text    :profile
+        t.string  :give_code, :default => ""
         
         t.string  :creator_name
-        t.string  :street_address
         t.string  :city
         t.string  :state
-        t.string  :postal_code
-
-        t.string  :business_name
-        t.string  :business_ein
-        t.string  :business_phone_number
 
         t.string  :fund_type
-        t.float   :commission_percent
-        
-        t.string  :balanced_uri
+        t.string  :business_name
+                
         t.boolean :is_active, :default => true
         
         t.timestamps

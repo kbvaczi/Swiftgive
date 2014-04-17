@@ -17,7 +17,7 @@ before_fork do |server, worker|
     Rails.logger.info('Disconnected from ActiveRecord')
   end
 
-  # Assign one sidekick worker in addition to 3 unicorn processes
+  # Assign one sidekick worker in addition to unicorn processes
   #@sidekiq_pid ||= spawn("bundle exec sidekiq -C ./config/sidekiq.yml")
 
 end

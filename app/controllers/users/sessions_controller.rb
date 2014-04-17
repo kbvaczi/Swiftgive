@@ -27,10 +27,6 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def sign_in_test
-    sign_in_and_redirect User.first, :event => :authentication #this will throw if @user is not activated      
-  end
-
   def new
     if params[:user].present?
       redirect_to account_manual_sign_in_path(:user => params[:user])

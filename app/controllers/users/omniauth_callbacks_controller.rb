@@ -26,7 +26,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # import state/country info if it's in the USA
     state_code   = Carmen::Country.coded('US').subregions.named(state_name, {:fuzzy => false, :case => false}).code rescue nil
-    country_code = state_code.present? ? 'US' : nil
 
     @standardized_auth_data = { :provider => @raw_auth_data.provider,
                                 :provider_name => 'Facebook', 
@@ -37,7 +36,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                   :last_name => (@raw_auth_data.info.last_name rescue nil),
                                   :city => city_name, 
                                   :state => state_code,
-                                  :country => country_code,
                                   :avatar => (@raw_auth_data.info.image rescue nil) 
                                 } 
                               }
@@ -67,8 +65,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @raw_auth_data = request.env["omniauth.auth"]
     city_name  = @raw_auth_data.info.location.partition(', ')[0].titleize rescue nil
     state_name = @raw_auth_data.info.location.partition(', ')[2].partition(/ area/i)[0].titleize rescue nil
-    country_code = Carmen::Country.coded((@raw_auth_data.extra.raw_info.location.country.code.upcase rescue nil)).code rescue nil        
-    state_code   = Carmen::Country.coded(country_code).subregions.named(state_name, {:fuzzy => false, :case => false}).code rescue nil
+    # import state/country info if it's in the USA
+    state_code   = Carmen::Country.coded('US').subregions.named(state_name, {:fuzzy => false, :case => false}).code rescue nil
     @standardized_auth_data = { :provider => @raw_auth_data.provider,
                                 :provider_name => 'LinkedIn',
                                 :uid => @raw_auth_data.uid,
@@ -76,7 +74,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                 :account_attributes => { 
                                   :first_name => (@raw_auth_data.info.first_name rescue nil), 
                                   :last_name => (@raw_auth_data.info.last_name rescue nil),
-                                  :country => country_code,                                
                                   :city => city_name, 
                                   :state => state_code,
                                   :avatar => (@raw_auth_data.info.image rescue nil) 

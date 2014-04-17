@@ -35,7 +35,7 @@ class FundsController < ApplicationController
 
   # GET /funds/new
   def new
-    @fund = Fund.new(@creator_account.attributes.slice('street_address', 'city', 'state', 'postal_code'))
+    @fund = Fund.new(@creator_account.attributes.slice('city', 'state'))
     respond_to do |format|
       format.html # new.html.erb
     end
@@ -62,12 +62,11 @@ class FundsController < ApplicationController
   # PUT /funds/1
   def update
     current_fund
-    respond_to do |format|
-      if @fund.update_attributes(params[:fund])
-        format.html { redirect_to back_path, notice: 'Fund was successfully updated.' }
-      else
-        format.html { render action: "edit" }
-      end
+    if @fund.update_attributes(params[:fund])
+      redirect_to back_path, notice: 'Fund was successfully updated.'
+    else
+      Rails.logger.debug @fund.errors.full_messages.to_s
+      render action: "edit"
     end
   end
 
@@ -94,7 +93,7 @@ class FundsController < ApplicationController
   
   def verify_creator_info_present
     @creator_account = current_user.account
-    required_attributes = %w(first_name last_name date_of_birth street_address city state postal_code)
+    required_attributes = %w(first_name last_name city state)
     required_attributes.each do |this_attribute|
       unless @creator_account[this_attribute].present?
         flash[:error] = 'Please complete your profile before creating a fund...'

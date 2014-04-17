@@ -1,9 +1,3 @@
-<%#= render :partial => 'payments/login_or_guest_prompt', :formats => [:mobile] unless user_signed_in? %>
-<% content_for :page do %>
-<%= render :partial => 'accounts/payment_cards/new_panel', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
-<% end %>
-
-<%#= render :partial => 'accounts/payment_cards/new', :locals => {:callback_function => 'balancedAddCardToGiveCallback'}, :formats => [:mobile] %>
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 
 <%= form_for @payment do |f| %>
@@ -35,31 +29,15 @@
       </div>
     </li>
     <li style='margin:0px;padding:8px;'>
-      <%= f.text_field :message, :'placeholder' => 'Optional Message', :'data-mini' => true, :'data-theme' => 'b' %>    
+      <%= f.text_field :message, :'placeholder' => 'Optional Message', :'data-mini' => true, :'data-theme' => 'a' %>    
     </li>
-  </ul>
-
-  <ul data-role="listview" data-inset="true" data-theme"a">      
-    <% current_user_default_payment_card = current_user.account.payment_cards.first rescue nil %>
-    <% if user_signed_in? and current_user_default_payment_card.present? %>
-      <li data-icon='gear'>
-        <a href='#new_payment_card_form' data-rel="popup" class='t-s'>Using <%= "#{current_user_default_payment_card.card_type} (x#{current_user_default_payment_card.last_4_digits})" %></a>        
-      </li>
-      <%= fields_for :payment_card_used do |c| %>
-        <%= c.hidden_field :balanced_uri, :value => current_user_default_payment_card.balanced_uri %>
-      <% end %>
-    <% else %>
-      <li data-icon='plus' id='payment_card_list_item' >
-        <a href='#new_payment_card_form' data-rel="panel" class='t-s'>Setup Payment Info</a>
-      </li>
-      <%= fields_for :payment_card_used do |c| %>
-        <%= c.hidden_field :balanced_uri %>
-      <% end %>
-    <% end %>
   </ul>
   
   <div class='ui-grid-full'>
-    <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check' %>
+    <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'f', :'data-icon' => 'check' %>
+  </div>
+  <div class='ui-grid-full pt-s'>
+    <%= f.submit "Save for Later", :'data-role' => 'button', :'data-theme' => 'c', :'data-icon' => 'clock' %>
   </div>
 
 <% end %>
@@ -67,103 +45,59 @@
 
 <script type='text/javascript'>
 
-$( document ).delegate("[data-role='page']", "pageinit", function() {
+  $( document ).delegate("[data-role='page']", "pageinit", function() {
 
-  $('#custom_amount_value').initAutoNumeric();
+    $('#custom_amount_value').initAutoNumeric();
 
-  $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
-    var target = $('#payment_amount_in_cents');
-    if (target.val() == 'other'){
-      target.val(target.children('option:first-child').attr('value'));
-      target.selectmenu( "refresh" );
-      window.setTimeout(function() { 
-        $('#custom_amount_popup').popup('open'); 
-      }, 300 );
+    $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
+      var target = $('#payment_amount_in_cents');
+      if (target.val() == 'other'){
+        target.val(target.children('option:first-child').attr('value'));
+        target.selectmenu( "refresh" );
+        window.setTimeout(function() { 
+          $('#custom_amount_popup').popup('open'); 
+        }, 300 );
+      }
+    });
+
+    if ('ontouchstart' in document.documentElement) {
+      $('.custom_amount_button').on('touchstart', custom_amount_button_press);
+      $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);
+    } else {
+      $('.custom_amount_button').on('click', custom_amount_button_press);
+      $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);    
     }
+
   });
 
-  if ('ontouchstart' in document.documentElement) {
-    $('.custom_amount_button').on('touchstart', custom_amount_button_press);
-    $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);
-  } else {
-    $('.custom_amount_button').on('click', custom_amount_button_press);
-    $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);    
-  }
-
-  $(this).delegate("form#new_payment input[type='submit']", 'click', function(e){
-    if(!$(this).closest('form#new_payment').find('input#payment_card_used_balanced_uri').val()) {
-      e.preventDefault();
-      flashNow('Please setup payment information before giving', 'error');
+  function custom_amount_button_press() {
+    var target = $('#custom_amount_value');
+    var source_button = $(this);
+    if (source_button.data('value') == 'clear'){
+      target.autoNumeric('set', 0);
+    } else if(source_button.data('value') == 'backspace') {
+      var current_value = parseInt(target.val().autoNumeric('get'));
+      var new_value = parseInt(current_value / 10);
+      target.autoNumeric('set', new_value);
+    } else {
+      var current_value = parseInt(target.autoNumeric('get'));
+      var new_value = current_value * 10 + parseInt($(this).data('value'));
+      target.autoNumeric('set', new_value);
     }
-  });
-});
-
-function custom_amount_button_press() {
-  var target = $('#custom_amount_value');
-  var source_button = $(this);
-  if (source_button.data('value') == 'clear'){
-    target.autoNumeric('set', 0);
-  } else if(source_button.data('value') == 'backspace') {
-    var current_value = parseInt(target.val().autoNumeric('get'));
-    var new_value = parseInt(current_value / 10);
-    target.autoNumeric('set', new_value);
-  } else {
-    var current_value = parseInt(target.autoNumeric('get'));
-    var new_value = current_value * 10 + parseInt($(this).data('value'));
-    target.autoNumeric('set', new_value);
   }
-}
 
-function custom_amount_ok_button_press() {
-  var value_text  = $('#custom_amount_value').html();
-  var value_value = $('#custom_amount_value').autoNumeric('get') * 100; 
-  if ($('#payment_amount_in_cents option').length == 5 ) {
-    $('#payment_amount_in_cents option:eq(3)').remove();
-  } 
-  var index_to_insert_before = $('#payment_amount_in_cents option').length - 1;
-  $("#payment_amount_in_cents option:eq(" + index_to_insert_before + ")").before("<option value=" + value_value + ">" + value_text + "</option>");  
-  $('#payment_amount_in_cents').val(value_value);
-  $('#payment_amount_in_cents').selectmenu( "refresh" );
-  //$('.ui-popup-screen.in').trigger('click');
-  $('#custom_amount_popup').popup('close');
-}
-
-function balancedAddCardToGiveCallback(response) {
-  $.mobile.loading('hide');
-  var tag = (response.status < 300) ? 'pre' : 'code';
-  debug(tag, JSON.stringify(response));
-  switch (response.status) {
-    case 201: // OK
-      $('#payment_card_used_balanced_uri').val(response.data.uri);                               
-      $('#payment_card_list_item').find('.ui-btn-text a').html('Using ' + response.data.brand + ' (x' + response.data.last_four + ')');
-      window.setTimeout ( function() {                  
-        flashNow('Your card was successfully validated', 'notice');
-      }, 300 );
-      break;
-    case 400:
-    case 403: // missing/malformed data - check response.error for details
-      $("#new_payment_card_form").popup("close");
-      var error_message = '<h3>Could not validate your card</h3>';
-      $.each( response.error, function( key, value ) {
-        error_message += ( key + ": " + "is not valid" + "<br/>");
-      });
-      error_message += "<p>Please try again...</p>";
-      window.setTimeout ( function() {                  
-        flashNow(error_message, 'error');
-      }, 1000 );
-      break;                
-    case 402: // we couldn't authorize the buyer's credit card - check response.error for details
-      $("#new_payment_card_form").popup("close");
-      var error_message = '<h3>Could not validate your card</h3><p>The card entered was declined</p><p>Please try another card...</p>';
-      window.setTimeout ( function() {                  
-        flashNow(error_message, 'error');
-      }, 1000 );
-      break;
-    case 404: // your marketplace URI is incorrect
-      break;
-    default: // we did something unexpected - check response.error for details
-      break;
+  function custom_amount_ok_button_press() {
+    var value_text  = $('#custom_amount_value').html();
+    var value_value = $('#custom_amount_value').autoNumeric('get') * 100; 
+    if ($('#payment_amount_in_cents option').length == 5 ) {
+      $('#payment_amount_in_cents option:eq(3)').remove();
+    } 
+    var index_to_insert_before = $('#payment_amount_in_cents option').length - 1;
+    $("#payment_amount_in_cents option:eq(" + index_to_insert_before + ")").before("<option value=" + value_value + ">" + value_text + "</option>");  
+    $('#payment_amount_in_cents').val(value_value);
+    $('#payment_amount_in_cents').selectmenu( "refresh" );
+    //$('.ui-popup-screen.in').trigger('click');
+    $('#custom_amount_popup').popup('close');
   }
-}
 
 </script>

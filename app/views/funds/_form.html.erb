@@ -17,18 +17,13 @@
   <%= f.input :fund_type, :as => :select,
                           :include_blank => false,
                           :collection => [['Personal','person'],['Business / Non-Profit','business']],
-                          :input_html => {:onchange => "refreshFormNewFund()"} %>
+                          :input_html => {:onchange => "refreshFormNewFund($(this).closest($('form')))"} %>
     
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
     
     <%= f.input :business_name, :placeholder => 'Business Name', :required => true %>
-    <%= f.input :business_ein, :placeholder => 'Business EIN' %>
-    <%= f.input :business_phone_number, :placeholder => 'Business Phone Number' %>
-  
-    <%= f.input :street_address, :placeholder => 'Street Address' %>
     <%= f.input :city, :placeholder => 'City' %>    
     <%= f.input :state, :placeholder => 'State' %>    
-    <%= f.input :postal_code, :placeholder => 'Zipcode' %>
     
   </div>
   <div class="form-actions">
@@ -41,12 +36,14 @@
 
 <script type='text/javascript'>
   
-  function refreshFormNewFund() {
+  function refreshFormNewFund($form) {
     var trigger_value = $("select#fund_fund_type").val();
     if (trigger_value == 'person') {
       $("div#business_information_inputs").hide();
+      $form.resetClientSideValidations();
     } else {
-      $("div#business_information_inputs").show();
+      $("div#business_information_inputs").show();      
+      $form.resetClientSideValidations();
     }
   }
 

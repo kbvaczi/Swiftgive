@@ -1,44 +1,9 @@
-<%= form_for @fund do |f| %>
+<%= form_for @fund, :method => :post do |f| %>
   
-  <ul data-role="listview" data-inset="true" data-theme"a">
-    <li data-role="list-divider" data-theme='a'>Create a New Fund</li>  
-    <li>
-      <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true %>
-      <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
-    </li>
-    <li>
-      <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c', :onchange => "refreshFormNewFund()" %>
-    </li>
-  </ul>
-    
-  <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='<%= 'hidden' unless @fund.is_business_fund? %>'>
-    <li data-role="list-divider" data-theme='a'>Business / Non-Profit Information</li>
-    <li>
-      <%= f.text_field :business_name, :placeholder => 'Business Name', :'data-mini' => true %>
-      <%= f.text_field :business_ein, :placeholder => 'Business EIN', :'data-mini' => true %>
-      <%= f.text_field :business_phone_number, :placeholder => 'Business Phone Number', :'data-mini' => true %>
-    </li>
-    <li>
-      <%= f.text_field :street_address, :placeholder => 'Street Address', :'data-mini' => true %>
-      <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>    
-      <%= f.text_field :state, :placeholder => 'State', :'data-mini' => true  %>    
-      <%= f.text_field :postal_code, :placeholder => 'Zipcode', :'data-mini' => true %>
-    </li>        
-  </ul>
+  <h1>Create New Fund</h1>
+
+  <%= render :partial => "form", :locals => {:f => f} %>
 
   <%= f.submit "Create This Fund" %>
 
 <% end %>
-
-<script type='text/javascript'>
-  
-  function refreshFormNewFund() {
-    var trigger_value = $.mobile.activePage.find("select#fund_fund_type").val();
-    if (trigger_value == 'person') {
-      $.mobile.activePage.find("ul[name='business_information_inputs']").hide();
-    } else {
-      $.mobile.activePage.find("ul[name='business_information_inputs']").show();
-    }
-  }
-
-</script>

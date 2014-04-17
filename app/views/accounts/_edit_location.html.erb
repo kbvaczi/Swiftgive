@@ -9,11 +9,8 @@
     <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
 
       <div class='form-horizontal'>
-        <%= f.input :street_address, :placeholder => 'Street Address' %>    
         <%= f.input :city, :placeholder => 'City' %>    
         <%= f.input :state, :placeholder => 'State' %>    
-        <%= f.input :postal_code, :placeholder => 'Postal Code' %>    
-        <%= f.input :country, :as => :string, :placeholder => 'Country' %>    
       </div>
 
     </div>

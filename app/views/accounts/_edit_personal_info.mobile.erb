@@ -2,7 +2,7 @@
     
   <div data-role="header" data-theme='a'>
       <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
-      <h4 style='margin:10px 0px;'>Edit Personal Information</h4>
+      <h4>Personal Info</h4>
   </div>
 
   <div class='pa-m'>
@@ -17,18 +17,10 @@
         <%= f.text_field :last_name, :placeholder => 'Last Name' %>    
       </div>
 
-      <h4>Date of Birth</h4>
-      <div class='ui-grid-solo'>
-        <%= f.date_select :date_of_birth, {:order => [:month, :day, :year],
-                                          :prompt => true,
-                                          :discard_day => true,
-                                          :use_short_month => false,
-                                          :include_blank => false, 
-                                          :start_year => Time.now.year - 100, 
-                                          :end_year => (Time.now.year - 10)} %>          
-      </div>
-      <div class='ui-grid-solo mt'>
-        <%= f.submit 'Update', :'data-icon' => 'check', :'data-theme' => 'b' %>
+      <div class='ui-grid-a'>
+        <div class='ui-block-a'><a href='#' data-role='button' data-rel='back' data-icon='delete'>Cancel</a></div>
+
+        <div class='ui-block-b'><%= f.submit 'Update', :'data-icon' => 'check' %></div>
       </div>
 
     <% end %>

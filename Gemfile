@@ -17,12 +17,11 @@ gem "simple_form", "~> 2.1.0"                         # standardized form helper
 gem "client_side_validations", "~> 3.2.6"
 gem "client_side_validations-simple_form", "~> 2.1.0" # client-side validations plugin to use simple form CSS
 
-gem "balanced", "~> 0.7.1"                            # balanced payments gateway
-
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 gem "imgkit", "~> 1.3.9"                              # convert html to images
 gem "carrierwave", "~> 0.8"                           # image_scan uploader
 gem "fog", "~> 1.10"                                  # supports amazon s3
+gem "unf"                                             # uniform normalization form support required for fog gem now?
 gem "mini_magick", "~> 3.6"                           # image manipulation
 
 gem "carmen", "~> 1.0.0.beta2"
@@ -31,7 +30,7 @@ gem "carmen", "~> 1.0.0.beta2"
 gem 'unicorn'                                         # Multi-threaded web server
 
 group :development do
-  gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"
+  gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"w
   gem 'sqlite3'                                       # simple file-based database
 end
 
@@ -47,12 +46,13 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem "therubyracer"
-  gem "less-rails"    #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
+  gem "less-rails"                                    # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem "twitter-bootstrap-rails", "~> 2.2.8"   
+  gem 'jquery-rails'
+  gem "jquery_mobile_rails", "~> 1.4.1"
 end
 
-gem 'jquery-rails'
-gem "jquery_mobile_rails", "~> 1.3.2"
+
 

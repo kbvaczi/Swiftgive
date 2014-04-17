@@ -14,6 +14,7 @@ class HomeController < ApplicationController
     render :text => robots, :layout => false, :content_type => "text/plain"
   end
 
+  # used for testing.  This should be empty when pushed.
   def test
    
   end

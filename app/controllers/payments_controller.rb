@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
 
   before_filter :verify_fund_present, :only => [:new]
   before_filter :set_back_path, :only => [:new]  
-  before_filter :set_referring_fund_and_redirect_to_splash, :only => [:new]
+  before_filter :set_referring_fund_and_redirect_to_splash, :only => [:new], :unless => Proc.new { user_signed_in? }
 
   def new
     @payment = Payment.new(params[:payment])
@@ -19,26 +19,8 @@ class PaymentsController < ApplicationController
     payment = Payment.new(params[:payment])
     if user_signed_in?
       payment.sender = current_user.account
-      payment_card = payment.sender.payment_cards.where(params[:payment_card_used].slice(*Accounts::PaymentCard.column_keys)).first_or_initialize
-      payment_card.remember_card = false if params[:payment_card_used].present? and params[:payment_card_used][:remember_card] == 'false' and payment_card.new_record?
-      payment.payment_card_used = payment_card
-    else
-      payment_card = Accounts::PaymentCard.new(:balanced_uri => params[:payment_card_used][:balanced_uri])
-      payment_card.validate_card_with_balanced
-      Balanced::Card.where(:hash => payment_card.balanced_hash).each do |duplicate_balanced_card|
-        duplicate_card = Accounts::PaymentCard.includes(:account).where(:balanced_uri => duplicate_balanced_card.uri)
-        if duplicate_card.present? and duplicate_card.account.user_id.nil?
-          duplicate_card_without_user = duplicate_card 
-          break
-        end
-      end
-      account = defined?(duplicate_card_without_user) ? duplicate_card_without_user.account : Account.new
-      payment_card.account = account
-      payment.payment_card_used = payment_card
-      payment.sender = account
     end
     if payment.save
-      payment_card.invalidate if payment_card.account.user_id.nil? or payment_card.remember_card == false
       if is_mobile_request?
         redirect_to payment_path(payment)
       else

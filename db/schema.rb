@@ -16,76 +16,32 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
     t.string   "uid"
-    t.string   "balanced_uri"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "phone_number"
-    t.date     "date_of_birth"
-    t.string   "street_address"
-    t.string   "postal_code"
     t.string   "city"
     t.string   "state"
-    t.string   "country"
     t.string   "avatar"
-    t.integer  "current_balance_in_cents"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
   add_index "accounts", ["user_id"], :name => "index_accounts_on_user_id"
-
-  create_table "accounts_payment_cards", :force => true do |t|
-    t.integer  "account_id"
-    t.string   "name_on_card"
-    t.string   "card_type"
-    t.string   "last_4_digits"
-    t.string   "balanced_uri"
-    t.boolean  "is_default",    :default => false
-    t.boolean  "is_active",     :default => true
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "accounts_payment_cards", ["account_id"], :name => "index_accounts_payment_cards_on_account_id"
-
-  create_table "bank_accounts", :force => true do |t|
-    t.integer  "fund_id"
-    t.integer  "user_id"
-    t.string   "balanced_uri"
-    t.string   "bank_name"
-    t.string   "owner_name"
-    t.string   "last_4_digits"
-    t.string   "account_type"
-    t.boolean  "is_debitable",  :default => false
-    t.boolean  "is_active",     :default => true
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "bank_accounts", ["fund_id"], :name => "index_bank_accounts_on_fund_id"
-  add_index "bank_accounts", ["user_id"], :name => "index_bank_accounts_on_user_id"
 
   create_table "funds", :force => true do |t|
     t.string   "uid"
     t.string   "name"
     t.string   "description"
     t.text     "profile"
+    t.string   "give_code",     :default => ""
     t.string   "creator_name"
-    t.string   "street_address"
     t.string   "city"
     t.string   "state"
-    t.string   "postal_code"
-    t.string   "business_name"
-    t.string   "business_ein"
-    t.string   "business_phone_number"
     t.string   "fund_type"
-    t.float    "commission_percent"
-    t.string   "balanced_uri"
-    t.boolean  "is_active",             :default => true
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.string   "give_code",             :default => ""
+    t.string   "business_name"
+    t.boolean  "is_active",     :default => true
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
@@ -102,25 +58,6 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
   add_index "funds_memberships", ["account_id"], :name => "index_funds_memberships_on_account_id"
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
 
-  create_table "funds_withdraws", :force => true do |t|
-    t.integer  "fund_id"
-    t.integer  "bank_account_id"
-    t.integer  "amount_in_cents"
-    t.integer  "commission_in_cents"
-    t.integer  "balanced_fee_in_cents"
-    t.integer  "amount_to_receiver_in_cents"
-    t.string   "status"
-    t.string   "uid"
-    t.string   "balanced_uri"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-  end
-
-  add_index "funds_withdraws", ["bank_account_id"], :name => "index_funds_withdraws_on_bank_account_id"
-  add_index "funds_withdraws", ["fund_id"], :name => "index_funds_withdraws_on_fund_id"
-  add_index "funds_withdraws", ["status"], :name => "index_funds_withdraws_on_status"
-  add_index "funds_withdraws", ["uid"], :name => "index_funds_withdraws_on_uid"
-
   create_table "marketing_products", :force => true do |t|
     t.string   "name"
     t.integer  "price_in_cents"
@@ -136,27 +73,22 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
 
   create_table "payments", :force => true do |t|
     t.integer  "fund_id"
-    t.integer  "withdraw_id"
     t.integer  "sender_id"
-    t.integer  "payment_card_used_id"
-    t.text     "message"
-    t.boolean  "is_anonymous",                :default => true
     t.integer  "amount_in_cents"
-    t.integer  "commission_in_cents"
-    t.float    "commission_percent"
-    t.integer  "balanced_fee_in_cents"
-    t.integer  "amount_to_receiver_in_cents"
+    t.text     "message"
+    t.string   "sender_name_from_email"
+    t.string   "sender_email"
+    t.boolean  "is_anonymous",           :default => true
+    t.boolean  "is_confirmed_by_email",  :default => false
+    t.boolean  "is_cancelled",           :default => false
     t.string   "uid"
-    t.string   "balanced_uri"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"
-  add_index "payments", ["payment_card_used_id"], :name => "index_payments_on_payment_card_used_id"
   add_index "payments", ["sender_id"], :name => "index_payments_on_sender_id"
   add_index "payments", ["uid"], :name => "index_payments_on_uid"
-  add_index "payments", ["withdraw_id"], :name => "index_payments_on_withdraw_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",   :null => false

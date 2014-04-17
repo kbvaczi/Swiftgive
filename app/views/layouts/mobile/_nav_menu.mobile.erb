@@ -1,14 +1,16 @@
 <div id='nav_menu' data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme='none'>
 	<div class='center_wrap'>
 		<h3 data-theme='a'>Menu</h3>
-		<%= link_to 'View Profile', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'gear', :'data-mini' => 'true', :'data-theme' => 'a' %>
-		<%= link_to 'Refer a friend', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'forward', :'data-mini' => 'true', :'data-theme' => 'a' %>
+		<% if user_signed_in? %>
+			<%= link_to 'View Profile', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true', :'data-theme' => 'a' %>
+		<% end %>
+		<%= link_to 'Refer a friend', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'mail', :'data-mini' => 'true', :'data-theme' => 'a' %>
 
 		<br class='spacer'/>
 		<% if user_signed_in? %>
-			<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'delete', :'data-mini' => 'true', :'data-theme' => 'a'%>
+			<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'power', :'data-mini' => 'true', :'data-theme' => 'a'%>
 		<% else %>
-			<%= link_to "Sign in", new_user_session_path,  :'data-role' => 'button', :'data-icon' => 'checks', :'data-mini' => 'true', :'data-theme' => 'a'%>
+			<%= link_to "Sign in", new_user_session_path,  :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true', :'data-theme' => 'a'%>
 		<% end %>
 	</div>
 </div>

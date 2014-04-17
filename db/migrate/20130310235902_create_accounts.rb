@@ -7,20 +7,13 @@ class CreateAccounts < ActiveRecord::Migration
         t.integer  :user_id
         
         t.string   :uid
-        t.string   :balanced_uri
 
         t.string   :first_name
         t.string   :last_name
-        t.string   :phone_number
-        t.date     :date_of_birth
-        t.string   :street_address
-        t.string   :postal_code
         t.string   :city
         t.string   :state
-        t.string   :country
 
         t.string   :avatar
-        t.integer  :current_balance_in_cents
 
         t.timestamps
       end
