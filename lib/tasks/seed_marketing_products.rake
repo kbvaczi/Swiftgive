@@ -3,7 +3,7 @@
 desc "Seed Marketing Products"
 
 task :seed_marketing_products => :environment do
-  Rails.logger.info "Running seed_marketing_products task:"
+  Rails.logger.info "Running seed_marketing_products task: "
   
   MarketingProduct.create(	:name => 'Coffee Mugs',
   					   		:zazzle_template_id => '168185807055035381',
