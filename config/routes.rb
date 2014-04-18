@@ -41,7 +41,7 @@ Swiftgive::Application.routes.draw do
   
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
   get 'payments/guest_splash'  => 'payments#guest_splash', :as => 'guest_splash'
-  resources :payments, :only => [:create, :show]
+  resources :payments, :only => [:create, :show] 
     
   resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]
   

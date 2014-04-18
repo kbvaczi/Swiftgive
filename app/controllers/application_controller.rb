@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include Mobylette::RespondToMobileRequests  
   mobylette_config do |config|
     config[:skip_xhr_requests] = false # this is needed for jquery mobile framework which sends requests via xhr
+    config[:fallback_chains] = { mobile: [:mobile, :html, :json] }
   end
 
   # Uncomment the next line to force all requests to be treated as mobile requests (for testing).  Alternatively you can set the user agent in chrome to a mobile device.

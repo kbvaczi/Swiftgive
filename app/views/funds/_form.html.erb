@@ -22,6 +22,7 @@
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
     
     <%= f.input :business_name, :placeholder => 'Business Name', :required => true %>
+    <%= f.input :business_email, :placeholder => 'Business Email', :required => true %>
     <%= f.input :city, :placeholder => 'City' %>    
     <%= f.input :state, :placeholder => 'State' %>    
     

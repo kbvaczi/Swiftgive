@@ -9,6 +9,7 @@ class CreatePayments < ActiveRecord::Migration
         t.text    :message
         t.string  :sender_name_from_email
         t.string  :sender_email
+        t.string  :receiver_email
 
         t.boolean :is_anonymous, :default => :true            # Sender name will not show up in public view
         t.boolean :is_confirmed_by_email, :default => :false  # We received a copy of the email sent to square cash for this payment

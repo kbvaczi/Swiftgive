@@ -17,18 +17,23 @@ class PaymentsController < ApplicationController
   
   def create
     payment = Payment.new(params[:payment])
-    if user_signed_in?
-      payment.sender = current_user.account
-    end
+    payment.sender = current_user.account if user_signed_in?
+    payment.receiver_email = payment.fund.is_business_fund? ? payment.fund.business_email : payment.fund.creator.user.email
     if payment.save
-      if is_mobile_request?
-        redirect_to payment_path(payment)
-      else
-        redirect_to fund_path(payment.fund), :notice => 'We appreciate your generosity!'
+      respond_to do |format|        
+        #format.mobile  { render json: ("[{name:uid, value:" + payment.uid + "}, {name:receiver_email, value:" + payment.receiver_email + "}]").to_json }
+        format.mobile  { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }
+        #format.html   { redirect_to fund_path(payment.fund), :notice => 'We appreciate your generosity!' }
+        #format.mobile { redirect_to payment_path(payment), :notice => 'We appreciate your generosity!' }        
       end
     else
-      flash[:error] = 'Error trying to give...'
-      redirect_to back_path
+      respond_to do |format|
+        format.mobile { render json: "error".to_json }
+        #format.html or format.mobile do
+        #  flash[:error] = 'Error trying to give...'
+        #  redirect_to back_path
+        #end        
+      end     
     end
   end
 

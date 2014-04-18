@@ -16,7 +16,7 @@ class Fund < ActiveRecord::Base
   has_many    :payments,        :class_name => 'Payment',           :dependent => :destroy
   
   attr_accessible :name, :description, :profile, :fund_type,
-                  :city, :state, :creator_info, :business_name
+                  :city, :state, :creator_info, :business_name, :business_email
                   
   attr_accessor   :creator_info
 
@@ -31,7 +31,8 @@ class Fund < ActiveRecord::Base
   validates_presence_of :uid, :name, :description
   validates             :fund_type, :inclusion => { :in => %w(business person), :message => "%{value} is not valid" }
   validates             :name, :format => { :with => /\A[\s\w\d().'!?]+\z/, :message => "No special characters" }
-  validates_presence_of :business_name, :if => Proc.new { self.fund_type == 'business' }
+  validates_presence_of :business_name, :business_email, :if => Proc.new { self.fund_type == 'business' }
+  validates             :business_email, :email => true, :if => Proc.new { self.fund_type == 'business' }
                         
   # ----- Callbacks ----- #    
 

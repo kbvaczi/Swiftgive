@@ -7,7 +7,7 @@ class Payment < ActiveRecord::Base
   
   attr_accessor :amount_in_dollars
 
-  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :amount_in_dollars, :sender_email, :sender_name_from_email
+  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :amount_in_dollars, :sender_email, :receiver_email, :sender_name_from_email
   
   def to_param
     self.uid.parameterize

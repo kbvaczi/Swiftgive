@@ -33,15 +33,16 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
     t.string   "name"
     t.string   "description"
     t.text     "profile"
-    t.string   "give_code",     :default => ""
+    t.string   "give_code",      :default => ""
     t.string   "creator_name"
     t.string   "city"
     t.string   "state"
     t.string   "fund_type"
     t.string   "business_name"
-    t.boolean  "is_active",     :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.string   "business_email"
+    t.boolean  "is_active",      :default => true
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
     t.text     "message"
     t.string   "sender_name_from_email"
     t.string   "sender_email"
+    t.string   "receiver_email"
     t.boolean  "is_anonymous",           :default => true
     t.boolean  "is_confirmed_by_email",  :default => false
     t.boolean  "is_cancelled",           :default => false

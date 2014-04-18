@@ -11,11 +11,11 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require application
-//= require_tree ./shared
-//= require_tree ./mobile
 //= require jquery.mobile
 //= require rails.validations
 //= require rails.validations.simple_form
+//= require_tree ./shared
+//= require_tree ./mobile
 
 
 
