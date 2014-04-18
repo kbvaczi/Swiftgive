@@ -102,7 +102,6 @@
   }
 
  $('form').submit(function(event) {
-    
     var url = '<%= payments_path(:method => :post) %>';   
     $.ajax( {
       url: url,
@@ -117,18 +116,15 @@
           var email_params = [{ name:"cc",        value:"cash@square.com" },
                               { name:"subject",   value:"here's%20$" + amount_in_dollars + "%20courtesy%20of%20Swiftgive" },
                               { name:"body",      value:"Note%20from%20sender:%20" + message + "\r\rPayment%20ID%20=%20" + mydata['uid'] }];
-          alert(mydata['uid']);
           $('#email_link_button').attr("href", "mailto:" + mydata.receiver_email + "?" + $.param(email_params));
           $('#square_cash_splash_popup').popup('open');  
-        }
-        
+        }        
       },
       error: function (mydata) {
         flashNow('Error submitting payment...', 'error');
       },
       dataType: 'json'
     });
-
     return event.preventDefault();
   });
   
