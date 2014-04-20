@@ -34,6 +34,7 @@ $(document).ready(function() {
     });
     $('.spinner').delay(2000).fadeIn();*/
   }).bind('ajaxStop', function(){
+    var target = $('#page');
     target.spin(false);
   });
         

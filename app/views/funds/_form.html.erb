@@ -19,14 +19,13 @@
                           :collection => [['Personal','person'],['Business / Non-Profit','business']],
                           :input_html => {:onchange => "refreshFormNewFund($(this).closest($('form')))"} %>
     
-  <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>
-    
+  <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>    
     <%= f.input :business_name, :placeholder => 'Business Name', :required => true %>
     <%= f.input :business_email, :placeholder => 'Business Email', :required => true %>
-    <%= f.input :city, :placeholder => 'City' %>    
-    <%= f.input :state, :placeholder => 'State' %>    
-    
+    <%= f.input :city, :placeholder => 'City', :required => true %>
+    <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State', :required => true %>  
   </div>
+
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to 'Cancel', back_path, :class => "btn" %>

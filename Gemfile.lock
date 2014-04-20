@@ -230,7 +230,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgresql-adapter
-  carmen (~> 1.0.0.beta2)
+  carmen (~> 1.0.1)
   carrierwave (~> 0.8)
   client_side_validations (~> 3.2.6)
   client_side_validations-simple_form (~> 2.1.0)

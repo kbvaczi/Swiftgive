@@ -76,7 +76,7 @@ class Fund < ActiveRecord::Base
   end
 
   def recent_payments
-    self.payments.last(10)
+    self.payments.last(10).reverse
   end
 
   def is_personal_fund?

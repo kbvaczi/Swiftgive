@@ -8,10 +8,4 @@ module AccountsHelper
 		end
 	end
 
-	def display_accountholder_location(account)
-		display_location = ""
-		display_location += "#{account.city.capitalize}" if account.city.present?
-		display_location += ", " if account.city.present? && account.state.present?
-	end
-
 end

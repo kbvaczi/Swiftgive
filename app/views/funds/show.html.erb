@@ -4,8 +4,8 @@
 <p class='lead'><%= current_fund.description %></p>
 
 <%= render :partial => 'funds/show/marketing_products' if is_current_fund_owner %>
-<%= render :partial => 'funds/show/info' unless is_current_fund_owner %>
-
+<%= render :partial => 'funds/show/info'  %>
+<%= render :partial => 'funds/show/give_code_modal' %>
 
 <% if current_fund.recent_payments.present? %>
 	<h3>Recent Donations</h3>
@@ -55,7 +55,8 @@
 			</tr>
 		</table>
 		<div class='center_wrap'>
-			<%= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, new_payment_path(:fund_uid => current_fund), :class => 'btn btn-primary' %>
+			<%= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, "#", :class => 'btn btn-primary', :onclick => "openGiveCodeModal();" %>
+			<%#= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, new_payment_path(:fund_uid => current_fund), :class => 'btn btn-primary' %>
 		</div>
 	</div>
 	

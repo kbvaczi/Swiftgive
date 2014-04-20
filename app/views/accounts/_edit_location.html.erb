@@ -10,7 +10,7 @@
 
       <div class='form-horizontal'>
         <%= f.input :city, :placeholder => 'City' %>    
-        <%= f.input :state, :placeholder => 'State' %>    
+        <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State' %>  
       </div>
 
     </div>

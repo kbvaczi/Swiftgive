@@ -5,7 +5,8 @@
   <li data-role="list-divider" data-theme='d'><%= current_fund.name %></li>
  	
   <li>
-		<p class='mt-s'><%= current_fund.description %></p>
+	<p class='mt-s'><%= current_fund.description %></p>
+	<p> <%= display_location(current_fund) %> </p>
   </li>
 
 	<% if is_current_fund_owner %>
@@ -26,7 +27,7 @@
   		<li data-role="list-divider" data-theme='c'>Fund Creator</li>
 		<li> <%= current_fund.creator_name %> </li> 
   	<% else %>
-		<li data-role="list-divider" data-theme='c'>Business Name</li>
+		<li data-role="list-divider" data-theme='c'>Organization Name</li>
 		<li> <%= current_fund.business_name %> </li> 
   	<% end %>
  

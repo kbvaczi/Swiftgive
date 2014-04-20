@@ -29,7 +29,7 @@
     <%= f.text_field :business_email, :placeholder => 'Business Email', :'data-mini' => true %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>    
-    <%= f.text_field :state, :placeholder => 'State', :'data-mini' => true  %>    
+    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>        
+    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
   </li>        
 </ul>

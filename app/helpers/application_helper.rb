@@ -25,16 +25,15 @@ module ApplicationHelper
       time.strftime("%m/%d/%y")
     end
   end
+
+  def display_location(model)
+    display_location = ""
+    display_location += "#{model.city.capitalize}" if model.city.present?
+    display_location += ", #{model.state}" if model.city.present? && model.state.present?
+  end
   
-  def us_states
-    [ ['Alaska', 'AK'], ['Alabama', 'AL'], ['Arizona', 'AZ'], ['Arkansas', 'AR'], ['California', 'CA'], ['Colorado', 'CO'], ['Connecticut', 'CT'],
-      ['Delaware', 'DE'], ['District of Columbia', 'DC'], ['Florida', 'FL'], ['Georgia', 'GA'], ['Hawaii', 'HI'], ['Idaho', 'ID'],
-      ['Illinois', 'IL'], ['Indiana', 'IN'], ['Iowa', 'IA'], ['Kansas', 'KS'], ['Kentucky', 'KY'], ['Lousiana', 'LA'], ['Maine', 'ME'], ['Maryland', 'MD'], 
-      ['Massachusetts', 'MA'], ['Michigan', 'MI'], ['Minnesota', 'MN'], ['Mississippi', 'MS'], ['Missouri', 'MO'], ['Montana', 'MT'], ['Nebraska', 'NE'],
-      ['Nevada', 'NV'], ['New Hampshire', 'NH'], ['New Jersey', 'NJ'], ['New Mexico', 'NM'], ['New York', 'NY'], ['North Carolina', 'NC'], ['North Dakota', 'ND'],
-      ['Ohio', 'OH'], ['Oklahoma', 'OK'], ['Oregon', 'OR'], ['Pennsylvania', 'PA'], ['Rhode Island', 'RI'], ['South Carolina', 'SC'],
-      ['South Dakota', 'SD'], ['Tennessee', 'TN'], ['Texas', 'TX'], ['Utah', 'UT'], ['Virginia', 'VA'], ['Vermont', 'VT'], ['Washington', 'WA'],
-      ['Wisconsin', 'WI'], ['West Virigina', 'WV'], ['Wyoming', 'WY'] ]
+  def us_state_codes_collection
+    Carmen::Country.coded('US').subregions.collect { |s| s.code }.sort
   end
   
   def pretty_print_hash(input_hash)

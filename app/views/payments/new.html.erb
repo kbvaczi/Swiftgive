@@ -1,29 +1,26 @@
 <% title receiving_fund.name %>
 
+<%= render :partial => 'payments/square_cash_splash' %>
+
 <h3>Complete this form to give</h3>
+
 <p class='lead'>Your Generosity is greatly appreciated</p>
 
-<%= simple_form_for @payment, :html => {:class => 'form-horizontal'}, :validate => true do |f| %>
+<%= simple_form_for @payment, :html => {:class => 'form-horizontal', :honeypot => true }, :validate => true do |f| %>
 
   <%= f.hidden_field :fund_id, :value => (params[:payment][:fund_id] rescue receiving_fund.id) %>
   
-  <%#= f.input :amount_in_cents,   :label => "Amount", 
-                                  :collection => [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']],
-                                  :include_blank => false,
-                                  :required => true %>
   <%= f.input :amount_in_dollars, :required => true, :wrapper => :prepend_append, :label => 'Amount', :input_html => {:style => 'width:50px'} do %>
     <%= content_tag :span, "$", :class => "add-on" %>
-	<%= f.input_field :amount_in_dollars, :class => 'currency_input no_sign span1', :style => 'text-align:right;' %>
-    <%= content_tag :span, ".00", :class => "add-on add-on-append" %>
-    
+    <%= f.input_field :amount_in_dollars, :class => 'currency_input no_sign span1', :style => 'text-align:right;' %>
+    <%= content_tag :span, ".00", :class => "add-on add-on-append" %> 
   <% end %>
 
-  <%= f.input :amount_in_cents,   :as => :hidden %>
-  
+  <%= f.input :amount_in_cents, :as => :hidden %>
 
   <%= f.input :is_anonymous, :label => "Anonymous",
-  							:include_blank => false,
-  							 :collection => [['Give Publically',false],["Give Anonymously",true]] %>
+  						:include_blank => false,
+  						:collection => [['Give Publically',false],["Give Anonymously",true]] %>
   
   <%= f.input :message, :label => 'Optional Message',
   						:as => :string,
@@ -43,5 +40,33 @@
 	$("input[name='payment[amount_in_dollars]']").change(function(){
 		$("input[name='payment[amount_in_cents]']").val($(this).val() * 100);
 	});
+
+  $('form#new_payment').submit(function(event) {
+    var url = '<%= payments_path(:method => :post) %>';   
+    $.ajax( {
+      url: url,
+      data: $(this).serialize(),
+      type: "POST",
+      success: function (response) {
+        if (typeof response == 'object' && response['uid']) {
+          var amount_in_dollars = $('#payment_amount_in_cents').val() / 100;
+          var message           = $('#payment_message').val();
+          var email_params = [{ name:"cc",        value: "cash@square.com" },
+                              { name:"subject",   value: "$" + amount_in_dollars },
+                              { name:"body",      value: response['uid'] }];
+          var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params);
+          $('#email_link_button').attr("href", response['redirect_link']);
+          $('#square_cash_splash_modal').modal('show');
+        } else {
+          flashNow('Error submitting payment...', 'error');          
+        }        
+      },
+      error: function (response) {
+        flashNow('Error submitting payment...', 'error');
+      },
+      dataType: 'json'
+    });
+    return event.preventDefault();
+  });
 
 </script>

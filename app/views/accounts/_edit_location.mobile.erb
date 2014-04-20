@@ -16,7 +16,7 @@
       </div>
 
       <div class='ui-grid-solo'>
-        <%= f.text_field :state, :placeholder => 'State' %>    
+        <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
       </div>
       
       <div class='ui-grid-a'>
