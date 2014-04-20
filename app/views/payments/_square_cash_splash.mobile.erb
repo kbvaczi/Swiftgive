@@ -17,7 +17,8 @@
   <div class='ui-grid-solo ml mr mb-s'>
     <p class='ma-m'>We will now setup an email for Square Cash to process your payment at no fee.  Please review amount in subject line and send to complete transaction.</p>
 
-    <a href="#" data-role="button" data-theme="a" data-icon="mail"  class="ui-btn-center" id="email_link_button">Open Email</a>
+    <%= link_to "Open Email", thanks_payments_path, :'data-role' => 'button', :'data-icon' => 'mail', :class => 'ui-btn-center', :id => 'email_link_button' %>
+    
   </div>
   
 </div>
