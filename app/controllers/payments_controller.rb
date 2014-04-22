@@ -10,7 +10,6 @@ class PaymentsController < ApplicationController
     @payment.amount_in_dollars = 5
     @payment.amount_in_cents = 500
     respond_to do |format|
-      format.html
       format.mobile
     end
   end
@@ -22,18 +21,12 @@ class PaymentsController < ApplicationController
     if payment.save
       respond_to do |format|        
         format.mobile  { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }
-        format.json    { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }
-        #format.html   { redirect_to fund_path(payment.fund), :notice => 'We appreciate your generosity!' }
-        #format.mobile { redirect_to payment_path(payment), :notice => 'We appreciate your generosity!' }        
+        format.json    { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }       
       end
     else
       respond_to do |format|
         format.mobile  { render json: "error".to_json }
         format.json    { render json: "error".to_json }
-        #format.html or format.mobile do
-        #  flash[:error] = 'Error trying to give...'
-        #  redirect_to back_path
-        #end
       end     
     end
   end

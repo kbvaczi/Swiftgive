@@ -43,7 +43,6 @@
 
 <% end %>
 
-
 <script type='text/javascript'>
 
   $( document ).delegate("[data-role='page']", "pageinit", function() {
@@ -101,7 +100,7 @@
     $('#custom_amount_popup').popup('close');
   }
 
- $('form').submit(function(event) {
+ $('form#new_payment').submit(function(event) {
     var url = '<%= payments_path(:method => :post) %>';   
     $.ajax( {
       url: url,
@@ -113,15 +112,17 @@
         } else {
           var amount_in_dollars = $('#payment_amount_in_cents option:selected').val() / 100;
           var message         = $('#payment_message').val();
-          var email_params = [{ name:"cc",        value:"cash@square.com" },
-                              { name:"subject",   value:"here's%20$" + amount_in_dollars + "%20courtesy%20of%20Swiftgive" },
-                              { name:"body",      value:"Note%20from%20sender:%20" + message + "\r\rPayment%20ID%20=%20" + response['uid'] }];
-          var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params);
+          var email_params = [{ name:"cc",        value:"cash@square.com,payments@swiftgive.com" },
+                              { name:"subject",   value:"Here's $" + amount_in_dollars + " courtesy of Swiftgive" },
+                              message ? { name:"body",      value:"Note From Sender: " + message + "\r\rYour Payment ID is: " + response['uid'] } : { name:"body",      value:"Your Payment ID is: " + response['uid'] }];
+          var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params).replace(/\+/g, '%20');
           $('#square_cash_splash_popup').popup('open');  
+          $('#square_mail_submit_form').attr('action', mail_to_link);
+          $('#email_link_button').attr('href', mail_to_link);
           $('#email_link_button').click(function(event){
             setTimeout(function () {
-                location.href = mail_to_link;
-            }, 1000);
+                location.href = '<%= thanks_payments_path %>';
+            }, 100);
           });
         }        
       },

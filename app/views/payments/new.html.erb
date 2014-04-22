@@ -36,7 +36,9 @@
 <% end %>
 
 <script type='text/javascript'>
-
+/*
+  Disabled to disallow desktop payments.  this will help deter bots from scraping email addresses from mailto links...
+  
 	$("input[name='payment[amount_in_dollars]']").change(function(){
 		$("input[name='payment[amount_in_cents]']").val($(this).val() * 100);
 	});
@@ -67,6 +69,6 @@
       dataType: 'json'
     });
     return event.preventDefault();
-  });
+  });*/
 
 </script>
