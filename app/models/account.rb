@@ -15,8 +15,8 @@ class Account < ActiveRecord::Base
 
   # ----- Validations ----- #
            
-  validates_presence_of   :first_name,    :if => 'self.first_name_changed? and self.persisted?'
-  validates_presence_of   :last_name,     :if => 'self.last_name_changed? and self.persisted?'
+  validates_presence_of   :first_name,    :if => 'self.first_name_changed? and self.persisted?'  # allows users to sign in via username and password without setting first/last name
+  validates_presence_of   :last_name,     :if => 'self.last_name_changed? and self.persisted?'   # allows users to sign in via username and password without setting first/last name
   
   # ----- Callbacks ----- #
 

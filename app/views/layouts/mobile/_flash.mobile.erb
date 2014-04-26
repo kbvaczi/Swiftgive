@@ -16,7 +16,8 @@ end
 %>
 
 <% if defined?(is_message_present) and is_message_present %>
-	<div class='center_wrap flash_message <%= "flash_#{flash_type}" %> pa-m' data-role="popup" data-position-to="window" data-theme='none' data-transition='pop' data-overlay-theme="a">
+	<div class='center_wrap flash_message <%= "flash_#{flash_type}" %> pa' data-role="popup" data-position-to="window" data-transition='pop' data-overlay-theme="a" data-history='false' style='width:250px'>	  
 		<%= flash_message %>
+		<%= content_tag :a, "OK", :'data-role' => 'button', :'data-rel' => 'back', :'data-icon' => 'check', :class => 'ui-btn-center mt' %>
 	</div>
 <% end %>

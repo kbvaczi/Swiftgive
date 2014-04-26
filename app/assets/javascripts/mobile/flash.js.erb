@@ -1,24 +1,30 @@
 $(document).delegate('.main_page', 'pageshow', function () {
-  target = $(this).find('.flash_message').first()
-  if (!target.hasClass('flash_permenant')){
-    target.on( "popupafteropen", function( event, ui ) {
-      window.setTimeout(function() { 
-        if (target.is(":visible")) {
-          target.popup('close'); 
-        }
-      }, 7000 ); 
-    });  
-  }
-  target.popup("open");
+  target = $(this).find('.flash_message').first();
+  window.setTimeout(function(){
+    target.on( "popupafterclose", function( event, ui ) {
+      target.popup('destroy');
+      target.remove();
+    });
+    if (!target.hasClass('flash_permenant')){
+      target.on( "popupafteropen", function( event, ui ) {
+        window.setTimeout(function() { 
+          if (target.is(":visible")) {
+            target.popup('close');            
+          }
+        }, 7000 );
+      });  
+    }
+    target.popup("open");
+  }, 300);  
 });
 
 $(document).on('click', '.flash_message', function () {
-  $(this).popup('close');  
+  $(this).popup('close');
 });
 
 function flashNow(message, message_type, popup_to_open_after_close) {
   message_type = message_type || 'notice';
-  var flash_message = "<div class='center_wrap flash_message pa-m flash_" + message_type + "' data-role='popup' data-position-to='window' data-theme='none' data-transition='fade' data-overlay-theme='b'><p class='flash_message_content center'></p></div>";
+  var flash_message = "<div class='center_wrap flash_message pa flash_" + message_type + "' role='dialog' data-position-to='window' data-transition='pop' data-overlay-theme='a'><p class='flash_message_content center' style='width:250px'></p></div>";
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message);
@@ -33,7 +39,9 @@ function flashNow(message, message_type, popup_to_open_after_close) {
     target.on( "popupafteropen", function( event, ui ) {
       window.setTimeout(function() { 
         if (target.is(":visible")) {
-          target.popup('close'); 
+          target.popup('close');
+          target.popup('destroy');
+          target.remove();
         }
       }, 7000 ); 
     });
