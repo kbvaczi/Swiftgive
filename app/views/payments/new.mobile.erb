@@ -37,19 +37,24 @@
   <div class='ui-grid-full'>
     <%= f.submit "Give Now", :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check' %>
   </div>
+  <!--
   <div class='ui-grid-full'>
-    <%= f.submit "Save for Later", :'data-role' => 'button', :'data-theme' => 'c', :'data-icon' => 'clock' %>
+    <%#= f.submit "Save for Later", :'data-role' => 'button', :'data-theme' => 'c', :'data-icon' => 'clock' %>
   </div>
+  -->
 
 <% end %>
 
 <script type='text/javascript'>
 
   $( document ).delegate("[data-role='page']", "pageinit", function() {
+    initialize_custom_amount_form();
+  });
 
+  function initialize_custom_amount_form() {
     $('#custom_amount_value').initAutoNumeric();
 
-    $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
+    $('#payment_amount_in_cents-listbox').one( "popupafterclose", function( event, ui ) {
       var target = $('#payment_amount_in_cents');
       if (target.val() == 'other'){
         target.val(target.children('option:first-child').attr('value'));
@@ -60,15 +65,17 @@
       }
     });
 
+    $('.custom_amount_button').off('touchstart', custom_amount_button_press);
+    $('.custom_amount_button').off('click', custom_amount_button_press);
+    $('#custom_amount_ok_button').off('click', custom_amount_ok_button_press);
+
     if ('ontouchstart' in document.documentElement) {
-      $('.custom_amount_button').on('touchstart', custom_amount_button_press);
-      $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);
+      $('.custom_amount_button').on('touchstart', custom_amount_button_press);      
     } else {
       $('.custom_amount_button').on('click', custom_amount_button_press);
-      $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);    
     }
-
-  });
+    $('#custom_amount_ok_button').on('click', custom_amount_ok_button_press);
+  }
 
   function custom_amount_button_press() {
     var target = $('#custom_amount_value');
@@ -100,7 +107,7 @@
     $('#custom_amount_popup').popup('close');
   }
 
- $('form#new_payment').submit(function(event) {
+  $('form#new_payment').submit(function(event) {
     var url = '<%= payments_path(:method => :post) %>';   
     $.ajax( {
       url: url,
@@ -111,13 +118,13 @@
           flashNow('Error submitting payment...', 'error');
         } else {
           var amount_in_dollars = $('#payment_amount_in_cents option:selected').val() / 100;
-          var message         = $('#payment_message').val();
+          var message           = $('#payment_message').val();
+          var body              = message ? message + "\r\rYour payment ID is: " + response['uid'] : "Your payment ID is: " + response['uid'];
           var email_params = [{ name:"cc",        value:"cash@square.com,payments@swiftgive.com" },
                               { name:"subject",   value:"Here's $" + amount_in_dollars + " courtesy of Swiftgive" },
-                              message ? { name:"body",      value:"Note From Sender: " + message + "\r\rYour Payment ID is: " + response['uid'] } : { name:"body",      value:"Your Payment ID is: " + response['uid'] }];
+                              { name:"body",      value:body }];
           var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params).replace(/\+/g, '%20');
-          $('#square_cash_splash_popup').popup('open');  
-          $('#square_mail_submit_form').attr('action', mail_to_link);
+          $('#square_cash_splash_popup').popup('open');            
           $('#email_link_button').attr('href', mail_to_link);
           $('#email_link_button').click(function(event){
             setTimeout(function () {

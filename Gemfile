@@ -24,8 +24,7 @@ gem "fog", "~> 1.10"                                  # supports amazon s3
 gem "unf"                                             # uniform normalization form support required for fog gem now?
 gem "mini_magick", "~> 3.6"                           # image manipulation
 
-gem 'carmen', '~> 1.0.1'
-
+gem 'carmen', '~> 1.0.1'                              # State and country information
 gem 'unicorn'                                         # Multi-threaded web server
 
 group :development do

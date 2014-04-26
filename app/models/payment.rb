@@ -7,7 +7,7 @@ class Payment < ActiveRecord::Base
   
   attr_accessor :amount_in_dollars
 
-  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :amount_in_dollars, :sender_email, :receiver_email, :sender_name_from_email
+  attr_accessible :amount_in_cents, :message, :is_anonymous, :fund_id, :amount_in_dollars, :sender_email, :receiver_email
   
   def to_param
     self.uid.parameterize
@@ -28,9 +28,27 @@ class Payment < ActiveRecord::Base
       
   # ----- Scopes ----- #
 
+  default_scope where(:is_cancelled => false)
 
   # ----- Member Methods ----- #  
 
+  def confirm_by_email(mail_object)
+    if mail_object.class.name == "Mail::Message"
+      sender_address    = mail_object.from.first
+      sender_name       = mail_object[:from].decoded[/(.+) \</, 1]
+      to_addresses      = mail_object.to
+      cc_addresses      = mail_object.cc
+      subject           = mail_object.subject
+      amount_in_cents   = (subject[/( |^)\$(\d+\.?\d{,2})( |$)/, 2].to_f * 100).to_i # there must be spaces around dollar amount for square cash to recognize
+      is_square_cash_copied = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
+      is_only_one_receiver  = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
+      if is_square_cash_copied and is_only_one_receiver and amount_in_cents.present?
+        self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)
+      else
+        self.update_attribute(:is_cancelled, true)
+      end
+    end
+  end
 
   # ----- Class Methods ----- #
 
