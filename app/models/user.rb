@@ -82,7 +82,6 @@ class User < ActiveRecord::Base
       Rails.logger.info new_user.errors.full_messages
       Rails.logger.info new_user.account.errors.full_messages
       return new_user if new_user.save
-
     end
     return nil
   end

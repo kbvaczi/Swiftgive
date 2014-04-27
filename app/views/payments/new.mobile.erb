@@ -119,12 +119,12 @@
         } else {
           var amount_in_dollars = $('#payment_amount_in_cents option:selected').val() / 100;
           var message           = $('#payment_message').val();
-          var body              = message ? message + "\r\rYour payment ID is: " + response['uid'] : "Your payment ID is: " + response['uid'];
+          var body              = message ? message + "\r\n\r\nYour payment ID is: " + response['uid'] : "Your payment ID is: " + response['uid'];
           var email_params = [{ name:"cc",        value:"cash@square.com, <%= ENV['PAYMENTS_EMAIL'] %>" },
                               { name:"subject",   value:"Here's $" + amount_in_dollars + " courtesy of Swiftgive" },
                               { name:"body",      value:body }];
           var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params).replace(/\+/g, '%20');
-          $('#square_cash_splash_popup').popup('open');            
+          $('#square_cash_splash_popup').popup('open');
           $('#email_link_button').attr('href', mail_to_link);
           $('#email_link_button').click(function(event){
             setTimeout(function () {

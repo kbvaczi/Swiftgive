@@ -121,7 +121,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
       remember_me(user)
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated      
-    else # user is nil, meaning the authentication already exists
+    elsif User.where("email LIKE ?", standardized_auth_data[:email]).present? # user has authenticated using the same email with a different service, use like for case insensitive
+      add_authentication_to_existing_account
+    else # some other problem
       flash[:error] = "There was a problem authenticating with this #{standardized_auth_data[:provider_name]} account..."      
       redirect_to back_path
     end
@@ -131,7 +133,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.find_from_omniauth(:standardized_auth_data => standardized_auth_data)
     if user.present? and user.persisted?
       user.update_authentication_raw_data(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data)
-      #TODO: Why does the page go back after closing flash message upon authentication?
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
       remember_me(user)      
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
@@ -143,13 +144,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def add_authentication_to_existing_account
     existing_user_associated_with_omniauth = User.find_from_omniauth(:standardized_auth_data => standardized_auth_data)
     if not existing_user_associated_with_omniauth.present?
-      if current_user.build_authentication(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data).save
+      if user_signed_in? and current_user.build_authentication(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data).save
         redirect_to back_path, :notice => "Successfully linked #{standardized_auth_data[:provider_name]} account to your user profile..."
+      elsif User.where("email LIKE ?", standardized_auth_data[:email]).first.build_authentication(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data).save
+        sign_in_existing_user
       else
         flash[:error] = "Unable to link #{standardized_auth_data[:provider_name]} account to your user profile..."
         redirect_to back_path
       end
-    elsif existing_user_associated_with_omniauth.id == current_user.id
+    elsif user_signed_in? and existing_user_associated_with_omniauth.id == current_user.id
       redirect_to back_path, :notice => "This #{standardized_auth_data[:provider_name]} account is already linked to your user profile..."
     else
       flash[:error] = "This #{standardized_auth_data[:provider_name]} account is already linked to another user profile..."
