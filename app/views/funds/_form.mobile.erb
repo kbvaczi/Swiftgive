@@ -12,7 +12,7 @@
 </script>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
-  <li data-role="list-divider" data-theme='a'>Fund Information</li>  
+  <li data-role="list-divider" >Fund Information</li>  
   <li>
     <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true %>
     <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
@@ -23,7 +23,7 @@
 </ul>
   
 <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='<%= 'hidden' unless @fund.is_business_fund? %>'>
-  <li data-role="list-divider" data-theme='a'>Business / Non-Profit Information</li>
+  <li data-role="list-divider" >Business / Non-Profit Information</li>
   <li>
     <%= f.text_field :business_name, :placeholder => 'Business Name', :'data-mini' => true %>
     <%= f.text_field :business_email, :placeholder => 'Business Email', :'data-mini' => true %>

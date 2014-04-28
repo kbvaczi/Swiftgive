@@ -1,7 +1,0 @@
-<div class='mt center_wrap'>
-	<h1>Thanks for your generosity!</h1>	
-	<br class='spacer'/>
-	<%= link_to "Sign up", new_user_session_path,  :'data-role' => 'button', :'data-icon' => 'check', :'data-mini' => 'true', :'data-theme' => 'c' unless user_signed_in? %>
-	<p>Appreciate our service?</p>
-	<%= link_to "Donate to SwiftGive", fund_path(Fund.first), :'data-role' => 'button', :'data-icon' => 'heart', :'data-mini' => 'true', :'data-theme' => 'c' %>
-</div>

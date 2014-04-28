@@ -27,7 +27,11 @@ class Account < ActiveRecord::Base
   
   # returns full name of user
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    if self.first_name.present? and self.last_name.present?
+      "#{self.first_name} #{self.last_name}"
+    else
+      self.first_name
+    end
   end
   
   def location

@@ -17,7 +17,7 @@
     <% end %>
     <div data-role="page" class='main_page' id='<%= yield(:page_id) %>' data-url='<%= current_path %>' data-transition="slide">       
       <%= render :partial => 'layouts/mobile/flash', :locals => {:flash => flash} %>
-      <div data-role="header" data-id='header' data-fullscreen='true' data-theme='d'>
+      <div data-role="header" data-id='header' data-fullscreen='true' >
         <div class='center_wrap'>
           <div class='left ml-m'><%= link_to 'back', back_path, :'data-role' => 'button', :'data-icon' => 'arrow-l', :'data-iconpos' => 'notext', :'data-shadow' => 'false', :class => "#{'ui-disabled' if current_path == root_url}" %></div>
           <div class='center'><%= link_to content_tag(:div, '', :id => 'logo', :class => 'center'), root_path %></div>

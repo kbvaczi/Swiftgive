@@ -2,7 +2,7 @@
 
 <ul data-role="listview" data-inset="true" data-theme"a">
  
-  <li data-role="list-divider" data-theme='d'><%= current_fund.name %></li>
+  <li data-role="list-divider" ><%= current_fund.name %></li>
  	
   <li>
 	<p class='mt-s'><%= current_fund.description %></p>
@@ -10,7 +10,7 @@
   </li>
 
 	<% if is_current_fund_owner %>
-	  <li data-role="list-divider" data-theme='c'>Donations</li>
+	  <li data-role="list-divider" >Donations</li>
 	  <li>
 	  	<div class='ui-grid-a'>
 		  	<div class='ui-block-a main'>Today</div>
@@ -24,10 +24,10 @@
 	<% end %>
   
   	<% if current_fund.is_personal_fund? %> 
-  		<li data-role="list-divider" data-theme='c'>Fund Creator</li>
+  		<li data-role="list-divider" >Fund Creator</li>
 		<li> <%= current_fund.creator_name %> </li> 
   	<% else %>
-		<li data-role="list-divider" data-theme='c'>Organization Name</li>
+		<li data-role="list-divider" >Organization Name</li>
 		<li> <%= current_fund.business_name %> </li> 
   	<% end %>
  
@@ -35,6 +35,6 @@
 </ul>
 
 
-<%= link_to 'Give to this Fund', new_payment_path(:fund_uid => current_fund.uid), :'data-role' => 'button', :'data-theme' => 'f', :'data-icon' => 'heart' %>
-<%= link_to 'Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-theme' => 'f', :'data-icon' => 'eye' if is_current_fund_owner%>
-<%= link_to 'Edit this Fund', edit_fund_path(@fund), :'data-role' => 'button', :'data-theme' => 'f', :'data-icon' => 'gear' if is_current_fund_owner %>
+<%= link_to 'Give to this Fund', new_payment_path(:fund_uid => current_fund.uid), :'data-role' => 'button', :'data-icon' => 'heart' %>
+<%= link_to 'Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-icon' => 'eye' if is_current_fund_owner%>
+<%= link_to 'Edit this Fund', edit_fund_path(@fund), :'data-role' => 'button', :'data-icon' => 'gear' if is_current_fund_owner %>

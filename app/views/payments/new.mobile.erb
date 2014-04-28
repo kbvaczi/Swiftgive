@@ -1,12 +1,13 @@
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 <%= render :partial => 'payments/square_cash_splash', :formats => [:mobile] %>
+<%= render :partial => 'payments/thank_you_splash'  , :formats => [:mobile] %>
 
 <%= form_for @payment, :html => { :honeypot => true } do |f| %>
   
   <%= f.hidden_field :fund_id %>
 
   <ul data-role="listview" data-inset="true" data-theme"a">
-    <li data-role="list-divider" data-theme='a'>Give to:</li>
+    <li data-role="list-divider" >Give to:</li>
     <li data-icon='info'>
       <%= link_to "#{receiving_fund.name}", fund_path(receiving_fund) %>
     </li>
@@ -25,12 +26,12 @@
       <div class='ui-grid-a pa-s'>
         <div class='ui-block-a pt-m pl-m t-s'><h3>Anonymous:</h3></div>
         <div class='ui-block-b pr-s' style='text-align:right;'>
-          <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true, :'data-theme' => 'a' %>
+          <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true %>
         </div>  
       </div>
     </li>
     <li style='margin:0px;padding:8px;'>
-      <%= f.text_field :message, :'placeholder' => 'Optional Message', :'data-mini' => true, :'data-theme' => 'a' %>    
+      <%= f.text_field :message, :'placeholder' => 'Optional Message', :'data-mini' => true %>    
     </li>
   </ul>
   
@@ -126,10 +127,13 @@
           var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params).replace(/\+/g, '%20');
           $('#square_cash_splash_popup').popup('open');
           $('#email_link_button').attr('href', mail_to_link);
+          $('#square_cash_splash_popup').on( "popupafterclose", function( event, ui ) {
+            window.setTimeout(function() { 
+              $('#thank_you_splash_popup').popup('open'); 
+            }, 500 );
+          });
           $('#email_link_button').click(function(event){
-            setTimeout(function () {
-                location.href = '<%= thanks_payments_path %>';
-            }, 100);
+            $('#square_cash_splash_popup').popup('close');
           });
         }        
       },

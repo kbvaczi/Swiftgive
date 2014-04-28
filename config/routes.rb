@@ -33,19 +33,11 @@ Swiftgive::Application.routes.draw do
     get 'give_code' => 'funds/give_codes#show', :on => :member
     get 'give_code_html/(:product)' => 'funds/give_codes#give_code_html', :on => :member, :as => :give_code_html
     get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member
-    scope :module => 'funds' do
-      resource :bank_account, :only => [:create, :destroy]
-      resources :withdraws, :only => [:create]
-    end
   end
   
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
   get 'payments/guest_splash'  => 'payments#guest_splash', :as => 'guest_splash'
-  resources :payments, :only => [:create, :show] do
-    get 'thanks', :on => :collection
-  end
-    
-  resources :bank_accounts, :path => 'bank_accounts', :only => [:create, :destroy]
+  resources :payments, :only => [:create, :show]
   
   match 'about' => 'home#about', :as => 'about'
 
@@ -54,7 +46,7 @@ Swiftgive::Application.routes.draw do
     match 'test' => 'home#test'
   end
   
-  # dynamic robots.txt per environment
+  # dynamic robots.txt per environment, we don't want bots crawling on development or staging sites
   get '/robots.txt' => 'home#robots'
   
   root :to => "home#index"

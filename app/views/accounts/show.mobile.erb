@@ -3,7 +3,7 @@
 <%= render :partial => 'accounts/add_social_network', :formats => [:mobile] %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
-  <li data-role="list-divider" data-theme='a'>My Profile</li>  
+  <li data-role="list-divider" >My Profile</li>  
     <li data-icon='gear'>
       <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
         <!-- 
@@ -49,7 +49,7 @@
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
-  <li data-role="list-divider" data-theme='a'>My Social Networks</li>  
+  <li data-role="list-divider" >My Social Networks</li>  
   <li>
     <div class='center_wrap'>
       <% current_user.authentications.each do |authentication| %>

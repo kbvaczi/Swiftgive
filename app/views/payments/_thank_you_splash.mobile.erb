@@ -1,0 +1,17 @@
+<div id="thank_you_splash_popup" style='width:275px' data-role="popup" data-history='false' data-position-to="window">
+
+  <div data-role="header" >
+      <h4 style="margin:0px">Thanks!</h4>
+  </div>
+
+  <div class='mt center_wrap'>
+    <h1>We admire your generosity...</h1>
+    <br class='spacer'/>
+    <h3>Admire our service?</h3>
+  </div>
+
+  <div class='ui-grid-solo ml mr mb-s'>
+    <%= link_to "Donate to SwiftGive", ENV['SWIFTGIVE_FUND_UID'] ? fund_path(ENV['SWIFTGIVE_FUND_UID']) : fund_path(Fund.first), :'data-role' => 'button', :'data-icon' => 'heart', :'data-mini' => 'true', :'data-theme' => 'c', :class => 'ui-btn-center' %>
+  </div>
+  
+</div>
