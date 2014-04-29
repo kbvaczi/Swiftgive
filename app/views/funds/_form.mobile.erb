@@ -18,7 +18,7 @@
     <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
   </li>
   <li>
-    <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false', :'data-theme' => 'c', :onchange => "refreshFormNewFund()" %>
+    <%= f.select :fund_type, [['Personal','person'],['Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false',  :onchange => "refreshFormNewFund()" %>
   </li>
 </ul>
   

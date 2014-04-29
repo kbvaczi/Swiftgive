@@ -1,0 +1,14 @@
+<ul data-role="listview" data-inset="true">
+	<li data-role="list-divider">My Funds</li>
+	<% user_funds = current_user.account.funds %>
+	<% user_funds.each do |fund| %>
+		<li><%= link_to fund.name, fund_path(fund) %></li>
+	<% end %>
+	<% unless user_funds.present? %>
+		<li><p>You currently are not a member of any funds...</p></li>
+	<% end %>
+</ul>
+
+<ul data-role="listview" data-inset="true">
+	<li  data-icon='plus'> <%= link_to 'Create new fund', new_fund_path %> </li>
+</ul>

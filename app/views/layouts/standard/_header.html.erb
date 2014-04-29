@@ -1,3 +1,8 @@
 <div id='navbar'>
-  <%= render :partial => 'layouts/standard/navbar' %>    
+	<div class='span3'>
+		<%= link_to content_tag(:div, '', :id => 'logo'), root_path, :id => 'logo_wrapper' %>
+	</div>
+	<div class='span9'>
+	  	<%= render :partial => 'layouts/standard/navbar' %>    
+	</div>
 </div>

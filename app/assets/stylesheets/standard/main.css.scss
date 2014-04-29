@@ -6,7 +6,7 @@ body {
   margin-bottom: 25px;
   padding: 0px;
   color: $fontColor;
-  background-color: rgba(100,150,100,0.05);
+  background-color: rgba(130,150,140,0.1);
 }  
 a:hover {
   background-color: #03c;
@@ -51,12 +51,12 @@ a:hover {
   position:relative;
 }
 #header #logo {
-  left:-10px;
   top:2px;
+  left:-10px;
   position: absolute;  
-  width:150px;
-  height:40px;
-  background-image: asset-url("swiftgive_logo.png", image);  
+  width:200px;
+  height:80px;
+  background-image: asset-url("swiftgive_logo_lg.png", image);  
   background-repeat: no-repeat;
   background-position: top left; 
   background-size: 100%;

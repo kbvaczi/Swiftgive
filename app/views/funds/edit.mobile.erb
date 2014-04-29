@@ -1,10 +1,13 @@
 <%= form_for @fund, :method => :put do |f| %>
 
-  <h1>Edit Fund</h1>
+	<div class='ui-grid-solo center_wrap'>
+		<h3>Edit Fund</h3>
+		<hr>
+	</div>
 
   <%= render :partial => "form", :locals => {:f => f} %>
   
-  <%= f.submit "Update Fund", :'data-icon' => 'check' %>
+  <%= f.submit "Update Fund", :'data-icon' => 'check', :'data-theme' => 'b' %>
 
 <% end %>
 

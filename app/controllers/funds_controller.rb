@@ -10,7 +10,7 @@ class FundsController < ApplicationController
     @funds = Fund.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.mobile
     end
   end
 
@@ -21,6 +21,7 @@ class FundsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.mobile
     end
   end
 
@@ -38,6 +39,7 @@ class FundsController < ApplicationController
     @fund = Fund.new(@creator_account.attributes.slice('city', 'state'))
     respond_to do |format|
       format.html # new.html.erb
+      format.mobile
     end
   end
 

@@ -1,9 +1,9 @@
 <div class='mt center_wrap'>
 	<%= image_tag 'swiftgive_logo_lg.png', :width => '80%' %>
 	<h2>Welcome to Swiftgive</h2>
-  <p class='pb pr pl t-s'>The easiest way to give tips or donations without cash!</p>
+  <p class='pb pr pl t-s'>A great way to give tips or donations without cash!</p>
   <div class='mt'>
-    <a href='<%= new_user_session_path %>' data-role='button'  data-mini='true' data-icon='user'>Sign-in</a>
+    <a href='<%= new_user_session_path %>' data-role='button' data-theme='b' data-mini='true' data-icon='user'>Sign-in</a>
   </div>
   <div class='mt pb-s'>
     <a href='<%= new_payment_path(:fund_uid => (session[:referring_fund_uid]), :guest_payment => true) %>' data-role='button' data-mini='true'  data-icon='arrow-r'>Give as a Guest</a>
