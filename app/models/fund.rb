@@ -5,18 +5,18 @@ class Fund < ActiveRecord::Base
   self.table_name = 'funds'
   
   has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => false }
-  has_many    :members,         :class_name => "Account",           :through => :memberships,  :source => :member
+  has_many    :members,         :class_name => "User",              :through => :memberships,  :source => :member
   
   has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => true }  
-  has_many    :owners,          :class_name => "Account",           :through => :ownerships,   :source => :member
+  has_many    :owners,          :class_name => "User",              :through => :ownerships,   :source => :member
   
   has_one     :creatorship,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_creator => true, :is_owner => true }  
-  has_one     :creator,         :class_name => "Account",           :through => :creatorship,  :source => :member
+  has_one     :creator,         :class_name => "User",              :through => :creatorship,  :source => :member
   
   has_many    :payments,        :class_name => 'Payment',           :dependent => :destroy
   
   attr_accessible :name, :description, :profile, :fund_type,
-                  :city, :state, :creator_info, :business_name, :business_email
+                  :city, :state, :creator_info, :receiver_name, :receiver_email
                   
   attr_accessor   :creator_info
 
@@ -29,10 +29,10 @@ class Fund < ActiveRecord::Base
   # ----- Validations ----- #
 
   validates_presence_of :uid, :name, :description
-  validates             :fund_type, :inclusion => { :in => %w(business person), :message => "%{value} is not valid" }
+  validates             :fund_type, :inclusion => { :in => %w(business person third_party), :message => "%{value} is not valid" }
   validates             :name, :format => { :with => /\A[\s\w\d().'!?]+\z/, :message => "No special characters" }
-  validates_presence_of :business_name, :business_email, :if => Proc.new { self.fund_type == 'business' }
-  validates             :business_email, :email => true, :if => Proc.new { self.fund_type == 'business' }
+  validates_presence_of :receiver_name, :receiver_email, :if => Proc.new { self.fund_type != 'personal' }
+  validates             :receiver_email, :email => true, :if => Proc.new { self.fund_type != 'personal' }
                         
   # ----- Callbacks ----- #    
 
@@ -87,6 +87,10 @@ class Fund < ActiveRecord::Base
     self.fund_type == 'business'
   end
 
+  def is_third_party_fund?
+    self.fund_type == 'third_party'
+  end
+
   def generate_and_upload_give_code
     temp_dir = Rails.root.join('tmp')
     Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir) # creates temp directory in heroku, which is not automatically created
@@ -111,9 +115,10 @@ class Fund < ActiveRecord::Base
   protected
 
   def get_creator_info
-    self.creator_info = { :full_name  => self.creator.full_name,
-                          :city => self.creator.city,
-                          :state => self.creator.state }
+    creator_account = self.creator.account
+    self.creator_info = { :full_name  => creator_account.full_name,
+                          :city => creator_account.city,
+                          :state => creator_account.state }
     self.creator_name = self.creator_info[:full_name]
     self.city = self.creator_info[:city]
     self.state = self.creator_info[:state]

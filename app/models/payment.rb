@@ -3,7 +3,7 @@ class Payment < ActiveRecord::Base
   # ----- Table Setup ----- #
 
   belongs_to  :fund,               :class_name => 'Fund'
-  belongs_to  :sender,             :class_name => 'Account'
+  belongs_to  :sender,             :class_name => 'User'
   
   attr_accessor :amount_in_dollars
 
@@ -25,6 +25,7 @@ class Payment < ActiveRecord::Base
   after_initialize  Proc.new { self.amount_in_dollars = self.amount_in_cents.to_f / 100 }
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }
+  before_create     Proc.new { self.is_anonymous = true unless self.sender.present? }
       
   # ----- Scopes ----- #
 
@@ -42,7 +43,7 @@ class Payment < ActiveRecord::Base
       amount_in_cents   = (subject[/( |^)\$(\d+\.?\d{,2})( |$)/, 2].to_f * 100).to_i # there must be spaces around dollar amount for square cash to recognize
       is_square_cash_copied = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
       is_only_one_receiver  = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
-      is_valid_receiver     = (to_addresses.first.downcase == self.fund.business_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members(:includes => :user).collect {|account| account.user.email.downcase}))
+      is_valid_receiver     = (to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members(:includes => :user).collect {|account| account.user.email.downcase}))
       if is_square_cash_copied and is_only_one_receiver and is_valid_receiver and amount_in_cents.present?
         self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)
       else

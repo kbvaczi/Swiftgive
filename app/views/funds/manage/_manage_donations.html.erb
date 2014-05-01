@@ -1,21 +1,27 @@
 <h3>Donations</h3>
 <table class='table'>
 	<tr>
-		<th>Net Amount</th>
+		<th>Amount</th>
 		<th>Sender</th>
 		<th>Location</th>
 		<th>Donated On</th>
 	</tr>
-	<% Payment.includes(:sender).all.each do |payment| %>
+	<% current_fund.payments.includes(:sender => :account).all.each do |payment| %>
 		<tr>	
 			<td>
 				<%= number_to_currency payment.amount_in_dollars %>
 			</td>
 			<td>
-				<%= display_accountholder_name(payment.sender, payment.is_anonymous) %>
+				<% if payment.sender.present? %>
+					<%= display_accountholder_name(payment.sender.account, payment.is_anonymous) %>
+				<% else %>
+					<span class='muted'>Anonymous</span>
+				<% end %>
 			</td>
 			<td>
-				<%= display_location(payment.sender) %>
+				<% if payment.sender.present? %>
+					<%= display_location(payment.sender.account) %>
+				<% end %>
 			</td>
 			<td>
 				<%= display_time(payment.created_at) %>

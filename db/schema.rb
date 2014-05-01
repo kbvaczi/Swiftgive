@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
     t.string   "city"
     t.string   "state"
     t.string   "fund_type"
-    t.string   "business_name"
-    t.string   "business_email"
+    t.string   "receiver_name"
+    t.string   "receiver_email"
     t.boolean  "is_active",      :default => true
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
@@ -50,14 +50,14 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
   add_index "funds", ["uid"], :name => "index_funds_on_uid"
 
   create_table "funds_memberships", :force => true do |t|
-    t.integer "account_id"
+    t.integer "user_id"
     t.integer "fund_id"
     t.boolean "is_owner",   :default => false
     t.boolean "is_creator", :default => false
   end
 
-  add_index "funds_memberships", ["account_id"], :name => "index_funds_memberships_on_account_id"
   add_index "funds_memberships", ["fund_id"], :name => "index_funds_memberships_on_fund_id"
+  add_index "funds_memberships", ["user_id"], :name => "index_funds_memberships_on_user_id"
 
   create_table "marketing_products", :force => true do |t|
     t.string   "name"

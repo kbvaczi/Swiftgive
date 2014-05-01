@@ -25,7 +25,8 @@
         </div>  
         <%= render :partial => 'layouts/mobile/nav_menu' %>
       </div>      
-      <div class='content' data-role="content" style='padding-top:0px;'>        
+      <div class='content' data-role="content" style='padding-top:0px;'>
+        <div class='center_wrap'><h1 class='page_title'><%= yield (:page_title) %></h1></div>
         <%= yield %>
       </div>
       <%= yield(:page) %>

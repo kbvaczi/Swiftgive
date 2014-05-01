@@ -1,3 +1,5 @@
+<% title "New User Registration" %>
+
 <% if resource.errors.present? %>
 
 <% flash[:error] = "<p>There were problems with your request</p><ul>".html_safe %>
@@ -9,8 +11,7 @@
 <% end %>
 
 <ul data-role="listview" data-inset="true">
-  <li class='center_wrap'>
-    <h1 class='mb'>New Users</h1>
+  <li class='center_wrap'>    
 
     <%= form_for(resource, :url => registration_path(resource), :html => { :honeypot => true } ) do |f| %>
         
@@ -23,7 +24,7 @@
       <%= f.password_field :password_confirmation,  :placeholder => "Confirm Password", 
                                                     :required => true %>
 
-      <%= f.submit 'Sign up' %>
+      <%= f.submit 'Sign up', :'data-icon' => 'check' %>
       
     <% end %>
 

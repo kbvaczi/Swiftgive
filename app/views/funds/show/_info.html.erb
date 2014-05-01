@@ -14,8 +14,8 @@
     	<% current_fund.owners.each do |owner| %>
     		<div>    			
     			<div class='left'>
-    				<b><%= owner.full_name %></b><br/>
-    				<%= "#{owner.city.capitalize}, " if owner.city.present? %> <%= "#{Carmen::Country.coded(owner.country).subregions.coded(owner.state).name rescue owner.state}" if owner.state.present? %>
+    				<b><%= owner.account.full_name %></b><br/>
+    				<%= "#{owner.account.city.capitalize}, " if owner.account.city.present? %> <%= "#{Carmen::Country.coded(owner.account.country).subregions.coded(owner.state).name rescue owner.account.state}" if owner.account.state.present? %>
     			</div>
     		</div>
     	<% end %>    	

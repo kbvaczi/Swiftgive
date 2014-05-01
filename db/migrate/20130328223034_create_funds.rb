@@ -14,8 +14,8 @@ class CreateFunds < ActiveRecord::Migration
         t.string  :state
 
         t.string  :fund_type
-        t.string  :business_name
-        t.string  :business_email
+        t.string  :receiver_name
+        t.string  :receiver_email
                 
         t.boolean :is_active, :default => true
         
@@ -28,13 +28,13 @@ class CreateFunds < ActiveRecord::Migration
     
     unless table_exists? :funds_memberships
       create_table :funds_memberships do |t|
-        t.integer  :account_id
+        t.integer  :user_id
         t.integer  :fund_id
         
         t.boolean  :is_owner, :default => false
         t.boolean  :is_creator, :default => false
       end
-      add_index   :funds_memberships, :account_id
+      add_index   :funds_memberships, :user_id
       add_index   :funds_memberships, :fund_id
     end
   end

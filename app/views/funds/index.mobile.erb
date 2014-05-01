@@ -1,6 +1,7 @@
+<% title "my funds" %>
 <ul data-role="listview" data-inset="true">
-	<li data-role="list-divider">My Funds</li>
-	<% user_funds = current_user.account.funds %>
+	
+	<% user_funds = current_user.funds %>
 	<% user_funds.each do |fund| %>
 		<li><%= link_to fund.name, fund_path(fund) %></li>
 	<% end %>

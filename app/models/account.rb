@@ -3,13 +3,8 @@ class Account < ActiveRecord::Base
   # ----- Table Setup ----- #
 
   belongs_to :user
-  has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id
-  has_many    :fund_memberships,  :class_name => 'Funds::Membership'
-  has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
 
-  attr_accessible :first_name, :last_name, :state, :city, :avatar, :email_from_user
-
-  attr_accessor :email_from_user
+  attr_accessible :first_name, :last_name, :state, :city, :avatar
 
   mount_uploader :avatar, AccountAvatarUploader
 

@@ -16,39 +16,29 @@ class PaymentsController < ApplicationController
   
   def create
     payment = Payment.new(params[:payment])
-    payment.sender = current_user.account if user_signed_in?
-    payment.receiver_email = payment.fund.is_business_fund? ? payment.fund.business_email : payment.fund.creator.user.email
+    payment.sender = current_user if user_signed_in?
+    payment.receiver_email = payment.fund.receiver_email.present? ? payment.fund.receiver_email : payment.fund.creator.email
     if payment.save
       respond_to do |format|        
-        format.mobile  { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }
-        format.json    { render json: {:uid => payment.uid, :receiver_email => payment.receiver_email}.to_json }       
+        format.mobile  { render json: {:uid => payment.uid, :receiver_email => "#{payment.fund.name} <#{payment.receiver_email}>"}.to_json }
       end
     else
       respond_to do |format|
         format.mobile  { render json: "error".to_json }
-        format.json    { render json: "error".to_json }
       end     
     end
   end
 
   def show
-    if user_signed_in?
-      @payment = current_user.account.payments.where(:uid => params[:id]).first
-    else
-      @payment = Payment.where(:uid => params[:id]).where("updated_at > '#{30.minutes.ago}'").first
-    end
+    @payment = Payment.where(:uid => params[:id]).first
     unless @payment.present?
       flash[:error] = 'Error viewing payment...'
-      redirect_to back_path 
+      redirect_to back_path
     end
   end
 
   def guest_splash
     render :layout => 'full'
-  end
-
-  def thanks
-
   end
   
   protected

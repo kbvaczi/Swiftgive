@@ -1,9 +1,6 @@
-<%= form_for @fund, :method => :put do |f| %>
+<% title "edit fund" %>
 
-	<div class='ui-grid-solo center_wrap'>
-		<h3>Edit Fund</h3>
-		<hr>
-	</div>
+<%= form_for @fund, :method => :put do |f| %>
 
   <%= render :partial => "form", :locals => {:f => f} %>
   

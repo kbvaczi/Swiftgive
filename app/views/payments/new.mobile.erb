@@ -2,13 +2,14 @@
 <%= render :partial => 'payments/square_cash_splash', :formats => [:mobile] %>
 <%= render :partial => 'payments/thank_you_splash'  , :formats => [:mobile] %>
 
+<% title "Start Giving" %>
+
 <%= form_for @payment, :html => { :honeypot => true } do |f| %>
   
   <%= f.hidden_field :fund_id %>
 
   <ul data-role="listview" data-inset="true" data-theme"a">
-    <li data-role="list-divider" >Give to:</li>
-    <li data-icon='info'>
+    <li data-icon='search'>
       <%= link_to "#{receiving_fund.name}", fund_path(receiving_fund) %>
     </li>
   </ul>
@@ -26,7 +27,7 @@
       <div class='ui-grid-a pa-s'>
         <div class='ui-block-a pt-m pl-m t-s'><h3>Anonymous:</h3></div>
         <div class='ui-block-b pr-s' style='text-align:right;'>
-          <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true %>
+          <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true, :disabled => user_signed_in? ? false : true %>
         </div>  
       </div>
     </li>
@@ -49,20 +50,25 @@
 <script type='text/javascript'>
 
   $( document ).delegate("[data-role='page']", "pageinit", function() {
+    
     initialize_custom_amount_form();
+
+    $("select[name='payment[is_anonymous]']").closest('li').on('click', function(){
+      flashNow('Please sign in to make your donations public.');
+    });
   });
 
   function initialize_custom_amount_form() {
     $('#custom_amount_value').initAutoNumeric();
 
-    $('#payment_amount_in_cents-listbox').one( "popupafterclose", function( event, ui ) {
+    $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {
       var target = $('#payment_amount_in_cents');
       if (target.val() == 'other'){
         target.val(target.children('option:first-child').attr('value'));
         target.selectmenu( "refresh" );
         window.setTimeout(function() { 
           $('#custom_amount_popup').popup('open'); 
-        }, 300 );
+        }, 200 );
       }
     });
 
@@ -121,10 +127,10 @@
           var amount_in_dollars = $('#payment_amount_in_cents option:selected').val() / 100;
           var message           = $('#payment_message').val();
           var body              = message ? message + "\r\n\r\nYour payment ID is: " + response['uid'] : "Your payment ID is: " + response['uid'];
-          var email_params = [{ name:"cc",        value:"cash@square.com, <%= ENV['PAYMENTS_EMAIL'] %>" },
+          var email_params = [{ name:"cc",        value:"Square Cash <cash@square.com>, Swiftgive<<%= ENV['PAYMENTS_EMAIL'] %>>" },
                               { name:"subject",   value:"Here's $" + amount_in_dollars + " courtesy of Swiftgive" },
                               { name:"body",      value:body }];
-          var mail_to_link = "mailto:" + response.receiver_email + "?" + $.param(email_params).replace(/\+/g, '%20');
+          var mail_to_link = "mailto:" + encodeURIComponent(response.receiver_email) + "?" + $.param(email_params).replace(/\+/g, '%20');
           $('#square_cash_splash_popup').popup('open');
           $('#email_link_button').attr('href', mail_to_link);
           $('#square_cash_splash_popup').on( "popupafterclose", function( event, ui ) {

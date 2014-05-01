@@ -2,6 +2,8 @@
 <%= render :partial => 'accounts/edit_location', :formats => [:mobile] %>
 <%= render :partial => 'accounts/add_social_network', :formats => [:mobile] %>
 
+<% title "My Account" %>
+
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" >My Profile</li>  
     <li data-icon='gear'>
@@ -37,8 +39,8 @@
     <li data-icon='gear'>      
         <% if current_user.account.city.present? and current_user.account.state.present? %>
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">
-            <div class='mt-m'>
-              <p><%= current_user.account.city %>, <%= current_user.account.state %> </p>        
+            <div>
+              <%= current_user.account.city %>, <%= current_user.account.state %>
             </div>
           </a>
         <% else %>          

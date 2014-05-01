@@ -1,37 +1,37 @@
-<% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user.account)) %>
+<% title "#{current_fund.name}" %>
+<% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
+
+<ul data-role="listview" data-inset="true">		
+	<li>
+		<%= current_fund.description %>
+	</li>
+	<li>
+		<%= display_location(current_fund) %>
+	</li>
+</ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
- 
-  <li data-role="list-divider" ><%= current_fund.name %></li>
- 	
-  <li>
-	<p class='mt-s'><%= current_fund.description %></p>
-	<p> <%= display_location(current_fund) %> </p>
-  </li>
-
-	<% if is_current_fund_owner %>
-	  <li data-role="list-divider" >Donations</li>
-	  <li>
-	  	<div class='ui-grid-a'>
-		  	<div class='ui-block-a main'>Today</div>
-		  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_today %> / $<%= current_fund.amount_payments_today_in_cents / 100 %> </div>
-		</div>
-	  	<div class='ui-grid-a'>
-		  	<div class='ui-block-a main'>This Month </div>
-		  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_this_month %>  / $<%= current_fund.amount_payments_this_month_in_cents / 100 %></div>
-		</div>
-	  </li>
-	<% end %>
-  
-  	<% if current_fund.is_personal_fund? %> 
-  		<li data-role="list-divider" >Fund Creator</li>
-		<li> <%= current_fund.creator_name %> </li> 
+	
+	<li data-role="list-divider" >Donations</li>
+	<li>
+		<div class='ui-grid-a'>
+	  	<div class='ui-block-a main'>Today</div>
+	  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_today %> / $<%= current_fund.amount_payments_today_in_cents / 100 %> </div>
+	</div>
+		<div class='ui-grid-a'>
+	  	<div class='ui-block-a main'>This Month </div>
+	  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_this_month %>  / $<%= current_fund.amount_payments_this_month_in_cents / 100 %></div>
+	</div>
+	</li>
+	
+  	<% if current_fund.is_business_fund? %> 
+  		<li data-role="list-divider" >Organization Name</li>
+		<li> <%= current_fund.receiver_name %> </li>   		
   	<% else %>
-		<li data-role="list-divider" >Organization Name</li>
-		<li> <%= current_fund.business_name %> </li> 
+		<li data-role="list-divider" >Fund Started By</li>
+		<li> <%= current_fund.creator_name %> </li> 
   	<% end %>
  
- 	
 </ul>
 
 

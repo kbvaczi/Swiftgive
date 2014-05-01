@@ -36,7 +36,7 @@ class FundsController < ApplicationController
 
   # GET /funds/new
   def new
-    @fund = Fund.new(@creator_account.attributes.slice('city', 'state'))
+    @fund = Fund.new(creator_account.attributes.slice('city', 'state'))
     respond_to do |format|
       format.html # new.html.erb
       format.mobile
@@ -51,7 +51,7 @@ class FundsController < ApplicationController
   # POST /funds
   def create
     @fund = Fund.new(params[:fund])
-    @fund.creator = @creator_account
+    @fund.creator = current_user
     @fund.creator_info = @creator_info
     if @fund.save
       redirect_to fund_path(@fund), notice: 'Fund was successfully created.'
@@ -93,11 +93,14 @@ class FundsController < ApplicationController
   
   protected
   
+  def creator_account
+    @creator_account ||= current_user.account
+  end
+
   def verify_creator_info_present
-    @creator_account = current_user.account
     required_attributes = %w(first_name last_name city state)
     required_attributes.each do |this_attribute|
-      unless @creator_account[this_attribute].present?
+      unless creator_account[this_attribute].present?
         flash[:error] = 'Please complete your profile before creating a fund...'
         redirect_to show_user_profile_path
         return
@@ -106,7 +109,7 @@ class FundsController < ApplicationController
   end
 
   def authenticate_fund_owner
-    unless current_fund.owners.include? current_user.account
+    unless current_fund.owners.include? current_user
       flash[:error] = 'You are not an owner of this fund...'
       redirect_to back_path 
     end

@@ -24,7 +24,7 @@ $(document).on('click', '.flash_message', function () {
 
 function flashNow(message, message_type, popup_to_open_after_close) {
   message_type = message_type || 'notice';
-  var flash_message = "<div class='center_wrap flash_message pa flash_" + message_type + "' role='dialog' data-position-to='window' data-transition='pop' data-overlay-theme='a'><p class='flash_message_content center' style='width:250px'></p></div>";
+  var flash_message = "<div class='center_wrap flash_message pa flash_" + message_type + "' role='dialog' data-position-to='window' data-transition='pop' data-overlay-theme='a'><p class='flash_message_content center' style='width:250px'></p><a role='button', data-icon='check', class='ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all ui-mini mt'>OK</a></div>";
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message);

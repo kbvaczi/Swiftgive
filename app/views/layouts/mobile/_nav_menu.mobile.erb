@@ -2,7 +2,7 @@
 	<div class='center_wrap'>
 		<h3 >Menu</h3>
 		<% if user_signed_in? %>
-			<%= link_to 'View Profile', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true' %>
+			<%= link_to 'My Account', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true' %>
 		<% end %>
 		<%= link_to 'My Funds', funds_path, :'data-role' => 'button', :'data-icon' => 'shop', :'data-mini' => 'true' %>
 

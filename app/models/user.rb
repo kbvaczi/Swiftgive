@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :current_password, :remember_me, :account_attributes
   
   has_one     :account
+  has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
+  has_many    :fund_memberships,  :class_name => 'Funds::Membership'
+  has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
   
   # allow form for accounts nested inside user signup/edit forms
@@ -27,7 +30,6 @@ class User < ActiveRecord::Base
   # ----- Callbacks ----- #
 
   after_initialize  :build_account_when_creating_new_user, :on => :create
-  before_validation :set_email_on_account, :on => :create
 
   # ----- Member Methods ----- #
   
@@ -103,10 +105,6 @@ class User < ActiveRecord::Base
       self.build_account
       self.account.user = self # setup back reference so account can access email prior to creation
     end
-  end
-
-  def set_email_on_account
-    self.account.email_from_user = self.email
   end
   
 end

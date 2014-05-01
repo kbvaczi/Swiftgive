@@ -90,7 +90,7 @@
   <div class='center_wrap content_box'>
     <h4>My Funds</h4>
     <table class='table'>
-      <% current_user.account.funds.each do |fund| %>
+      <% current_user.funds.each do |fund| %>
         <tr>
           <td>
             <%= link_to "#{fund.name} <i class='icon-chevron-right'></i>".html_safe, fund_path(fund), :class => "btn-small"%>

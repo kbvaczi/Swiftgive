@@ -1,7 +1,7 @@
+<% title "Returning User Sign In" %>
+
 <ul data-role="listview" data-inset="true">
 	<li>
-		<div class='center_wrap'><h1>Returning User</h1></div>
-
 		<%= form_for @user, :url => user_session_path, :html => { :honeypot => true } do |f| %>
 		  
 		  <%= f.text_field :email , :required => 'true', :placeholder => 'Email' %>
@@ -18,4 +18,3 @@
 		<% end %>
 	</li>
 </ul>
-<%#= render :partial => "devise/shared/links" %>
