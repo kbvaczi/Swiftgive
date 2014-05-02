@@ -1,4 +1,4 @@
-<% title "Setup My Profile"  %>
+<% title "Setup My Account"  %>
 <%= render :partial => 'edit_name' %>
 <%= render :partial => 'edit_email' %>
 <%= render :partial => 'edit_location' %>
@@ -14,7 +14,6 @@
     <th>Name</th>
     <td><%= current_user.account.full_name %></td>
     <td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-    
   </tr>
 <!-- 
   <%# take out avatar for now %>

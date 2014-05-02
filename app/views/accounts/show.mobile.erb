@@ -38,10 +38,8 @@
     </li>
     <li data-icon='gear'>      
         <% if current_user.account.city.present? and current_user.account.state.present? %>
-          <a href="#account_edit_location" data-rel="popup" data-position-to="window">
-            <div>
-              <%= current_user.account.city %>, <%= current_user.account.state %>
-            </div>
+          <a href="#account_edit_location" data-rel="popup" data-position-to="window">            
+            <%= current_user.account.city %>, <%= current_user.account.state %>            
           </a>
         <% else %>          
           <a href="#account_edit_location" data-rel="popup" data-position-to="window">Setup Location Info</a>

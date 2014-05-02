@@ -9,7 +9,7 @@
     <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
 
       <div class='form-horizontal'>
-        <%= f.input :city, :placeholder => 'City' %>    
+        <%= f.input :city, :placeholder => 'City', :input_html => { :maxlength => 30 } %>    
         <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State' %>  
       </div>
 

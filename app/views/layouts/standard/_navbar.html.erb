@@ -10,7 +10,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.account.full_name || current_user.email %> <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <!--<li><%#= link_to "<i class='icon-share-alt icon-even-spaced'></i> Refer a Friend".html_safe, account_path(current_user) %></li>-->
-            <li><%= link_to "<i class='icon-user icon-even-spaced'></i> Profile".html_safe, show_user_profile_path, :method => :get %></li>
+            <li><%= link_to "<i class='icon-user icon-even-spaced'></i> Account".html_safe, show_user_profile_path, :method => :get %></li>
             <li class="dropdown-submenu">
               <a tabindex="-1" href="#"><i class='icon-even-spaced icon-heart'></i> My Funds</a>
               <ul class="dropdown-menu">

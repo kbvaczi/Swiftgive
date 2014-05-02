@@ -12,24 +12,25 @@
     </div>
   <% end %>
 
-  <%= f.input :name, :placeholder => 'Fund Name' %>
-  <%= f.input :description,  :placeholder => 'Description' %>
+  <%= f.input :name, :placeholder => 'Fund Name', :input_html => { :maxlength => 50 } %>
+  <%= f.input :description,  :as =>  :text,
+                            :placeholder => 'Description', :input_html => { :maxlength => 250, :rows => 4 } %>
   <%= f.input :fund_type, :as => :select,
                           :include_blank => false,
                           :collection => [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']],
                           :input_html => {:onchange => "refreshFormNewFund($(this).closest($('form')))"} %>
     
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>    
-    <%= f.input :receiver_name, :placeholder => 'Business Name', :label => 'Business Name', :required => true %>
+    <%= f.input :receiver_name, :placeholder => 'Business Name', :label => 'Business Name', :required => true, :input_html => { :maxlength => 30 } %>
     <%= f.input :receiver_email, :placeholder => 'Business Email', :label => 'Business Email', :required => true %>
-    <%= f.input :city, :placeholder => 'City', :required => true %>
+    <%= f.input :city, :placeholder => 'City', :required => true, :input_html => { :maxlength => 30 } %>
     <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State', :required => true %>  
   </div>
 
   <div id="third_party_information_inputs" style='<%= 'display:none;' unless @fund.is_third_party_fund? %>'>    
-    <%= f.input :receiver_name, :placeholder => 'Receiver Name', :required => true %>
+    <%= f.input :receiver_name, :placeholder => 'Receiver Name', :required => true, :input_html => { :maxlength => 30 } %>
     <%= f.input :receiver_email, :placeholder => 'Receiver Email', :required => true %>
-    <%= f.input :city, :placeholder => 'City', :required => true %>
+    <%= f.input :city, :placeholder => 'City', :required => true, :input_html => { :maxlength => 30 } %>
     <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State', :required => true %>  
   </div>
 
@@ -37,7 +38,6 @@
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to 'Cancel', back_path, :class => "btn" %>
   </div>
-  
 
 <% end %>
 

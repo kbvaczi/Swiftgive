@@ -2,6 +2,8 @@ class Accounts::Location
   include ActiveModel::Validations 
 
   validates_presence_of :city, :state
+  validates             :city, :length => {:maximum => 30}
+  validates             :state, :length => {:minimum => 2, :maximum => 2}
                         
   # to deal with form, you must have an id attribute
   attr_accessor :id, :city, :state

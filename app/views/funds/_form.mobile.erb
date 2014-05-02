@@ -2,7 +2,7 @@
   <li data-role="list-divider" >Fund Information</li>  
   <li>
     <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true, :maxlength => 50 %>
-    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true, :maxlength => 100 %>
+    <%= f.text_area :description,  :placeholder => 'Description', :'data-mini' => true, :maxlength => 250 %>
   </li>
   <li>
     <%= f.select :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false',  :onchange => "refreshFormNewFund()" %>
