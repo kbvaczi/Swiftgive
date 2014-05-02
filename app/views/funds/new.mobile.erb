@@ -1,7 +1,6 @@
+<% title "Create New Fund" %>
+
 <%= form_for @fund, :method => :post do |f| %>
-  
-  
-	<center><h1>Create New Fund</h1></center>
 
   <%= render :partial => "form", :locals => {:f => f} %>
 

@@ -13,6 +13,12 @@ h1.page_title {
   text-transform:capitalize;
 }
 
+p.word_wrap {
+  max-height:80px;
+  word-wrap: break-word !important;
+  white-space: normal !important;
+}
+
 #header {
   height:40px;
 }
@@ -26,3 +32,4 @@ h1.page_title {
   background-image: asset-url("swiftgive_logo.png", image);  
   background-repeat: no-repeat;
 }
+

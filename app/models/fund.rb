@@ -30,9 +30,9 @@ class Fund < ActiveRecord::Base
 
   validates_presence_of :uid, :name, :description
   validates             :fund_type, :inclusion => { :in => %w(business person third_party), :message => "%{value} is not valid" }
-  validates             :name, :format => { :with => /\A[\s\w\d().'!?]+\z/, :message => "No special characters" }
-  validates_presence_of :receiver_name, :receiver_email, :if => Proc.new { self.fund_type != 'personal' }
-  validates             :receiver_email, :email => true, :if => Proc.new { self.fund_type != 'personal' }
+  validates             :name, :length => {:minimum => 10, :maximum => 50, :message => "your name is too long"} 
+  validates_presence_of :receiver_name, :receiver_email, :unless => Proc.new { self.is_personal_fund? }
+  validates             :receiver_email, :email => true, :unless => Proc.new { self.is_personal_fund? }
                         
   # ----- Callbacks ----- #    
 

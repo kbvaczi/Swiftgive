@@ -1,39 +1,40 @@
 <% title "#{current_fund.name}" %>
+
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
 
 <ul data-role="listview" data-inset="true">		
 	<li>
-		<%= current_fund.description %>
-	</li>
-	<li>
-		<%= display_location(current_fund) %>
+		<p class='word_wrap'><%= current_fund.description %></p>
+		<h3><%= display_location(current_fund) %></h3>
 	</li>
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
 	
-	<li data-role="list-divider" >Donations</li>
-	<li>
-		<div class='ui-grid-a'>
-	  	<div class='ui-block-a main'>Today</div>
-	  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_today %> / $<%= current_fund.amount_payments_today_in_cents / 100 %> </div>
-	</div>
-		<div class='ui-grid-a'>
-	  	<div class='ui-block-a main'>This Month </div>
-	  	<div class='ui-block-b side' style='text-align:right;'> <%= current_fund.number_payments_this_month %>  / $<%= current_fund.amount_payments_this_month_in_cents / 100 %></div>
-	</div>
-	</li>
-	
-  	<% if current_fund.is_business_fund? %> 
-  		<li data-role="list-divider" >Organization Name</li>
-		<li> <%= current_fund.receiver_name %> </li>   		
-  	<% else %>
-		<li data-role="list-divider" >Fund Started By</li>
-		<li> <%= current_fund.creator_name %> </li> 
-  	<% end %>
- 
-</ul>
+	<% if current_fund.is_third_party_fund? %>
+		<li data-role="list-divider">Donations Benefit</li>
+		<li><p class='ma-n'><%= current_fund.receiver_name %></p> </li>
+	<% end %>
 
+  <% if current_fund.is_business_fund? %> 
+  	<li data-role="list-divider" >Organization Name</li>
+		<li><p class='ma-n'><%= current_fund.receiver_name %></p></li>
+  <% else %>
+		<li data-role="list-divider" >Fund Started By</li>
+		<li><p class='ma-n'><%= current_fund.creator_name %></p></li> 
+  <% end %>
+ 
+	<li data-role="list-divider">Recent Donations</li>
+	<li>
+	 	<p class='ma-n'>Today</p>
+	 	<span class="ui-li-count ui-body-inherit"><%= current_fund.number_payments_today %> / $<%= current_fund.amount_payments_today_in_cents / 100 %></span>
+	</li>
+	<li>
+	 	<p class='ma-n'>This Month</p>
+	 	<span class="ui-li-count ui-body-inherit"><%= current_fund.number_payments_this_month %>  / $<%= current_fund.amount_payments_this_month_in_cents / 100 %></span>
+	</li>
+
+</ul>
 
 <%= link_to 'Give to this Fund', new_payment_path(:fund_uid => current_fund.uid), :'data-role' => 'button', :'data-icon' => 'heart', :'data-theme' => 'b' %>
 <%= link_to 'Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-icon' => 'eye' if is_current_fund_owner%>

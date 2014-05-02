@@ -1,8 +1,8 @@
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" >Fund Information</li>  
   <li>
-    <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true %>
-    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true %>
+    <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true, :maxlength => 50 %>
+    <%= f.text_field :description,  :placeholder => 'Description', :'data-mini' => true, :maxlength => 100 %>
   </li>
   <li>
     <%= f.select :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false',  :onchange => "refreshFormNewFund()" %>
@@ -12,11 +12,11 @@
 <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='<%= 'hidden' unless @fund.is_business_fund? %>'>
   <li data-role="list-divider" >Business / Non-Profit Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Business Name', :'data-mini' => true %>
-    <%= f.text_field :receiver_email, :placeholder => 'Business Email', :'data-mini' => true %>
+    <%= f.text_field :receiver_name, :placeholder => 'Business Name', :'data-mini' => true, :maxlength => 30 %>
+    <%= f.text_field :receiver_email, :placeholder => 'Business Email', :'data-mini' => true, :maxlength => 30 %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>        
+    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30  %>        
     <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
   </li>
 </ul>
@@ -24,11 +24,11 @@
 <ul data-role="listview" data-inset="true" data-theme"a" name="third_party_information_inputs" class='<%= 'hidden' unless @fund.is_third_party_fund? %>'>
   <li data-role="list-divider" >Receiver Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Receiver Name', :'data-mini' => true %>
-    <%= f.text_field :receiver_email, :placeholder => 'Receiver Email', :'data-mini' => true %>
+    <%= f.text_field :receiver_name, :placeholder => 'Receiver Name', :'data-mini' => true, :maxlength => 30 %>
+    <%= f.text_field :receiver_email, :placeholder => 'Receiver Email', :'data-mini' => true, :maxlength => 30 %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true  %>        
+    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30 %>        
     <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
   </li>        
 </ul>
