@@ -13,7 +13,7 @@ gem "omniauth-google-oauth2", "~> 0.1.13"             # omni-auth strategy for l
 gem "omniauth-linkedin", "~> 0.1.0"                   # omni-auth strategy for logging in with linkedin
 
 gem "honeypot-captcha", "~> 0.0.2"                    # alternative to capcha without the complexity 
-gem "simple_form", "~> 2.1.0"                         # standardized form helpers
+gem "simple_form", "~> 2.1.0"                         # standardized form CSS and helpers
 gem "client_side_validations", "~> 3.2.6"
 gem "client_side_validations-simple_form", "~> 2.1.0" # client-side validations plugin to use simple form CSS
 
@@ -42,14 +42,14 @@ end
 
 # Gems used only for assets and not required in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem "therubyracer"
+  gem 'sass-rails',   '~> 3.2.3'                      # required for twitter bootsrap
+  gem "therubyracer"                                  # required for twitter bootsrap
   gem "less-rails"                                    # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem "twitter-bootstrap-rails", "~> 2.2.8"   
+  gem "twitter-bootstrap-rails", "~> 2.2.8"           # UI bootstrap
   gem 'jquery-rails'
-  gem "jquery_mobile_rails", "~> 1.4.1"
+  gem "jquery_mobile_rails", "~> 1.4.1"               # mobile UI bootstrap
 end
 
 
