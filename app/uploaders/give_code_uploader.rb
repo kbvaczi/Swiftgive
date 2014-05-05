@@ -37,13 +37,13 @@ class GiveCodeUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
-    process :resize_to_fit => [100, 100]
-  end
+  #version :thumb do
+  #  process :resize_to_fit => [100, 100]
+  #end
 
-  version :small do
-    process :resize_to_fit => [1000, 1200]
-  end
+  #version :small do
+  #  process :resize_to_fit => [1000, 1200]
+  #end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -54,7 +54,7 @@ class GiveCodeUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "give_code.png" if original_filename
+    "give_code.pdf" if original_filename
   end
 
 end

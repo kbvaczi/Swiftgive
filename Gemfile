@@ -19,6 +19,8 @@ gem "client_side_validations-simple_form", "~> 2.1.0" # client-side validations 
 
 gem "rqrcode", "~> 0.4.2"                             # QRCode Generator Library
 gem "imgkit", "~> 1.3.9"                              # convert html to images
+gem 'pdfkit', '~> 0.6.2'
+gem 'wkhtmltopdf-binary', '~> 0.9.9.1'
 gem "carrierwave", "~> 0.8"                           # image_scan uploader
 gem "fog", "~> 1.10"                                  # supports amazon s3
 gem "unf"                                             # uniform normalization form support required for fog gem now?
