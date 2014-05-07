@@ -78,5 +78,5 @@ Swiftgive::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   # Default Host required by Devise
-  config.action_mailer.default_url_options = { :host => 'www.swiftgive.com' }
+  config.action_mailer.default_url_options = { :host => 'http://www.swiftgive.com' }
 end
