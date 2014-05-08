@@ -24,9 +24,9 @@ class Funds::GiveCodesController < ApplicationController
     #send_data(code_image, :type => 'image/png', :disposition => 'inline') 
 
     code_url = new_payment_url(:fund_uid => current_fund.uid)
-    code_image_html = render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 500}
-    code_image = PDFKit.new(code_image_html, {:'page-height'    => '5300px', 
-                                              :'page-width'     => '5000px', 
+    code_image_html = render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513}
+    code_image = PDFKit.new(code_image_html, {:'page-height'    => '263pt', 
+                                              :'page-width'     => '250pt', 
                                               :'margin-top'     => '0', 
                                               :'margin-bottom'  => '0',
                                               :'margin-left'    => '0',

@@ -6,38 +6,32 @@
     display:inline-block;
     border-width: 0;
     border-style: none;
+    border-color: #000;
     border-collapse: collapse;
-    table-layout: fixed;
   }
   td {
     border-width: 0;
     border-style: none;
+    border-color: #000;
     border-collapse: collapse;
     padding: 0;
     margin: 0;
-    width: <%= size / qr_code.modules.count %>px;
-    height: <%= size / qr_code.modules.count %>px;
+    width: <%= size.to_f / qr_code.modules.count %>px;
+    height: <%= size.to_f / qr_code.modules.count %>px;
   }
   td.black { background-color: #000; }
   td.white { background-color: none; }
-  td.br-tr { border-top-right-radius: 5px; }
-  td.br-tl { border-top-left-radius: 5px; }
-  td.br-br { border-bottom-right-radius: 5px; }
-  td.br-bl { border-bottom-left-radius: 5px; }
 </style>
 
 <table>
   <% qr_code.modules.each_index do |x| %>
     <tr>
       <% qr_code.modules.each_index do |y| %>
-        <% classes_for_this_cell = [] %>
-        <% qr_code.dark?(x,y) ? classes_for_this_cell.push('black') : classes_for_this_cell.push('white') %>
-        <%# classes_for_this_cell.push('br-tl') if (x == 0 or !qr_code.dark?(x-1,y)) and (y == 0 or !qr_code.dark?(x,y-1)) %>
-        <%# classes_for_this_cell.push('br-tr') if (x == (qr_code.modules.count - 1) or !qr_code.dark?(x+1,y)) and (y == 0 or !qr_code.dark?(x,y-1)) %>
-        <%# classes_for_this_cell.push('br-br') if (x == (qr_code.modules.count - 1) or !qr_code.dark?(x+1,y)) and (y == (qr_code.modules.count - 1) or !qr_code.dark?(x,y+1)) %>
-        <%# classes_for_this_cell.push('br-bl') if (x == 0 or !qr_code.dark?(x-1,y)) and (y == (qr_code.modules.count - 1) or !qr_code.dark?(x,y+1)) %>
-        <%= content_tag :td, "", :class => classes_for_this_cell.inject {|sum, c| sum + " " + c} %>
-
+        <% if qr_code.dark?(x,y) %>
+          <td class="black"/>
+        <% else %>
+          <td class="white"/>
+        <% end %>
       <% end %>
     </tr>
   <% end %>
