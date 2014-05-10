@@ -32,7 +32,7 @@ Swiftgive::Application.routes.draw do
     put 'toggle_active_status', :on => :member, :as => 'toggle_active_status'
     get 'give_code' => 'funds/give_codes#show', :on => :member
     get 'give_code_html/(:product)' => 'funds/give_codes#give_code_html', :on => :member, :as => :give_code_html
-    get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member
+    get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member, :defaults => { :format => 'pdf' }
   end
   
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
@@ -40,6 +40,8 @@ Swiftgive::Application.routes.draw do
   resources :payments, :only => [:create, :show]
   
   match 'about' => 'home#about', :as => 'about'
+  match 'terms' => 'home#terms', :as => 'terms'
+  match 'privacy' => 'home#privacy', :as => 'privacy'
 
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?

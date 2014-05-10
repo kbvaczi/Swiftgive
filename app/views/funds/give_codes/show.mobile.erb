@@ -1,4 +1,4 @@
 <% title "scan this code to give" %>
 <div class='center_wrap'>
-	<%= image_tag (current_fund.give_code.url || give_code_image_fund_path(current_fund.uid)), :width => '100%' %>
+	<%= image_tag (current_fund.give_code.url(:version => :rasterized) || give_code_image_fund_path(current_fund.uid, :format => :png, :skip_mobile => true)), :width => '100%' %>
 </div>

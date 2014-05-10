@@ -17,22 +17,17 @@ class Funds::GiveCodesController < ApplicationController
     return
   end
 
-  def give_code_image
-    #code_url = new_payment_url(:fund_uid => current_fund.uid)
-    #code_image_html = render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 1000}
-    #code_image = IMGKit.new(code_image_html, :quality => 90, :height => 1200, :width => 1000, :zoom => 1).to_img(:png)
-    #send_data(code_image, :type => 'image/png', :disposition => 'inline') 
-
-    code_url = new_payment_url(:fund_uid => current_fund.uid)
-    code_image_html = render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513}
-    code_image = PDFKit.new(code_image_html, {:'page-height'    => '263pt', 
-                                              :'page-width'     => '250pt', 
-                                              :'margin-top'     => '0', 
-                                              :'margin-bottom'  => '0',
-                                              :'margin-left'    => '0',
-                                              :'margin-right'   => '0'}).to_pdf
-    send_data(code_image, :type => 'image/pdf', :disposition => 'inline') 
-    return
+  def give_code_image    
+    respond_to do |format|
+      format.png do
+        code_image = current_fund.give_code_as_png
+        send_data(code_image, :type => 'image/png', :disposition => 'inline')
+      end
+      format.pdf do
+        code_image = current_fund.give_code_as_pdf
+        send_data(code_image, :type => 'image/pdf', :disposition => 'inline')
+      end
+    end    
   end
   
   def current_fund

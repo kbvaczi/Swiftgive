@@ -7,6 +7,7 @@ body {
   padding: 0px;
   color: $fontColor;
   background-color: rgba(130,150,140,0.1);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }  
 a:hover {
   background-color: #03c;
@@ -38,11 +39,20 @@ a:hover {
   margin:0px;
 }
 #footer {
-  margin:0px;
-  height:20px;
+  text-align: center;
+  padding: 30px 0;
+  margin: 30px 0px 0px 0px;
+}
+.footer_links li:first-child {
+  padding-left: 0;
+}
+.footer_links li {
+  display: inline;
+  padding: 0 2px;
 }
 
-// # ----- Header ----- #
+/* # ----- Header ----- # */
+
 #header {
   width:960px;
   height: $headerHeight;
@@ -51,12 +61,11 @@ a:hover {
   position:relative;
 }
 #header #logo {
-  top:2px;
-  left:-10px;
+  top:6px;
   position: absolute;  
-  width:200px;
+  width:180px;
   height:80px;
-  background-image: asset-url("swiftgive_logo_lg.png", image);  
+  background-image: asset-url("swiftgive_logo.png", image);  
   background-repeat: no-repeat;
   background-position: top left; 
   background-size: 100%;

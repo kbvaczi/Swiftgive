@@ -6,7 +6,7 @@
   </div>
 
   <div class="modal-body ma center_wrap">    
-      <%= image_tag (current_fund.give_code.url || give_code_image_fund_path(current_fund.uid)), :style => "width:300px;" %>        
+      <%= image_tag (give_code_image_fund_path(current_fund.uid, :format => :png)), :style => "width:300px;" %>        
   </div>   
   
   <div class="modal-footer">

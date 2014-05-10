@@ -20,9 +20,11 @@
 
     <div id='page' class='container'>
 
-      <div id='title' class='row'>
-        <div class='center_wrap'><h1><%= yield (:page_title) %></h1></div>
-      </div>
+      <% if content_for?(:page_title) %>
+        <div id='title' class='row'>
+          <div class='center_wrap'><h1><%= yield (:page_title) %></h1></div>
+        </div>
+      <% end %>
 
       <div id="main" class='row'>        
 
@@ -31,17 +33,9 @@
         </div>
            
       </div>
-
-      <div id="bottomnav" class='row'>
-        <div class='span12'>
-          <%= render :partial => 'layouts/standard/bottomnav' %>
-        </div>
-      </div>
       
       <div id="footer" class='row'>
-        <div class='span12'>
           <%= render :partial => 'layouts/standard/footer' %>
-        </div>
       </div>
       
     </div>

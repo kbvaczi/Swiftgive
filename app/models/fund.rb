@@ -30,7 +30,7 @@ class Fund < ActiveRecord::Base
 
   validates_presence_of :uid, :name, :description
   validates             :fund_type, :inclusion => { :in => %w(business person third_party), :message => "%{value} is not valid" }
-  validates             :name, :length => { :minimum => 10, :maximum => 50 }
+  validates             :name, :length => { :minimum => 3, :maximum => 50 }
   validates             :description, :length => { :minimum => 10, :maximum => 250 }
   validates_presence_of :receiver_name, :receiver_email, :unless => Proc.new { self.is_personal_fund? }
   validates             :receiver_email, :email => true, :unless => Proc.new { self.is_personal_fund? }
@@ -95,8 +95,17 @@ class Fund < ActiveRecord::Base
   def generate_and_upload_give_code
     temp_dir = Rails.root.join('tmp')
     Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir) # creates temp directory in heroku, which is not automatically created
-    give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s}", '.pdf'], 'tmp', :encoding => 'ascii-8bit')
-    
+    give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s} ", '.pdf'], 'tmp', :encoding => 'ascii-8bit')
+    code_image_blob = self.give_code_as_pdf
+    give_code_image_tempfile.write(code_image_blob)
+    give_code_image_tempfile.flush    
+    self.give_code = give_code_image_tempfile
+    self.save
+    puts self.errors.full_messages
+    give_code_image_tempfile.unlink
+  end
+
+  def give_code_as_pdf
     code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
     code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513}
     code_image_blob = PDFKit.new(code_html, { :'page-height'    => '263pt', 
@@ -105,17 +114,14 @@ class Fund < ActiveRecord::Base
                                               :'margin-bottom'  => '0',
                                               :'margin-left'    => '0',
                                               :'margin-right'   => '0'}).to_pdf
-    
-    #we switched to pdf vector images so line below is no longer valid
-    #code_image_blob = IMGKit.new(code_html, :quality => 50, :height => 3600, :width => 3000, :zoom => 1).to_img(:png)
+    code_image_blob
+  end
 
-    give_code_image_tempfile.write(code_image_blob)
-    give_code_image_tempfile.flush
-    
-    self.give_code = give_code_image_tempfile
-    self.save
-    
-    give_code_image_tempfile.unlink
+  def give_code_as_png
+    code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
+    code_image_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 510 }
+    code_image_blob = IMGKit.new(code_image_html, :quality => 40, :height => 530, :width => 500, :zoom => 1).to_img(:png)
+    code_image_blob
   end
 
   # ----- Class Methods ----- #
