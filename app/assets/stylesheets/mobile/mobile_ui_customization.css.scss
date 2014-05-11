@@ -37,3 +37,13 @@ input.large_input {
 	text-shadow:none;
 }
 
+/* Listview modifications */
+
+.ui-listview-in-collapsible {
+  margin: -30px -16px -27px -16px !important;
+}
+
+.ui-listview-in-collapsible li.ui-last-child {
+  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}

@@ -30,12 +30,12 @@ gem 'carmen', '~> 1.0.1'                              # State and country inform
 gem 'unicorn'                                         # Multi-threaded web server
 
 group :development do
-  gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"w
+  gem 'hooves', :require => 'hooves/default'          # unicorn works with "rails s"
   gem 'sqlite3'                                       # simple file-based database
 end
 
 group :staging, :production do
-  gem "activerecord-postgresql-adapter"               # PostgesQL Adapter for Heroku Database
+  gem "activerecord-postgresql-adapter"               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
   gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										                      # enable memcache for heroku
   gem 'memcachier'									                  # use memcachier addon for heroku through dalli

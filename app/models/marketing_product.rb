@@ -4,9 +4,11 @@ class MarketingProduct < ActiveRecord::Base
 
   self.table_name = 'marketing_products'
   
-  attr_accessible :name, :picture_url, :zazzle_template_id, :price_in_cents, :is_active
+  attr_accessible :name, :image, :comment, :zazzle_template_id, :price_in_cents, :is_active
 
   default_scope where(:is_active => true)
+
+  mount_uploader :image, MarketingProductImageUploader
 
   # ----- Validations ----- #
 
@@ -35,3 +37,5 @@ class MarketingProduct < ActiveRecord::Base
   # ----- Class Methods ----- #
   
 end
+
+#http://www.zazzle.com/api/create/at-238963925078453068?ax=Linkover&ed=true&fwd=ProductPage&ic=&pd=145726043656272339&rf=238963925078453068&t_givecode_iid=https%3A%2F%2Fswiftgive-development.s3.amazonaws.com%2Ffunds%2Ff_63be80bd%2Fgive_code.pdf&t_text0_txt=My+first+fund&t_text_txt=My+first+fund&tc=

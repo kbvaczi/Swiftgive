@@ -4,7 +4,7 @@ class Fund < ActiveRecord::Base
 
   self.table_name = 'funds'
   
-  has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => false }
+  has_many    :memberships,     :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy
   has_many    :members,         :class_name => "User",              :through => :memberships,  :source => :member
   
   has_many    :ownerships,      :class_name => 'Funds::Membership', :foreign_key => :fund_id,  :dependent => :destroy,  :conditions => { :is_owner => true }  
@@ -40,8 +40,7 @@ class Fund < ActiveRecord::Base
   before_validation :generate_and_assign_uid,       :on => :create, :unless => Proc.new { self.uid.present? }
   before_validation :get_creator_info,              :on => :create, :unless => Proc.new { self.creator_info.present? }
   after_commit      :generate_and_upload_give_code, :on => :create, :unless => Proc.new { self.give_code.present? }
-  # TODO: update givecode if necessary
-    
+      
   # ----- Member Methods ----- #
 
   def number_payments_today
@@ -127,6 +126,7 @@ class Fund < ActiveRecord::Base
   # ----- Class Methods ----- #
   
   # ----- Protected Methods ----- #
+
   protected
 
   def get_creator_info

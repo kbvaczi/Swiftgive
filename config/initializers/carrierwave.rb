@@ -14,6 +14,4 @@ CarrierWave.configure do |config|
   config.fog_attributes = {'Cache-Control'=>'public, max-age=315576000'}  # set cache-control headers for uploaded files
   config.fog_directory  = ENV['AWS_BUCKET']
   
-  
-  
 end

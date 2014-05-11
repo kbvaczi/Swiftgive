@@ -1,9 +1,12 @@
 <% title current_fund.name  %>
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
+<% is_current_fund_member = (user_signed_in? and current_fund.members.include?(current_user)) %>
 
 <p class='lead'><%= current_fund.description %></p>
-
-<%= render :partial => 'funds/show/marketing_products' if is_current_fund_owner %>
+<% if is_current_fund_member %>
+	<h3>Market This Fund</h3>
+	<%= render :partial => 'funds/show/marketing_products' %>
+<% end %>
 <%= render :partial => 'funds/show/info'  %>
 <%= render :partial => 'funds/show/give_code_modal' %>
 

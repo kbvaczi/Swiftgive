@@ -2,15 +2,8 @@
 <h3>Professional Products</h3>
 <p>Easy marketing with professionaly printed products from our partner at Zazzle.com. Each product is uniquely coded to your fund, making it easy for people to scan and give to you!</p>
 
-<div class='center_wrap marketing_products clearfix'>
-	<% MarketingProduct.scoped.each do |product| %>
-		<span style='display:inline-block;width:150px'>
-			<%= link_to image_tag(product.picture_url, :width => '100px'), product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix', :target => '_blank' %>
-			<h5><%= product.name %></h5>
-		</span>
-	<% end %>
-</div>
+<%= render :partial => 'funds/show/marketing_products' %>
 
 <h3>Download Your Give Code</h3>
 <p>Not interested in professional products? Just download your fund's give code and print it yourself.</p>
-<%= link_to '<i class="icon-download"></i>&nbsp Download Give Code'.html_safe, current_fund.give_code.url, :class => 'btn' %>
+<%= link_to '<i class="icon-download"></i>&nbsp Download Give Code'.html_safe, give_code_image_fund_path(current_fund, :format => :png), :class => 'btn' %>

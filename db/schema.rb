@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130818141052) do
+ActiveRecord::Schema.define(:version => 20140511143150) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -63,10 +63,11 @@ ActiveRecord::Schema.define(:version => 20130818141052) do
     t.string   "name"
     t.integer  "price_in_cents"
     t.string   "zazzle_template_id"
-    t.string   "picture_url"
     t.boolean  "is_active",          :default => true
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.text     "image"
+    t.text     "comment"
   end
 
   add_index "marketing_products", ["name"], :name => "index_marketing_products_on_name"

@@ -1,10 +1,15 @@
-
-<h3>Market Your Fund</h3>
-<div class='center_wrap marketing_products clearfix'>
+<ul class="thumbnails">
 	<% MarketingProduct.scoped.each do |product| %>
-		<span style='display:inline-block;width:150px'>
-			<%= link_to image_tag(product.picture_url, :width => '100px'), product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix', :target => '_blank' %>
-			<h5><%= product.name %></h5>
-		</span>
+		<li class="span2">
+			<div class="thumbnail" style="height:200px;">
+				<div class='mt center_wrap' style='height:100px;vertical-align:middle;'>
+				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix center', :target => '_blank' %>
+				</div>
+				<div class="caption">
+					<h5><%= product.name %></h5>
+					<p class='muted t-s' ><i><%= product.comment %></i></p>                    
+				</div>
+			</div>
+		</li>
 	<% end %>
-</div>
+</ul>
