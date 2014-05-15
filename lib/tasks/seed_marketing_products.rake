@@ -41,7 +41,7 @@ task :seed_marketing_products => :environment do
                   :image => File.open('app/assets/images/marketing_products/sticker.png'),
                   :comment => 'Just stick and forget')
 
-  MarketingProduct.create(  :name => 'T-Shirts',
+  MarketingProduct.create(  :name => 'T-Shirts',                  
                   :zazzle_template_id => '235403812552985696',
                   :price_in_cents => 1695,
                   :image => File.open('app/assets/images/marketing_products/t_shirt.png'),

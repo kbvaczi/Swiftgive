@@ -29,12 +29,28 @@ class MarketingProductImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process :convert => 'jpg'
-  process :resize_and_pad => [300, 300, "white", "center"]
+  process :convert => 'png'
+  process :remove_background
+  process :resize_and_pad => [300, 300]
   
   # Create different versions of your uploaded files:
   version :thumb do
-    process :resize_and_pad => [100, 100, "white", "center"]
+    process :resize_and_pad => [100, 100]
+  end
+
+  def remove_background
+    manipulate! do |img| 
+      img.combine_options do |c|        
+        c.fill "none"
+        c.fuzz "3%"
+        c.draw 'matte 0,0 floodfill'
+        c.flop
+        c.draw 'matte 0,0 floodfill'
+        c.flop
+      end
+      img = yield(img) if block_given?
+      img
+    end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -46,7 +62,7 @@ class MarketingProductImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{model.name.downcase}.jpg"
+    "#{model.name.downcase}.png"
   end
 
 end
