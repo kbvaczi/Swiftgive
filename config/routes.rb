@@ -28,6 +28,7 @@ Swiftgive::Application.routes.draw do
   end
 
   resources :funds do
+    get 'promote' => 'funds#promote', :on => :member
     get 'manage/(:section)' => 'funds#manage', :on => :member, :as => 'manage'
     put 'toggle_active_status', :on => :member, :as => 'toggle_active_status'
     get 'give_code' => 'funds/give_codes#show', :on => :member

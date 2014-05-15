@@ -3,24 +3,14 @@
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
 <% is_current_fund_member = (user_signed_in? and current_fund.members.include?(current_user)) %>
 
+<%= render :partial => 'funds/show/tabs' %>
+
 <ul data-role="listview" data-inset="true">		
 	<li>
 		<p class='word_wrap'><%= current_fund.description %></p>
 		<h3><%= display_location(current_fund) %></h3>
 	</li>
 </ul>
-<div data-role="collapsible-set">
-	<div data-role="collapsible" data-collapsed="false">
-	<h3 >Market This Fund<h3>
-		<ul data-role="listview" class='ui-listview ui-listview-in-collapsible'>			
-			<% MarketingProduct.scoped.each do |product| %>
-				<li class=" ui-li-has-thumb ui-first-child">
-					<%= link_to "#{image_tag(product.image_url(:thumb))}<h4>#{product.name}</h4><p class='word_wrap' style='margin-bottom:-5px;'><i>#{product.comment}</i></p>".html_safe, product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :target => '_blank' %>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-</div>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
 	
@@ -49,6 +39,5 @@
 
 </ul>
 
-<%= link_to 'Give to this Fund', new_payment_path(:fund_uid => current_fund.uid), :'data-role' => 'button', :'data-icon' => 'heart', :'data-theme' => 'b' %>
 <%= link_to 'Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-icon' => 'eye' if is_current_fund_owner%>
 <%= link_to 'Edit this Fund', edit_fund_path(@fund), :'data-role' => 'button', :'data-icon' => 'gear' if is_current_fund_owner %>

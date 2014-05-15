@@ -7,7 +7,7 @@
     <a href='<%= new_user_session_path %>' data-role='button' data-theme='b' data-icon='user'>Sign-in</a>
   </div>
   <div class='mt pb-s'>
-    <a href='<%= new_payment_path(:fund_uid => (session[:referring_fund_uid]), :guest_payment => true) %>' data-role='button' data-icon='arrow-r'>Give as a Guest</a>
+    <a href='<%= new_payment_path(:fund_uid => (session[:referring_fund_uid])) %>' data-role='button' data-icon='arrow-r'>Give as a Guest</a>
   </div>
   <div class='mt'>
   	<%= link_to 'Learn more', about_path %>

@@ -1,18 +1,14 @@
+<% title current_fund.name %>
+
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 <%= render :partial => 'payments/square_cash_splash', :formats => [:mobile] %>
 <%= render :partial => 'payments/thank_you_splash'  , :formats => [:mobile] %>
 
-<% title "Give to this fund" %>
+<%= render :partial => 'funds/show/tabs' %>
 
 <%= form_for @payment, :html => { :honeypot => true } do |f| %>
   
   <%= f.hidden_field :fund_id %>
-
-  <ul data-role="listview" data-inset="true" data-theme"a">
-    <li data-icon='search'>
-      <%= link_to "#{receiving_fund.name}", fund_path(receiving_fund) %>
-    </li>
-  </ul>
 
   <ul data-role="listview" data-inset="true" data-theme"a">    
     <li style='margin:0px;padding:0px;'>
@@ -52,10 +48,12 @@
   $( document ).delegate("[data-role='page']", "pageinit", function() {
     
     initialize_custom_amount_form();
-
-    $("select[name='payment[is_anonymous]']").closest('li').on('click', function(){
-      flashNow('Please sign in to make your donations public.');
-    });
+    
+    <% unless user_signed_in? %>
+      $("select[name='payment[is_anonymous]']").closest('li').on('click', function(){
+        flashNow('Please sign in to make your donations public.');
+      });
+    <% end %>
   });
 
   function initialize_custom_amount_form() {

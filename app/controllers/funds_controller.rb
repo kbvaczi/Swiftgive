@@ -1,6 +1,6 @@
 class FundsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :promote]
   before_filter :verify_creator_info_present, :only => [:new, :create]
   before_filter :authenticate_fund_owner, :only => [:edit, :manage, :toggle_active_status, :update, :destroy]
 
@@ -25,10 +25,17 @@ class FundsController < ApplicationController
     end
   end
 
+  def promote
+    set_back_path
+    current_fund
+    respond_to do |format|
+      format.mobile
+    end
+  end
+
   def manage
     set_back_path
     current_fund
-
     respond_to do |format|
       format.html
     end

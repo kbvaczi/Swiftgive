@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new(params[:payment])
-    @payment.fund ||= receiving_fund
+    @payment.fund ||= current_fund
     @payment.amount_in_dollars = 5
     @payment.amount_in_cents = 500
     respond_to do |format|
@@ -43,21 +43,21 @@ class PaymentsController < ApplicationController
   
   protected
 
-  def receiving_fund
-    @receiving_fund ||= Fund.find_by_uid(params[:fund_uid])
+  def current_fund
+    @current_fund ||= Fund.find_by_uid(params[:fund_uid])
   end
-  helper_method :receiving_fund
+  helper_method :current_fund
 
   def verify_fund_present
-    unless receiving_fund.present?
+    unless current_fund.present?
       flash[:error] = 'This fund does not exist...'
       redirect_to back_path
     end
   end
 
   def set_referring_fund_and_redirect_to_splash
-    session[:referring_fund_uid] = receiving_fund.uid
-    unless !is_mobile_request? or user_signed_in? or params[:guest_payment].present?
+    session[:referring_fund_uid] = current_fund.uid
+    unless !is_mobile_request? or user_signed_in? or session[:referring_fund_uid]
       redirect_to guest_splash_path
     end
   end

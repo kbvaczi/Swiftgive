@@ -30,17 +30,19 @@ class MarketingProductImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process :convert => 'png'
-  process :remove_background
-  process :resize_and_pad => [300, 300]
+  process :resize_and_pad => [250, 250, 'white', 'center']
+  process :remove_background_and_extend => [300, 300]
+  
   
   # Create different versions of your uploaded files:
   version :thumb do
     process :resize_and_pad => [100, 100]
+    
   end
 
-  def remove_background
-    manipulate! do |img| 
-      img.combine_options do |c|        
+  def remove_background_and_extend(width, height)
+    manipulate! do |img|      
+      img.combine_options do |c|
         c.fill "none"
         c.fuzz "3%"
         c.draw 'matte 0,0 floodfill'
@@ -48,6 +50,12 @@ class MarketingProductImageUploader < CarrierWave::Uploader::Base
         c.draw 'matte 0,0 floodfill'
         c.flop
       end
+      img.combine_options do |c|
+        c.gravity 'center'
+        c.background "rgba(255,255,255,0.0)"
+        c.extent "#{width}x#{height}"
+      end
+      img.strip
       img = yield(img) if block_given?
       img
     end

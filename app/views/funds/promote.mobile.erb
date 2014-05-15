@@ -1,0 +1,23 @@
+<% title "#{current_fund.name}" %>
+
+<%= render :partial => 'funds/show/tabs' %>
+
+<ul data-role="listview" data-inset="true">		
+	<li>
+		<p class='word_wrap'>We offer a variety of professional marketing products suited for any style of fundraising campaign. Products are fully customizable and come specially coded to this fund. Mix and match to maximize donations!</p>
+	</li>
+</ul>
+	
+<ul data-role="listview" data-inset="true" data-theme"a">
+	<% MarketingProduct.scoped.each do |product| %>
+		<li class=" ui-li-has-thumb ui-first-child">
+			<%= link_to "#{image_tag(product.image_url(:thumb))}<h4>#{product.name}</h4><p class='word_wrap' style='margin-bottom:-5px;'><i>#{product.comment}</i></p>".html_safe, product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :target => '_blank' %>
+		</li>
+	<% end %>
+</ul>
+
+<center>
+	<%= image_tag image_path('zazzle.png'), :width =>  '50%' %>
+	<div class='t-ss'>Products and Images courtesy of Zazzle Inc.</div>
+</center>
+	

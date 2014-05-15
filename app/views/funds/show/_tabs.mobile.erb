@@ -1,0 +1,7 @@
+<div data-role="navbar">
+	<ul>
+	  <li><%= link_to "About", fund_path(current_fund), :class => ('ui-btn-active' if url_for == fund_path(current_fund)) %></li>
+	  <li><%= link_to "Give", new_payment_path(current_fund), :class => ('ui-btn-active' if url_for == new_payment_path(current_fund)) %></li>
+	  <li><%= link_to "Promote", promote_fund_path(current_fund), :class => ('ui-btn-active' if url_for == promote_fund_path(current_fund)) %> </li>
+	</ul>
+</div>

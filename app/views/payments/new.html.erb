@@ -1,4 +1,4 @@
-<% title receiving_fund.name %>
+<% title current_fund.name %>
 
 <%= render :partial => 'payments/square_cash_splash' %>
 
@@ -8,7 +8,7 @@
 
 <%= simple_form_for @payment, :html => {:class => 'form-horizontal', :honeypot => true }, :validate => true do |f| %>
 
-  <%= f.hidden_field :fund_id, :value => (params[:payment][:fund_id] rescue receiving_fund.id) %>
+  <%= f.hidden_field :fund_id, :value => (params[:payment][:fund_id] rescue current_fund.id) %>
   
   <%= f.input :amount_in_dollars, :required => true, :wrapper => :prepend_append, :label => 'Amount', :input_html => {:style => 'width:50px'} do %>
     <%= content_tag :span, "$", :class => "add-on" %>
