@@ -1,24 +1,20 @@
-<% title "Please Sign In" %>
-<div class='center_wrap'>
-	<!-- <h3 style='margin-top:0px'>New to <%= image_tag 'swiftgive_logo.png', :height => '30px', :style => 'position:relative;top:8px;' %> ?</h3> -->
-  <h3>Express sign-in through your preferred network:</h3>
-</div>
+<% title "Please Sign in through your preferred network" %>
 
-<div class='center_wrap'>
+<div class='center_wrap mt pt'>
   <%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
   <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
   <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:google_oauth2), :rel => 'external' %>
   <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
 </div>
 <div class='center_wrap mt' style='font-size:90%'>
-	or <a data-transition="slide" data-rel='popup' href='#new_or_returning_user_prompt' data-tolerance="0,0"> sign-in manually </a> 
+	<a data-transition="slide" data-rel='popup' href='#new_or_returning_user_prompt' data-tolerance="0,0"> sign-in manually </a> 
 </div>
 
 <br class='spacer'/>
 
 <div class='mt'>
 	<%#= link_to 'Current Member Sign in', root_path, :'data-role' => 'button', :'data-mini' => false, :'data-theme' => 'b', :'data-icon' => 'check'%>
- <%= link_to 'Learn more about us', root_path, :'data-role' => 'button', :'data-mini' => true, :'data-icon' => 'info'%>
+ <%= link_to 'Learn more about us', about_path, :'data-role' => 'button', :'data-icon' => 'info'%>
 </div>
 
 <div id='new_or_returning_user_prompt' data-role="popup" data-position-to="window" data-overlay-theme="a" >
