@@ -13,8 +13,8 @@
   <ul data-role="listview" data-inset="true" data-theme"a">    
     <li style='margin:0px;padding:0px;'>
       <div class='ui-grid-a pa-s'>
-        <div class='ui-block-a pt-m pl-m t-s'><h3>Amount:</h3></div>
-        <div class='ui-block-b pr-s'>
+        <div class='ui-block-a pt-m pl-m t-s main'><h3>Amount to give:</h3></div>
+        <div class='ui-block-b pr-s side'>
           <div><%= f.select :amount_in_cents, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => true, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
         </div>
       </div>
@@ -45,7 +45,7 @@
 
 <script type='text/javascript'>
 
-  $( document ).delegate("[data-role='page']", "pageinit", function() {
+  $("[data-role='page']").on('pageinit', function() {
     
     initialize_custom_amount_form();
     
@@ -57,6 +57,7 @@
   });
 
   function initialize_custom_amount_form() {
+
     $('#custom_amount_value').initAutoNumeric();
 
     $('#payment_amount_in_cents-listbox').on( "popupafterclose", function( event, ui ) {

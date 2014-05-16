@@ -1,0 +1,39 @@
+<h2>The Problem</h2>
+<p class='word_wrap'>So often we've been in awkward situations wanting to hand over some cash for a tip or donation, just to find our wallet empty except for that lonely piece of lint in the corner.</p>
+<h4 class='mt mb'>Nobody Carries Cash</h4>
+
+<h2>Mobile Fundraising</h2>
+<p class='word_wrap'>Swiftgive allows you to give money from a mobile device by scanning unique barcodes we call "give codes".</p>
+<p class='word_wrap'>We provide a solution for you to start and manage any fund whether you're raising donations for charity or just collecting tips for yourself.</p>
+<p class='word_wrap'>After creating your fund you can pick from a variety of customizable marketing products from our partners at Zazzle, getting your give code in front of donors.</p>
+
+<h4>Having a car wash for your sports team?</h4>
+<div><%= image_tag MarketingProduct.find_by_name('T-Shirts').image_url(:thumb) %></div>
+<p class='word_wrap'>We offer T-shirts that have your give code on the front. Donors can scan from the comfort of their car.</p>
+
+<h4>Drive a pedicab?</h4>
+<div><%= image_tag MarketingProduct.find_by_name('Wall Decals').image_url(:thumb) %></div>
+<p class='word_wrap'>Stick a large wall decal with your give code on the side of your ride. No more awkward looks from people with empty wallets.</p>
+
+<h4>Your organization give out gifts?</h4>
+<div><%= image_tag MarketingProduct.find_by_name('Coffee Mugs').image_url(:thumb) %></div>
+<p class='word_wrap'>Send out give-coded coffee mugs.</p>
+
+<h4>Work as a valet?</h4>
+<div><%= image_tag MarketingProduct.find_by_name('Buttons').image_url(:thumb) %></div>
+<p class='word_wrap'>Pin a coded button to your company shirt.</p>
+
+<h4>The possibilities are endless</h4>
+<p class='word_wrap'>Place a give-coded sticker on your church collection plate.</p>
+<p class='word_wrap'>Hand out give-coded business cards at a street corner.</p>
+<p class='word_wrap'>Mail out postcards with your give code on it.</p>
+
+<h4 class='mt mb'>Go out and raise some money</h4>
+
+<h2>Universal Solution</h2>
+<p class='word_wrap'>Swiftgive works on all modern mobile devices.  There is no special Swiftgive app you need to download.</p>
+<p class='word_wrap'>Give codes can be used by most barcode scanning apps free to download from your App store.</p>
+
+<h2>Free to give, Free to receive</h2>
+<p class='word_wrap'>Swiftgive is built on top of <%= link_to 'Square Cash', 'https://square.com/cash' %>, a free peer-to-peer payment gateway.  This means you pay nothing to give or receive payments.</p>
+<h4 class='mt'>All you need is an email and a debit card</h4>

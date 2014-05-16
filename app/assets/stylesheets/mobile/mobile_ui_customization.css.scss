@@ -19,9 +19,6 @@ input.large_input {
 .ui-grid-a > .ui-block-a.main, .ui-grid-a > .ui-block-b.main  { width: 65% }
 .ui-grid-a > .ui-block-b.side, .ui-grid-a > .ui-block-a.side { width: 35%; }
 
-#nav_menu-popup {
-    
-}
 #nav_menu {
     width: 200px;
     border: 1px solid #000;
@@ -46,4 +43,15 @@ input.large_input {
 .ui-listview-in-collapsible li.ui-last-child {
   border-bottom-right-radius: 5px !important;
   border-bottom-left-radius: 5px !important;
+}
+
+.ui-listview h3 {
+  font-size:90% !important;
+}
+
+.ui-listview h4 {
+  font-size: 80% !important;
+  color:#555555;
+  text-shadow: none;
+  font-style:italic;
 }

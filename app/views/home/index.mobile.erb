@@ -1,12 +1,10 @@
-<% title "Collecting Tips and Fundraising Made Easy!" %>
+<% title "Collecting Tips and Fundraising Made Easy" %>
 
-<center>
-	<h3></h3>
+<center>	
 	<h5><i>All you need is email and a debit card</i></h5>
 </center>
 
 <ul data-role="listview" data-inset="true" class='mb'>
-
 	<li class='pt-s pb-s'>
 		<div class='ui-grid-a'>
 			<div class='ui-block-a side'>
@@ -80,8 +78,11 @@
 	</li>
 
 </ul>
+
 <% unless user_signed_in? %>
-	<%= link_to "Get Started Now", new_user_session_path, :'data-role' => 'button', :'data-icon' => 'heart',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
+	<%= link_to "Get Started Now", new_user_session_path, :'data-role' => 'button', :'data-icon' => 'check',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
 <% else %>
-	<%= link_to "Get Started Now", new_fund_path, :'data-role' => 'button', :'data-icon' => 'heart',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
+	<%= link_to "Get Started Now", funds_path, :'data-role' => 'button', :'data-icon' => 'check',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
 <% end %>
+
+<%= link_to "Learn More", about_path, :'data-role' => 'button', :'data-icon' => 'info',  :class => 'ui-btn-center' %> 
