@@ -14,6 +14,23 @@ class HomeController < ApplicationController
     render :text => robots, :layout => false, :content_type => "text/plain"
   end
 
+  def terms
+    set_back_path
+    respond_to do |format|
+      format.html {render :layout => "full"}
+      format.mobile
+    end
+  end
+
+  def about
+    set_back_path
+    respond_to do |format|
+      format.html {render :layout => "full"}
+      format.mobile
+    end
+  end
+
+
   # used for testing.  This should be empty when pushed.
   def test
    
