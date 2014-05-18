@@ -40,22 +40,28 @@ Swiftgive::Application.routes.draw do
   get 'payments/guest_splash'  => 'payments#guest_splash', :as => 'guest_splash'
   resources :payments, :only => [:create, :show]
   
-  match 'about' => 'home#about', :as => 'about'
-  match 'terms' => 'home#terms', :as => 'terms'
-  match 'privacy' => 'home#privacy', :as => 'privacy'
-
   # routes for testing (not for production)  
   if Rails.env.development? or Rails.env.staging?
     match 'test' => 'home#test'
+
+    # sidekiq monitoring server... we will have dedicated server for production
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
   end
   
   # dynamic robots.txt per environment, we don't want bots crawling on development or staging sites
   get '/robots.txt' => 'home#robots'
   
-  root :to => "home#index"
+  # simple contact form
   match 'contact'             => 'contact#index'
   match 'contact_create'      => 'contact#create'
   
+  match 'about'               => 'home#about'
+  match 'terms'               => 'home#terms'
+  match 'privacy'             => 'home#privacy'
+
+  root :to => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

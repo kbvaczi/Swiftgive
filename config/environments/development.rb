@@ -19,6 +19,9 @@ Swiftgive::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  # See everything in the log (default is :info)
+  config.log_level = :debug
+
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 

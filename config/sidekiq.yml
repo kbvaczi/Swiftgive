@@ -1,0 +1,11 @@
+---
+:pidfile: tmp/pids/sidekiq.pid
+development:
+  :concurrency: 3
+staging:
+  :concurrency: 3
+production:
+  :concurrency: 10
+:queues:
+  - [email,   1]
+  - [default, 5]

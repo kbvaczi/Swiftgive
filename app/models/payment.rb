@@ -16,7 +16,7 @@ class Payment < ActiveRecord::Base
   # ----- Validations ----- #
   
   validates_presence_of   :uid, :fund, :amount_in_cents
-  validate                Proc.new {self.amount_in_dollars = self.amount_in_dollars.to_i} if 'self.amount_in_dollars.present?'
+  validate                Proc.new {self.amount_in_dollars = self.amount_in_dollars.to_i}, :if => 'self.amount_in_dollars.present?'
   validates_inclusion_of  :amount_in_dollars, :in => 1..1000, :allow_nil => true, :message => 'Must be between $1 and $1000'
   validates_inclusion_of  :amount_in_cents, :in => 100..100000, :message => 'Must be between $1 and $1000', :allow_nil => false
                         

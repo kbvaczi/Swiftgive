@@ -4,15 +4,16 @@ class User < ActiveRecord::Base
   
   # Include default devise modules. Others available are:
   # :token_authenticatable,  :timeoutable 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable, 
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin]
+  
+  devise  :database_authenticatable, :async, # uses devise async gem to send emails using backgroudn worker process
+          :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, # standard Devise stuff
+          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin] # allows users to login through omniauth authentications
+         
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :current_password, :remember_me, :account_attributes
   
-  has_one     :account
+  has_one     :account, :dependent => :destroy
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id

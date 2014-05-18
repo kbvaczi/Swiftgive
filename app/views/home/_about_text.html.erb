@@ -8,19 +8,19 @@
 <p class='word_wrap'>After creating your fund you can pick from a variety of customizable marketing products from our partners at Zazzle, getting your give code in front of donors.</p>
 
 <h4>Having a car wash for your sports team?</h4>
-<div><%= image_tag MarketingProduct.find_by_name('T-Shirts').image_url(:thumb) %></div>
+<div><%= image_tag MarketingProduct.find_by_name('T-Shirts').image_url(:thumb) rescue nil %></div>
 <p class='word_wrap'>We offer T-shirts that have your give code on the front. Donors can scan from the comfort of their car.</p>
 
 <h4>Drive a pedicab?</h4>
-<div><%= image_tag MarketingProduct.find_by_name('Wall Decals').image_url(:thumb) %></div>
+<div><%= image_tag MarketingProduct.find_by_name('Wall Decals').image_url(:thumb) rescue nil %></div>
 <p class='word_wrap'>Stick a large wall decal with your give code on the side of your ride. No more awkward looks from people with empty wallets.</p>
 
 <h4>Your organization give out gifts?</h4>
-<div><%= image_tag MarketingProduct.find_by_name('Coffee Mugs').image_url(:thumb) %></div>
+<div><%= image_tag MarketingProduct.find_by_name('Coffee Mugs').image_url(:thumb) rescue nil %></div>
 <p class='word_wrap'>Send out give-coded coffee mugs.</p>
 
 <h4>Work as a valet?</h4>
-<div><%= image_tag MarketingProduct.find_by_name('Buttons').image_url(:thumb) %></div>
+<div><%= image_tag MarketingProduct.find_by_name('Buttons').image_url(:thumb) rescue nil %></div>
 <p class='word_wrap'>Pin a coded button to your company shirt.</p>
 
 <h4>The possibilities are endless</h4>
