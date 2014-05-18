@@ -28,19 +28,16 @@
     height:<%= width.to_f * 0.8 %>px;
     width: <%= width.to_f * 0.8 %>px;
     margin-left: -<%= width.to_f * 0.405 %>px;
-    margin-top: -<%= width.to_f * 0.2 %>px;    
+    margin-top: -<%= width.to_f * 0.2 %>px;
   }
 </style>
 
 
 <div class='div_code_wrapper'>
-  <%#= image_tag asset_path('give_code_wrapper.svg', :only_path => false), :class => 'give_code_wrapper_image' %>
   <%= image_tag asset_path('give_code_wrapper.svg', :only_path => false), :class => 'give_code_wrapper_image' %>
-  <%#= content_tag :object, "", :data => asset_path('give_code_wrapper_test.svg', :only_path => false), :type => "image/svg+xml", :class => 'give_code_wrapper_image' %>
-
+  
   <div class='qr_code'>
     <%= render :partial => 'funds/give_codes/qr_code', :locals => {:message => message, :size => width * 0.82} %>
   </div>
-
+  
 </div>
-

@@ -26,7 +26,7 @@ Swiftgive::Application.routes.draw do
     get 'location' => 'locations#edit', :as => :location
     put 'location' => 'locations#update', :as => :location
   end
-
+  
   resources :funds do
     get 'promote' => 'funds#promote', :on => :member
     get 'manage/(:section)' => 'funds#manage', :on => :member, :as => 'manage'
@@ -53,6 +53,8 @@ Swiftgive::Application.routes.draw do
   get '/robots.txt' => 'home#robots'
   
   root :to => "home#index"
+  match 'contact'             => 'contact#index'
+  match 'contact_create'      => 'contact#create'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

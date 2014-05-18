@@ -64,5 +64,11 @@ class ApplicationController < ActionController::Base
     Rails.application.routes.recognize_path(request.path).inspect.parameterize('_') rescue root_path
   end
   helper_method :current_page_id
+
+  # used to consistently display model errors in a flash message
+  def display_errors(model)
+    model.errors.full_messages.inject {|string, m| string + '<br/>' + m.to_s}
+  end
+  helper_method :display_errors
   
 end

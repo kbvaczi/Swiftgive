@@ -39,5 +39,5 @@
 
 </ul>
 
-<%= link_to 'Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-icon' => 'eye' if is_current_fund_owner%>
+<%= link_to 'Display Give Code', give_code_fund_path(current_fund), :'data-role' => 'button', :'data-icon' => 'eye' if is_current_fund_owner%>
 <%= link_to 'Edit this Fund', edit_fund_path(@fund), :'data-role' => 'button', :'data-icon' => 'gear' if is_current_fund_owner %>

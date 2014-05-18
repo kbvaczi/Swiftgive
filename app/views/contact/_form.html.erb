@@ -1,0 +1,28 @@
+
+<%= simple_form_for @contact, :url => { :action => "create" }, :html => { :method => :post, :honeypot => true, :class => 'form-horizontal' } do |f| %>
+  
+  <%= f.input :sender_name,   :label => "Your Name", :required => true %>
+  
+  <%= f.input :email,         :required => true %>
+  
+  <%= f.input :support_type,  :label => "Reason for Contact",
+                              :include_blank => false , 
+                              :collection => [["Give us Kudos",                               "Kudos"],
+																							["Ask a Question",                              "Question"], 
+																							["Give a Suggestion",                           "Suggestion"],
+																							["Inquire About Advertising",                   "Advertisement"],
+																							["I have a legal issue to discuss",             "Legal Issue"]] %>
+                              
+  <%= f.input :content,       :label => "Your Message", 
+                              :as => :text, 
+                              :required => true, 
+                              :input_html => {:maxlength => "500"} %>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit 'Submit', :class => 'btn btn-primary' %>      
+      <%= submit_tag 'Cancel', :type => :reset, :class => "btn" %>      
+    </div>
+  </div>
+  
+<% end %>

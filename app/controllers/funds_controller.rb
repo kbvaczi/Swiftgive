@@ -64,7 +64,7 @@ class FundsController < ApplicationController
       redirect_to fund_path(@fund), notice: 'Fund was successfully created.'
     else
       Rails.logger.debug @fund.errors.full_messages.to_s
-      flash[:error] = @fund.errors.full_messages.to_s
+      flash[:error] = display_errors(@fund)
       render action: "new"
     end    
   end
@@ -76,7 +76,7 @@ class FundsController < ApplicationController
       redirect_to back_path, notice: 'Fund was successfully updated.'
     else
       Rails.logger.debug @fund.errors.full_messages.to_s
-      flash[:error] = @fund.errors.full_messages.to_s
+      flash[:error] = display_errors(@fund)
       render action: "edit"
     end
   end

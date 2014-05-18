@@ -19,21 +19,6 @@ input.large_input {
 .ui-grid-a > .ui-block-a.main, .ui-grid-a > .ui-block-b.main  { width: 65% }
 .ui-grid-a > .ui-block-b.side, .ui-grid-a > .ui-block-a.side { width: 35%; }
 
-#nav_menu {
-    width: 200px;
-    border: 1px solid #000;
-    border-right: none;
-    background: rgba(0,0,0,.9);
-    margin: -1px 0;
-}
-#nav_menu .ui-btn {
-    margin: 1em 15px;
-}
-#nav_menu h3 {
-	color: #eee;
-	text-shadow:none;
-}
-
 /* Listview modifications */
 
 .ui-listview-in-collapsible {
@@ -54,4 +39,23 @@ input.large_input {
   color:#555555;
   text-shadow: none;
   font-style:italic;
+}
+
+/* wrap push on wide viewports once open */
+@media (min-width: 35em){
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+    margin-right: 17em;
+  }
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-push.ui-panel-content-fixed-toolbar-position-right,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+  .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+    margin: 0 0 0 17em;
+  }
+  .ui-responsive-panel .ui-panel-dismiss-display-push {
+    display: none;
+  }
 }

@@ -1,4 +1,3 @@
-
 $(document).bind("mobileinit", function(){
 	// GLOBAL DEFAULTS
 	$.extend(  $.mobile , {
@@ -10,7 +9,6 @@ $(document).bind("mobileinit", function(){
   $('.close_flash_button').click(function(){
 		$('.flash_message').popup('close');
 	});
-
 });
 
 //remove previous page when page is changed

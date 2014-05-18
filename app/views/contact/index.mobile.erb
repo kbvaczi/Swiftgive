@@ -1,0 +1,33 @@
+<% title 'Contact' %>
+
+<ul data-role='listview' data-inset='true'>
+	<li>
+
+		<%= simple_form_for @contact, :url => { :action => "create" }, :html => { :method => :post, :honeypot => true } do |f| %>
+		  
+		  <%= f.input :sender_name,   :label => false, :placeholder => 'Your Name', :required => true %>
+		  
+		  <%= f.input :email,         :label => false, :placeholder => 'Your e-mail', :required => true %>
+		  
+		  <%= f.input :support_type,  :label => false,
+		                              :include_blank => false , 
+		                              :collection => [["Give us Kudos",                               "Kudos"],
+																									["Ask a Question",                              "Question"], 
+																									["Give a Suggestion",                           "Suggestion"],
+																									["Inquire About Advertising",                   "Advertisement"]] %>
+		                              
+		  <%= f.input :content,       :label => false,
+		  							  						:placeholder => 'Your Message', 
+		                              :as => :text,
+		                              :required => true, 
+		                              :input_html => {:maxlength => "500"} %>
+		  
+		  <div class='mt'>
+	      <%= f.submit 'Submit', :'data-role' => 'button', :'data-theme' => 'b', :'data-icon' => 'check' %>      
+	      <%= submit_tag 'Cancel', :type => :reset, :'data-role' => "button", :'data-mini' => true, :'data-icon' => 'delete' %>      
+		  </div>
+		  
+		<% end %>
+
+	</li>
+</ul>
