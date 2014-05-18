@@ -51,7 +51,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem "twitter-bootstrap-rails", "~> 2.2.8"           # UI bootstrap
   gem 'jquery-rails'
-  gem "jquery_mobile_rails", "~> 1.4.1"               # mobile UI bootstrap
+  gem "jquery_mobile_rails", "~> 1.4.2"               # mobile UI bootstrap
 end
 
 
