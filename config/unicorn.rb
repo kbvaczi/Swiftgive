@@ -10,12 +10,7 @@ worker_processes 3
 
 # our sidekick worker
 @sidekiq_pid = nil
-
-
-if Rails.env.development?
-  listen 3000  
-end
-  
+ 
 before_fork do |server, worker|
 
   if defined?(ActiveRecord::Base)
