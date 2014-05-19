@@ -79,4 +79,5 @@ Swiftgive::Application.configure do
   
   # Default Host required by Devise
   config.action_mailer.default_url_options = { :host => 'http://www.swiftgive.com' }
+  config.action_mailer.asset_host = "http://www.swiftgive.com"  
 end

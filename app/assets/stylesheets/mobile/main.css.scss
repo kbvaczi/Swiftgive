@@ -1,6 +1,10 @@
 @import "shared/variables";
 @import "shared/helpers";
 
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}  
+
 h1.page_title {
 	font-size:18px;
 	margin:0px 10px 10px 10px;

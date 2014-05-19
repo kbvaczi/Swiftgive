@@ -27,8 +27,8 @@ class Contact
 
   def save
     if self.valid?
-      #ContactMailer.delay(:queue => :email).send_mail(self)
-      ContactMailer.send_mail(self).deliver
+      ContactMailer.delay(:queue => :email).send_mail(self) # backround processing using Sidekiq
+      #ContactMailer.send_mail(self).deliver # no background processing
       return true
     end
     return false

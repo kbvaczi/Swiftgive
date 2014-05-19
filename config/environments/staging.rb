@@ -76,4 +76,5 @@ Swiftgive::Application.configure do
   
   # Default Host required by Devise
   config.action_mailer.default_url_options = { :host => 'swiftgive.herokuapp.com' }
+  config.action_mailer.asset_host = "http://swiftgive.herokuapp.com"  
 end

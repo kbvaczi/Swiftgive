@@ -68,6 +68,10 @@ module Swiftgive
     
     # compile additional manifest files for mobile and standard
     config.assets.precompile += %w( standard.js standard.css mobile.js mobile.css )
+
+    config.to_prepare do
+      Devise::Mailer.layout "email" # use email layout for devise emails
+    end
     
   end
 end

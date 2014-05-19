@@ -40,9 +40,12 @@ Swiftgive::Application.configure do
   
   # Default Host required by Devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.asset_host = "http://localhost:3000"    
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = "http://localhost:3000"
+
+  
   
 end

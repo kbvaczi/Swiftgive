@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
           :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, # standard Devise stuff
           :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :linkedin] # allows users to login through omniauth authentications
          
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :current_password, :remember_me, :account_attributes
   
