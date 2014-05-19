@@ -10,8 +10,10 @@ worker_processes 3
 
 # our sidekick worker
 @sidekiq_pid = nil
- 
-listen 3000 if Rails.env.development?
+
+rails_env = ENV['RAILS_ENV'] || 'development'
+
+listen 3000 if rails_env == 'development'
 
 before_fork do |server, worker|
 
