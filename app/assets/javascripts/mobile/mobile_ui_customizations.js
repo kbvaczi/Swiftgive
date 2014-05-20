@@ -5,15 +5,13 @@ $(document).bind("mobileinit", function(){
     defaultPageTransition: 'flip',
     loadingMessageTextVisible: 'true'
   });
-
-  $('.close_flash_button').click(function(){
-		$('.flash_message').popup('close');
-	});
 });
 
 //remove previous page when page is changed
-$(document).on("pagehide", "div[data-role=page]", function(event){
+$(document).delegate("div[data-role=page]", "pagehide", function(event){
+  $('.flash_message').remove();
   $(event.target).remove();
+
 });
 
 //Show loading spinner when clicking non-xhr links

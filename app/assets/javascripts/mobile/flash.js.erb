@@ -1,30 +1,16 @@
 $(document).delegate('.main_page', 'pageshow', function () {
-  target = $(this).find('.flash_message').first();
-  window.setTimeout(function(){
-    target.on( "popupafterclose", function( event, ui ) {
-      target.popup('destroy');
-      target.remove();
-    });
-    if (!target.hasClass('flash_permenant')){
-      target.on( "popupafteropen", function( event, ui ) {
-        window.setTimeout(function() { 
-          if (target.is(":visible")) {
-            target.popup('close');            
-          }
-        }, 7000 );
-      });  
-    }
-    target.popup("open");
-  }, 300);  
+  flashExistingMessage($(this));
 });
 
-$(document).on('click', '.flash_message', function () {
+$(document).delegate('.flash_message', 'click', function () {
   $(this).popup('close');
 });
 
 function flashNow(message, message_type, popup_to_open_after_close) {
   message_type = message_type || 'notice';
-  var flash_message = "<div class='center_wrap flash_message pa flash_" + message_type + "' role='dialog' data-position-to='window' data-transition='pop' data-overlay-theme='a'><p class='flash_message_content center' style='width:250px'></p><a role='button', data-icon='check', class='ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all ui-mini mt'>OK</a></div>";
+  var flash_message = "<%= (ApplicationController.new.render_to_string :partial => 'layouts/mobile/flash', :formats => [:mobile], :locals => {:flash => {:notice => '*placeholder*'}}).gsub("\n", "").gsub("\"","") %>" ; //"
+  flash_message = flash_message.replace("*placeholder*", message);
+  flash_message = flash_message.replace('flash_notice', 'flash_' + message_type);
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message);
@@ -46,5 +32,27 @@ function flashNow(message, message_type, popup_to_open_after_close) {
       }, 7000 ); 
     });
     target.popup().popup("open");
+  }
+}
+
+function flashExistingMessage(page_dom_object) {
+  target = page_dom_object.find('.flash_message').first();
+  if (target.length !== 0) {
+    target.on( "popupafterclose", function( event, ui ) {
+      target.popup('destroy');
+      target.remove();                      
+    });
+    window.setTimeout(function(){      
+      if (!target.hasClass('flash_permenant')){
+        target.on( "popupafteropen", function( event, ui ) {
+          window.setTimeout(function() { 
+            if (target.is(":visible")) {
+              target.popup('close');            
+            }
+          }, 7000 );
+        });  
+      }
+      target.popup("open");
+    }, 300);  
   }
 }
