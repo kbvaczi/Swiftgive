@@ -37,7 +37,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def new_manual
     @user = User.new(params[:user])
-    flash[:error] = 'Invalid email and/or password' if params[:user].present?
+    flash.now[:error] = 'Invalid email and/or password' if params[:user].present?
   end
   
 end

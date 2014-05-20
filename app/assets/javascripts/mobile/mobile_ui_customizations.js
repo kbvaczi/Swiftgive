@@ -1,17 +1,6 @@
-$(document).bind("mobileinit", function(){
-	// GLOBAL DEFAULTS
-	$.extend(  $.mobile , {
-		//ajaxEnabled: false,
-    defaultPageTransition: 'flip',
-    loadingMessageTextVisible: 'true'
-  });
-});
-
 //remove previous page when page is changed
 $(document).delegate("div[data-role=page]", "pagehide", function(event){
-  $('.flash_message').remove();
   $(event.target).remove();
-
 });
 
 //Show loading spinner when clicking non-xhr links

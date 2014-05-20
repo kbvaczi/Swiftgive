@@ -1,4 +1,4 @@
-$(document).delegate('.main_page', 'pageshow', function () {
+$(document).delegate('.main_page', 'pageinit', function () {
   flashExistingMessage($(this));
 });
 
@@ -36,7 +36,7 @@ function flashNow(message, message_type, popup_to_open_after_close) {
 }
 
 function flashExistingMessage(page_dom_object) {
-  target = page_dom_object.find('.flash_message').first();
+  var target = page_dom_object.find('.flash_message').first();
   if (target.length !== 0) {
     target.on( "popupafterclose", function( event, ui ) {
       target.popup('destroy');

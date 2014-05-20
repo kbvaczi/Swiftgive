@@ -19,7 +19,7 @@ class ContactController < ApplicationController
       redirect_to root_path, :notice => "Thanks for contacting us! Your message was sent."
     else
       Rails.logger.debug @contact.errors.full_messages.to_s
-      flash[:error] = display_errors(@contact)
+      flash.now[:error] = display_errors(@contact)
       render action: "index"
     end
   end

@@ -12,10 +12,7 @@
 
   <body>    
     <div id="loader"></div>  <%# ajax loading spinner %>
-    <% unless content_for?(:page_id) %>
-      <% provide :page_id, current_page_id %>
-    <% end %>
-    <div data-role="page" class='main_page' id='<%= yield(:page_id) %>' data-url='<%= current_path %>' data-transition="slide">       
+    <div data-role="page" class='main_page'>       
       <%= render :partial => 'layouts/mobile/flash', :locals => {:flash => flash} %>
       <div class='content' data-role="content" style='padding-top:0px;'>        
         <%= yield %>
