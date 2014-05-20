@@ -6,7 +6,7 @@ style_for_text  =       "font-family:'Helvetica Nuve', Helvetica, Arial, sans-se
 
 style_for_background =  "background:#{background_color};"
 
-style_for_mail_main =   "font-size:12px;width:500px;background:#{background_color};"
+style_for_mail_main =   "font-size:12px;width:500px;border-collapse:collapse;table-layout:fixed;"
 
 style_for_heading =     "background:#edf1f2;height:25px;font-size:14px;font-weight:bold;line-height:2.4;text-align:center;padding:0 10px 0 10px;margin: 0px 0px 10px 0px;border-bottom: 2px solid #eee;"
 
@@ -20,21 +20,21 @@ border_radius =         "5px"
 
 %>
 
-<table cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;width:600px;table-layout:fixed;"><tbody>
+<table cellspacing="0" cellpadding="0" border="0" style="<%= style_for_mail_main %>"><tbody>
   <tr>
-    <th style="padding-left:5px;"></th>
-    <th style="width:570px;padding-bottom:3px;text-align:right;">
+    <th style="padding-left:15px;"></th>
+    <th style="width:450px;padding-bottom:3px;text-align:right;">
         <%# add facebook icons and such here %>
     </th>
-    <th style="padding-left:5px;"></th>
+    <th style="padding-left:15px;"></th>
   </tr>
   <tr style="<%= style_for_background %>">
     <td style="border-top-left-radius:<%= border_radius %>;padding-left:10px;"> </th>
-    <td style="text-align:center;width:570px;padding:10px;"> <%= link_to 'http://swiftgive.s3.amazonaws.com/images/swiftgive_logo_lg.png', :alt => "Swiftgive Logo"), root_url %> </th>
+    <td style="text-align:center;width:450px;padding:10px;"> <%= link_to image_tag('http://swiftgive.s3.amazonaws.com/images/swiftgive_logo_lg.png', :alt => "Swiftgive Logo"), root_url %> </th>
     <td style="border-top-right-radius:<%= border_radius %>;padding-left:10px;"> </th>
   </tr>
   <tr>
-    <td style="padding-left:5px;<%= style_for_background %>"> </th>
+    <td style="padding-left:15px;<%= style_for_background %>"> </th>
     <td style="<%= style_for_background %>"> 
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tbody>
         <tr>
@@ -42,10 +42,10 @@ border_radius =         "5px"
         </tr>
       </tbody></table>
     </td>    
-    <td style="padding-left:5px;<%= style_for_background %>"> </th>
+    <td style="padding-left:15px;<%= style_for_background %>"> </th>
   </tr>
   <tr>
-    <td style="padding-left:5px;<%= style_for_background %>"> </th>
+    <td style="padding-left:15px;<%= style_for_background %>"> </th>
     <td style="<%= style_for_background %>"> 
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tbody>
         <tr>
@@ -53,10 +53,10 @@ border_radius =         "5px"
         </tr>
       </tbody></table>
     </td>
-    <td style="padding-left:5px;<%= style_for_background %>"> </th>
+    <td style="padding-left:15px;<%= style_for_background %>"> </th>
   </tr>
   <tr>
-    <td colspan=3 style="border-bottom-left-radius:<%= border_radius %>;border-bottom-right-radius:<%= border_radius %>;padding-bottom:15px;<%= style_for_background %>"> </td>
+    <td colspan=3 style="border-bottom-left-radius:<%= border_radius %>;border-bottom-right-radius:<%= border_radius %>;padding-bottom:20px;<%= style_for_background %>"> </td>
   </tr>
   <tr>
     <td colspan=3 style="padding:10px;<%= style_for_footer %>" >  
