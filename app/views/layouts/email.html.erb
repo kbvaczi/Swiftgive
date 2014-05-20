@@ -6,7 +6,7 @@ style_for_text  =       "font-family:'Helvetica Nuve', Helvetica, Arial, sans-se
 
 style_for_background =  "background:#{background_color};"
 
-style_for_mail_main =   "font-size:12px;width:100%;background:#{background_color};"
+style_for_mail_main =   "font-size:12px;width:500px;background:#{background_color};"
 
 style_for_heading =     "background:#edf1f2;height:25px;font-size:14px;font-weight:bold;line-height:2.4;text-align:center;padding:0 10px 0 10px;margin: 0px 0px 10px 0px;border-bottom: 2px solid #eee;"
 
@@ -30,7 +30,7 @@ border_radius =         "5px"
   </tr>
   <tr style="<%= style_for_background %>">
     <td style="border-top-left-radius:<%= border_radius %>;padding-left:10px;"> </th>
-    <td style="text-align:center;width:570px;padding:10px;"> <%= link_to image_tag(asset_path('swiftgive_logo_lg.png'), :alt => "Swiftgive Logo"), root_url %> </th>
+    <td style="text-align:center;width:570px;padding:10px;"> <%= link_to 'http://swiftgive.s3.amazonaws.com/images/swiftgive_logo_lg.png', :alt => "Swiftgive Logo"), root_url %> </th>
     <td style="border-top-right-radius:<%= border_radius %>;padding-left:10px;"> </th>
   </tr>
   <tr>
