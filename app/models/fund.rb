@@ -20,7 +20,8 @@ class Fund < ActiveRecord::Base
                   
   attr_accessor   :creator_info
 
-  mount_uploader :give_code, GiveCodeUploader
+  mount_uploader :give_code_image, GiveCodeImageUploader
+  mount_uploader :give_code_vector, GiveCodeVectorUploader
 
   def to_param
     self.uid.parameterize
@@ -39,7 +40,7 @@ class Fund < ActiveRecord::Base
 
   before_validation :generate_and_assign_uid,       :on => :create, :unless => Proc.new { self.uid.present? }
   before_validation :get_creator_info,              :on => :create, :unless => Proc.new { self.creator_info.present? }
-  after_commit      :generate_and_upload_give_code, :on => :create, :unless => Proc.new { self.give_code.present? }
+  after_commit      :generate_and_upload_give_codes, :on => :create, :unless => Proc.new { self.give_code_image.present? }
       
   # ----- Member Methods ----- #
 
@@ -91,29 +92,39 @@ class Fund < ActiveRecord::Base
     self.fund_type == 'third_party'
   end
 
-  def generate_and_upload_give_code
+  def generate_and_upload_give_codes
     temp_dir = Rails.root.join('tmp')
     Dir.mkdir(temp_dir) unless Dir.exists?(temp_dir) # creates temp directory in heroku, which is not automatically created
-    give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s} ", '.pdf'], 'tmp', :encoding => 'ascii-8bit')
-    code_image_blob = self.give_code_as_pdf
+    
+    give_code_image_tempfile = Tempfile.new(["give_code_#{self.uid.to_s} ", '.png'], 'tmp', :encoding => 'ascii-8bit')
+    code_image_blob = self.give_code_as_png
     give_code_image_tempfile.write(code_image_blob)
-    give_code_image_tempfile.flush    
-    self.give_code = give_code_image_tempfile
-    self.save
-    puts self.errors.full_messages
+    give_code_image_tempfile.flush
+    
+    give_code_vector_tempfile = Tempfile.new(["give_code_#{self.uid.to_s} ", '.pdf'], 'tmp', :encoding => 'ascii-8bit')
+    code_vector_blob = self.give_code_as_pdf
+    give_code_vector_tempfile.write(code_vector_blob)
+    give_code_vector_tempfile.flush
+    
+    self.give_code_image = give_code_image_tempfile
+    self.give_code_vector = give_code_vector_tempfile
+
+    Rails.logger.info self.errors.full_messages unless self.save
+
     give_code_image_tempfile.unlink
+    give_code_vector_tempfile.unlink
   end
 
   def give_code_as_pdf
     code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
     code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513}
-    code_image_blob = PDFKit.new(code_html, { :'page-height'    => '263pt', 
+    code_vector_blob = PDFKit.new(code_html, { :'page-height'    => '263pt', 
                                               :'page-width'     => '250pt', 
                                               :'margin-top'     => '0', 
                                               :'margin-bottom'  => '0',
                                               :'margin-left'    => '0',
                                               :'margin-right'   => '0'}).to_pdf
-    code_image_blob
+    code_vector_blob
   end
 
   def give_code_as_png

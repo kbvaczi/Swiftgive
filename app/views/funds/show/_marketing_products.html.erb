@@ -3,7 +3,7 @@
 		<li class="span2">
 			<div class="thumbnail" style="height:200px;">
 				<div class='mt center_wrap' style='height:100px;vertical-align:middle;'>
-				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_givecode_iid => current_fund.give_code.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix center', :target => '_blank' %>
+				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_givecode_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix center', :target => '_blank' %>
 				</div>
 				<div class="caption">
 					<h5><%= product.name %></h5>

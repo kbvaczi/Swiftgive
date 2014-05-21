@@ -6,4 +6,4 @@
 
 <h3>Download Your Give Code</h3>
 <p>Not interested in professional products? Just download your fund's give code and print it yourself.</p>
-<%= link_to '<i class="icon-download"></i>&nbsp Download Give Code'.html_safe, give_code_image_fund_path(current_fund, :format => :png), :class => 'btn' %>
+<%= link_to '<i class="icon-download"></i>&nbsp Download Give Code'.html_safe, current_fund.give_code_image.url, :class => 'btn' %>

@@ -34,7 +34,7 @@
 
 
 <div class='div_code_wrapper'>
-  <%= image_tag asset_path('give_code_wrapper.svg', :only_path => false), :class => 'give_code_wrapper_image' %>
+  <%= image_tag "http://swiftgive.s3.amazonaws.com/images/give_code_wrapper.svg", :class => 'give_code_wrapper_image' %>
   
   <div class='qr_code'>
     <%= render :partial => 'funds/give_codes/qr_code', :locals => {:message => message, :size => width * 0.82} %>

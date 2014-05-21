@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140511143150) do
+ActiveRecord::Schema.define(:version => 20140521001907) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -28,26 +28,8 @@ ActiveRecord::Schema.define(:version => 20140511143150) do
   add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
   add_index "accounts", ["user_id"], :name => "index_accounts_on_user_id"
 
-  create_table "funds", :force => true do |t|
-    t.string   "uid"
-    t.string   "name"
-    t.string   "description"
-    t.text     "profile"
-    t.string   "give_code",      :default => ""
-    t.string   "creator_name"
-    t.string   "city"
-    t.string   "state"
-    t.string   "fund_type"
-    t.string   "receiver_name"
-    t.string   "receiver_email"
-    t.boolean  "is_active",      :default => true
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
-  add_index "funds", ["name"], :name => "index_funds_on_name"
-  add_index "funds", ["uid"], :name => "index_funds_on_uid"
+# Could not dump table "funds" because of following StandardError
+#   Unknown type 'strong' for column 'give_code_image'
 
   create_table "funds_memberships", :force => true do |t|
     t.integer "user_id"
