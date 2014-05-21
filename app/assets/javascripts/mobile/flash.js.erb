@@ -8,9 +8,9 @@ $(document).delegate('.flash_message', 'click', function () {
 
 function flashNow(message, message_type, popup_to_open_after_close) {
   message_type = message_type || 'notice';
-  var flash_message = "<%= (ApplicationController.new.render_to_string :partial => 'layouts/mobile/flash', :formats => [:mobile], :locals => {:flash => {:notice => '*placeholder*'}}).gsub("\n", "").gsub("\"","") %>" ; //"
+  var flash_message = "<div class='center_wrap flash_message flash_type' data-role='popup' data-position-to='window' data-transition='pop' style='width:250px'> *placeholder* <div class='mt'><a data-rel='back' data-icon='check' data-mini='true' class='ui-btn-center mt' %>OK</a></div></div>"  
   flash_message = flash_message.replace("*placeholder*", message);
-  flash_message = flash_message.replace('flash_notice', 'flash_' + message_type);
+  flash_message = flash_message.replace('flash_type', 'flash_' + message_type);
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message);
