@@ -48,7 +48,7 @@ group :staging do
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
-group :staging do
+group :production do
   gem 'activerecord-postgresql-adapter'               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
   gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										                      # enable memcache for heroku
