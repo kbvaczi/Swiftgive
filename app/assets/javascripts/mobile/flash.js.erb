@@ -7,8 +7,8 @@ $(document).delegate('.flash_message', 'click', function () {
   $(this).popup('close');
 });
 
-// mobile browsers support touchstart
-$(document).delegate('.flash_message', 'touchstart', function () {
+// mobile browsers support touchend
+$(document).delegate('.flash_message', 'touchend', function () {
   $(this).popup('close');
 });
 
