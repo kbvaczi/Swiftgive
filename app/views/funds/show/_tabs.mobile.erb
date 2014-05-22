@@ -1,4 +1,4 @@
-<div data-role="navbar">
+<div data-role="navbar" class='mt'>
 	<ul>
 	  <li><%= link_to "About", fund_path(current_fund), :class => ('ui-btn-active' if url_for == fund_path(current_fund)) %></li>
 	  <li><%= link_to "Give", new_payment_path(current_fund), :class => ('ui-btn-active' if url_for == new_payment_path(current_fund)) %></li>
