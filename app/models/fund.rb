@@ -93,7 +93,7 @@ class Fund < ActiveRecord::Base
   end
 
   def delayed_generate_and_upload_give_codes
-    self.delay(5.minutes).generate_and_upload_give_codes
+    self.delay.generate_and_upload_give_codes
   end
 
   def generate_and_upload_give_codes
