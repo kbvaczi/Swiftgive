@@ -40,7 +40,7 @@ class Fund < ActiveRecord::Base
 
   before_validation :generate_and_assign_uid,       :on => :create, :unless => Proc.new { self.uid.present? }
   before_validation :get_creator_info,              :on => :create, :unless => Proc.new { self.creator_info.present? }
-  after_commit      :generate_and_upload_give_codes, :on => :create, :unless => Proc.new { self.give_code_image.present? }
+  after_commit      :delayed_generate_and_upload_give_codes, :on => :create, :unless => Proc.new { self.give_code_image.present? }
       
   # ----- Member Methods ----- #
 
@@ -90,6 +90,10 @@ class Fund < ActiveRecord::Base
 
   def is_third_party_fund?
     self.fund_type == 'third_party'
+  end
+
+  def delayed_generate_and_upload_give_codes
+    self.delay(5.minutes).generate_and_upload_give_codes
   end
 
   def generate_and_upload_give_codes

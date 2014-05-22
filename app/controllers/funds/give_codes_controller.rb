@@ -1,9 +1,5 @@
 class Funds::GiveCodesController < ApplicationController
 
-  def show
-
-  end
-
   def give_code_html
     code_url = new_payment_url(:fund_uid => current_fund.uid)
     render :partial => 'funds/give_codes/give_code', :layout => false, :formats => [:html], :locals => {:message => code_url, :include_header => false }

@@ -6,7 +6,12 @@
   </div>
 
   <div class="modal-body ma center_wrap">    
-      <%= image_tag current_fund.give_code_image.url, :style => "width:300px;" %>        
+    <% if current_fund.give_code_image.present? %>
+      <%= image_tag current_fund.give_code_image.url, :style => "width:300px;" %>
+    <% else %>
+      <h2>Ooops!</h2>
+      <h4>We haven't generated the give code for this fund yet.  Please try again later.  Sorry for the inconvenience!</h4>
+    <% end %>
   </div>   
   
   <div class="modal-footer">

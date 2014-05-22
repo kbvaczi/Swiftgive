@@ -1,6 +1,7 @@
 class FundsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [:show, :promote]
+  before_filter :verify_give_code_present, :only => [:promote, :give_code]
   before_filter :verify_creator_info_present, :only => [:new, :create]
   before_filter :authenticate_fund_owner, :only => [:edit, :manage, :toggle_active_status, :update, :destroy]
 
@@ -38,6 +39,14 @@ class FundsController < ApplicationController
     current_fund
     respond_to do |format|
       format.html
+    end
+  end
+
+  def give_code
+    set_back_path
+    current_fund
+    respond_to do |format|
+      format.mobile
     end
   end
 
@@ -121,6 +130,13 @@ class FundsController < ApplicationController
     unless current_fund.owners.include? current_user
       flash[:error] = 'You are not an owner of this fund...'
       redirect_to back_path 
+    end
+  end
+
+  def verify_give_code_present
+    unless current_fund.give_code_image.present? and current_fund.give_code_vector.present?
+      flash[:error] = 'Your give code has not been generated yet.  Please try again later.'
+      redirect_to back_path
     end
   end
   
