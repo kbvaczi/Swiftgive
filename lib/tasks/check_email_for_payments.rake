@@ -16,10 +16,12 @@ task :check_email_for_payments => :environment do
 	
 	Mail.find(keys: ['NOT','SEEN']) do |message, imap, message_id| # works only with IMAP, not with POP3 (https://github.com/mikel/mail/issues/258)
 		payment_uid_from_email = message.body.decoded[/your payment id is: (\S+)/i,1]
-		this_payment = Payment.where(:uid => payment_uid_from_email).first
-		Rails.logger.debug "Payment #{payment_uid_from_email} Found" if this_payment.present?
-		this_payment.confirm_by_email(message) if this_payment.present?
-		imap.uid_store(message_id, "+FLAGS", [:Seen]) # mark messages as read (https://github.com/mikel/mail/issues/422)
+		this_payment = Payment.unconfirmed.where(:uid => payment_uid_from_email).first
+		if this_payment.present?
+			Rails.logger.info "Payment #{payment_uid_from_email} Found" 
+			this_payment.confirm_by_email(message) if this_payment.present?
+			imap.uid_store(message_id, "+FLAGS", [:Seen]) # mark messages as read (https://github.com/mikel/mail/issues/422)
+		end
 	end
 
 	Rails.logger.debug "task ending: scan payments email"

@@ -27,6 +27,13 @@ class Fund < ActiveRecord::Base
     self.uid.parameterize
   end
 
+  # ----- Scopes ----- #
+
+  default_scope { active }
+
+  scope :active,    where(:is_active => true)
+  scope :inactive,  where(:is_active => false)
+
   # ----- Validations ----- #
 
   validates_presence_of :uid, :name, :description
@@ -45,39 +52,39 @@ class Fund < ActiveRecord::Base
   # ----- Member Methods ----- #
 
   def number_payments_today
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_day).count
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_day).count
   end
 
   def amount_payments_today_in_cents
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_day).sum(:amount_in_cents)
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_day).sum(:amount_in_cents)
   end
 
   def number_payments_this_month
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_month).count
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_month).count
   end
 
   def amount_payments_this_month_in_cents
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_month).sum(:amount_in_cents)
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_month).sum(:amount_in_cents)
   end
 
   def number_payments_this_year
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_year).count
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_year).count
   end
 
   def amount_payments_this_year_in_cents
-    self.payments.where('created_at > ?', Time.zone.now.beginning_of_year).sum(:amount_in_cents)
+    self.payments.scoped.where('created_at > ?', Time.zone.now.beginning_of_year).sum(:amount_in_cents)
   end
 
   def number_payments
-    self.payments.count
+    self.payments.scoped.count
   end
 
   def amount_payments_in_cents
-    self.payments.sum(:amount_in_cents)
+    self.payments.scoped.sum(:amount_in_cents)
   end
 
   def recent_payments
-    self.payments.last(10).reverse
+    self.payments.scoped.last(10).reverse
   end
 
   def is_personal_fund?
@@ -157,7 +164,7 @@ class Fund < ActiveRecord::Base
   def generate_and_assign_uid
     self.uid = loop do
       random_uid = 'f_' + SecureRandom.hex(4).to_s
-      break random_uid unless self.class.where(uid: random_uid).exists?
+      break random_uid unless self.class.unscoped.where(uid: random_uid).exists?
     end
   end
   

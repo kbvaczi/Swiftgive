@@ -29,7 +29,12 @@ class Payment < ActiveRecord::Base
       
   # ----- Scopes ----- #
 
-  default_scope where(:is_cancelled => false)
+  default_scope { confirmed_by_email.not_cancelled }
+  
+  scope :confirmed_by_email,  where(:is_confirmed_by_email => true)
+  scope :unconfirmed,         where(:is_confirmed_by_email => false)
+  scope :not_cancelled,       where(:is_cancelled => false)
+  scope :cancelled,           where(:is_cancelled => true)
 
   # ----- Member Methods ----- #  
 
@@ -65,7 +70,7 @@ class Payment < ActiveRecord::Base
   def generate_and_assign_uid
     self.uid = loop do
       random_uid = 'p_' + SecureRandom.hex(5)
-      break random_uid unless self.class.where(uid: random_uid).exists?
+      break random_uid unless self.class.unscoped.where(uid: random_uid).exists?
     end
   end
 

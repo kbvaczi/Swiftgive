@@ -19,7 +19,7 @@ class MarketingProduct < ActiveRecord::Base
   # ----- Member Methods ----- #
 
   def link_to_product(params = {})
-    #TODO: figure out what characters are not allowed
+    #TODO: figure out what characters are not allowed ('#' doesn't work, but only prohibits sendng correct fund name, so not a big deal)
     
     default_params = { :rf => '238963925078453068',
                :tc => '',

@@ -3,12 +3,11 @@ class FundsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :promote]
   before_filter :verify_give_code_present, :only => [:promote, :give_code]
   before_filter :verify_creator_info_present, :only => [:new, :create]
-  before_filter :authenticate_fund_owner, :only => [:edit, :manage, :toggle_active_status, :update, :destroy]
+  before_filter :authenticate_fund_owner, :only => [:edit, :manage, :update, :destroy]
 
   # GET /funds
   def index
     set_back_path
-    @funds = Fund.all
 
     respond_to do |format|
       format.mobile
@@ -90,21 +89,12 @@ class FundsController < ApplicationController
     end
   end
 
-  def toggle_active_status
-    if current_fund.update_attribute(:is_active, !current_fund.is_active)
-      redirect_to back_path, :notice => 'Successfully updated active status...'
-    else
-      flash[:error] = 'Could not update status...'
-      redirect_to back_path
-    end
-  end
-
   # DELETE /funds/1
   def destroy
-    if current_fund.destroy
-      redirect_to root_path, :notice => 'fund deleted'
+    if current_fund.update_attribute(:is_active, false)
+      redirect_to root_path, :notice => 'Fund Deleted'
     else
-      flash[:error] = 'fund cound not be deleted'
+      flash[:error] = 'Fund cound not be deleted'
       redirect_to back_path
     end
   end

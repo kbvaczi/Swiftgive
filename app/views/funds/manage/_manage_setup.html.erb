@@ -13,13 +13,6 @@
 		<td><p style='display:inline-block;max-width:350px;'> <%= current_fund.description %> </p></td>
 		<td><a href="#edit_description_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
 	<tr> 
-	<tr>
-		<th>Status</th>
-		<td><p>
-			<%= current_fund.is_active ? 'Currently Active' : 'Currently Inactive' %>
-		</p></td>
-		<td><a href="<%= toggle_active_status_fund_path(current_fund) %>" role="button" class="btn-small" data-method='put'><i class="icon-off"></i> <%= current_fund.is_active ? 'Set Inactive' : 'Set Active' %></a></td>
-	<tr>		
 </table>
 
 <div id="edit_name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">

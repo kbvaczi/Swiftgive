@@ -18,6 +18,7 @@ class PaymentsController < ApplicationController
     payment = Payment.new(params[:payment])
     payment.sender = current_user if user_signed_in?
     payment.receiver_email = payment.fund.receiver_email.present? ? payment.fund.receiver_email : payment.fund.creator.email
+    payment.is_confirmed_by_email = false
     if payment.save
       respond_to do |format|        
         format.mobile  { render json: {:uid => payment.uid, :receiver_email => "#{payment.fund.name} <#{payment.receiver_email}>"}.to_json }

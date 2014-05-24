@@ -22,6 +22,7 @@ class CreatePayments < ActiveRecord::Migration
         add_index :payments, :uid
         add_index :payments, :fund_id
         add_index :payments, :sender_id
+        add_index :is_confirmed_by_email
     end
   end
 

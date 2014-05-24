@@ -31,7 +31,6 @@ Swiftgive::Application.routes.draw do
     get 'promote' => 'funds#promote', :on => :member
     get 'give_code' => 'funds#give_code', :on => :member
     get 'manage/(:section)' => 'funds#manage', :on => :member, :as => 'manage'
-    put 'toggle_active_status', :on => :member, :as => 'toggle_active_status'    
     get 'give_code_html/(:product)' => 'funds/give_codes#give_code_html', :on => :member, :as => :give_code_html
     get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member, :defaults => { :format => 'pdf' }
   end

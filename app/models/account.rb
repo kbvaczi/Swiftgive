@@ -48,7 +48,7 @@ class Account < ActiveRecord::Base
     unless self.uid.present?
       self.uid = loop do
         random_uid = 'ACCT_' + SecureRandom.hex(5)
-        break random_uid unless Account.where(uid: random_uid).exists?
+        break random_uid unless Account.unscoped.where(uid: random_uid).exists?
       end
     end
   end
