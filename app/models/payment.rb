@@ -50,6 +50,10 @@ class Payment < ActiveRecord::Base
       is_only_one_receiver  = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
       is_valid_receiver     = (to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase}))
       if is_square_cash_copied and is_only_one_receiver and is_valid_receiver and amount_in_cents.present?
+        Rails.logger.debug "Square cash is copied: #{is_square_cash_copied}"
+        Rails.logger.debug "One Receiver: #{is_only_one_receiver}"
+        Rails.logger.debug "valid receiver: #{is_valid_receiver}"
+        Rails.logger.debug "Amount: #{amount_in_cents}"
         self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)
       else
         self.update_attribute(:is_cancelled, true)
