@@ -4,7 +4,7 @@ desc "check email for payments"
 
 task :check_email_for_payments => :environment do
 
-	Rails.logger.debug "task starting: scan payments email"
+	Rails.logger.info "task starting: scan payments email"
 
 	Mail.defaults do
 	  retriever_method :imap, :address    => "imap.secureserver.net",
@@ -24,6 +24,6 @@ task :check_email_for_payments => :environment do
 		end
 	end
 
-	Rails.logger.debug "task ending: scan payments email"
+	Rails.logger.info "task ending: scan payments email"
 
 end
