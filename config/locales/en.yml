@@ -2,6 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  slogan: "Real-world tips and fundraising from mobile devices"
   errors:
     messages:
       email: "Not an email address"
