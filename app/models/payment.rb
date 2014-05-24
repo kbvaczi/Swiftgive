@@ -48,7 +48,7 @@ class Payment < ActiveRecord::Base
       amount_in_cents   = (subject[/( |^)\$(\d+\.?\d{,2})( |$)/, 2].to_f * 100).to_i # there must be spaces around dollar amount for square cash to recognize
       is_square_cash_copied = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
       is_only_one_receiver  = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
-      is_valid_receiver     = (to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members(:includes => :user).collect {|account| account.user.email.downcase}))
+      is_valid_receiver     = (to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase}))
       if is_square_cash_copied and is_only_one_receiver and is_valid_receiver and amount_in_cents.present?
         self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)
       else
