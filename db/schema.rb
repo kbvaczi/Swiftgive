@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521001907) do
+ActiveRecord::Schema.define(:version => 20140525130642) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "user_id"
@@ -63,12 +63,13 @@ ActiveRecord::Schema.define(:version => 20140521001907) do
     t.string   "sender_name_from_email"
     t.string   "sender_email"
     t.string   "receiver_email"
-    t.boolean  "is_anonymous",           :default => true
-    t.boolean  "is_confirmed_by_email",  :default => false
-    t.boolean  "is_cancelled",           :default => false
+    t.boolean  "is_anonymous",            :default => true
+    t.boolean  "is_confirmed_by_email",   :default => false
+    t.boolean  "is_cancelled",            :default => false
     t.string   "uid"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "reason_for_cancellation"
   end
 
   add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"

@@ -38,30 +38,33 @@ class Payment < ActiveRecord::Base
 
   # ----- Member Methods ----- #  
 
-  def confirm_by_email(mail_object)
-    if mail_object.class.name == "Mail::Message"
-      sender_address    = mail_object.from.first
-      sender_name       = mail_object[:from].decoded[/(.+) \</, 1]
-      to_addresses      = mail_object.to
-      cc_addresses      = mail_object.cc
-      subject           = mail_object.subject
-      amount_in_cents   = (subject[/( |^)\$(\d+\.?\d{,2})( |$)/, 2].to_f * 100).to_i # there must be spaces around dollar amount for square cash to recognize
-      is_square_cash_copied = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
-      is_only_one_receiver  = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
-      is_valid_receiver     = (to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase}))
-      if is_square_cash_copied and is_only_one_receiver and is_valid_receiver and amount_in_cents.present?
-        Rails.logger.info "Square cash is copied: #{is_square_cash_copied}"
-        Rails.logger.info "One Receiver: #{is_only_one_receiver}"
-        Rails.logger.info "valid receiver: #{is_valid_receiver}"
-        Rails.logger.info "Amount: #{amount_in_cents}"
-        self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)
+  def confirm_by_email(sender_address, sender_name, to_addresses, cc_addresses, subject, amount_in_cents)
+    if sender_address.present? and sender_name.present? and to_addresses.present? and cc_addresses.present? and subject.present? and amount_in_cents.present?
+      is_square_cash_copied   = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
+      is_only_one_receiver    = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
+      is_valid_receiver       = ((to_addresses.first.downcase == self.fund.receiver_email.downcase) or (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase})))
+      is_not_sending_to_self  = to_addresses.first.downcase != sender_address.downcase
+      if not is_square_cash_copied
+        self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'square cash not copied on email'}, :without_protection => true)
+      elsif not is_only_one_receiver
+        self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'multiple receivers not allowed'}, :without_protection => true)
+      elsif not is_valid_receiver
+        self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'invalid receiver email'}, :without_protection => true)
+      elsif not amount_in_cents.present?
+        self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'payment amount missing in heading'}, :without_protection => true)
+      elsif not is_not_sending_to_self
+        self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'cannot send payments to yourself'}, :without_protection => true)        
       else
-        self.update_attribute(:is_cancelled, true)
+        self.update_attributes({:receiver_email => to_addresses.first, :sender_email => sender_address, :amount_in_cents => amount_in_cents, :is_confirmed_by_email => true, :sender_name_from_email => sender_name}, :without_protection => true)      
       end
     end
   end
 
   # ----- Class Methods ----- #
+
+  def self.cancel_old_payments
+    Payment.unconfirmed.where("created_at < ?", 1.day.ago).update_all(:is_cancelled => true, :reason_for_cancellation => 'no payment email sent')
+  end
 
   def self.column_keys 
     self.column_names.collect { |c| c.to_sym }
