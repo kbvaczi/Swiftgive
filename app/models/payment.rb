@@ -16,7 +16,7 @@ class Payment < ActiveRecord::Base
   # ----- Validations ----- #
   
   validates_presence_of   :uid, :fund, :amount_in_cents
-  validate                Proc.new {self.amount_in_dollars = self.amount_in_dollars.to_i}, :if => 'self.amount_in_dollars.present?'
+  validate                Proc.new { self.amount_in_dollars = self.amount_in_dollars.to_i }, :if => Proc.new { self.amount_in_dollars.present? }
   validates_inclusion_of  :amount_in_dollars, :in => 1..1000, :allow_nil => true, :message => 'Must be between $1 and $1000'
   validates_inclusion_of  :amount_in_cents, :in => 100..100000, :message => 'Must be between $1 and $1000', :allow_nil => false
                         
@@ -25,8 +25,14 @@ class Payment < ActiveRecord::Base
   after_initialize  Proc.new { self.amount_in_dollars = self.amount_in_cents.to_f / 100 }
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }
-  before_create     Proc.new { self.is_anonymous = true unless self.sender.present? }
+  before_create     Proc.new { self.is_anonymous = true unless self.sender.present? } # guests cannot send public payments because we do not have their user details
+  after_create      :confirm_payment_by_checking_email
       
+  # asynchronously perform check email task via sidekiq
+  def confirm_payment_by_checking_email
+    ConfirmPaymentsByCheckingEmails.perform_in(5.minutes)
+  end
+
   # ----- Scopes ----- #
 
   default_scope { confirmed_by_email.not_cancelled }
@@ -63,11 +69,7 @@ class Payment < ActiveRecord::Base
   # ----- Class Methods ----- #
 
   def self.cancel_old_payments
-    Payment.unconfirmed.where("created_at < ?", 1.day.ago).update_all(:is_cancelled => true, :reason_for_cancellation => 'no payment email sent')
-  end
-
-  def self.column_keys 
-    self.column_names.collect { |c| c.to_sym }
+    Payment.unconfirmed.not_cancelled.where("created_at < ?", 1.day.ago).update_all(:is_cancelled => true, :reason_for_cancellation => 'no payment email sent')
   end
 
   # ----- Protected Methods ----- #

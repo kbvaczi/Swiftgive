@@ -13,6 +13,7 @@ gem 'omniauth-google-oauth2', '~> 0.1.13'             # omni-auth strategy for l
 gem 'omniauth-linkedin', '~> 0.1.0'                   # omni-auth strategy for logging in with linkedin
 
 gem 'sidekiq', '~> 2.6.1'                             # redis backed background processing
+gem 'sidekiq-unique-jobs', '~> 3.0.0'                 # adds unique jobs functionality to sidekiq
 gem 'devise-async', '~> 0.5.0'                        # devise emails sent in background
 
 gem 'honeypot-captcha', '~> 0.0.2'                    # alternative to capcha without the complexity 

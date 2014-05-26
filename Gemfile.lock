@@ -126,6 +126,7 @@ GEM
     mini_portile (0.5.3)
     mobylette (3.3.2)
       actionpack (>= 3.0)
+    mock_redis (0.13.2)
     multi_json (1.10.0)
     multipart-post (2.0.0)
     net-scp (1.2.1)
@@ -207,6 +208,9 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
+    sidekiq-unique-jobs (3.0.0)
+      mock_redis
+      sidekiq (>= 2.6)
     simple_form (2.1.1)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -292,6 +296,7 @@ DEPENDENCIES
   rqrcode (~> 0.4.2)
   sass-rails (~> 3.2.3)
   sidekiq (~> 2.6.1)
+  sidekiq-unique-jobs (~> 3.0.0)
   simple_form (~> 2.1.0)
   sinatra
   slim
