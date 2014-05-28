@@ -1,3 +1,8 @@
+/* prevents page flashing when changing */
+.ui-page {
+  -webkit-backface-visibility: hidden;
+} 
+
 .ui-controlgroup-controls {
   width: 100%;
 }

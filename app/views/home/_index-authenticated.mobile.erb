@@ -16,7 +16,7 @@
 	<li data-role='list-divider'>My Fund Earnings</li>
 	<% if current_user.funds.present? %>		
 		<li>
-		 	<p>Today</p>
+		 	<p class='ma-n'>Today</p>
 		 	<span class="ui-li-count ui-body-inherit"><%= current_user_payments_received_today.count %> / <%= number_to_currency current_user_amount_payments_received_today_in_cents / 100, :precision => 0 %></span>
 		</li>
 		<li>
