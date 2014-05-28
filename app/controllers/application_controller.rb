@@ -70,5 +70,19 @@ class ApplicationController < ActionController::Base
     model.errors.full_messages.inject {|string, m| string + '<br/>' + m.to_s}
   end
   helper_method :display_errors
+
+  def recent_funds_viewed_uids
+    cookies[:recent_funds_viewed_uids] ||= '[]' #initialize to empty array if cookie is nil so the json decode won't throw an error
+    @recent_funds_viewed_uids ||= (ActiveSupport::JSON.decode(cookies[:recent_funds_viewed_uids]) rescue [])
+  end
+
+  def recent_funds_viewed_uids_write(object)
+    cookies[:recent_funds_viewed_uids] = ActiveSupport::JSON.encode(object)
+  end
+
+  def current_user_recent_funds_viewed
+    Fund.where(:uid => recent_funds_viewed_uids).sort {|a, b| recent_funds_viewed_uids.index(b.uid) <=> recent_funds_viewed_uids.index(a.uid)}
+  end
+  helper_method :current_user_recent_funds_viewed
   
 end

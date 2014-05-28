@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many    :funds,             :class_name => 'Fund',                  :through => :fund_memberships
   has_many    :fund_memberships,  :class_name => 'Funds::Membership'
   has_many    :payments,          :class_name => 'Payment',               :foreign_key => :sender_id
+  has_many    :payments_received, :class_name => 'Payment',               :through => :funds, :source => :payments
   has_many    :authentications,   :class_name => 'Users::Authentication', :dependent => :destroy
   
   # allow form for accounts nested inside user signup/edit forms

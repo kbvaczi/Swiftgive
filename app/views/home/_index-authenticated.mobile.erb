@@ -1,0 +1,37 @@
+<% title 'My Dashboard' %>
+
+<ul data-role="listview" data-inset="true">
+	<li data-role='list-divider'>My Payments</li>
+	<li>
+	 	<p class='ma-n'>Today</p>
+	 	<span class="ui-li-count ui-body-inherit"><%= current_user_payments_made_today.count %> / <%= number_to_currency current_user_amount_payments_today_in_cents / 100, :precision => 0 %></span>
+	</li>
+	<li>
+	 	<p class='ma-n'>This Month</p>
+	 	<span class="ui-li-count ui-body-inherit"><%= current_user_payments_made_this_month.count %> / <%= number_to_currency current_user_amount_payments_this_month_in_cents / 100, :precision => 0 %></span>
+	</li>
+</ul>
+
+<ul data-role="listview" data-inset="true">
+	<li data-role='list-divider'>My Fund Earnings</li>
+	<% if current_user.funds.present? %>		
+		<li>
+		 	<p>Today</p>
+		 	<span class="ui-li-count ui-body-inherit"><%= current_user_payments_received_today.count %> / <%= number_to_currency current_user_amount_payments_received_today_in_cents / 100, :precision => 0 %></span>
+		</li>
+		<li>
+		 	<p class='ma-n'>This Month</p>
+		 	<span class="ui-li-count ui-body-inherit"><%= current_user_payments_received_this_month.count %> / <%= number_to_currency current_user_amount_payments_received_this_month_in_cents / 100, :precision => 0 %></span>
+		</li>
+	<% else %>
+		<li><%= link_to 'Start a Fund', new_fund_path %></li>
+	<% end %>
+</ul>
+<% if current_user_recent_funds_viewed.present? %>
+	<ul data-role="listview" data-inset="true">
+		<li data-role='list-divider'>Recently Viewed Funds</li>
+		<% current_user_recent_funds_viewed.each do |fund| %>
+			<li><%= link_to fund.name, fund_path(fund) %></li>
+		<% end %>
+	</ul>
+<% end %>

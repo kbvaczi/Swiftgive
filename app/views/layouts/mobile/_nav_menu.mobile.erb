@@ -3,6 +3,7 @@
 
 		<% if user_signed_in? %>
 			<h3><%= current_user.account.full_name %></h3>
+			<%= link_to 'My Dashboard', root_path, :'data-role' => 'button', :'data-icon' => 'home', :'data-mini' => 'true' %>
 			<%= link_to 'My Account', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true' %>
 			<%= link_to 'My Funds', funds_path, :'data-role' => 'button', :'data-icon' => 'shop', :'data-mini' => 'true' %>
 			<br class='spacer'/>
