@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
   before_filter :set_referring_fund_and_redirect_to_splash, :only => [:new], :unless => Proc.new { user_signed_in? }
 
   def new
+    add_fund_to_recent_funds_viewed
     @payment = Payment.new(params[:payment])
     @payment.fund ||= current_fund
     @payment.amount_in_dollars = 5

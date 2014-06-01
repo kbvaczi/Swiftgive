@@ -84,5 +84,16 @@ class ApplicationController < ActionController::Base
     Fund.where(:uid => recent_funds_viewed_uids).sort {|a, b| recent_funds_viewed_uids.index(b.uid) <=> recent_funds_viewed_uids.index(a.uid)}
   end
   helper_method :current_user_recent_funds_viewed
+
+  def add_fund_to_recent_funds_viewed
+    unless (  current_fund.uid.in? recent_funds_viewed_uids or 
+              (user_signed_in? and current_fund.uid.in? current_user.funds.pluck(:uid)) )
+      recent_funds_viewed_uids_write(recent_funds_viewed_uids.push(current_fund.uid)) 
+      unless recent_funds_viewed_uids.length <= 5
+        recent_funds_viewed_uids.shift
+        recent_funds_viewed_uids_write(recent_funds_viewed_uids) 
+      end 
+    end
+  end
   
 end
