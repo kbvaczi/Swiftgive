@@ -65,7 +65,8 @@ a:hover {
   position: absolute;  
   width:180px;
   height:80px;
-  background-image: asset-url("swiftgive_logo.png", image);  
+  background-image: url(http://swiftgive.s3.amazonaws.com/images/swiftgive_logo_lg.png);
+  background-image: url(http://swiftgive.s3.amazonaws.com/images/swiftgive_logo.svg);
   background-repeat: no-repeat;
   background-position: top left; 
   background-size: 100%;
