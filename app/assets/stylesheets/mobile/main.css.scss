@@ -17,7 +17,7 @@ h1.page_title {
   text-transform:capitalize;
 }
 
-p.word_wrap {
+.word_wrap {
   word-wrap: break-word !important;
   white-space: normal !important;
 }
@@ -36,3 +36,12 @@ p.word_wrap {
   background-repeat: no-repeat;
 }
 
+a.ui-link, a.ui-link:visited {
+  font-weight:normal;
+  text-decoration: none;
+  color: $fontColorSwiftgiveGreen;
+}
+a.ui-link:hover, a.ui-link:hover, a.ui-link:active{
+  color: $fontColorLight;
+  text-decoration: underline;
+}

@@ -1,0 +1,45 @@
+$.rails.allowAction = function(element) {
+  var message = element.data('confirm'),
+  answer = false, callback;
+  if (!message) { return true; }
+
+  if ($.rails.fire(element, 'confirm')) {
+          myCustomConfirmBox(message, function() {
+                  callback = $.rails.fire(element,
+                          'confirm:complete', [answer]);
+                  if(callback) {
+                          var oldAllowAction = $.rails.allowAction;
+                          $.rails.allowAction = function() { return true; };
+                          element.trigger('click');
+                          $.rails.allowAction = oldAllowAction;
+                  }
+          });
+  }
+  return false;
+}
+
+function myCustomConfirmBox(message, callback) {
+  // call callback() if the user says yes 
+  var flash_message = "<div class='center_wrap flash_message flash_notice' data-role='popup' data-overlay-theme='b' data-position-to='window' data-transition='pop' data-history='false' style='width:250px'><div class='flash_content ma'>" + message + "</div><div class='ui-grid-a ma-m'><div class='ui-block-a'><a data-rel='close' data-role='button' data-icon='check' data-mini='true' class='accept_confirm'>Yes</a></div><div class='ui-block-b'><a data-rel='close' data-role='button' data-icon='delete' data-mini='true'>Cancel</a></div></div></div>";
+  if ($.mobile.activePage) {
+    $.mobile.activePage.find('.flash_message').remove();
+    $.mobile.activePage.prepend(flash_message).enhanceWithin();
+    var target = $.mobile.activePage.find('.flash_message');
+    target.on('popupafterclose', function() {
+      target.remove();
+    });
+    target.on( "popupafteropen", function( event, ui ) {
+      window.setTimeout(function() { 
+        if (target.is(":visible")) {
+          target.popup('close');
+          target.popup('destroy');
+          target.remove();
+        }
+      }, 7000 ); 
+    });
+    target.find('.accept_confirm').on('click', function (){
+      callback();
+    });
+    target.popup().popup("open");
+  }
+}

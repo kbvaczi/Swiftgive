@@ -10,21 +10,21 @@
 		<% end %>		
 
 		<% if user_signed_in? %>
+			<div style="border-top:1px solid #eee"></div>
+			<br class='spacer'/>
 			<%= link_to "Sign out", destroy_user_session_path, :method => :delete,  :'data-role' => 'button', :'data-icon' => 'power', :'data-mini' => 'true' %>
 		<% else %>
 			<%= link_to "Sign in", new_user_session_path,  :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true' %>
 		<% end %>
 
 
+		
 		<br class='spacer'/>
-		<br class='spacer'/>
-
-
 		<div style="border-top:1px solid #eee"></div>
 		<br class='spacer'/>
 		
 		<span class='t-s'><%= link_to "About", about_path %></span>
-		-
+		<br/>
 		<span class='t-s'><%= link_to "Contact", contact_path %></span>
 		<br/>
 		<span class='t-s'><%= link_to "Terms and Conditions", terms_path %></span>

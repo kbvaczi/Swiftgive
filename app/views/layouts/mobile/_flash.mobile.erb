@@ -14,8 +14,12 @@ end
 %>
 
 <% if defined?(flash_type) and flash_type.present? %>
-	<div class='center_wrap flash_message <%= 'flash_#{flash_type}' %> pa' data-role='popup' data-position-to='window' data-overlay-theme='b' data-transition='pop' data-history='false' style='width:250px'>	  
-		<%= flash_message %>
-		<div class='mt'><%= content_tag :a, 'OK', :'data-rel' => 'back', :'data-icon' => 'check', :'data-mini' => true, :class => 'ui-btn-center mt' %></div>
+	<div class='center_wrap flash_message <%= 'flash_#{flash_type}' %>' data-role='popup' data-position-to='window' data-overlay-theme='b' data-transition='pop' data-history='false' style='width:250px'>	  
+		<div class='flash_content ma'>
+			<%= flash_message %>
+		</div>
+		<div class='ma'>
+			<%= content_tag :a, 'OK', :'data-rel' => 'close', :'data-role' => 'button', :'data-icon' => 'check', :'data-mini' => true %>
+		</div>
 	</div>
 <% end %>
