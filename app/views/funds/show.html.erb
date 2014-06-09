@@ -2,12 +2,7 @@
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
 <% is_current_fund_member = (user_signed_in? and current_fund.members.include?(current_user)) %>
 
-<p class='lead'><%= current_fund.description %></p>
-<% if is_current_fund_member %>
-	<h3>Market This Fund</h3>
-	<%= render :partial => 'funds/show/marketing_products' %>
-<% end %>
-<%= render :partial => 'funds/show/info'  %>
+<%= render :partial => 'funds/show/info' %>
 <%= render :partial => 'funds/show/give_code_modal' %>
 
 <% if current_fund.recent_payments.present? %>
@@ -36,33 +31,32 @@
 	</table>
 <% end %>
 
+<%= render :partial => 'funds/show/marketing_products' %>
+
 <%= content_for :sidebar do %>
-	
-	
+		
 	<% if is_current_fund_owner %>
-		<div class='center_wrap content_box'>
-			<h5>You are an owner of this fund</h5>
-			<div >
-				<%= link_to "<i class='icon-wrench'></i> Manage this fund".html_safe, manage_fund_path(current_fund), :class => 'btn' %>
+		<div class='content_box clearfix'>
+			<h4>You are an owner of this fund</h4>
+			<div class='mt'>
+				<%= link_to "<i class='fa fa-fw fa-wrench'></i> Manage this fund".html_safe, manage_fund_path(current_fund), :class => 'btn btn-default pull-right' %>
 			</div>
 		</div>
 	<% end %>
 
-	<div class='content_box'>
-		<table class='table table-borderless'>
+	<div class='content_box clearfix'>
+		<h4>Donations</h4>
+		<table class='table'>
 			<tr>
-				<th>Donations This Month</th>
-				<td><%= current_fund.number_payments_this_month %></td>
+				<td>Today</td>
+				<td class='t-l'><span class='right'><%= number_to_currency current_fund.amount_payments_today_in_cents / 100 %></span></td>
 			</tr>
 			<tr>
-				<th>Donated This Month</th>
-				<td><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></td>
+				<td>This Month</td>
+				<td class='t-l'><span class='right'><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></span></td>
 			</tr>
-		</table>
-		<div class='center_wrap'>
-			<%= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, "#", :class => "btn btn-primary", :onclick => "openGiveCodeModal();" %>
-			<%#= link_to "<i class='icon-heart'></i> Give to this fund".html_safe, new_payment_path(:fund_uid => current_fund), :class => 'btn btn-primary' %>
-		</div>
+		</table>	
+		<%= link_to "<i class='fa fa-fw fa-heart'></i> Give to this fund".html_safe, "#", :class => "btn btn-primary pull-right", :onclick => "openGiveCodeModal();" %>
 	</div>
-	
+
 <% end %>

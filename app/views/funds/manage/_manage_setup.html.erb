@@ -1,50 +1,60 @@
 <h3>Fund Setup</h3>
-<table class='table'>
+<table class='table table-striped'>
   <col width='25%'>
   <col width='55%'>
   <col width='20%'>
 	<tr>
 		<th>Name</th>
 		<td><p> <%= current_fund.name %> </p></td>
-		<td><a href="#edit_name_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-	<tr>
+		<td><a href="#edit_name_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-gear"></i> Edit</a></td>
+	</tr>
 	<tr>
 		<th>Description</th>
-		<td><p style='display:inline-block;max-width:350px;'> <%= current_fund.description %> </p></td>
-		<td><a href="#edit_description_modal" role="button" class="btn-small" data-toggle="modal"><i class="icon-wrench"></i> Edit</a></td>
-	<tr> 
+		<td><p style='display:inline-block;max-width:350px;'> <%= current_fund.description %> </p></td>		
+    <td><a href="#edit_description_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-gear"></i> Edit</a></td>
+	</tr> 
 </table>
 
-<div id="edit_name_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Edit Fund Name</h3>
-  </div>  
-  <%= form_for current_fund, :method => :put, :html => {:class => 'modal-form'} do |f| %>
-    <div class="modal-body">
-      <%= f.text_field :name, :placeholder => 'Fund Name' %>    
-    </div>
-    <div class="modal-footer"> 
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <%= f.submit 'Update', :class => 'btn btn-primary' %>
-    </div>
-  <% end %>  
-</div>
+<div id="edit_name_modal" class="modal fade" data-keyboard='false'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class='modal-title' id="edit_name_modal_label">Edit Fund Name</h4>
+      </div>  
+      <%= simple_form_for current_fund, :method => :put, :html => {:class => 'modal-form'} do |f| %>
+        <div class="modal-body">
+          <div class='form-horizontal'>
+            <%= f.input :name, :placeholder => 'Fund Name' %>    
+          </div>
+        </div>
+        <div class="modal-footer">           
+          <%= f.submit 'Update', :class => 'btn btn-primary' %>
+          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><i class='fa fa-fw fa-ban'></i>Close</button>
+        </div>
+      <% end %>  
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-<div id="edit_description_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Edit Fund Description</h3>
-  </div>  
-  <%= form_for current_fund, :method => :put, :html => {:class => 'modal-form'} do |f| %>
-    <div class="modal-body">     
-      <%= f.text_field :description, :placeholder => 'Fund Description', :style => 'width:90%' %>    
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <%= f.submit 'Update', :class => 'btn btn-primary' %>
-    </div>
-  <% end %>  
-</div>
+<div id="edit_description_modal" class="modal fade" data-keyboard='false'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class='modal-title' id="edit_name_modal_label">Edit Fund Description</h4>
+      </div>  
+      <%= simple_form_for current_fund, :method => :put, :html => {:class => 'modal-form'} do |f| %>
+        <div class="modal-body">     
+          <%= f.input :description, :as => :text, :placeholder => 'Fund Description', :style => 'width:90%' %>    
+        </div>
+        <div class="modal-footer">
+          <%= f.submit 'Update', :class => 'btn btn-primary' %>
+          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><i class='fa fa-fw fa-ban'></i>Close</button>          
+        </div>
+      <% end %>  
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <%#= render :partial => 'funds/manage/manage_membership' %>

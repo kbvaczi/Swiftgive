@@ -14,7 +14,7 @@
 
     <%= render :partial => 'layouts/shared/flash', :locals => {:flash => flash} %>
 
-    <div id='header' class='container'>
+    <div id='header'>
       <%= render :partial => 'layouts/standard/header' %>            
     </div>
 
@@ -28,22 +28,19 @@
 
       <div id="main" class='row'>               
 
-        <div id="mainbar" class='span8'>
+        <div id="mainbar" class='col-md-8'>
           <%= yield %>
         </div>
         
-        <div id="sidebar" class='span4'>
+        <div id="sidebar" class='col-md-4'>
           <%= render :partial => 'layouts/standard/sidebar' %>
-        </div>
-           
-      </div>
-      
-      <div id="footer" class='row'>        
+        </div>           
+      </div> <%# main %>   
+    </div> <%# page %>
+          
+      <div id="footer">        
           <%= render :partial => 'layouts/standard/footer' %>        
       </div>
-      
-    </div>
-    
   </body>
 
 </html>

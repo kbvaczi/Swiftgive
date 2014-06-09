@@ -1,8 +1,10 @@
 module ApplicationHelper
 
-  def title(page_title)
+  def title(page_title, heading=true)
     provide :title, " | #{page_title.gsub(/[\[\]\^\$\.\|\?\*\+\\~`\!@#%\+={}'"<>;,]{1,}/, "").gsub("&", "and").capitalize}"
-    provide :page_title, page_title
+    if heading
+      provide :page_title, page_title 
+    end
   end
   
   def page_description(page_description = nil)

@@ -1,5 +1,5 @@
 <h3>Stats</h3>
-<table class='table'>
+<table class='table table-striped'>
 	<tr>
 		<th></th>
 		<th>Today</th>
@@ -13,12 +13,12 @@
 		<td><%= current_fund.number_payments_this_month %></td>
 		<td><%= current_fund.number_payments_this_year %></td>
 		<td><%= current_fund.number_payments %></td>
-	<tr>
+	</tr>
 	<tr>
 		<th>Amount Donated</th>
 		<td><%= number_to_currency current_fund.amount_payments_today_in_cents / 100 %></td>
 		<td><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></td>
 		<td><%= number_to_currency current_fund.amount_payments_this_year_in_cents / 100 %></td>
 		<td><%= number_to_currency current_fund.amount_payments_in_cents / 100 %></td>
-	<tr>	
+	</tr>	
 </table>

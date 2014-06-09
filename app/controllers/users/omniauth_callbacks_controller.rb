@@ -104,7 +104,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def store_auth_data(standardized_data_hash=nil)
     request.session['devise.standardized_omniauth_data'] = standardized_data_hash
-    request.session['devise.raw_omniauth_data'] = request.env['omniauth.auth'] if request.env['omniauth.auth'].present?
+    request.session['devise.raw_omniauth_data'] = env["omniauth.auth"].except("extra") if request.env['omniauth.auth'].present?
   end
   
   def standardized_auth_data

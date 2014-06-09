@@ -1,22 +1,23 @@
-<div id="edit_location_modal" class="modal hide fade" role="dialog" data-keyboard='false'>
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Edit Your Location</h3>
-  </div>
-  <div class="modal-body">
-    <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
-
-    <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
-
-      <div class='form-horizontal'>
-        <%= f.input :city, :placeholder => 'City', :input_html => { :maxlength => 30 } %>    
-        <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State' %>  
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-      <%= f.submit 'Update', :class => 'btn btn-primary' %>
-    </div>
-  <% end %>  
-</div>
+<div id="edit_location_modal" class="modal fade" data-keyboard='false'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class='modal-title' id="edit_name_modal_label">Change Your Name</h4>
+      </div>  
+        <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
+        <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
+        <div class="modal-body">
+          <div class='form-horizontal'>
+            <%= f.input :city, :placeholder => 'City', :input_html => { :maxlength => 30 } %>    
+            <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State' %>  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Update".html_safe, :class => 'btn btn-primary' %>
+          <a class="btn btn-default" data-dismiss="modal" aria-hidden="true"><i class='fa fa-fw fa-ban'></i>Close</a>          
+        </div>
+      <% end %>  
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

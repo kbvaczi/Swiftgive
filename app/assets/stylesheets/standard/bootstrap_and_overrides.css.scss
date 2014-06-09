@@ -1,0 +1,52 @@
+/*
+  =require twitter-bootstrap-static/bootstrap
+
+  Use Font Awesome icons (default)
+  To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
+  =require twitter-bootstrap-static/fontawesome
+*/
+
+@import "shared/variables";
+
+body {
+  padding-top: 50px; /* for fixed header */
+}
+/* font awesome icons */
+.fa-fw {
+  margin-right:5px;
+}
+
+.table tr:last-child {
+	border-bottom:1px solid rgb(221,221,221);
+}
+.table td, .table th {
+	vertical-align: middle !important;
+}
+
+a {
+  color: $SwiftgiveGreen;
+}
+
+a:hover, a:active {
+  color: $SwiftgiveGreenDark;
+}
+
+ul.nav li.active a {
+  background-color: $SwiftgiveGreen !important; 
+}
+
+/* images in links have background blue when hovered */
+a:hover img {
+  background:#fff;
+}
+
+.content_box h2:nth-of-type(1), .content_box h3:nth-of-type(1), .content_box h4:nth-of-type(1), .content_box h5:nth-of-type(1) {
+  margin-top: 0px;
+}
+
+.btn-primary {
+  background-color: $SwiftgiveGreen !important;
+  border-color: #999 !important;  
+}
+
+

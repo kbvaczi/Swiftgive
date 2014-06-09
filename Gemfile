@@ -60,11 +60,9 @@ end
 # Gems used only for assets and not required in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'                      # required for twitter bootsrap
-  gem 'therubyracer'                                  # required for twitter bootsrap
-  gem 'less-rails'                                    # Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS  
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'twitter-bootstrap-rails', '~> 2.2.8'           # UI bootstrap
+  gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
   gem 'jquery-rails'
   gem 'jquery_mobile_rails', '~> 1.4.2'               # mobile UI bootstrap
 end

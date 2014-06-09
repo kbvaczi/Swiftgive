@@ -10,36 +10,35 @@
   <body>
     
     <%# ajax loading spinner %>
-    <div id="loader"></div>  
+    <div id="loader"></div>
 
     <%= render :partial => 'layouts/shared/flash', :locals => {:flash => flash} %>
-      
-    <div id='header' class='container'>
-      <%= render :partial => 'layouts/standard/header' %>  
+
+    <div id='header'>
+      <%= render :partial => 'layouts/standard/header' %>            
     </div>
 
     <div id='page' class='container'>
-
+      
       <% if content_for?(:page_title) %>
         <div id='title' class='row'>
           <div class='center_wrap'><h1><%= yield (:page_title) %></h1></div>
         </div>
       <% end %>
 
-      <div id="main" class='row'>        
+      <div id="main" class='row'>               
 
-        <div id="mainbar" class='span12'>
+        <div id="mainbar" class='col-md-12'>
           <%= yield %>
         </div>
-           
-      </div>
-      
-      <div id="footer" class='row'>
-          <%= render :partial => 'layouts/standard/footer' %>
-      </div>
-      
+          
+      </div> <%# main %>   
+    </div> <%# page %>
+          
+    <div id="footer">        
+        <%= render :partial => 'layouts/standard/footer' %>        
     </div>
-    
+
   </body>
 
 </html>
