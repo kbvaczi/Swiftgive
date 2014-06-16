@@ -1,13 +1,13 @@
 <div id='navbar'>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="banner">
     <div class='container'>
       <%= link_to content_tag(:div, '', :id => 'logo'), root_path, :id => 'logo_wrapper', :class => 'navbar-brand' %>
-      <div class="collapse navbar-collapse mr">
+      <div class="collapse navbar-collapse mr" role='navigation'>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "About", about_path %></li>
         	<% if user_signed_in? %>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Funds <i class="fa fa-chevron-circle-down"></i></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Funds <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
               <% if current_user.funds.count > 0 %>                
                 <% current_user.funds.each do |fund| %>
@@ -21,7 +21,7 @@
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.account.full_name || current_user.email %> <i class="fa fa-chevron-circle-down"></i></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.account.full_name || current_user.email %> <i class="fa fa-caret-down"></i></b></a>
               <ul class="dropdown-menu">
                 <li><%= link_to "<i class='fa fa-user fa-fw'></i>Account".html_safe, show_user_profile_path, :method => :get %></li>                               
                 <li class="divider"></li>
@@ -30,7 +30,7 @@
             </li>            
     		  <% else %>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <i class="fa fa-chevron-circle-down"></i></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu" style='width:250px;'>
                 <li class='ma'>
                   <h5>Express (Recommended):</h5>
@@ -41,8 +41,7 @@
                     <%= link_to image_tag('linkedin.png', :width => '50px', :height => '50px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
                   </div>
                 </li>
-                <li class="divider"></li>
-                <li class="divider"></li>
+                <li class="divider"></li>                
                 <li class='ma'>
                   <h5>Old Fashioned:</h5>
                   <%= simple_form_for User.new, :url => user_session_path, :html => { :honeypot => true } do |f| %>

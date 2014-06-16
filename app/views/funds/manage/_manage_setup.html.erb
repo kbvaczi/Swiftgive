@@ -46,7 +46,7 @@
       </div>  
       <%= simple_form_for current_fund, :method => :put, :html => {:class => 'modal-form'} do |f| %>
         <div class="modal-body">     
-          <%= f.input :description, :as => :text, :placeholder => 'Fund Description', :style => 'width:90%' %>    
+          <%= f.input :description, :as => :text, :placeholder => 'Fund Description', :input_html => {:rows => 5} %>    
         </div>
         <div class="modal-footer">
           <%= f.submit 'Update', :class => 'btn btn-primary' %>

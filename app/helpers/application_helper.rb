@@ -59,6 +59,12 @@ module ApplicationHelper
     end
     output_string.html_safe
   end
+
+  def s3_image_path(path_within_images_directory)
+    current_bucket = ENV['AWS_BUCKET']
+    s3_image_path = "http://#{current_bucket}.s3.amazonaws.com/images/#{path_within_images_directory}"
+    s3_image_path
+  end
     
 end
 

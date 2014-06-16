@@ -1,14 +1,14 @@
 <% # DISPLAY FLASH NOTICES --------------------------------------- %>  
 <% if flash[:notice] %> 
-  <div id="flash" class="alert alert-success">
-    <%= flash[:notice] %>
+  <div id="flash" class="alert alert-success alert-dismissable">
+    <p><i class='fa fa-fw fa-check'></i> <%= flash[:notice] %> <button type="button" class="close pull-right" aria-hidden="true">&times;</button></p>
   </div>
 <% elsif flash[:error] %>
-  <div id="flash" class="alert alert-error">
-    <%= flash[:error] %>
+  <div id="flash" class="alert alert-danger alert-dismissable">
+    <p><i class='fa fa-fw fa-warning'></i> <%= flash[:error] %> <button type="button" class="close pull-right" aria-hidden="true">&times;</button></p>
   </div>
 <% elsif flash[:warning] %>
-  <div id="flash" class="alert alert-warning">
-    <%= flash[:warning] %>
+  <div id="flash" class="alert alert-warning alert-dismissable">
+    <p><%= flash[:warning] %> <button type="button" class="close pull-right" aria-hidden="true">&times;</button></p>
   </div>
 <% end %>

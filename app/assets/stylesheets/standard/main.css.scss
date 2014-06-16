@@ -15,13 +15,13 @@ body {
 a:hover {  
   text-decoration: underline;
 }
-#title {
-  margin:0px 0px 25px 0px;
+#title, h1.title, h2.title, h3.title {
+  margin:10px 0px 25px 0px;
 }
 #page {
- margin-top: 10px; 
-
+ 
 }
+
 #main {
   min-height:600px;
 }
@@ -58,36 +58,53 @@ a:hover {
 
 /* # ----- Header ----- # */
 
-#header {
-  
-}
-#header #logo_wrapper {
-  
-}
 #header #logo {
   position:relative;
   top:-10px;
-  width:180px;
-  height:40px;
+  width:210px;
+  height:50px;
   background-image: url(http://swiftgive.s3.amazonaws.com/images/swiftgive_logo_lg.png);
   background-image: url(http://swiftgive.s3.amazonaws.com/images/swiftgive_logo.svg);
   background-repeat: no-repeat;
   background-position: middle; 
   background-size: 100%;
 }
-#navbar {
-  position:relative;
-}
-#navbar .navbar-inner {
-
-}
-#sidebar {
-  
-}
 .content_box {
   background-color: #eee;
   @extend .mb;
   @extend .pa;
   @extend .br
+}
+
+/* # ----- Page Content ----- # */
+
+.page_background_image {
+  position:absolute;
+  z-index: 0;
+  width:100%;
+  height:700px;
+  background-image: url(http://swiftgive.s3.amazonaws.com/images/carwash.jpg);
+  background-repeat: no-repeat;
+  background-position: middle; 
+  background-size: 100%;
+}
+
+.frontpage-banner {
+  min-height:700px;
+}
+
+/* icon wrappers */
+
+.icon-wrapper-circle {
+  border-radius:50%;
+  height:120px;
+  width:120px;
+  display:inline-block;
+  
+}
+
+.icon-wrapper i {
+  font-size:700%;
+  line-height:0.9;
 }
 

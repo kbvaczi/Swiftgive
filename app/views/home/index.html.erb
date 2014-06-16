@@ -1,10 +1,101 @@
 <% title t('slogan'), false %>
-<div class="jumbotron mt">
-  <h1><%= t('slogan') %></h1>
-  <p>SwiftGive is a platform for fundraising and tips!</p>
-  <p>
-    <a class="btn btn-primary btn-large">
-      Learn more
-    </a>
-  </p>
+
+<% content_for :page do %>
+	<div class='jumbotron page_background_image'></div>
+<% end %>
+
+<div class='frontpage-banner'>
+	<div class="jumbotron jumbotron-translucent mt">
+		<h1><%= t('slogan') %></h1>  
+		<p>Because Nobody Carries Cash</p>
+		<%= link_to "Start Your Fund Today &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb' %>
+	</div>
+</div>
+
+<div class='row'>
+	<div class='col-md-12 pa center_wrap'>
+		<h2><i class='fa fa-fw fa-exclamation-triangle tc-g'></i> The Problem</h2>
+		<p class='lead word_wrap text-justify mt'>Often we find ourselves wanting to hand over some cash as a tip or donation for a good cause, but open our wallet to find just empty space where the cash should be. Likewise when we're fundraising or working for tips and find we aren't getting the donations expected because our donors didn't have time to stop at the ATM.</p>	 
+	</div>
+</div>
+
+<div class='row mb'>
+	 <div class='col-md-12 pa center_wrap'>
+		 <h2><i class='fa fa-fw fa-check-square tc-g'></i> The Solution</h2>
+		 <p class='lead word_wrap text-justify mt'>Swiftgive is a platform that allows you to give and recieve money in the real world from mobile devices. We provide tools to help you start and manage a fund whether you're raising donations for charity or just collecting tips.  Receive money from friends or complete strangers.  Others can also join in to promote your fund and solicit donations on your behalf.</p>
+	</div>
+</div>
+
+<br/>
+<hr>
+<br/>
+
+<div class='row mt mb'>
+	<div class='col-md-4 center_wrap'>
+		<%= image_tag asset_path('marketing_montage.png'), :height => '300px', :width => '300px' %>
+	</div>
+	<div class='col-md-8 mt center_wrap'>
+		<h2><i class='fa fa-fw fa-dollar tc-g'></i> Raising Money</h2>		
+		<p class='lead text-justify mt'>Start a new fund or find one you want to promote. Get customizable marketing products specially coded to that fund.</p>
+		<p class='lead text-justify'>Help spread the world by giving products to friends or to your fundraising team.</p>
+		<p class='lead text-justify'>Distribute or display marketing products in public while asking people to contribute. We have products available for a variety marketing strategies.</p>		
+	</div>	
+</div>
+
+<br/>
+<hr>
+<br/>
+
+<div class='row mt mb'>	
+	<div class='col-md-8 mt center_wrap'>
+		<h2><i class='fa fa-fw fa-heart tc-g'></i> Giving Money</h2>
+		<p class='lead text-justify mt'>Scan a give code using any QR code reading app on any type of device. No need to download a special Swiftgive app. </p>
+		<p class='lead text-justify'>Read more about the fund from your device before deciding to give, or wait to give later after services rendered.</p>
+		<p class='lead text-justify'>Choose amount to give and send payment directly from your device.  All you need is email and a debit card. Debit card information can be entered later if you're short 
+		on time.</p>					
+	</div>	
+	<div class='col-md-4 center_wrap'>
+		<%= image_tag asset_path('iphone_scanning_give_code.svg'), :height => '450px' %>
+	</div>
+</div>
+
+<br/>
+<hr>
+<br/>
+
+<div class='row mt mb'>
+	<div class='col-md-4 center_wrap mb'>
+		<div class='bc-g pa tc-w mb icon-wrapper icon-wrapper-circle'>
+			<i class='fa fa-dollar'></i>
+		</div>
+		<h3>Free to Use</h3>
+		<p><i>Free to start. No fees give.  No fees to receive.</i></p>
+	</div>
+	<div class='col-md-4 center_wrap mb'>
+		<div class='bc-g pa tc-w mb icon-wrapper icon-wrapper-circle'>
+			<i class='fa fa-mobile-phone'></i>
+		</div>
+		<h3>Universal</h3>
+		<p><i>Works with all modern mobile devices. All you need is email and a debit card.</i></p>
+	</div>
+	<div class='col-md-4 center_wrap mb'>
+		<div class='bc-g pa tc-w mb icon-wrapper icon-wrapper-circle'>
+			<i class='fa fa-lock'></i>
+		</div>
+		<h3>Secure</h3>
+		<p><i>Built on top of an established peer-to-peer payment service.</i></p>
+	</div>
+</div>
+
+<br/>
+<hr>
+<br/>
+
+<div class ='row mt mb center_wrap'>
+	<div class='col-md-6'>
+		<%= link_to "Get Started Now &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb' %>
+	</div>
+	<div class='col-md-6'>
+		<%= link_to "Learn More &nbsp<i class='fa fa-info-circle'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-default mt mb' %>
+	</div>
 </div>

@@ -18,7 +18,7 @@
       <%= render :partial => 'layouts/standard/header' %>            
     </div>
 
-    <div id='page' class='container'>
+    <div id='page'>
       
       <% if content_for?(:page_title) %>
         <div id='title' class='row'>
@@ -26,21 +26,21 @@
         </div>
       <% end %>
 
-      <div id="main" class='row'>               
-
+      <div id="main" class='container'>               
         <div id="mainbar" class='col-md-8'>
           <%= yield %>
-        </div>
-        
+        </div>        
         <div id="sidebar" class='col-md-4'>
           <%= render :partial => 'layouts/standard/sidebar' %>
         </div>           
       </div> <%# main %>   
+
     </div> <%# page %>
           
       <div id="footer">        
           <%= render :partial => 'layouts/standard/footer' %>        
       </div>
+      
   </body>
 
 </html>

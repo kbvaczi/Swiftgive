@@ -5,7 +5,7 @@
 <%= render :partial => 'edit_password' %>
 <%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
 
-<h3>My Profile</h3>
+<h3 class='title'>My Profile</h3>
 <table class="table table-striped">
   <col width='25%' />
   <col width='55%' />
@@ -13,7 +13,7 @@
   <tr>
     <th>Name</th>
     <td><%= current_user.account.full_name %></td>
-    <td><button class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit_name_modal"><i class="fa fa-wrench"></i>Edit</button></td>
+    <td><button class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit_name_modal"><i class="fa fa-fw fa-wrench"></i>Edit</button></td>
   </tr>
 <!-- 
   <%# take out avatar for now %>
@@ -27,7 +27,7 @@
   <tr>
     <th>Email Address</th>
     <td><%= current_user.email %></td>
-    <td><a href="#edit_email_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-wrench"></i>Edit</a></td>
+    <td><a href="#edit_email_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-wrench"></i>Edit</a></td>
   </tr>
   <tr>
     <th>Location</th>
@@ -39,7 +39,7 @@
       <% end %>
       
     </td>
-    <td><a href="#edit_location_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-wrench"></i>Edit</a></td>
+    <td><a href="#edit_location_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-wrench"></i>Edit</a></td>
     
   </tr>
   <tr>
@@ -49,13 +49,13 @@
     <% else %>
       <td><i>You currently have no password</i></td>
     <% end %>    
-    <td><a href="#edit_password_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-wrench"></i>Edit</a></td>
+    <td><a href="#edit_password_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-wrench"></i>Edit</a></td>
   </tr>
 </table>
 
 <br class='spacer'/>
 
-<h3>My Social Networks</h3>
+<h3 class='title'>My Social Networks</h3>
 <table class='table table-striped'>
   <col width='80%' />
   <col width='20%' />
@@ -67,7 +67,7 @@
         <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
       <% end %>
     </td>
-    <td><a href="#add_social_network_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-plus"></i>Add</a></td>
+    <td><a href="#add_social_network_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-plus"></i>Add</a></td>
   </tr>
 </table>
 
@@ -88,12 +88,12 @@
       <% current_user.funds.each do |fund| %>
         <tr>
           <td>
-            <%= link_to "#{fund.name} <i class='fa fa-fw fa-arrow-right'></i>".html_safe, fund_path(fund), :class => "btn-small"%>
+            <%= link_to "#{fund.name}".html_safe, fund_path(fund), :class => "btn-small"%>
           </td>
         </tr>   
       <% end %>
     </table>
-    <%= link_to "<i class='fa fa-fw fa-plus'></i>Create new fund".html_safe, new_fund_path, :class => 'btn btn-default pull-right' %>    
+    <%= link_to "<i class='fa fa-fw fa-plus'></i>Start a New Fund".html_safe, new_fund_path, :class => 'btn btn-default pull-right' %>    
   </div>
 
 <% end %>
