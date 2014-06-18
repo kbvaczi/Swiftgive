@@ -22,6 +22,14 @@ class HomeController < ApplicationController
     end
   end
 
+  def privacy
+    set_back_path
+    respond_to do |format|
+      format.html {render :layout => "full"}
+      format.mobile
+    end
+  end
+
   def about
     set_back_path
     respond_to do |format|
