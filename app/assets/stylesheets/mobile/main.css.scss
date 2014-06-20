@@ -5,9 +5,18 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }  
 
+h1.frontpage {
+	font-size:24px;
+	margin:0px 0px 5px 0px;
+  padding:8px 0px 0px 0px;
+  line-height:120%;
+  text-shadow: 0px 1px 1px rgba(25,25,25,0.1);
+  text-transform:capitalize;
+}
+
 h1.page_title {
-	font-size:18px;
-	margin:0px 10px 10px 10px;
+  font-size:18px;
+  margin:0px 10px 10px 10px;
   padding:8px;
   line-height:120%;
   text-shadow: 0px 1px 1px rgba(25,25,25,0.1);
@@ -17,9 +26,18 @@ h1.page_title {
   text-transform:capitalize;
 }
 
+.jumbotron {
+  position: relative;
+  min-height:140px;
+}
+
 .word_wrap {
   word-wrap: break-word !important;
   white-space: normal !important;
+}
+
+.text-justify {
+  text-align: justify; 
 }
 
 #header {
@@ -44,4 +62,21 @@ a.ui-link, a.ui-link:visited {
 a.ui-link:hover, a.ui-link:hover, a.ui-link:active{
   color: $fontColorLight;
   text-decoration: underline;
+}
+
+.page-background-image {
+  position:relative;
+  margin: 0px -20px 0px -20px;
+  padding:0px 20px 0px 20px;
+  height:220px;  
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+@media all and (min-width: 400px) {
+  .page-background-image { height: 270px; }
+}
+
+.background-image-carwash {
+  background-image: image-url('jumbotron/carwash.jpg');
 }

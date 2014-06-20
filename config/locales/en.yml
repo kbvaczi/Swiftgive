@@ -3,6 +3,7 @@
 
 en:
   slogan: "Tips and fundraising in the real world from mobile devices"
+  slogan-sub: "Nobody carries cash"
   errors:
     messages:
       email: "Not an email address"

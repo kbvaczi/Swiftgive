@@ -1,88 +1,56 @@
-<% title t('slogan') %>
+<% title t('slogan'), false %>
 
-<center>		
-	<h5><i>No fees.<br/>All you need is e-mail and a debit card.</i></h5>
-</center>
+<%#= image_tag image_path('jumbotron/carwash.jpg'), :class => 'jumbotron-background' %>
 
-<ul data-role="listview" data-inset="true" class='mb'>
-	<li class='pt-s pb-s'>
-		<div class='ui-grid-a'>
-			<div class='ui-block-a side'>
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50" height="50" viewBox="0, 0, 360, 360">
-				  <g id="Layer 1">
-				    <g>
-				      <path d="M180.5,313.875 C106.839,313.875 47.125,254.161 47.125,180.5 C47.125,106.839 106.839,47.125 180.5,47.125 C254.161,47.125 313.875,106.839 313.875,180.5 C313.875,254.161 254.161,313.875 180.5,313.875 z" fill="#92BB92"/>
-				      <path d="M180.5,44.625 C255.542,44.625 316.375,105.458 316.375,180.5 C316.375,255.542 255.542,316.375 180.5,316.375 C105.458,316.375 44.625,255.542 44.625,180.5 C44.625,105.458 105.458,44.625 180.5,44.625 z M180.5,49.625 C108.22,49.625 49.625,108.22 49.625,180.5 C49.625,252.78 108.22,311.375 180.5,311.375 C252.78,311.375 311.375,252.78 311.375,180.5 C311.375,108.22 252.78,49.625 180.5,49.625 z" fill="#404040"/>
-				    </g>
-				    <g>
-				      <text transform="matrix(1, 0, 0, 1, 180, 180.5)">
-				        <tspan x="-58.594" y="71.5" font-family="TrebuchetMS-Bold" font-size="200" fill="#FFFFFF" stroke="#404040" stroke-width="6">1</tspan>
-				      </text>
-				    </g>
-				  </g>
-				  <defs/>
-				</svg>			
+<div class='relative page-background-image background-image-carwash'>	
+	<h1 class='frontpage'><%= t('slogan') %></h1>
+	<p class='mt-s'><%= t('slogan-sub') %></p>	
+</div>
+<%= link_to "Start Your Fund Today", funds_path, :'data-role' => 'button', :'data-icon' => 'check', :'data-theme' => 'b', :style => 'margin-top:-60px'%>
+<div style='height:10px;'></div>
+<p>
+	<ul data-role='listview' data-inset='true'>
+		<li>
+			<h2><i class='fa fa-fw fa-exclamation-triangle tc-g'></i> The Problem</h2>
+			<p class='lead word_wrap mt'>Often we find ourselves wanting to hand over some cash as a tip or donation for a good cause, but open our wallet to find just empty space where the cash should be. Likewise when we're fundraising or working for tips and find we aren't getting the donations expected because our donors didn't have time to stop at the ATM.</p>	 				
+		</li>
+	</ul>
+	<ul data-role='listview' data-inset='true'>
+		<li>
+			<h2><i class='fa fa-fw fa-check-square tc-g'></i> The Solution</h2>
+			<p class='lead word_wrap mt'>Swiftgive is a platform that allows you to give and recieve money in the real world from mobile devices. We provide tools to help you start and manage a fund whether you're raising donations for charity or just collecting tips.  Receive money from friends or complete strangers.  Others can also join in to promote your fund and solicit donations on your behalf.</p>			
+		</li>
+	</ul>
+	<ul data-role='listview' data-inset='true'>
+		<li>		
+			<div class='ui-grid-a ui-responsive'>
+				<div class='ui-block-a'>	
+					<h2><i class='fa fa-fw fa-dollar tc-g'></i> Raising Money</h2>				
+					<p class='word_wrap mt text-justify'>Start a new fund or find one you want to promote. Get customizable marketing products specially coded to that fund.</p>
+					<p class='word_wrap'>Help spread the world by giving products to friends or to your fundraising team.</p>
+					<p class='word_wrap'>Distribute or display marketing products in public while asking people to contribute. We have products available for a variety marketing strategies.</p>						
+				</div>
+				<div class='ui-block-b center_wrap'>
+					<%= image_tag asset_path('marketing_montage.png'), :width => '70%' %>
+				</div>
 			</div>
-			<div class='ui-block-b main'>
-				<h3 class='mt'>Start a Fund</h3>
+		</li>
+	</ul>
+	<ul data-role='listview' data-inset='true'>	
+		<li>			
+			<div class='ui-grid-a ui-responsive'>
+				<div class='ui-block-b'>					
+				<h2><i class='fa fa-fw fa-heart tc-g'></i> Giving Money</h2>
+					<p class='lead word_wrap mt'>Scan a give code using any QR code reading app on any type of device. No need to download a special Swiftgive app. </p>
+					<p class='lead word_wrap'>Read more about the fund from your device before deciding to give, or wait to give later after services rendered.</p>
+					<p class='lead word_wrap'>Choose amount to give and send payment directly from your device.  All you need is email and a debit card. Debit card information can be entered later if you're short 
+					on time.</p>	
+				</div>
+				<div class='ui-block-b center_wrap'>
+					<%= image_tag asset_path('iphone_scanning_give_code.png'), :width => '50%' %>
+				</div>				
 			</div>
-		</div>		
-	</li>
-
-	<li class='pt-s pb-s'>
-		<div class='ui-grid-a'>
-			<div class='ui-block-a side'>
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50" height="50" viewBox="0, 0, 360, 360">
-				  <g id="Layer 1">
-				    <g>
-				      <path d="M180.5,313.875 C106.839,313.875 47.125,254.161 47.125,180.5 C47.125,106.839 106.839,47.125 180.5,47.125 C254.161,47.125 313.875,106.839 313.875,180.5 C313.875,254.161 254.161,313.875 180.5,313.875 z" fill="#92BB92"/>
-				      <path d="M180.5,44.625 C255.542,44.625 316.375,105.458 316.375,180.5 C316.375,255.542 255.542,316.375 180.5,316.375 C105.458,316.375 44.625,255.542 44.625,180.5 C44.625,105.458 105.458,44.625 180.5,44.625 z M180.5,49.625 C108.22,49.625 49.625,108.22 49.625,180.5 C49.625,252.78 108.22,311.375 180.5,311.375 C252.78,311.375 311.375,252.78 311.375,180.5 C311.375,108.22 252.78,49.625 180.5,49.625 z" fill="#404040"/>
-				    </g>
-				    <g>
-				      <text transform="matrix(1, 0, 0, 1, 180, 180.5)">
-				        <tspan x="-58.594" y="71.5" font-family="TrebuchetMS-Bold" font-size="200" fill="#FFFFFF" stroke="#404040" stroke-width="6">2</tspan>
-				      </text>
-				    </g>
-				  </g>
-				  <defs/>
-				</svg>			
-			</div>
-			<div class='ui-block-b main'>
-				<h3 class='mt'>Promote your fund</h3>
-			</div>
-		</div>		
-	</li>
-
-	<li class='pt-s pb-s'>
-		<div class='ui-grid-a'>
-			<div class='ui-block-a side'>
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50" height="50" viewBox="0, 0, 360, 360">
-				  <g id="Layer 1">
-				    <g>
-				      <path d="M180.5,313.875 C106.839,313.875 47.125,254.161 47.125,180.5 C47.125,106.839 106.839,47.125 180.5,47.125 C254.161,47.125 313.875,106.839 313.875,180.5 C313.875,254.161 254.161,313.875 180.5,313.875 z" fill="#92BB92"/>
-				      <path d="M180.5,44.625 C255.542,44.625 316.375,105.458 316.375,180.5 C316.375,255.542 255.542,316.375 180.5,316.375 C105.458,316.375 44.625,255.542 44.625,180.5 C44.625,105.458 105.458,44.625 180.5,44.625 z M180.5,49.625 C108.22,49.625 49.625,108.22 49.625,180.5 C49.625,252.78 108.22,311.375 180.5,311.375 C252.78,311.375 311.375,252.78 311.375,180.5 C311.375,108.22 252.78,49.625 180.5,49.625 z" fill="#404040"/>
-				    </g>
-				    <g>
-				      <text transform="matrix(1, 0, 0, 1, 180, 180.5)">
-				        <tspan x="-58.594" y="71.5" font-family="TrebuchetMS-Bold" font-size="200" fill="#FFFFFF" stroke="#404040" stroke-width="6">3</tspan>
-				      </text>
-				    </g>
-				  </g>
-				  <defs/>
-				</svg>			
-			</div>
-			<div class='ui-block-b main'>
-				<h3 class='mt'>Get Paid</h3>
-			</div>
-		</div>		
-	</li>
-
-</ul>
-
-<% unless user_signed_in? %>
-	<%= link_to "Get Started Now", new_user_session_path, :'data-role' => 'button', :'data-icon' => 'check',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
-<% else %>
-	<%= link_to "Get Started Now", funds_path, :'data-role' => 'button', :'data-icon' => 'check',  :class => 'ui-btn-center mt', :'data-theme' => 'b' %> 
-<% end %>
-
-<%= link_to "Learn More", about_path, :'data-role' => 'button', :'data-icon' => 'info',  :class => 'ui-btn-center' %> 
+		</li>
+	</ul>
+</p>
+<%= link_to "Learn More", about_path, :'data-role' => 'button', :'data-icon' => 'info' %> 

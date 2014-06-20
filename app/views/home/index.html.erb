@@ -7,7 +7,7 @@
 <div class='frontpage-banner'>
 	<div class="jumbotron jumbotron-translucent mt">
 		<h1><%= t('slogan') %></h1>  
-		<p>Because Nobody Carries Cash</p>
+		<p><%= t('slogan-sub') %></p>
 		<%= link_to "Start Your Fund Today &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb' %>
 	</div>
 </div>
@@ -76,7 +76,7 @@
 			<i class='fa fa-mobile-phone'></i>
 		</div>
 		<h3>Universal</h3>
-		<p><i>Works with all modern mobile devices. All you need is email and a debit card.</i></p>
+		<p><i>Works with most modern mobile devices. All you need is email and a debit card.</i></p>
 	</div>
 	<div class='col-md-4 center_wrap mb'>
 		<div class='bc-g pa tc-w mb icon-wrapper icon-wrapper-circle'>
@@ -96,6 +96,6 @@
 		<%= link_to "Get Started Now &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb' %>
 	</div>
 	<div class='col-md-6'>
-		<%= link_to "Learn More &nbsp<i class='fa fa-info-circle'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-default mt mb' %>
+		<%= link_to "Learn More &nbsp<i class='fa fa-info-circle'></i>".html_safe, about_path, :class => 'btn btn-lg btn-default mt mb' %>
 	</div>
 </div>
