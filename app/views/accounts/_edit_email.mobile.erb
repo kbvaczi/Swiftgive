@@ -1,0 +1,20 @@
+<div id="account_edit_email" data-role="popup" data-history='false' data-position-to="window" data-overlay-theme="a" data-transition='pop'>
+    
+  <div data-role="header" >
+      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+      <h4>Change Email</h4>
+  </div>
+
+  <div class='pa-m'>
+    <%= simple_form_for current_user, :url => user_registration_path, :html => {:id => 'edit_email_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
+      <div class="ui-grid-solo">
+        <%= f.input :email, :placeholder => 'example@domain.com', :label => false %>
+      </div>
+      <div class='ui-grid-a'>
+        <div class='ui-block-a'><a href='#' data-role='button' data-rel='back' data-icon='delete'>Cancel</a></div>
+        <div class='ui-block-b'><%= f.submit 'Update', :'data-icon' => 'check' %></div>
+      </div>
+    <% end %>
+  </div>
+
+</div>
