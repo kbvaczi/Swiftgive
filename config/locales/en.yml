@@ -4,6 +4,8 @@
 en:
   slogan: "Free, easy mobile fundraising and tipping"
   slogan-sub: "Nobody carries cash, but everybody has a phone"
+  the-problem: "No one carries cash. Often we want to tip a couple dollars, but we do not have the cash. Likewise when we're fundraising or working for tips we have a hard time getting paid because \"I didn't have time to stop by the ATM.\""
+  the-solution: "Swiftgive is a simple platform that allows you to give and receive money from mobile devices. It is totally free. Whether you're seeking donations or just collecting tips, we provide tools to help you start and manage a fund. Receive money from friends or complete strangers. Others can also join in to promote your fund and solicit donations on your behalf."
   errors:
     messages:
       email: "Not an email address"
