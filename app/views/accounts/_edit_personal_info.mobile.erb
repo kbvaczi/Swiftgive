@@ -2,18 +2,15 @@
     
   <div data-role="header" >
       <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
-      <h4>Personal Info</h4>
+      <h4 class='ma-n'>Change Your Name</h4>
   </div>
 
   <div class='pa-m'>
 
     <%= form_for current_user.account, :url => update_user_profile_path, :method => :put do |f| %>
 
-      <div class='ui-grid-solo'>
+      <div class='ui-grid-solo pa-s'>
         <%= f.text_field :first_name, :placeholder => 'First Name' %>    
-      </div>
-
-      <div class='ui-grid-solo'>
         <%= f.text_field :last_name, :placeholder => 'Last Name' %>    
       </div>
 
