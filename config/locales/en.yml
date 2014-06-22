@@ -2,8 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  slogan: "Tips and fundraising in the real world from mobile devices"
-  slogan-sub: "Nobody carries cash"
+  slogan: "Free, easy mobile fundraising and tipping"
+  slogan-sub: "Nobody carries cash, but everybody has a phone"
   errors:
     messages:
       email: "Not an email address"
