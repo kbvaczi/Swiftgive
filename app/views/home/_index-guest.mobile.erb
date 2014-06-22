@@ -1,12 +1,11 @@
 <% title t('slogan'), false %>
 
-<%#= image_tag image_path('jumbotron/carwash.jpg'), :class => 'jumbotron-background' %>
-
-<div class='relative page-background-image background-image-carwash'>		
-	<h1 class='frontpage'><%= t('slogan') %></h1>
-	<p class='mt-s mb-n t-s text-shadow-white'><%= t('slogan-sub') %></p>		
+<div class='page-background-image background-image-1'></div>
+<div class='jumbotron'>
+	<h1 class='frontpage text-shadow-white'><%= t('slogan') %></h1>
+	<p class='mt-m mb-n t-ss tc-light-grey text-shadow-black'><i><%= t('slogan-sub') %></i></p>			
 </div>
-<%= link_to "Start Your Fund Today", funds_path, :'data-role' => 'button', :'data-icon' => 'check', :'data-theme' => 'b', :style => 'margin-top:-60px'%>
+<%= link_to "Start Your Fund Today", funds_path, :'data-role' => 'button', :'data-icon' => 'check', :'data-theme' => 'b'%>
 <div style='height:10px;'></div>
 <p>
 	<ul data-role='listview' data-inset='true'>
