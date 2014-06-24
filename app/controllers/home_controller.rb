@@ -41,7 +41,7 @@ class HomeController < ApplicationController
 
   # used for testing.  This should be empty when pushed.
   def test
-   
+
   end
 
 end

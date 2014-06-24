@@ -1,51 +1,60 @@
 <%= render :partial => 'accounts/edit_personal_info', :formats => [:mobile] %>
 <%= render :partial => 'accounts/edit_location', :formats => [:mobile] %>
+<%= render :partial => 'accounts/edit_password', :formats => [:mobile] %>
 <%= render :partial => 'accounts/add_social_network', :formats => [:mobile] %>
 
 <% title "My Account" %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" >My Profile</li>  
-    <li data-icon='gear'>
-      <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
-        <!-- 
-        <%# remove avatar for now %>
-        <div class='ui-grid-a'>
-          <div class='ui-block-a side'>
-            <%# if current_user.account.avatar.present? %>
-              <%#= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
-            <%# else %>
-              <div style='height:80px;width:80px'>Add Image</div>
-            <%# end %>
-          </div>
-          <div class='ui-block-b main pr-m'>
-            <h3 class='mt-s mb-s'><%#= current_user.account.first_name %></h3>
-            <h3 class='mt-s'><%#= current_user.account.last_name %></h3>
-            <p><%#= current_user.email %></p>
-            <%# if current_user.account.date_of_birth.present? %>
-              <p><i>Born: <%#= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
-            <%# else %>
-              <p><i>No birthday entered</i></p>
-            <%# end %>
-          </div>          
+  <li data-icon='gear'>
+    <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
+      <!-- 
+      <%# remove avatar for now %>
+      <div class='ui-grid-a'>
+        <div class='ui-block-a side'>
+          <%# if current_user.account.avatar.present? %>
+            <%#= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
+          <%# else %>
+            <div style='height:80px;width:80px'>Add Image</div>
+          <%# end %>
         </div>
-        -->
-        <div>
-            <h3 class='mt-s mb-n'><%= current_user.account.full_name %></h3>
-            <p class='ma-n'><%= current_user.email %></p>
-          </div>     
-      </a>
-    </li>
-    <li data-icon='gear'>      
-        <% if current_user.account.city.present? and current_user.account.state.present? %>
-          <a href="#account_edit_location" data-rel="popup" data-position-to="window">            
-            <%= current_user.account.city %>, <%= current_user.account.state %>            
-          </a>
-        <% else %>          
-          <a href="#account_edit_location" data-rel="popup" data-position-to="window">Setup Location Info</a>
-        <% end %>
-    </li>
+        <div class='ui-block-b main pr-m'>
+          <h3 class='mt-s mb-s'><%#= current_user.account.first_name %></h3>
+          <h3 class='mt-s'><%#= current_user.account.last_name %></h3>
+          <p><%#= current_user.email %></p>
+          <%# if current_user.account.date_of_birth.present? %>
+            <p><i>Born: <%#= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
+          <%# else %>
+            <p><i>No birthday entered</i></p>
+          <%# end %>
+        </div>          
+      </div>
+      -->
+      <div>
+        <h3 class='mt-s mb-n'><%= current_user.account.full_name %></h3>
+        <p class='ma-n'><%= current_user.email %></p>
+      </div>     
+    </a>
   </li>
+  <li data-icon='gear'>      
+    <% if current_user.account.city.present? and current_user.account.state.present? %>
+      <a href="#account_edit_location" data-rel="popup" data-position-to="window">            
+        <h3><%= current_user.account.city %>, <%= current_user.account.state %></h3>
+      </a>
+    <% else %>          
+      <a href="#account_edit_location" data-rel="popup" data-position-to="window">Setup Location Info</a>
+    <% end %>
+  </li>  
+  <li data-icon='gear'>
+    <a href="#account_edit_password" data-rel="popup" data-position-to="window">            
+      <% if current_user.is_password_set %>
+        <p class=''><i>Your password is set</i></p>
+      <% else %>
+        <p class='ma-n'><i>You have no password</i></p>
+      <% end %>            
+    </a>
+  </li>  
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">

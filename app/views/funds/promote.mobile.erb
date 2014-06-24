@@ -11,9 +11,10 @@
 </ul>
 	
 <ul data-role="listview" data-inset="true" data-theme"a">
+<li data-role="list-divider">Marketing products for this fund</li>
 	<% MarketingProduct.scoped.each do |product| %>
 		<li class=" ui-li-has-thumb ui-first-child">
-			<%= link_to "#{image_tag(product.image_url(:thumb))}<h4>#{product.name}</h4><p class='word_wrap' style='margin-bottom:-5px;'><i>#{product.comment}</i></p>".html_safe, product.link_to_product(:t_givecode_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :target => '_blank' %>
+			<%= link_to "#{image_tag(product.image_url(:thumb))}<h4>#{product.name}</h4><p class='word_wrap' style='margin-bottom:-5px;'>#{product.comment}</p>".html_safe, product.link_to_product(:t_givecode_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :target => '_blank' %>
 		</li>
 	<% end %>
 </ul>
