@@ -13,7 +13,7 @@ class Users::PasswordsController < Devise::PasswordsController
       set_flash_message(:notice, flash_message) if is_navigational_format?
       sign_in(resource_name, resource)
       respond_with resource, :location => after_resetting_password_path_for(resource)
-    else
+    else      
       respond_with resource
     end
   end

@@ -1,9 +1,13 @@
 <%= provide :heading, "Unlock Instructions" %>
 
-<p>Hello <%= @resource.email %>!</p>
+<%# abstract email so gmail doesn't convert into mailto link %>
+<p>Hello <%=h (@resource.account.first_name.present? ? @resource.account.first_name : @resource.email.gsub('@','<span>@</span>').gsub('.','<span>.</span>').html_safe) rescue "There" %>!</p>
 
-<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+<p>Your account has been locked due to an excessive number of sign in attempts.</p>
 
 <p>Click the link below to unlock your account:</p>
-
-<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>
+<br/>
+<p>
+	<%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token), :style => "background-color:#87b287;border:1px solid #999;border-radius:3px;padding:10px;color:#fff;text-decoration:none;" %>
+</p>
+<br/>
