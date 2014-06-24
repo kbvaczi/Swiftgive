@@ -1,4 +1,4 @@
-<% title 'New Users' %>
+<% title 'New User Sign Up' %>
 
 <%= simple_form_for(resource, :url => registration_path(resource), :html => { :honeypot => true } ) do |f| %>
     
@@ -22,6 +22,7 @@
 		  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
 		    <i class="fa fa-fw fa-sign-in"></i> Sign Up
 			<% end %>    
+      <%= link_to "Already a member", new_user_session_path, :class => 'btn btn-sm' %>
 		</div>
 	</div>
   

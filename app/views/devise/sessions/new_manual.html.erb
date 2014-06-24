@@ -8,12 +8,14 @@
   <% if devise_mapping.rememberable? %>
     <%= f.input :remember_me, :as => :boolean, :label => '&nbsp;'.html_safe, :inline_label => 'Remember me' %>
   <% end %>
+
   
   <div class='form-group'>
 		<div class='col-md-offset-4 col-md-6'>  
 		  <%= button_tag(type: 'submit', class: "btn btn-primary", wrapper_class: 'form-group') do %>
 		    <i class="fa fa-fw fa-sign-in"></i> Sign In
 		  <% end %>
+		  <%= link_to "Sign up first", new_user_registration_path, :class => 'btn btn-sm' %>
 		</div>
 	</div>
 

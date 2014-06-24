@@ -1,17 +1,23 @@
-<% title "Express Sign-in" %>
-<div class='center_wrap'>		
-	<h3>Select your preferred network:</h3>
+<% title "Sign In" %>
+
+
+<div class='col-md-8 col-md-offset-2'>
+	<h4>Express (Recommended):</h4>		
+	<%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
+	<%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
+	<%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:google_oauth2), :rel => 'external' %>
+	<%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
 </div>
 
-<div class='center_wrap'>
-  <%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
-  <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
-  <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:google_oauth2), :rel => 'external' %>
-  <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
-</div>
+<div class='col-md-7 col-md-offset-2 mt'>
+	<h4>Old Fashioned (Boring):</h4>
+	<%= simple_form_for User.new, :url => user_session_path, :html => { :honeypot => true } do |f| %>
+		<%= f.input :email , :required => 'true', :placeholder => 'Email', :label => false, :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
+		<%= f.input :password, :required => 'true', :placeholder => 'Password', :label => false, :wrapper => :none, :wrapper_html => {:class => 'pl pr'}  %>
+		<%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+		    <i class="fa fa-fw fa-sign-in"></i> Sign In
+		<% end %>    		
+		<%= link_to "Sign up first", new_user_registration_path, :class => 'btn btn-sm' %>
 
-<br class='spacer'/>
-
-<div class='mt center_wrap'>
- <%= link_to "<i class='fa fa-fw fa-info-circle'></i>Learn more about us".html_safe, about_path, :class => 'btn btn-default' %>
+	<% end %>               
 </div>
