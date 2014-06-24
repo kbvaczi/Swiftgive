@@ -3,17 +3,17 @@
 <%= render :partial => 'payments/custom_amount_form', :formats => [:mobile] %>
 <%= render :partial => 'payments/square_cash_splash', :formats => [:mobile] %>
 <%= render :partial => 'payments/thank_you_splash'  , :formats => [:mobile] %>
-
 <%= render :partial => 'funds/show/tabs' %>
 
 <%= form_for @payment, :html => { :honeypot => true } do |f| %>
   
   <%= f.hidden_field :fund_id %>
 
-  <ul data-role="listview" data-inset="true" data-theme"a">    
+  <ul data-role="listview" data-inset="true" data-theme"a">
+    <li data-role="list-divider">Give to this fund</li>
     <li style='margin:0px;padding:0px;'>
       <div class='ui-grid-a pa-s'>
-        <div class='ui-block-a pt-m pl-m t-s main'><h3>Amount to give:</h3></div>
+        <div class='ui-block-a pt-m pl-m main'><h4>Amount to give:</h4></div>
         <div class='ui-block-b pr-s side'>
           <div><%= f.select :amount_in_cents, [['$ 2', 200], ['$ 5', 500], ['$ 10', 1000], ['Other', 'other']], { :selected => 500 }, :'data-mini' => true, :'data-native-menu' => 'false', :'data-id' => 'payment_amount' %></div>
         </div>
@@ -21,7 +21,7 @@
     </li>
     <li style='margin:0px;padding:0px;'>
       <div class='ui-grid-a pa-s'>
-        <div class='ui-block-a pt-m pl-m t-s'><h3>Anonymous:</h3></div>
+        <div class='ui-block-a pt-m pl-m'><h4>Anonymous:</h4></div>
         <div class='ui-block-b pr-s' style='text-align:right;'>
           <%= f.select :is_anonymous, [['No',false],["Yes",true]], {}, :'data-role' => 'slider', :'data-mini' => true, :disabled => user_signed_in? ? false : true %>
         </div>  

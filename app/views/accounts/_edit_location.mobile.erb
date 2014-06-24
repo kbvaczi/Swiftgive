@@ -2,7 +2,7 @@
     
   <div data-role="header" >
       <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
-      <h4 style='margin:0px;'>Edit Location</h4>
+      <h4 class='ma-n'>Change Your Location</h4>
   </div>
     
   <div class='pa-m'>
@@ -11,17 +11,13 @@
 
     <%= form_for location, :url => accounts_location_path, :method => :put do |f| %>
 
-      <div class='ui-grid-solo'>
+      <div class='ui-grid-solo pa-s mb-s'>
         <%= f.text_field :city, :placeholder => 'City' %>    
-      </div>
-
-      <div class='ui-grid-solo'>
         <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
       </div>
       
       <div class='ui-grid-a'>
         <div class='ui-block-a'><a href='#' data-role='button' data-rel='back' data-icon='delete'>Cancel</a></div>
-
         <div class='ui-block-b'><%= f.submit 'Update', :'data-icon' => 'check' %></div>
       </div>
 

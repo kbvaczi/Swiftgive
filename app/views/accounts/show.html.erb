@@ -1,6 +1,6 @@
 <% title "Setup My Account"  %>
 <%= render :partial => 'edit_name' %>
-<%= render :partial => 'edit_email' %>
+<%#= render :partial => 'edit_email' %>
 <%= render :partial => 'edit_location' %>
 <%= render :partial => 'edit_password' %>
 <%= render :partial => 'accounts/add_social_network', :formats => [:html] %>
@@ -27,7 +27,7 @@
   <tr>
     <th>Email Address</th>
     <td><%= current_user.email %></td>
-    <td><a href="#edit_email_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-wrench"></i>Edit</a></td>
+    <td><!--<a href="#edit_email_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-wrench"></i>Edit</a>--></td>
   </tr>
   <tr>
     <th>Location</th>
