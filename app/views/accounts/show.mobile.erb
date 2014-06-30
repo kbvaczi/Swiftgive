@@ -39,7 +39,7 @@
     <a href="#add_social_network_form" data-rel="popup" data-position-to="window" class='pt-s pb-n'>      
       <div class='ma-n pa-n'>
         <% authentications = current_user.authentications %>
-        <% if !authentications.present? %>
+        <% if authentications.present? %>
           <% authentications.each do |authentication| %>
             <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
             <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
