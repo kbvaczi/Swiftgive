@@ -41,6 +41,26 @@
     </td>
     <td><a href="#edit_location_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-wrench"></i>Edit</a></td>
     
+  </tr>  
+</table>
+
+<br class='spacer'/>
+
+<h3 class='title'>My Login Methods</h3>
+<table class='table table-striped'>
+  <col width='25%' />
+  <col width='55%' />
+  <col width='20%' />
+  <tr>
+    <th>Social Networks</th>
+    <td>
+      <% current_user.authentications.each do |authentication| %>
+        <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
+        <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
+        <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
+      <% end %>
+    </td>
+    <td><a href="#add_social_network_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-plus"></i>Add</a></td>
   </tr>
   <tr>
     <th>Password</th>    
@@ -52,33 +72,6 @@
     <td><a href="#edit_password_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-wrench"></i>Edit</a></td>
   </tr>
 </table>
-
-<br class='spacer'/>
-
-<h3 class='title'>My Social Networks</h3>
-<table class='table table-striped'>
-  <col width='80%' />
-  <col width='20%' />
-  <tr>
-    <td>
-      <% current_user.authentications.each do |authentication| %>
-        <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
-        <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
-        <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
-      <% end %>
-    </td>
-    <td><a href="#add_social_network_modal" role="button" class="btn btn-default btn-sm" data-toggle="modal"><i class="fa fa-fw fa-plus"></i>Add</a></td>
-  </tr>
-</table>
-
-
-
-<script type='text/javascript'>
-  $('#add_new_card_button').click(function(){
-    $('#add_new_card_button').hide();
-    $('#payment_card_form').show();    
-  });
-</script>
 
 <%= content_for :sidebar do %>
   
