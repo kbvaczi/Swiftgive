@@ -78,8 +78,8 @@ Swiftgive::Application.configure do
   config.action_mailer.asset_host = "http://www.swiftgive.com"  
 
   # Force Devise to use SSL (From https://github.com/plataformatec/devise/wiki/How-To:-Use-SSL-(HTTPS))
-  config.to_prepare { Devise::SessionsController.force_ssl }
-  config.to_prepare { Devise::RegistrationsController.force_ssl }
-  config.to_prepare { Devise::PasswordsController.force_ssl }
+  config.to_prepare { Users::SessionsController.force_ssl }
+  config.to_prepare { Users::RegistrationsController.force_ssl }
+  config.to_prepare { Users::PasswordsController.force_ssl }
   # or your customized controller, extending from Devise
 end
