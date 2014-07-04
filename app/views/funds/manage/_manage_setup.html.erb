@@ -15,6 +15,10 @@
 	</tr> 
 </table>
 
+<%= link_to fund_path(@fund), :method => :delete, :confirm => "Are you sure you want to delete this fund?", :class => 'btn btn-default' do %>
+  <i class='fa fa-fw fa-times'></i>Delete This Fund
+<% end %>
+
 <div id="edit_name_modal" class="modal fade" data-keyboard='false'>
   <div class='modal-dialog'>
     <div class='modal-content'>
