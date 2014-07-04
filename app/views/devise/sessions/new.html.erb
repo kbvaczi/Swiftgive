@@ -1,7 +1,6 @@
 <% title "Sign In" %>
 
-
-<div class='col-md-8 col-md-offset-2'>
+<div class='col-md-8 col-md-offset-2 mt'>
 	<h4>Express (Recommended):</h4>		
 	<%# links need rel external to work with jquery mobile (http://stackoverflow.com/questions/5523494/jquery-mobile-breaks-omniauth) %>
 	<%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:facebook), :rel => 'external' %>
@@ -9,15 +8,34 @@
 	<%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_sign_in_path(:linkedin), :rel => 'external' %>
 </div>
 
-<div class='col-md-7 col-md-offset-2 mt'>
+<div class='col-md-7 col-md-offset-2 mt mb'>
 	<h4>Old Fashioned (Boring):</h4>
 	<%= simple_form_for User.new, :url => user_session_path, :html => { :honeypot => true } do |f| %>
 		<%= f.input :email , :required => 'true', :placeholder => 'Email', :label => false, :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
 		<%= f.input :password, :required => 'true', :placeholder => 'Password', :label => false, :wrapper => :none, :wrapper_html => {:class => 'pl pr'}  %>
+		<% if devise_mapping.rememberable? %>
+		    <%= f.input :remember_me, :as => :boolean, :label => false, :inline_label => 'Remember me' %>
+		<% end %>
 		<%= button_tag(type: 'submit', class: "btn btn-primary") do %>
 		    <i class="fa fa-fw fa-sign-in"></i> Sign In
 		<% end %>    		
-		<%= link_to "Sign up first", new_user_registration_path, :class => 'btn btn-sm' %>
+
+		<div class='mt'>
+			<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+			  <%= link_to "Sign up first", new_user_registration_path, :class => 'btn btn-sm'  %>
+			<% end -%>
+		</div>
+		<div>
+			<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+			  <%= link_to "Forgot your password", new_user_password_path, :class => 'btn btn-sm'  %>
+			<% end -%>
+		</div>
+		<div>
+			<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+			  <%= link_to "Resend confirmation email", new_user_confirmation_path, :class => 'btn btn-sm'  %> <br />
+			<% end -%>
+		</div>
 
 	<% end %>               
 </div>
+

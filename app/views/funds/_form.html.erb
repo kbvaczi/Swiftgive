@@ -1,17 +1,5 @@
 <%= simple_form_for @fund, :validate => true, :html => {:class => 'form-horizontal'} do |f| %>
  
-  <% if @fund.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@fund.errors.count, "error") %> prohibited this fund from being saved:</h2>
-
-      <ul>
-      <% @fund.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <%= f.input :name, :placeholder => 'Fund Name', :input_html => { :maxlength => 50 } %>
   <%= f.input :description,  :as =>  :text,
                             :placeholder => 'Description', :input_html => { :maxlength => 250, :rows => 4 } %>
@@ -44,6 +32,11 @@
 <% end %>
 
 <script type='text/javascript'>
+
+  $(document).ready(function() {
+    /* Need to refresh on load othrwise form will submit all values even ones that are supposed to be disabled */
+    refreshFormNewFund($("form#new_fund"));
+  });
   
   function refreshFormNewFund($form) {
     var trigger_value = $("select#fund_fund_type").val();
@@ -64,6 +57,7 @@
       $("div#business_information_inputs").find('input').attr("disabled",true);
       $('div#third_party_information_inputs').show();
       $('div#third_party_information_inputs').find('input').attr("disabled",false);
+      $form.resetClientSideValidations();
     }
   }
 

@@ -1,16 +1,27 @@
-<h2>Change your password</h2>
+<% title 'Change your password' %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<% flash.now[:error] = devise_error_messages! if devise_error_messages!.present? %>
 
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password, :autofocus => true %></div>
+<div class='col-md-7 col-md-offset-2 mt mb'>
+	<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :honeypot => true, :method => :put }) do |f| %>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
+		<%= f.input :reset_password_token, :as => :hidden %>
 
-  <div><%= f.submit "Change my password" %></div>
-<% end %>
+		<%= f.input :password,	:as => :password, 
+    												:required => true, 
+                            :placeholder => "New Password",
+                            :label => false,
+                            :wrapper => :none, :wrapper_html => {:class => 'pl pr'}  %>
 
-<%= render "devise/shared/links" %>
+	    <%= f.input :password_confirmation,		:as => :password,
+	    																			:placeholder => "Confirm New Password", 
+	                                          :required => true,
+	                                          :label => false,
+	                                          :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
+
+		<%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+			<i class="fa fa-fw fa-save"></i> Let's do this!
+		<% end %>
+		
+	<% end %>
+</div>

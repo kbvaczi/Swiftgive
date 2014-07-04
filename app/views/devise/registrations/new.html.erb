@@ -1,30 +1,37 @@
 <% title 'New User Sign Up' %>
 
-<%= simple_form_for(resource, :url => registration_path(resource), :html => { :honeypot => true } ) do |f| %>
+<div class='col-md-7 col-md-offset-2 mt mb'>
+
+  <%= simple_form_for(resource, :url => registration_path(resource), :html => { :honeypot => true } ) do |f| %>
+      
+    <%= f.input :email,	:required => true,
+                        :placeholder => "Email",
+                        :label => false,
+                        :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
+
+    <%= f.input :password,	:as => :password, 
+    												:required => true, 
+                            :placeholder => "Password",
+                            :label => false,
+                            :wrapper => :none, :wrapper_html => {:class => 'pl pr'}  %>
+
+    <%= f.input :password_confirmation,		:as => :password,
+    																			:placeholder => "Confirm Password", 
+                                          :required => true,
+                                          :label => false,
+                                          :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
+
+  	<% if devise_mapping.rememberable? %>
+      <%= f.input :remember_me, :as => :boolean, :label => false, :inline_label => 'Remember me' %>
+    <% end %>
     
-  <%= f.input :email,	:required => true,
-                      :placeholder => "Email" %>
-
-  <%= f.input :password,	:as => :password, 
-  												:required => true, 
-                          :placeholder => "Password"  %>
-
-  <%= f.input :password_confirmation,		:as => :password,
-  																			:placeholder => "Confirm Password", 
-                                        :required => true %>
-
-	<% if devise_mapping.rememberable? %>
-    <%= f.input :remember_me, :as => :boolean, :label => '&nbsp;'.html_safe, :inline_label => 'Remember me' %>
-  <% end %>
-                                          
-  <div class='form-group'>
-	  <div class='col-sm-offset-4 col-md-6'>
-		  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-		    <i class="fa fa-fw fa-sign-in"></i> Sign Up
-			<% end %>    
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <i class="fa fa-fw fa-sign-in"></i> Sign Up
+    <% end %>   
+    <div class='mt'>
       <%= link_to "Already a member", new_user_session_path, :class => 'btn btn-sm' %>
-		</div>
-	</div>
-  
-<% end %>
+    </div>
+    
+  <% end %>
 
+</div>

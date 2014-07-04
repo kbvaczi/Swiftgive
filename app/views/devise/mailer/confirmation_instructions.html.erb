@@ -1,7 +1,14 @@
 <%= provide :heading, "Welcome to Swiftgive" %>
 
-<p>Welcome <%= @email %>!</p>
+<%# abstract email so gmail doesn't convert into mailto link %>
+<p>Welcome <%= @email.gsub('@','<span>@</span>').gsub('.','<span>.</span>').html_safe %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>Please confirm your email by clicking on the link below:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<br/>
+
+<p>
+	<%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), :style => "background-color:#87b287;border:1px solid #999;border-radius:3px;padding:10px;color:#fff;text-decoration:none;" %>
+</p>
+
+<br/>

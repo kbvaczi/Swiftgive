@@ -1,22 +1,14 @@
 <% 
 
 background_color = '#f3f3f3'
-
-style_for_text  =       "font-family:'Helvetica Nuve', Helvetica, Arial, sans-serif;"
-
-style_for_background =  "background:#{background_color};"
-
-style_for_mail_main =   "font-size:12px;width:450px;border-collapse:collapse;table-layout:fixed;"
-
-style_for_heading =     "background:#fafafa;height:25px;font-size:14px;font-weight:bold;line-height:2.4;text-align:center;padding:0 10px 0 10px;margin: 0px 0px 10px 0px;border: 1px solid #efefef;border-bottom:none;"
-
-style_for_content =     "background:#fdfdfd;text-align:center;word-wrap:break-word;"
-                        
-style_for_footer =      "font-size:11px;color:#bbb;text-align:center;"
-
-style_for_link =        "font-size:11px;color:rgb(135,178,135);"
-
 border_radius =         "5px"
+style_for_text  =       "font-family:'Helvetica Nuve', Helvetica, Arial, sans-serif;"
+style_for_background =  "background:#{background_color};"
+style_for_mail_main =   "font-size:12px;width:450px;border-collapse:collapse;table-layout:fixed;"
+style_for_heading =     "background:#fafafa;height:25px;font-size:14px;font-weight:bold;line-height:2.4;text-align:center;padding:0 10px 0 10px;margin: 0px 0px 10px 0px;border: 1px solid #efefef;border-bottom:none;"
+style_for_content =     "background:#fdfdfd;text-align:center;word-wrap:break-word;"                        
+style_for_footer =      "font-size:11px;color:#bbb;text-align:center;"
+style_for_link =        "font-size:11px;color:rgb(135,178,135);"
 
 %>
 
@@ -49,7 +41,8 @@ border_radius =         "5px"
     <td style="<%= style_for_background %>"> 
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%;"><tbody>
         <tr>
-          <td style="border:1px solid #efefef;border-top:none;padding:15px;border-bottom-left-radius:<%= border_radius %>;border-bottom-right-radius:<%= border_radius %>;<%= style_for_content + style_for_text %>" > <%= yield %> </td>
+          <td style="border:1px solid #efefef;border-top:none;padding:15px;border-bottom-left-radius:<%= border_radius %>;border-bottom-right-radius:<%= border_radius %>;<%= style_for_content + style_for_text %>" > <%= yield %>
+          </td>
         </tr>
       </tbody></table>
     </td>
