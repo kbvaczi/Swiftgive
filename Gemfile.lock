@@ -175,8 +175,6 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rack-www (1.5.0)
-      rack
     rails (3.2.12)
       actionmailer (= 3.2.12)
       actionpack (= 3.2.12)
@@ -285,7 +283,6 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.1.13)
   omniauth-linkedin (~> 0.1.0)
   pdfkit (~> 0.6.2)
-  rack-www
   rails (= 3.2.12)
   rqrcode (~> 0.4.2)
   sass-rails (~> 3.2.3)
