@@ -47,6 +47,7 @@ group :staging do
   gem 'memcachier'                                    # use memcachier addon for heroku through dalli  
   gem 'slim'                                          # this is for sidekiq monitoring server 
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
+  gem 'rack-ssl-enforcer'                             # reroutes all traffic through ssl
 end
 
 group :production do
@@ -54,6 +55,7 @@ group :production do
   gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										                      # enable memcache for heroku
   gem 'memcachier'									                  # use memcachier addon for heroku through dalli
+  gem 'rack-ssl-enforcer'                             # reroutes all traffic through ssl
 end
 
 # Gems used only for assets and not required in production environments by default.
