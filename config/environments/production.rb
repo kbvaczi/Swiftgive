@@ -77,4 +77,7 @@ Swiftgive::Application.configure do
   # Default Host required by Devise
   config.action_mailer.default_url_options = { :host => 'www.swiftgive.com' }
   config.action_mailer.asset_host = "https://www.swiftgive.com"  
+
+  # Use ssl enforcer gem to reroute all traffic through https protocol
+  config.middleware.use Rack::SslEnforcer  
 end

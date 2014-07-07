@@ -73,8 +73,5 @@ module Swiftgive
       Devise::Mailer.layout "email" # use email layout for devise emails
     end
 
-    # Use ssl enforcer gem to reroute all traffic through https protocol
-    config.middleware.use Rack::SslEnforcer  
-
   end
 end
