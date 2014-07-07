@@ -48,7 +48,8 @@ Swiftgive::Application.configure do
   config.action_controller.perform_caching = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = "http://www.swiftgive.com"
+  # config.action_controller.asset_host = "http://assets.example.com"
+  # config.action_controller.asset_host = "https://swiftgive.herokuapp.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
@@ -74,12 +75,6 @@ Swiftgive::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   # Default Host required by Devise
-  config.action_mailer.default_url_options = { :host => 'http://www.swiftgive.com' }
+  config.action_mailer.default_url_options = { :host => 'www.swiftgive.com' }
   config.action_mailer.asset_host = "http://www.swiftgive.com"  
-
-  # Force Devise to use SSL (From https://github.com/plataformatec/devise/wiki/How-To:-Use-SSL-(HTTPS))
-  config.to_prepare { Users::SessionsController.force_ssl }
-  config.to_prepare { Users::RegistrationsController.force_ssl }
-  config.to_prepare { Users::PasswordsController.force_ssl }
-  # or your customized controller, extending from Devise
 end
