@@ -40,22 +40,17 @@ group :development do
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
-group :staging do
-  gem 'activerecord-postgresql-adapter'               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
-  gem 'newrelic_rpm'                                  # Performance Monitoring / Dyno keepalive
-  gem 'dalli'                                         # enable memcache for heroku
-  gem 'memcachier'                                    # use memcachier addon for heroku through dalli  
-  gem 'slim'                                          # this is for sidekiq monitoring server 
-  gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
-  gem 'rack-ssl-enforcer'                             # reroutes all traffic through ssl
-end
-
-group :production do
+group :production, :staging do
   gem 'activerecord-postgresql-adapter'               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
   gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										                      # enable memcache for heroku
   gem 'memcachier'									                  # use memcachier addon for heroku through dalli
   gem 'rack-ssl-enforcer'                             # reroutes all traffic through ssl
+end
+
+group :staging do
+  gem 'slim'                                          # this is for sidekiq monitoring server 
+  gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
 # Gems used only for assets and not required in production environments by default.
