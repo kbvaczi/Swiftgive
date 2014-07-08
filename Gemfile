@@ -14,7 +14,7 @@ gem 'omniauth-linkedin', '~> 0.1.0'                   # omni-auth strategy for l
 
 gem 'sidekiq', '~> 2.6.1'                             # redis backed background processing
 gem 'sidekiq-unique-jobs', '~> 3.0.0'                 # adds unique jobs functionality to sidekiq
-gem 'devise-async', '~> 0.5.0'                        # devise emails sent in background
+gem 'devise-async', '~> 0.6.0'                        # devise emails sent in background
 
 gem 'honeypot-captcha', '~> 0.0.2'                    # alternative to capcha without the complexity 
 gem 'simple_form', '~> 2.1.0'                         # standardized form CSS and helpers
