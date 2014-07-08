@@ -7,25 +7,40 @@
 
 <ul data-role="listview" data-inset="true">		
 	<li>
-		<p class='word_wrap'><%= current_fund.description %></p>
-		<h3><%= display_location(current_fund) %></h3>
+		<p class='word_wrap'><%= current_fund.description %></p>		
 	</li>
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
 	
 	<% if current_fund.is_third_party_fund? %>
-		<li data-role="list-divider">Donations Benefit</li>
-		<li><p class='ma-n'><%= current_fund.receiver_name %></p> </li>
+		<li data-role="list-divider">Giving Benefits</li>
+		<li>
+			<p class='ma-n'>
+				<%= current_fund.receiver_name %>
+			</p> 
+		</li>
 	<% end %>
 
-  <% if current_fund.is_business_fund? %> 
-  	<li data-role="list-divider" >Organization Name</li>
-		<li><p class='ma-n'><%= current_fund.receiver_name %></p></li>
-  <% else %>
-		<li data-role="list-divider" >Fund Starter</li>
-		<li><p class='ma-n'><%= current_fund.creator_name %></p></li> 
-  <% end %>
+	<% if current_fund.is_business_fund? %>
+		<li data-role="list-divider" >Organization</li>
+		<li>
+			<p class='ma-n'>
+				<%= current_fund.receiver_name %>
+			</p> 
+		</li>
+	<% end %>
+	
+	<li data-role="list-divider" >Fund Owner</li>
+	<% current_fund.owners.each do |owner| %>
+        <li>         
+        	<p class='ma-n'>
+            	<b><%= owner.account.full_name %></b><br/>
+            	<%= "#{owner.account.city.capitalize}, " if owner.account.city.present? %> <%= "#{owner.account.state}" if owner.account.state.present? %>
+          	</p>
+        </li>
+	<% end %>   		
+  
  
 	<li data-role="list-divider">Recent Donations</li>
 	<li>

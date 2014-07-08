@@ -19,8 +19,6 @@ module ApplicationHelper
     end
     if options[:format] == 'long'
       time.strftime("%B #{day}, %Y")
-    elsif options[:format] == 'long'
-      time.strftime("%B #{day}, %Y")
     elsif options[:format] == 'spelled'
       time.strftime("%B %Y")
     else
