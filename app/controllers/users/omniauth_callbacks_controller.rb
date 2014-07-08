@@ -157,7 +157,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to back_path, :notice => "This #{standardized_auth_data[:provider_name]} account is already linked to your user profile..."
     else
       flash[:error] = "This #{standardized_auth_data[:provider_name]} account is already linked to another user profile..."
-      redirect_to root_path      
+      redirect_to back_path
     end
   end
   
