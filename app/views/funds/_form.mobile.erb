@@ -1,35 +1,72 @@
 <ul data-role="listview" data-inset="true" data-theme"a">
   <li data-role="list-divider" >Fund Information</li>  
   <li>
-    <%= f.text_field :name, :placeholder => 'Fund Name', :'data-mini' => true, :maxlength => 50 %>
-    <%= f.text_area :description,  :placeholder => 'Description', :'data-mini' => true, :maxlength => 250 %>
+    <%= f.text_field  :name, 
+                      :placeholder => 'Fund Name', 
+                      :'data-mini' => true, 
+                      :maxlength => 50 %>
+    <%= f.text_area   :description,
+                      :placeholder => 'Description', 
+                      :'data-mini' => true, 
+                      :maxlength => 250 %>
   </li>
   <li>
-    <%= f.select :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']], {}, :'data-mini' => true,  :'data-native-menu' => 'false',  :onchange => "refreshFormNewFund()" %>
+    <%= f.select      :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']], {}, 
+                      :'data-mini' => true,  
+                      :'data-native-menu' => 'false',  
+                      :onchange => "refreshFormNewFund()" %>
   </li>
 </ul>
   
 <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='<%= 'hidden' unless @fund.is_business_fund? %>'>
   <li data-role="list-divider" >Business / Non-Profit Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Business Name', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?) %>
-    <%= f.text_field :receiver_email, :placeholder => 'Business Email', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?) %>
+    <%= f.text_field  :receiver_name, 
+                      :placeholder => 'Business Name', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_business_fund?) %>
+    <%= f.text_field  :receiver_email, 
+                      :placeholder => 'Business Email', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_business_fund?) %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?)  %>        
-    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true, :disabled => ('disabled' unless @fund.is_business_fund?) %>  
+    <%= f.text_field  :city, 
+                      :placeholder => 'City', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_business_fund?)  %>        
+    <%= f.select      :state, us_state_codes_collection, {}, 
+                      :'data-mini' => true, 
+                      :disabled => ('true' unless @fund.is_business_fund?) %>  
   </li>
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a" name="third_party_information_inputs" class='<%= 'hidden' unless @fund.is_third_party_fund? %>'>
   <li data-role="list-divider" >Receiver Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Receiver Name', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>
-    <%= f.text_field :receiver_email, :placeholder => 'Receiver Email', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>
+    <%= f.text_field  :receiver_name, 
+                      :placeholder => 'Receiver Name', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_third_party_fund?) %>
+    <%= f.text_field  :receiver_email, 
+                      :placeholder => 'Receiver Email', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_third_party_fund?) %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>        
-    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>  
+    <%= f.text_field  :city, 
+                      :placeholder => 'City', 
+                      :'data-mini' => true, 
+                      :maxlength => 30, 
+                      :disabled => ('true' unless @fund.is_third_party_fund?) %>        
+    <%= f.select      :state, us_state_codes_collection, {}, 
+                      :'data-mini' => true, 
+                      :disabled => ('true' unless @fund.is_third_party_fund?) %>  
   </li>        
 </ul>
 
@@ -39,19 +76,25 @@
     var trigger_value = $.mobile.activePage.find("select#fund_fund_type").val();
     if (trigger_value == 'person') {
       $.mobile.activePage.find("ul[name='business_information_inputs']").hide();
-      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').attr("disabled",true);
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').textinput('disable');
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('select').selectmenu('disable');
       $.mobile.activePage.find("ul[name='third_party_information_inputs']").hide();
-      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').attr("disabled",true);
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').textinput('disable');
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('select').selectmenu('disable');
     } else if (trigger_value == 'business') {
       $.mobile.activePage.find("ul[name='third_party_information_inputs']").hide();
-      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').attr("disabled",true);
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').textinput('disable');
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('select').selectmenu('disable');
       $.mobile.activePage.find("ul[name='business_information_inputs']").show();
-      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').attr("disabled",false);
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').textinput('enable');
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('select').selectmenu('enable');
     } else if (trigger_value == 'third_party') {
       $.mobile.activePage.find("ul[name='third_party_information_inputs']").show();
-      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').attr("disabled",false);
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('input').textinput('enable');
+      $.mobile.activePage.find("ul[name='third_party_information_inputs']").find('select').selectmenu('enable');
       $.mobile.activePage.find("ul[name='business_information_inputs']").hide();
-      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').attr("disabled",true);
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('input').textinput('disable');
+      $.mobile.activePage.find("ul[name='business_information_inputs']").find('select').selectmenu('disable');
     }
   }
 

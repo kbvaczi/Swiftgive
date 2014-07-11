@@ -20,7 +20,7 @@ $.rails.allowAction = function(element) {
 
 function myCustomConfirmBox(message, callback) {
   // call callback() if the user says yes 
-  var flash_message = "<div class='center_wrap flash_message flash_notice' data-role='popup' data-overlay-theme='b' data-position-to='window' data-transition='pop' data-history='false' style='width:250px'><div class='flash_content ma'>" + message + "</div><div class='ui-grid-a ma-m'><div class='ui-block-a'><a data-rel='close' data-role='button' data-icon='check' data-mini='true' class='accept_confirm'>Yes</a></div><div class='ui-block-b'><a data-rel='close' data-role='button' data-icon='delete' data-mini='true'>Cancel</a></div></div></div>";
+  var flash_message = "<div class='center_wrap flash_message flash_notice' data-role='popup' data-overlay-theme='b' data-position-to='window' data-transition='pop' data-history='false' style='width:250px'><div class='flash_content ma'>" + message + "</div><div class='ui-grid-a ma-m'><div class='ui-block-a'><a data-rel='close' data-role='button' data-icon='check' data-mini='true' class='accept_confirm'>Yes</a></div><div class='ui-block-b'><a data-rel='close' data-role='button' data-icon='delete' data-mini='true'>No</a></div></div></div>";
   if ($.mobile.activePage) {
     $.mobile.activePage.find('.flash_message').remove();
     $.mobile.activePage.prepend(flash_message).enhanceWithin();
