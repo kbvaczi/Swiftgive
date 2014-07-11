@@ -208,7 +208,7 @@ html .ui-alt-icon .ui-radio-off:after {
 }
 /* Loader */
 .ui-icon-loading {
-	background: url("images/ajax-loader.gif");
+	background: image-url("images/ajax-loader.gif");
 	background-size: 2.875em 2.875em;
 }
 /* Swatches */
@@ -456,7 +456,7 @@ html .ui-body-b .ui-btn:visited,
 html body .ui-group-theme-b .ui-btn:visited,
 html head + body .ui-btn.ui-btn-b:visited {
 	background-color: #87b287 /*{b-bup-background-color}*/;
-	border-color: #999 /*{b-bup-border}*/;
+	border-color: #888 /*{b-bup-border}*/;
 	color: #ffffff /*{b-bup-color}*/;
 	text-shadow: none;
 }
@@ -467,7 +467,7 @@ html .ui-body-b .ui-btn:hover,
 html body .ui-group-theme-b .ui-btn:hover,
 html head + body .ui-btn.ui-btn-b:hover {
 	background-color: #74a474 /*{b-bhover-background-color}*/;
-	border-color: #999 /*{b-bhover-border}*/;
+	border-color: #888 /*{b-bhover-border}*/;
 	color: #ffffff /*{b-bhover-color}*/;
 	text-shadow: none;
 }
@@ -478,7 +478,7 @@ html .ui-body-b .ui-btn:active,
 html body .ui-group-theme-b .ui-btn:active,
 html head + body .ui-btn.ui-btn-b:active {
 	background-color: #619461 /*{b-bdown-background-color}*/;
-	border-color: #999 /*{b-bdown-border}*/;
+	border-color: #888 /*{b-bdown-border}*/;
 	color: #ffffff /*{b-bdown-color}*/;
 	text-shadow: none;
 }
