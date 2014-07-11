@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   include Mobylette::RespondToMobileRequests  
-  include Devise::Controllers::Rememberable # allows us to use remember_me helper to persist sessions
+  #include Devise::Controllers::Rememberable # allows us to use remember_me helper to persist sessions
   
   # TODO: enable banned user functionality
   def after_sign_in_path_for(resource)
@@ -119,7 +119,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.create_from_omniauth(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data)
     if user.present? and user.persisted?
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
-      remember_me(user)
+      #remember_me(user)
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated      
     elsif User.where("email LIKE ?", standardized_auth_data[:email]).present? # user has authenticated using the same email with a different service, use like for case insensitive
       add_authentication_to_existing_account
@@ -134,7 +134,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user.present? and user.persisted?
       user.update_authentication_raw_data(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data)
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
-      remember_me(user)
+      #remember_me(user)
       user.update_attribute(:confirmed_at, Time.now) unless user.confirmed_at.present? # This line is needed in case someone has created an account using email, but not confirmed their address, then try to subsequently login through omniauth
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
     else
