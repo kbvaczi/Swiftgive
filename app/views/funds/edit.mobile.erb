@@ -1,6 +1,6 @@
 <% title "edit fund" %>
 
-<%= form_for @fund, :method => :put do |f| %>
+<%= simple_form_for @fund, :method => :put do |f| %>
 
   <%= render :partial => "form", :locals => {:f => f} %>
   

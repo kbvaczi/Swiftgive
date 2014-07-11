@@ -12,24 +12,24 @@
 <ul data-role="listview" data-inset="true" data-theme"a" name="business_information_inputs" class='<%= 'hidden' unless @fund.is_business_fund? %>'>
   <li data-role="list-divider" >Business / Non-Profit Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Business Name', :'data-mini' => true, :maxlength => 30 %>
-    <%= f.text_field :receiver_email, :placeholder => 'Business Email', :'data-mini' => true, :maxlength => 30 %>
+    <%= f.text_field :receiver_name, :placeholder => 'Business Name', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?) %>
+    <%= f.text_field :receiver_email, :placeholder => 'Business Email', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?) %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30  %>        
-    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
+    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_business_fund?)  %>        
+    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true, :disabled => ('disabled' unless @fund.is_business_fund?) %>  
   </li>
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a" name="third_party_information_inputs" class='<%= 'hidden' unless @fund.is_third_party_fund? %>'>
   <li data-role="list-divider" >Receiver Information</li>
   <li>
-    <%= f.text_field :receiver_name, :placeholder => 'Receiver Name', :'data-mini' => true, :maxlength => 30 %>
-    <%= f.text_field :receiver_email, :placeholder => 'Receiver Email', :'data-mini' => true, :maxlength => 30 %>
+    <%= f.text_field :receiver_name, :placeholder => 'Receiver Name', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>
+    <%= f.text_field :receiver_email, :placeholder => 'Receiver Email', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>
   </li>
   <li>
-    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30 %>        
-    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true %>  
+    <%= f.text_field :city, :placeholder => 'City', :'data-mini' => true, :maxlength => 30, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>        
+    <%= f.select :state, us_state_codes_collection, {}, :'data-mini' => true, :disabled => ('disabled' unless @fund.is_third_party_fund?) %>  
   </li>        
 </ul>
 
