@@ -13,7 +13,7 @@
 				<td>
 				<div>
 					<div class='left pl'>
-						<b><%= payment.is_anonymous ? 'Anonymous Donor' : payment.sender.account.full_name %></b><br/>
+						<%= display_accountholder_name(payment.sender, payment.is_anonymous) %><br/>
 						<% if payment.sender.present? %>
 							<%= "#{payment.sender.account.city.capitalize}, " if payment.sender.account.city.present? %> <%= "#{Carmen::Country.coded(payment.sender.account.country).subregions.coded(payment.sender.account.state).name rescue payment.sender.account.state}" if payment.sender.account.state.present? %>
 						<% end %>

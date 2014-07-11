@@ -13,7 +13,7 @@
 			</td>
 			<td>
 				<% if payment.sender.present? %>
-					<%= display_accountholder_name(payment.sender.account, payment.is_anonymous) %>
+					<%= display_accountholder_name(payment.sender, payment.is_anonymous) %>
 				<% else %>
 					<span class='muted'>Anonymous</span>
 				<% end %>
