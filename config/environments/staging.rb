@@ -49,7 +49,7 @@ Swiftgive::Application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = "http://swiftgive.herokuapp.com"
+  config.action_controller.asset_host = "https://www.swiftgive.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
@@ -72,9 +72,12 @@ Swiftgive::Application.configure do
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
-  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   # Default Host required by Devise
-  config.action_mailer.default_url_options = { :host => 'swiftgive.herokuapp.com' }
-  config.action_mailer.asset_host = "http://swiftgive.herokuapp.com"  
+  config.action_mailer.default_url_options = { :host => 'www.swiftgive.com' }
+  config.action_mailer.asset_host = "https://www.swiftgive.com"  
+
+  # Use ssl enforcer gem to reroute all traffic through https protocol
+  config.middleware.use Rack::SslEnforcer  
 end

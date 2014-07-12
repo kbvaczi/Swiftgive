@@ -6,8 +6,10 @@
         <h4 class='modal-title' id="edit_name_modal_label">Add a Social Network</h4>
       </div>  
       <div class="modal-body">
-        <p>Quickly sign in through your social network of choice without entering your swiftgive password every time</p>
-        <div>
+        <div class="alert alert-info mb">
+          <strong>Note:</strong> Quickly sign in through your social network of choice without entering your swiftgive password every time.
+        </div>        
+        <div class='center_wrap'>
           <%= link_to image_tag('facebook.png', :width => '75px', :height => '75px'), authentication_add_path(:facebook), :rel => 'external' %>
           <%= link_to image_tag('google.png', :width => '75px', :height => '75px'), authentication_add_path(:google_oauth2), :rel => 'external' %>
           <%= link_to image_tag('linkedin.png', :width => '75px', :height => '75px'), authentication_add_path(:linkedin), :rel => 'external' %>   

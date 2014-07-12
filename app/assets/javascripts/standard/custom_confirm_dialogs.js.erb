@@ -1,0 +1,54 @@
+$.rails.allowAction = function(element) {  
+  var message = element.data('confirm'),
+  answer = false, callback;
+  if (!message) { return true; }
+
+  if ($.rails.fire(element, 'confirm')) {
+    myCustomConfirmBox(message, function() {
+      callback = $.rails.fire(element,'confirm:complete', [answer]);
+      if(callback) {
+        var oldAllowAction = $.rails.allowAction;
+        $.rails.allowAction = function() { return true; };
+        element.trigger('click');
+        $.rails.allowAction = oldAllowAction;
+      }
+    });
+  }
+  return false;
+}
+
+function myCustomConfirmBox(message, callback) {
+  // call callback() if the user says yes 
+  
+  var dialog_html = " \
+  <div id='confirm_dialog' class='modal fade' data-keyboard='false'>\
+    <div class='modal-dialog'>\
+      <div class='modal-content'>\
+        <div class='modal-header'>\
+          <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>\
+          <h4 class='modal-title'><i class='fa fa-fw fa-warning'></i>Are you sure?</h4>\
+        </div>\
+        <div class='modal-body center_wrap t-l'>\
+          <p class='center_wrap'>" + message + "</p> \
+          <input type='checkbox' id='confirm_dialog_checkbox'> Yes I'm sure\
+        </div>\
+        <div class='modal-footer'>\
+          <button class='btn btn-primary' id='confirm_dialog_accept' data-dismiss='modal' aria-hidden='true' disabled='true'><i class='fa fa-fw fa-check'></i>OK</button>\
+          <button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>Close</button>\
+        </div>\
+      </div>\
+    </div>\
+  </div>";
+  
+  $('#page').prepend(dialog_html);
+  $('#confirm_dialog').find('#confirm_dialog_checkbox').change(function(){
+    if($(this).is(':checked'))
+      $('#confirm_dialog_accept').attr('disabled', false);  // checked
+    else
+      $('#confirm_dialog_accept').attr('disabled', true);  // unchecked    
+  });
+  $('#confirm_dialog').modal('show');
+  $('#confirm_dialog').find('#confirm_dialog_accept').on('click', function (){
+    callback();
+  });  
+}

@@ -9,20 +9,34 @@
 @import "shared/variables";
 
 body {
-  padding-top: 50px; /* for fixed header */
+  padding-top: 60px; /* for fixed header */
+}
+.navbar, .navbar-collapse, .navbar-brand, .navbar-nav {
+  min-height:60px;
+  font-size:16px;
+}
+.navbar-nav > li {
+  padding-top:5px;
 }
 /* font awesome icons */
 .fa-fw {
   margin-right:5px;
 }
-
 .table tr:last-child {
 	border-bottom:1px solid rgb(221,221,221);
 }
 .table td, .table th {
 	vertical-align: middle !important;
 }
-
+.jumbotron-translucent {
+  background-color: rgba(255,255,255,0.3);
+}
+.jumbotron-clear {
+  background:none;
+}
+@media(min-width:768px){
+  .jumbotron h1 {font-size:50px;}
+}
 a {
   color: $SwiftgiveGreen;
 }
@@ -40,6 +54,11 @@ a:hover img {
   background:#fff;
 }
 
+.content_box {
+  background-color: $backgroundColor !important;
+  border: 1px solid $borderColor;
+}
+
 .content_box h2:nth-of-type(1), .content_box h3:nth-of-type(1), .content_box h4:nth-of-type(1), .content_box h5:nth-of-type(1) {
   margin-top: 0px;
 }
@@ -49,4 +68,14 @@ a:hover img {
   border-color: #999 !important;  
 }
 
+.alert {
+  margin-bottom: 0px;
+}
 
+h2, h3, h4 {
+  margin-bottom:20px;
+}
+
+.thumbnail {
+  border-color: $borderColor;
+}

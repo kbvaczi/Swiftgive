@@ -14,7 +14,7 @@ gem 'omniauth-linkedin', '~> 0.1.0'                   # omni-auth strategy for l
 
 gem 'sidekiq', '~> 2.6.1'                             # redis backed background processing
 gem 'sidekiq-unique-jobs', '~> 3.0.0'                 # adds unique jobs functionality to sidekiq
-gem 'devise-async', '~> 0.5.0'                        # devise emails sent in background
+gem 'devise-async', '~> 0.6.0'                        # devise emails sent in background
 
 gem 'honeypot-captcha', '~> 0.0.2'                    # alternative to capcha without the complexity 
 gem 'simple_form', '~> 2.1.0'                         # standardized form CSS and helpers
@@ -40,21 +40,17 @@ group :development do
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
-group :staging do
-  gem 'activerecord-postgresql-adapter'               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
-  gem 'newrelic_rpm'                                  # Performance Monitoring / Dyno keepalive
-  gem 'dalli'                                         # enable memcache for heroku
-  gem 'memcachier'                                    # use memcachier addon for heroku through dalli  
-  gem 'slim'                                          # this is for sidekiq monitoring server 
-  gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
-end
-
-group :production do
+group :production, :staging do
   gem 'activerecord-postgresql-adapter'               # PostgesQL Adapter for Heroku Database (requires Postgres to be installed, heroku has it pre-installed)
   gem 'newrelic_rpm'								                  # Performance Monitoring / Dyno keepalive
   gem 'dalli'										                      # enable memcache for heroku
   gem 'memcachier'									                  # use memcachier addon for heroku through dalli
-  gem 'rack-www'									                    # rack middleware to add www. to naked domain calls
+  gem 'rack-ssl-enforcer'                             # reroutes all traffic through ssl
+end
+
+group :staging do
+  gem 'slim'                                          # this is for sidekiq monitoring server 
+  gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
 # Gems used only for assets and not required in production environments by default.

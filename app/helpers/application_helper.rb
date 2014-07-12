@@ -19,8 +19,6 @@ module ApplicationHelper
     end
     if options[:format] == 'long'
       time.strftime("%B #{day}, %Y")
-    elsif options[:format] == 'long'
-      time.strftime("%B #{day}, %Y")
     elsif options[:format] == 'spelled'
       time.strftime("%B %Y")
     else
@@ -58,6 +56,12 @@ module ApplicationHelper
       output_string << input_hash.inspect
     end
     output_string.html_safe
+  end
+
+  def s3_image_path(path_within_images_directory)
+    current_bucket = ENV['AWS_BUCKET']
+    s3_image_path = "https://#{current_bucket}.s3.amazonaws.com/images/#{path_within_images_directory}"
+    s3_image_path
   end
     
 end

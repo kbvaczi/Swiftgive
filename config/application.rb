@@ -72,6 +72,6 @@ module Swiftgive
     config.to_prepare do
       Devise::Mailer.layout "email" # use email layout for devise emails
     end
-    
+
   end
 end

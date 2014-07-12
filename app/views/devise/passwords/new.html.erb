@@ -1,12 +1,13 @@
-<h2>Forgot your password?</h2>
+<% title 'Forgot your password' %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+<div class='col-md-7 col-md-offset-2 mt mb'>
+	<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :honeypot => true, :method => :post }) do |f| %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+		<%= f.input :email , :required => 'true', :placeholder => 'Email', :label => false, :wrapper => :none, :wrapper_html => {:class => 'pl pr'} %>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+		<%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+			<i class="fa fa-fw fa-envelope"></i> Email Me Reset Instructions
+		<% end %>
+		
+	<% end %>
+</div>

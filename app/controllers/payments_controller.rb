@@ -57,11 +57,11 @@ class PaymentsController < ApplicationController
     end
   end
 
-  def set_referring_fund_and_redirect_to_splash
-    session[:referring_fund_uid] = current_fund.uid
+  def set_referring_fund_and_redirect_to_splash    
     unless !is_mobile_request? or user_signed_in? or session[:referring_fund_uid]
       redirect_to guest_splash_path
     end
+    session[:referring_fund_uid] = current_fund.uid
   end
 
 end

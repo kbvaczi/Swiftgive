@@ -7,7 +7,7 @@ class AddImageToMarketingProducts < ActiveRecord::Migration
 
     def down
       add_column(:marketing_products, :picture_url, :text)		unless column_exists?(:marketing_products, :picture_url)
-      remove_column(:marketing_products, :comment, :text)	   	if column_exists?(:marketing_products, :comment)
+      remove_column(:marketing_products, :comment)	   	     if column_exists?(:marketing_products, :comment)
       remove_column(:marketing_products, :image)				if column_exists?(:marketing_products, :image)
     end
 end

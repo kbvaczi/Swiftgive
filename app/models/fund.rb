@@ -42,6 +42,11 @@ class Fund < ActiveRecord::Base
   validates             :description, :length => { :minimum => 10, :maximum => 250 }
   validates_presence_of :receiver_name, :receiver_email, :unless => Proc.new { self.is_personal_fund? }
   validates             :receiver_email, :email => true, :unless => Proc.new { self.is_personal_fund? }
+  validate              :user_has_less_than_five_funds, :on => :create
+
+  def user_has_less_than_five_funds
+    self.errors.add(:base, 'You cannot have more than 5 funds') if self.creator.funds.count >= 5
+  end
                         
   # ----- Callbacks ----- #    
 

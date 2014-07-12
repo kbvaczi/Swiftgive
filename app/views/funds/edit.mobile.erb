@@ -1,13 +1,10 @@
 <% title "edit fund" %>
 
-<%= form_for @fund, :method => :put do |f| %>
+<%= simple_form_for @fund, :method => :put do |f| %>
 
   <%= render :partial => "form", :locals => {:f => f} %>
   
-  <%= f.submit "Update Fund", :'data-icon' => 'check', :'data-theme' => 'b' %>
+  <%= f.submit "Update Fund", :'data-icon' => 'check', :'data-theme' => 'b' %>  
 
 <% end %>
-
-<%= link_to 'Delete Fund', fund_path(@fund), :method => :delete, :'data-role' => 'button', :'data-theme' => 'f', :'data-icon' => 'delete', :confirm => "Are you sure you want to delete this fund?" %>
-
-
+<%= link_to 'Cancel', back_path, :'data-role' => 'button', :'data-icon' => 'delete' %>

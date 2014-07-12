@@ -2,25 +2,38 @@
 <h3>About</h3>
 <p class='lead'><%= display_description_with_line_breaks(current_fund.description) %></p>
 <table class="table table-striped">
+  <% if current_fund.is_business_fund? %> 
+    <tr>
+      <th>Organization</th>
+      <td><%= current_fund.receiver_name %></td>
+    </tr>
+  <% end %>
+  
+  
+  <% if current_fund.is_third_party_fund? %>
+    <tr>
+      <th>Giving Benefits</th>
+      <td><%= current_fund.receiver_name %></td>
+    </tr>
+  <% end %>
+
   <tr>
-    <th>Based From</th>
-    <td><%= "#{current_fund.city.capitalize}, #{current_fund.state}" %></td>
-  </tr>
-  <tr>
-    <th>Created</th>
-    <td><%= display_time current_fund.created_at, :day => false %></td>
-  </tr>
-  <tr>
-    <th>Owners</th>
+    <th>Fund Owner</th>
     <td>
-    	<% current_fund.owners.each do |owner| %>
-    		<div>    			
-    			<div class='left'>
-    				<b><%= owner.account.full_name %></b><br/>
-    				<%= "#{owner.account.city.capitalize}, " if owner.account.city.present? %> <%= "#{Carmen::Country.coded(owner.account.country).subregions.coded(owner.state).name rescue owner.account.state}" if owner.account.state.present? %>
-    			</div>
-    		</div>
-    	<% end %>    	
+      <% current_fund.owners.each do |owner| %>
+        <div>         
+          <div class='left'>
+            <b><%= owner.account.full_name %></b><br/>
+            <%= "#{owner.account.city.capitalize}, " if owner.account.city.present? %> <%= "#{Carmen::Country.coded(owner.account.country).subregions.coded(owner.state).name rescue owner.account.state}" if owner.account.state.present? %>
+          </div>
+        </div>
+      <% end %>     
     </td>
   </tr>
+
+  <tr>
+    <th>Created</th>
+    <td><%= display_time current_fund.created_at, :day => false, :format => 'spelled' %></td>
+  </tr>
+  
 </table>

@@ -6,69 +6,58 @@
 <% title "My Account" %>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
-  <li data-role="list-divider" >My Profile</li>  
+  <li data-role="list-divider" >My Profile</li>
+  
   <li data-icon='gear'>
     <a href="#account_edit_personal_info" data-rel="popup" data-position-to="window">
-      <!-- 
-      <%# remove avatar for now %>
-      <div class='ui-grid-a'>
-        <div class='ui-block-a side'>
-          <%# if current_user.account.avatar.present? %>
-            <%#= image_tag current_user.account.avatar, :height => '80px', :width => '80px' %>
-          <%# else %>
-            <div style='height:80px;width:80px'>Add Image</div>
-          <%# end %>
-        </div>
-        <div class='ui-block-b main pr-m'>
-          <h3 class='mt-s mb-s'><%#= current_user.account.first_name %></h3>
-          <h3 class='mt-s'><%#= current_user.account.last_name %></h3>
-          <p><%#= current_user.email %></p>
-          <%# if current_user.account.date_of_birth.present? %>
-            <p><i>Born: <%#= display_time current_user.account.date_of_birth, :format => 'spelled' %></i></p>
-          <%# else %>
-            <p><i>No birthday entered</i></p>
-          <%# end %>
-        </div>          
-      </div>
-      -->
       <div>
-        <h3 class='mt-s mb-n'><%= current_user.account.full_name %></h3>
-        <p class='ma-n'><%= current_user.email %></p>
+        <% if current_user.account.first_name.present? %>
+          <p class='ma-n'><%= current_user.account.full_name %></p>
+        <% else %>
+          <p class='ma-n'>What's Your Name?</p>
+        <% end %>
       </div>     
     </a>
   </li>
   <li data-icon='gear'>      
     <% if current_user.account.city.present? and current_user.account.state.present? %>
       <a href="#account_edit_location" data-rel="popup" data-position-to="window">            
-        <h3><%= current_user.account.city %>, <%= current_user.account.state %></h3>
+        <p class='mt-n mb-n'><%= current_user.account.city %>, <%= current_user.account.state %></p>
       </a>
     <% else %>          
-      <a href="#account_edit_location" data-rel="popup" data-position-to="window">Setup Location Info</a>
+      <a href="#account_edit_location" data-rel="popup" data-position-to="window">
+        <p class='ma-n'>Setup Location Info</p>
+      </a>
     <% end %>
-  </li>  
+  </li>    
+  <li><p class='ma-n'><%= current_user.email %></p></li>
+</ul>
+
+<ul data-role="listview" data-inset="true" data-theme"a">
+  <li data-role="list-divider" >My Login Methods</li>    
+  <li data-icon='plus'>
+    <a href="#add_social_network_form" data-rel="popup" data-position-to="window" class='pt-s pb-n'>      
+      <div class='ma-n pa-n'>
+        <% authentications = current_user.authentications %>
+        <% if authentications.present? %>
+          <% authentications.each do |authentication| %>
+            <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
+            <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
+            <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
+          <% end %>
+        <% else %>
+          <p class='mt-m mb-m'>Add a Social Network</p>
+        <% end %>
+      </div>
+    </a>
+  </li>
   <li data-icon='gear'>
     <a href="#account_edit_password" data-rel="popup" data-position-to="window">            
       <% if current_user.is_password_set %>
-        <p class=''><i>Your password is set</i></p>
+        <p class='ma-n'><i>Your password is set</i></p>
       <% else %>
         <p class='ma-n'><i>You have no password</i></p>
       <% end %>            
     </a>
-  </li>  
-</ul>
-
-<ul data-role="listview" data-inset="true" data-theme"a">
-  <li data-role="list-divider" >My Social Networks</li>  
-  <li>
-    <div class='center_wrap'>
-      <% current_user.authentications.each do |authentication| %>
-        <%= image_tag('facebook.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Facebook' %>
-        <%= image_tag('google.png', :width => '50px', :height => '50px') if authentication.provider_name == 'Google' %>
-        <%= image_tag('linkedin.png', :width => '50px', :height => '50px') if authentication.provider_name == 'LinkedIn' %>      
-      <% end %>
-    </div>
-  </li>
-  <li data-icon='plus'>
-    <a href="#add_social_network_form" data-rel="popup" data-position-to="window">Add Social Network</a>
   </li>
 </ul>

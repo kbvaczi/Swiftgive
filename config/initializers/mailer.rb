@@ -6,5 +6,5 @@ ActionMailer::Base.smtp_settings = {
   :user_name => 'noreply@swiftgive.com',
   :password => ENV['EMAIL_PASSWORD'],
   :authentication => :plain,
-  :from => "\"SwiftGive Notifications\" <noreply@SwiftGive.com>"
+  :from => "\"Swiftgive\" <noreply@Swiftgive.com>"
 }

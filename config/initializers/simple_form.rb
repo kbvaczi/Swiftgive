@@ -109,7 +109,7 @@ SimpleForm.setup do |config|
   # config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  config.label_class = 'col-lg-3 control-label'
+  config.label_class = 'col-md-4 control-label'
 
   # You can define the class to use on all forms. Default is simple_form.
   config.form_class = 'simple_form form-horizontal'
@@ -143,7 +143,7 @@ SimpleForm.setup do |config|
   # config.country_priority = nil
 
   # Default size for text inputs.
-  config.default_input_size = 60
+  config.default_input_size = 40
 
   # When false, do not use translations for labels.
   # config.translate_labels = true

@@ -16,9 +16,9 @@
   <%= f.input :content,       :label => "Your Message", 
                               :as => :text, 
                               :required => true, 
-                              :input_html => {:maxlength => "500"} %>
+                              :input_html => {:maxlength => "500", :rows => 10} %>
 
-  <div class="control-group">
+  <div class="control-group col-md-6 col-md-offset-4">
     <div class="controls">
       <%= f.submit 'Submit', :class => 'btn btn-primary' %>      
       <%= submit_tag 'Cancel', :type => :reset, :class => "btn" %>      
