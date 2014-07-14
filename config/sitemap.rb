@@ -4,6 +4,7 @@ SitemapGenerator::Sitemap.default_host = "http://www.swiftgive.com"
 SitemapGenerator::Sitemap.create do
   add root_path, :priority => 1
   add about_path, :priority => 0.7
+  add fund_path(ENV['SWIFTGIVE_FUND_UID']), :priority => 0.7 if ENV['SWIFTGIVE_FUND_UID'].present?
   add contact_path, :priority => 0.2
   add terms_path, :priority => 0.1
   add privacy_path, :priority => 0.1
