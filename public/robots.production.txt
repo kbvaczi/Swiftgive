@@ -4,4 +4,4 @@
 # User-Agent: *
 # Disallow: /
 
-SITEMAP: https://www.swiftgive.com/sitemap_index.xml.gz
+SITEMAP: http://swiftgive.s3.amazonaws.com/sitemap/sitemap.xml.gz

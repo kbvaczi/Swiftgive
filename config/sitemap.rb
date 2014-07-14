@@ -1,5 +1,18 @@
-# Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.swiftgive.com"
+# Your website's host name
+SitemapGenerator::Sitemap.default_host = ENV['HOST']
+
+# The remote host where your sitemaps will be hosted
+SitemapGenerator::Sitemap.sitemaps_host = "http://" + ENV['AWS_BUCKET'] + ".s3.amazonaws.com/"
+
+# The directory to write sitemaps to locally
+SitemapGenerator::Sitemap.public_path = 'tmp/'
+
+# Set this to a directory/path if you don't want to upload to the root of your `sitemaps_host`
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemap/'
+
+# Instance of `SitemapGenerator::WaveAdapter`
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::WaveAdapter.new
+
 
 SitemapGenerator::Sitemap.create do
   add root_path, :priority => 1
