@@ -48,7 +48,7 @@ class Payment < ActiveRecord::Base
     if sender_address.present? and sender_name.present? and to_addresses.present? and cc_addresses.present? and subject.present? and amount_in_cents.present?
       is_square_cash_copied   = cc_addresses.any?{ |s| s.casecmp("cash@square.com") == 0 } # square cash must be copied for valid payment
       is_only_one_receiver    = to_addresses.length == 1 # square cash allows 1 receiver maximum otherwise payment won't go through
-      is_valid_receiver       = ( (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase})) or (to_addresses.first.downcase == (self.fund.receiver_email.downcase rescue nil) )
+      is_valid_receiver       = ( (to_addresses.first.downcase.in?(self.fund.members.collect {|user| user.email.downcase})) or (to_addresses.first.downcase == (self.fund.receiver_email.downcase rescue nil)) )
       is_not_sending_to_self  = to_addresses.first.downcase != sender_address.downcase
       if not is_square_cash_copied
         self.update_attributes({:is_cancelled => true, :reason_for_cancellation => 'square cash not copied on email'}, :without_protection => true)
