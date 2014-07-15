@@ -54,7 +54,7 @@ Swiftgive::Application.routes.draw do
   # simple contact form
   match 'contact'             => 'contact#index'
   match 'contact_create'      => 'contact#create'
-  
+  match 'sitemap'             => 'home#sitemap'
   match 'about'               => 'home#about'
   match 'terms'               => 'home#terms'
   match 'privacy'             => 'home#privacy'

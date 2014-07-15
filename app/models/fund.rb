@@ -39,7 +39,7 @@ class Fund < ActiveRecord::Base
   validates_presence_of :uid, :name, :description
   validates             :fund_type, :inclusion => { :in => %w(business person third_party), :message => "%{value} is not valid" }
   validates             :name, :length => { :minimum => 3, :maximum => 50 }
-  validates             :description, :length => { :minimum => 10, :maximum => 250 }
+  validates             :description, :length => { :minimum => 10, :maximum => 500 }
   validates_presence_of :receiver_name, :receiver_email, :unless => Proc.new { self.is_personal_fund? }
   validates             :receiver_email, :email => true, :unless => Proc.new { self.is_personal_fund? }
   validate              :user_has_less_than_five_funds, :on => :create

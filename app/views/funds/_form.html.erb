@@ -2,7 +2,7 @@
  
   <%= f.input :name, :placeholder => 'Fund Name', :input_html => { :maxlength => 50 } %>
   <%= f.input :description,  :as =>  :text,
-                            :placeholder => 'Description', :input_html => { :maxlength => 250, :rows => 4 } %>
+                            :placeholder => 'Description', :input_html => { :maxlength => 500, :rows => 4 } %>
   <%= f.input :fund_type, :as => :select,
                           :include_blank => false,
                           :collection => [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']],

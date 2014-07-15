@@ -33,6 +33,8 @@ gem 'mini_magick', '~> 3.6'                           # image manipulation
 gem 'carmen', '~> 1.0.1'                              # State and country information
 gem 'unicorn'                                         # Multi-threaded web server
 
+gem 'sitemap_generator', '~> 5.0.4'                   # generates a sitemap and advertises new sitemaps to bing and google search
+
 group :development do
   gem 'unicorn-rails', '~> 2.1.1'                     # unicorn works with "rails s"
   gem 'sqlite3'                                       # simple file-based database

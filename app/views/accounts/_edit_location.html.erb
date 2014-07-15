@@ -3,7 +3,7 @@
     <div class='modal-content'>
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class='modal-title' id="edit_name_modal_label">Change Your Name</h4>
+        <h4 class='modal-title' id="edit_name_modal_label">Change Your Location</h4>
       </div>  
         <% location = Accounts::Location.new(params[:accounts_location] || current_user.account.attributes.slice('street_address', 'city', 'state', 'postal_code', 'country')) %> 
         <%= simple_form_for location, :url => accounts_location_path, :html => {:id => 'edit_location_form', :class => 'modal-form'}, :validate => true, :method => :put do |f| %>
