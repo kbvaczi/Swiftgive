@@ -3,3 +3,5 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-Agent: *
 # Disallow: /
+
+SITEMAP: http://swiftgive.s3.amazonaws.com/sitemap/sitemap.xml.gz

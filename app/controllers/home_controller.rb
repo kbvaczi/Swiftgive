@@ -38,6 +38,14 @@ class HomeController < ApplicationController
     end
   end
 
+  def sitemap
+    if ENV['SITEMAP_URL'].present?
+      redirect_to ENV['SITEMAP_URL']
+    else
+      redirect_to root_path 
+    end
+  end
+
 
   # used for testing.  This should be empty when pushed.
   def test
