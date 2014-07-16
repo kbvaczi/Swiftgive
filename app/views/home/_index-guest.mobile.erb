@@ -66,4 +66,14 @@
 		</li>
 	</ul>
 </p>
+
 <%= link_to "Learn More", about_path, :'data-role' => 'button', :'data-icon' => 'info' %> 
+
+
+<script>
+
+	$("[data-role='page']").on('pageinit', function() {
+		cyclePageBackgroundImage();
+	});
+
+</script>
