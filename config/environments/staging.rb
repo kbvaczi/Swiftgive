@@ -80,4 +80,9 @@ Swiftgive::Application.configure do
 
   # Use ssl enforcer gem to reroute all traffic through https protocol
   config.middleware.use Rack::SslEnforcer  
+
+  # HTTP authentication, must be inserted before SSL enforcer to ensure communication over HTTPS
+  config.middleware.insert_before(Rack::SslEnforcer, Rack::Auth::Basic, 'Please Authenticate') do |username, password|
+    [username, password] == [ENV.fetch('HTTP_USER'), ENV.fetch('HTTP_PASSWORD')]
+  end
 end
