@@ -1,5 +1,5 @@
 # Your website's host name
-SitemapGenerator::Sitemap.default_host = ENV['HOST']
+SitemapGenerator::Sitemap.default_host = "http://" + ENV['HOST']
 
 # The remote host where your sitemaps will be hosted
 SitemapGenerator::Sitemap.sitemaps_host = "http://" + ENV['AWS_BUCKET'] + ".s3.amazonaws.com/"
