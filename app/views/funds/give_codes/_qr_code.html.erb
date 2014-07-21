@@ -1,4 +1,5 @@
-<% qr_code = RQRCode::QRCode.new(message, :size => 6, :level => :h) %>
+<% error_level ||= :h %>
+<% qr_code = RQRCode::QRCode.new(message, :size => 6, :level => error_level) %>
 <% size ||= 10 * qr_code.modules.count %>
 
 <style type="text/css">
