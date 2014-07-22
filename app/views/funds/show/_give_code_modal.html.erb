@@ -7,7 +7,7 @@
       </div>  
       <div class="modal-body ma center_wrap">    
         <% if current_fund.give_code_image.present? %>
-          <%= image_tag current_fund.give_code_image.url, :style => "width:300px;" %>
+          <%= image_tag current_fund.give_code_image.url, :style => "width:300px;", :alt => "Swiftgive | #{current_fund.name}" %>
         <% else %>
           <h2>Ooops!</h2>
           <h4>We haven't generated the give code for this fund yet.  Please try again later.  Sorry for the inconvenience!</h4>
