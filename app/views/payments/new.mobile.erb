@@ -124,8 +124,9 @@
           flashNow('Error submitting payment...', 'error');
         } else {
           var amount_in_dollars = $('#payment_amount_in_cents option:selected').val() / 100;
-          var message           = $('#payment_message').val();
-          var body              = message ? message + "\r\n\r\nYour payment ID is: " + response['uid'] : "Your payment ID is: " + response['uid'];
+          var user_message      = $('#payment_message').val();
+          var standard_message  = "Message from Swiftgive:\r\nBoth sender and receiver will soon receive an email from Square Cash confirming this payment. If you haven't done so already, you will be prompted to enter your debit card information. Once Square has your debit card, they will process all your future payments automatically. For your records, your payment ID is: " + response['uid'] + "\r\n\r\n Thanks for using Swiftgive!";
+          var body              = user_message ? user_message + "\r\n\r\n" + standard_message : standard_message;
           var email_params = [{ name:"cc",        value:"Square Cash <cash@square.com>, Swiftgive<<%= ENV['PAYMENTS_EMAIL'] %>>" },
                               { name:"subject",   value:"Here's $" + amount_in_dollars + " courtesy of Swiftgive" },
                               { name:"body",      value:body }];

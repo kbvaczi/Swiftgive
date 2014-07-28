@@ -133,7 +133,8 @@ class Fund < ActiveRecord::Base
 
   def give_code_as_pdf
     code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
-    code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513}
+    code_error_level = Rails.env.production? ? :h : :m
+    code_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 513, :error_level => code_error_level}
     code_vector_blob = PDFKit.new(code_html, { :'page-height'    => '263pt', 
                                               :'page-width'     => '250pt', 
                                               :'margin-top'     => '0', 
@@ -145,7 +146,8 @@ class Fund < ActiveRecord::Base
 
   def give_code_as_png
     code_url  = Rails.application.routes.url_helpers.new_payment_url(:fund_uid => self.uid, :host => ENV['HOST'])
-    code_image_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 510 }
+    code_error_level = Rails.env.production? ? :h : :m
+    code_image_html = ApplicationController.new.render_to_string :partial =>'funds/give_codes/give_code', :locals => {:message => code_url, :width => 510, :error_level => code_error_level }
     code_image_blob = IMGKit.new(code_image_html, :quality => 40, :height => 530, :width => 500, :zoom => 1).to_img(:png)
     code_image_blob
   end
