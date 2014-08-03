@@ -37,7 +37,7 @@ task :seed_marketing_products => :environment do
                   :comment => 'Giant reusable stickers')
 
   MarketingProduct.create(  :name => 'Stickers',
-                  :zazzle_template_id => '217386779406632965',
+                  :zazzle_template_id => '217970799043890191',
                   :price_in_cents => 575,
                   :image => File.open('app/assets/images/marketing_products/sticker.png'),
                   :comment => 'Just stick and forget')

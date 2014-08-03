@@ -4,7 +4,7 @@
 		<div class="col-md-3"  style='height:200px;'>
 			<div class="thumbnail bc-w">
 				<div class='center_wrap'>
-				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_image0_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix center ', :target => '_blank' %>
+				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_image0_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name, :tc => current_fund.uid), :class => 'clearfix center ', :target => '_blank' %>
 				</div>
 			</div>
 			<div class='caption mb ml-m' style='margin-top:-10px'>

@@ -7,7 +7,7 @@ body {
 }  
 
 h1.frontpage {
-	font-size:24px;
+	font-size:23px;
 	margin:0px 0px 5px 0px;
   padding:8px 0px 0px 0px;
   line-height:120%;
@@ -44,6 +44,7 @@ h1.page_title {
   width:180px;
   height:40px;
   background-size: auto 100%;
+  background-position: center center;
   background-image: image-url('swiftgive_logo.svg');
   background-repeat: no-repeat;
 }
