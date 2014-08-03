@@ -1,5 +1,6 @@
 <% width ||= 513.to_f %>
 <% height = 525/500.to_f * width.to_f %>
+<% error_level ||= :h %>
 
 <style type="text/css">
   body, html {
@@ -37,7 +38,7 @@
   <%= image_tag 'give_code_wrapper.svg', :class => 'give_code_wrapper_image' %>
   
   <div class='qr_code'>
-    <%= render :partial => 'funds/give_codes/qr_code', :locals => {:message => message, :size => width * 0.82} %>
+    <%= render :partial => 'funds/give_codes/qr_code', :locals => {:message => message, :size => width * 0.82, :error_level => error_level} %>
   </div>
   
 </div>

@@ -26,7 +26,7 @@ class MarketingProduct < ActiveRecord::Base
                :ic => '',
                :ax => 'Linkover', 
                :pd => self.zazzle_template_id, # zazzle template ID
-               :fwd => 'ProductPage',  # this is a link to product page
+               :fwd => 'designtool',  # productpage or designtool, tells where to direct user
                :ed => 'true' } # user can customize the product
 
     URI::HTTP.build({ :host  => 'www.zazzle.com',
