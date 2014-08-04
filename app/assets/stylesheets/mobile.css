@@ -11,10 +11,8 @@
 
  *= require application
  *= require_self
-
- *= require jquery.mobile 
+ *= require jquery.mobile
+ *= require ./mobile/main
  *= require_tree ./mobile
- *= require ../../../vendor/assets/stylesheets/jquery-mobile-swiftgive
-
 
  */
