@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 ruby '2.0.0'
 
@@ -11,7 +12,7 @@ gem 'omniauth', '~> 1.1.3'                            # omni-auth implementation
 gem 'omniauth-facebook', '~> 1.4.1'                   # omni-auth plugin for logging in from facebook
 gem 'omniauth-google-oauth2', '~> 0.1.13'             # omni-auth strategy for logging in with google
 gem 'omniauth-linkedin', '~> 0.1.0'                   # omni-auth strategy for logging in with linkedin
-gem 'social-buttons', '~> 0.3.9'                      # for generating like buttons, etc...
+gem 'rails-assets-RRSSB'                              # share buttons
 
 gem 'sidekiq', '~> 2.6.1'                             # redis backed background processing
 gem 'sidekiq-unique-jobs', '~> 3.0.0'                 # adds unique jobs functionality to sidekiq

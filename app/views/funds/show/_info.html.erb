@@ -1,11 +1,6 @@
-
 <h3>About</h3>
 <p class='lead'><%= display_description_with_line_breaks(current_fund.description) %></p>
-<div class='ma'>
-  <div class='left mb mr'><%= like_button(ENV['FACEBOOK_APP_ID']) %></div>  
-  <div class='left mb mr-s ml'><%= google_plus_button :script => true, :annotation => :bubble, :size => :medium %></div>
-  <div class='left mb'><%= pinit_button :media => current_fund.give_code_image %></div>  
-</div>
+
 <table class="table table-striped">
   <% if current_fund.is_business_fund? %> 
     <tr>
@@ -13,7 +8,6 @@
       <td><%= current_fund.receiver_name %></td>
     </tr>
   <% end %>
-  
   
   <% if current_fund.is_third_party_fund? %>
     <tr>

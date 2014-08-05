@@ -2,8 +2,14 @@
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
 <% is_current_fund_member = (user_signed_in? and current_fund.members.include?(current_user)) %>
 
-<%= render :partial => 'funds/show/info' %>
 <%= render :partial => 'funds/show/give_code_modal' %>
+<%= render :partial => 'funds/show/info' %>
+<div class='row mb'>
+	<div class='col-md-5 mb' style='opacity:0.8;'>		
+		<%= render :partial => 'funds/show/social_buttons' %>
+	</div>	
+</div>
+
 
 <% if current_fund.recent_payments.present? %>
 	<h3>Recent Donations</h3>
@@ -58,5 +64,7 @@
 		</table>	
 		<%= link_to "<i class='fa fa-fw fa-heart'></i> Give to this fund".html_safe, "#", :class => "btn btn-primary pull-right", :onclick => "openGiveCodeModal();" %>
 	</div>
+
+
 
 <% end %>
