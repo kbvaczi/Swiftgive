@@ -4,12 +4,6 @@
 
 <%= render :partial => 'funds/show/give_code_modal' %>
 <%= render :partial => 'funds/show/info' %>
-<div class='row mb'>
-	<div class='col-md-5 mb' style='opacity:0.8;'>		
-		<%= render :partial => 'funds/show/social_buttons' %>
-	</div>	
-</div>
-
 
 <% if current_fund.recent_payments.present? %>
 	<h3>Recent Donations</h3>
@@ -62,9 +56,15 @@
 				<td class='t-l'><span class='right'><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></span></td>
 			</tr>
 		</table>	
-		<%= link_to "<i class='fa fa-fw fa-heart'></i> Give to this fund".html_safe, "#", :class => "btn btn-primary pull-right", :onclick => "openGiveCodeModal();" %>
+		<%= link_to "<i class='fa fa-fw fa-heart'></i> Give to this fund".html_safe, "#", :class => "btn btn-primary pull-right t-l", :onclick => "openGiveCodeModal();" %>
 	</div>
 
+<div class='content_box clearfix'>
+	<h4>Share This Fund</h4>
+	<div style='opacity:0.7;max-width:320px;'>		
+		<%= render :partial => 'funds/show/social_buttons' %>
+	</div>	
+</div>
 
 
 <% end %>
