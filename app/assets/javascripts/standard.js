@@ -15,7 +15,6 @@
 //= require rails.validations
 //= require rails.validations.simple_form
 //= require spin
-//= require RRSSB
 
 //= require_tree ./standard
 //= require_tree ./shared

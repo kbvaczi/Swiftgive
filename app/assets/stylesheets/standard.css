@@ -11,5 +11,4 @@
  *= require application
  *= require_self
  *= require_tree ./standard
- *= require RRSSB/scss/rrssb
  */

@@ -5,8 +5,8 @@
       <div class="collapse navbar-collapse mr" role='navigation'>
 
         <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to content_tag(:i, "", :class => 'fa fa-2x fa-facebook-square'), 'http://www.facebook.com/swiftgive', :target => '_blank', :class => 'pr-n pt-m mb-n' %></li>
-          <li><%= link_to content_tag(:i, "", :class => 'fa fa-2x fa-envelope-square'), contact_path, :class => 'popup pr-n pt-m mb-n mr' %></li>
+        <li><%= link_to content_tag(:i, "", :class => 'fa fa-2x fa-facebook-square social_grey'), 'http://www.facebook.com/swiftgive', :target => '_blank', :class => 'pr-n pt-m mb-n' %></li>
+          <li><%= link_to content_tag(:i, "", :class => 'fa fa-2x fa-envelope-square social_grey'), contact_path, :class => 'popup pr-n pt-m mb-n mr' %></li>
           <li><div class='ma'></div></li>
           <li><%= link_to "About", about_path %></li>
         	<% if user_signed_in? %>
