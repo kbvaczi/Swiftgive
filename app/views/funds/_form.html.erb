@@ -5,12 +5,12 @@
                             :placeholder => 'Description', :input_html => { :maxlength => 500, :rows => 4 } %>
   <%= f.input :fund_type, :as => :select,
                           :include_blank => false,
-                          :collection => [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']],
+                          :collection => [['For Myself','person'],['For Someone Else','third_party'],['For an Organization','business']],
                           :input_html => {:onchange => "refreshFormNewFund($(this).closest($('form')))"} %>
     
   <div id="business_information_inputs" style='<%= 'display:none;' unless @fund.is_business_fund? %>'>    
-    <%= f.input :receiver_name, :placeholder => 'Business Name', :label => 'Business Name', :required => true, :input_html => { :maxlength => 30 } %>
-    <%= f.input :receiver_email, :placeholder => 'Business Email', :label => 'Business Email', :required => true %>
+    <%= f.input :receiver_name, :placeholder => 'Organization Name', :label => 'Organization Name', :required => true, :input_html => { :maxlength => 30 } %>
+    <%= f.input :receiver_email, :placeholder => 'Organization Email', :label => 'Organization Email', :required => true %>
     <%= f.input :city, :placeholder => 'City', :required => true, :input_html => { :maxlength => 30 } %>
     <%= f.input :state, :as => :select, :collection => us_state_codes_collection, :prompt => 'State', :required => true %>  
   </div>
