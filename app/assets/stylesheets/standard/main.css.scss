@@ -77,56 +77,32 @@ a:hover {
   @extend .br
 }
 
-/* # ----- Page Content ----- # */
-
-.page-background-image {
-  position:absolute;
-  z-index: 0;
-  width:100%;  
-  background-repeat: no-repeat;
-  background-position: center center; 
-}
-
-@media(max-width:767px){
-  .page-background-image {
-    background-size: auto 100%;
-    height: 550px;
-  }
-  .frontpage-banner {
-    min-height: 550px;
-  }
-}
-@media(min-width:768px){
-  .page-background-image {
-    background-size: 100%;
-    height:550px;
-  }
-  .frontpage-banner {
-    min-height:550px;
-  }
-}
-@media(min-width:992px){
-  .page-background-image {
-    background-size: 100% auto;
-    height:600px;
-  }
-  .frontpage-banner {
-    min-height:600px;
-  }
-}
-
 /* icon wrappers */
 
 .icon-wrapper-circle {
   border-radius:50%;
-  height:104px;
-  width:104px;
+  border: none;
   display:inline-block;
-  
+  vertical-align: middle;
+  text-align: center;
+}
+.icon-wrapper-circle-medium {
+  height:75px;
+  width:75px;
 }
 
-.icon-wrapper i {
+.icon-wrapper-circle-large {
+  height:125px;
+  width:125px;
+}
+
+.icon-in-wrapper-medium {
+  font-size:360%;
+  text-shadow: 0px -2px 0px rgba(50,50,50,0.2);  
+}
+
+.icon-in-wrapper-large {  
   font-size:600%;
-  line-height:0.9;
+  padding-top:20px;
+  text-shadow: 0px -2px 0px rgba(50,50,50,0.2);  
 }
-

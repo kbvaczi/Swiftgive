@@ -13,32 +13,125 @@
 </div>
 
 <div class='row'>
-	<div class='col-md-4 center_wrap mb'>
-		<div class='bc-g pa tc-w mb-m icon-wrapper icon-wrapper-circle'>
-			<i class='fa fa-dollar'></i>
+	<div class='col-md-4 center_wrap mb'>		
+		<div class='bc-g mb-m icon-wrapper-circle icon-wrapper-circle-large'>
+			<i class='fa fa-dollar icon-in-wrapper-large tc-w'></i>
 		</div>
 		<h3 class='mb-m'>Free to Use</h3>
 		<p><i>Totally free. No fee to give. No fee to receive.</i></p>
 	</div>
-	<div class='col-md-4 center_wrap mb'>
-		<div class='bc-g pa tc-w mb-m icon-wrapper icon-wrapper-circle'>
-			<i class='fa fa-mobile-phone'></i>
+	<div class='col-md-4 center_wrap mb'>		
+		<div class='bc-g mb-m icon-wrapper-circle icon-wrapper-circle-large'>
+			<i class='fa fa-mobile-phone icon-in-wrapper-large tc-w'></i>
 		</div>
 		<h3 class='mb-m'>Universal</h3>
 		<p><i>Works with most modern mobile devices. All you need is email and a debit card.</i></p>
 	</div>
 	<div class='col-md-4 center_wrap mb'>
-		<div class='bc-g pa tc-w mb-m icon-wrapper icon-wrapper-circle'>
-			<i class='fa fa-lock'></i>
+		<div class='bc-g mb-m icon-wrapper-circle icon-wrapper-circle-large'>
+			<i class='fa fa-lock icon-in-wrapper-large tc-w'></i>
 		</div>
 		<h3 class='mb-m'>Secure</h3>
 		<p><i>Built on top of an established peer-to-peer payment service.</i></p>
 	</div>
 </div>
 
-<br/>
-<hr>
-<br/>
+<div class='row row-hr'></div>
+
+<div class='row'>
+	<div class='center_wrap'><h2 class='t-ssl drop-shadow-up'>Giving with Swiftgive</h2></div>
+	<br/>
+	<div class='col-md-4'>
+		<div class='panel panel-default'>
+			<div class='panel-body center_wrap'>
+				<h3 class='lead'>Scan a Give Code</h3>
+				<%= image_tag asset_path('iphone_scanning_give_code.png'), :height => '325px' %>
+				<div class='giving-arrow'>
+					<div class='bc-g icon-wrapper-circle icon-wrapper-circle-large'>
+						<i class='fa fa-chevron-right icon-in-wrapper-large tc-w pl-m'></i>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<i>Use any <b>QR code reading app</b> free from your app store. There is no special Swiftgive app that you need to download.</i>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-4'>
+		<div class='panel panel-default'>
+			<div class='panel-body center_wrap'>
+				<h3 class='lead'>Enter Amount to Give</h3>
+				<%= image_tag asset_path('iphone_selecting_amount.png'), :height => '325px' %>
+				<div class='giving-arrow'>
+					<div class='bc-g icon-wrapper-circle icon-wrapper-circle-large'>
+						<i class='fa fa-chevron-right icon-in-wrapper-large tc-w pl-m'></i>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<i>Optionally include a message, then tap <b>Give Now</b>. Feel free to <b>give as a guest</b> or you can sign in and choose to make your donation public.</i>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-4'>
+		<div class='panel panel-default'>
+			<div class='panel-body center_wrap'>
+				<h3 class='lead'>Send Payment Email</h3>				
+				<%= image_tag asset_path('iphone_sending_email.png'), :height => '325px' %>
+			</div>
+			<div class="panel-footer">
+				<i>We set up the email for you so <b>just tap send</b>. <b>Square Cash</b> will respond via email, allowing you to enter <b>debit card</b> info and finalize your payment. </i>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class='row row-hr'></div>
+
+<div class='row'>
+	<div class='center_wrap'><h2 class='t-ssl drop-shadow-up'>Receiving with Swiftgive</h2></div>
+	<br/>
+	<div class='col-md-4 center_wrap mt'>
+		<%= image_tag asset_path('marketing_montage.png'), :height => '300px', :width => '300px' %>
+	</div>
+	<div class='col-md-8'>
+		<div class='row ml pl'>
+			<div class='col-sm-2'>
+				<span class='icon-wrapper-circle icon-wrapper-circle-medium bc-g'>
+					<div class='tc-w icon-in-wrapper-medium'><i class='fa fa-inbox'></i></div>
+				</span>
+			</div>
+			<div class='col-sm-10 mt'>
+				<h3 class='d-ib lead t-sl'>Find a Fund to Promote</h3>
+				<p class='tc-grey'>Think of funds like an inbox for tips and donations. Start a new one yourself or find one to promote. A fund can be for a single person or for an entire organization with lots of fundraisers.</p>
+			</div>
+		</div>
+		<div class='row ml pl'>
+			<div class='col-sm-2'>
+				<span class='icon-wrapper-circle icon-wrapper-circle-medium bc-g'>
+					<div class='tc-w icon-in-wrapper-medium'><i class='fa fa-qrcode'></i></div>
+				</span>
+			</div>
+			<div class='col-sm-10 mt'>
+				<h3 class='d-ib lead t-sl'>Arm yourself with marketing products</h3>
+				<p class='tc-grey'>Get customizable marketing products specially coded to a fund. Add your logo and text for a personal touch. Help spread the word by giving products to friends, and share your fund on social media to encourage others to promote with you.</p>
+			</div>
+		</div>
+		<div class='row pl ml'>
+			<div class='col-sm-2'>
+				<span class='icon-wrapper-circle icon-wrapper-circle-medium bc-g'>
+					<div class='tc-w icon-in-wrapper-medium'><i class='fa fa-group'></i></div>
+				</span>
+			</div>
+			<div class='col-sm-10 mt'>
+				<h3 class='d-ib lead t-sl'>Have donors scan your give codes</h3>
+				<p class='tc-grey'>We have products for a variety of strategies. Want face-to-face interaction? Pick up some coded buttons to wear or business cards to hand out. Prefer a more distanced approach? Put up coded stickers and posters, or just mail out some coded post cards.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class='row row-hr'></div>
 
 <div class='row'>
 	<div class='col-md-4 center_wrap'>
@@ -50,7 +143,7 @@
 	</div>	
 </div>
 
-<div class='row mt'>
+<div class='row'>
 	<div class='col-md-8 mt center_wrap'>
 		<h2><i class='fa fa-fw fa-check-square tc-g'></i> The Solution</h2>
 	    <p class='lead word_wrap text-justify mt'><%= t('the-solution') %></p>
@@ -60,38 +153,7 @@
 	</div>
 </div>
 
-<br/>
-<hr>
-<br/>
-
-<div class='row mt mb'>
-	<div class='col-md-4 center_wrap'>
-		<%= image_tag asset_path('marketing_montage.png'), :height => '300px', :width => '300px' %>
-	</div>
-	<div class='col-md-8 mt center_wrap'>
-		<h2><i class='fa fa-fw fa-dollar tc-g'></i> Raising Money</h2>		
-		<p class='lead text-justify mt'>Start a new fund or find one you want to promote. Get customizable marketing products specially coded to that fund.</p>
-		<p class='lead text-justify'>Help spread the word by giving products to friends or to your fundraising team.</p>
-		<p class='lead text-justify'>Distribute or display marketing products in public while asking people to contribute. We have products available for a variety of marketing strategies.</p>		
-	</div>	
-</div>
-
-<div class='row mt mb'>	
-	<div class='col-md-8 mt center_wrap'>
-		<h2><i class='fa fa-fw fa-heart tc-g'></i> Giving Money</h2>
-		<p class='lead text-justify mt'>Scan a give code using any QR code reading app on any type of device. No need to download a special Swiftgive app. </p>
-		<p class='lead text-justify'>Read more about the fund from your device before deciding to give, or wait to give later after services rendered.</p>
-		<p class='lead text-justify'>Choose amount to give and send payment directly from your device.  All you need is email and a debit card. Debit card information can be entered later if you're short 
-		on time.</p>					
-	</div>
-	<div class='col-md-4 center_wrap'>
-		<%= image_tag asset_path('iphone_scanning_give_code.png'), :height => '400px' %>
-	</div>
-</div>
-
-<br/>
-<hr>
-<br/>
+<div class='row row-hr'></div>
 
 <div class ='row mt mb center_wrap'>
 	<div class='col-md-6'>
