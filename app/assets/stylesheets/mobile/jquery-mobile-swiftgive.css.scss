@@ -8,7 +8,7 @@
 * http://jquery.org/license
 *
 */
-
+@import "shared/variables";
 
 /* Globals */
 /* Font
@@ -222,7 +222,7 @@ html .ui-body-a .ui-bar-inherit,
 html body .ui-group-theme-a .ui-bar-inherit {
 	background-color: #e9e9e9 /*{a-bar-background-color}*/;
 	border-color: #dddddd /*{a-bar-border}*/;
-	color: #333333 /*{a-bar-color}*/;
+	color: $fontColor /*{a-bar-color}*/;
 	text-shadow: none;
 	font-weight: bold;
 }
@@ -236,7 +236,7 @@ html body .ui-group-theme-a .ui-bar-inherit {
 .ui-page-theme-a .ui-panel-wrapper {
 	background-color: #f9f9f9 /*{a-page-background-color}*/;
 	border-color: #bbbbbb /*{a-page-border}*/;
-	color: #333333 /*{a-page-color}*/;
+	color: $fontColor /*{a-page-color}*/;
 	text-shadow: none;
 }
 /* Body: Read-only lists, text inputs, collapsible content */
@@ -248,7 +248,7 @@ html body .ui-group-theme-a .ui-body-inherit,
 html .ui-panel-page-container-a {
 	background-color: #ffffff /*{a-body-background-color}*/;
 	border-color: #dddddd /*{a-body-border}*/;
-	color: #333333 /*{a-body-color}*/;
+	color: $fontColor /*{a-body-color}*/;
 	text-shadow: none;
 }
 .ui-body-a {
@@ -295,7 +295,7 @@ html body .ui-group-theme-a .ui-btn:visited,
 html head + body .ui-btn.ui-btn-a:visited {
 	background-color: #f6f6f6 /*{a-bup-background-color}*/;
 	border-color: #dddddd /*{a-bup-border}*/;
-	color: #333333 /*{a-bup-color}*/;
+	color: $fontColor /*{a-bup-color}*/;
 	text-shadow: none;
 }
 /* Button hover */
@@ -306,7 +306,7 @@ html body .ui-group-theme-a .ui-btn:hover,
 html head + body .ui-btn.ui-btn-a:hover {
 	background-color: #ededed /*{a-bhover-background-color}*/;
 	border-color: #dddddd /*{a-bhover-border}*/;
-	color: #333333 /*{a-bhover-color}*/;
+	color: $fontColor /*{a-bhover-color}*/;
 	text-shadow: none;
 }
 /* Button down */
@@ -317,7 +317,7 @@ html body .ui-group-theme-a .ui-btn:active,
 html head + body .ui-btn.ui-btn-a:active {
 	background-color: #e8e8e8 /*{a-bdown-background-color}*/;
 	border-color: #dddddd /*{a-bdown-border}*/;
-	color: #333333 /*{a-bdown-color}*/;
+	color: $fontColor /*{a-bdown-color}*/;
 	text-shadow: none;
 }
 /* Active button */
@@ -384,7 +384,7 @@ html .ui-body-b .ui-bar-inherit,
 html body .ui-group-theme-b .ui-bar-inherit {
 	background-color: #e9e9e9 /*{b-bar-background-color}*/;
 	border-color: #dddddd /*{b-bar-border}*/;
-	color: #333333 /*{b-bar-color}*/;
+	color: $fontColor /*{b-bar-color}*/;
 	text-shadow: none;
 	font-weight: bold;
 }
@@ -398,7 +398,7 @@ html body .ui-group-theme-b .ui-bar-inherit {
 .ui-page-theme-b .ui-panel-wrapper {
 	background-color: #333 /*{b-page-background-color}*/;
 	border-color: #bbbbbb /*{b-page-border}*/;
-	color: #333333 /*{b-page-color}*/;
+	color: $fontColor /*{b-page-color}*/;
 	text-shadow: none;
 }
 /* Body: Read-only lists, text inputs, collapsible content */
@@ -410,7 +410,7 @@ html body .ui-group-theme-b .ui-body-inherit,
 html .ui-panel-page-container-b {
 	background-color: #ffffff /*{b-body-background-color}*/;
 	border-color: #dddddd /*{b-body-border}*/;
-	color: #333333 /*{b-body-color}*/;
+	color: $fontColor /*{b-body-color}*/;
 	text-shadow: none;
 }
 .ui-body-b {
