@@ -8,7 +8,7 @@
 	<div class="jumbotron jumbotron-translucent mt">
 		<h1 class='text-shadow-white'><%= t('slogan') %></h1>  
 		<p class='text-shadow-white'><%= t('slogan-sub') %></p>
-		<%= link_to "Start Your Fund Today &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb box-shadow-white' %>
+		<%= link_to "Start For Free Today &nbsp<i class='fa fa-chevron-circle-right'></i>".html_safe, new_fund_path, :class => 'btn btn-lg btn-primary mt mb box-shadow-white' %>
 	</div>
 </div>
 
@@ -89,7 +89,7 @@
 <div class='row row-hr'></div>
 
 <div class='row'>
-	<div class='center_wrap'><h2 class='t-ssl drop-shadow-up'>Receiving with Swiftgive</h2></div>
+	<div class='center_wrap'><h2 class='t-ssl drop-shadow-up'>Raising Money with Swiftgive</h2></div>
 	<br/>
 	<div class='col-md-4 center_wrap mt'>
 		<%= image_tag asset_path('marketing_montage.png'), :height => '300px', :width => '300px' %>
@@ -133,22 +133,45 @@
 
 <div class='row row-hr'></div>
 
-<div class='row'>
-	<div class='col-md-4 center_wrap'>
-		<%= image_tag asset_path('empty_wallet.jpg'), :width => '300px' %>
+<div class='row'>	
+	<div class='col-md-6 col-md-offset-3 center_wrap'>
+		<div class='panel panel-default'>
+			<div class='panel-body center_wrap'>
+				<h3 class='lead t-ssl drop-shadow-up'>Check out Our Fund</h3>
+				<% if ENV['SWIFTGIVE_FUND_UID'].present? %>
+					<%= link_to image_tag("swiftgive_give_code.png", :width => '400px'), fund_path(ENV['SWIFTGIVE_FUND_UID']) %>	
+				<% else %>
+					<%= image_tag("swiftgive_give_code.png", :width => '400px') %>
+				<% end %>				
+			</div>
+			<div class="panel-footer">
+				This is what give codes look like. <b>Scan</b> or <b>click</b> this code to check out our fund called "Help Support Swiftgive".  It's is a fully functional fund to raise money for the maintenance and development of Swiftgive, but it also serves as a demo. You are welcome to give if you'd like, but please don't feel obligated.
+			</div>
+		</div>
+		
 	</div>
-	<div class='col-md-8 mt center_wrap'>
-		<h2><i class='fa fa-fw fa-exclamation-triangle tc-g'></i> The Problem</h2>
-	    <p class='lead word_wrap text-justify mt'><%= t('the-problem') %></p>
-	</div>	
 </div>
 
+
+<div class='row row-hr'></div>
+
 <div class='row'>
-	<div class='col-md-8 mt center_wrap'>
-		<h2><i class='fa fa-fw fa-check-square tc-g'></i> The Solution</h2>
-	    <p class='lead word_wrap text-justify mt'><%= t('the-solution') %></p>
+	<div class='col-md-5 center_wrap'>
+		<%= image_tag asset_path('empty_wallet.jpg'), :width => '300px' %>
+	</div>
+	<div class='col-md-7 mt center_wrap'>
+		<h3 class='t-sl drop-shadow-up'><i class='fa fa-fw fa-exclamation-triangle tc-g fa-lg'></i> The Problem</h3>
+	    <p class='lead word_wrap text-justify mt pt tc-grey-dark'><%= t('the-problem') %></p>
 	</div>	
-	<div class='col-md-4 center_wrap'>
+</div>
+<br/>
+<br/>
+<div class='row'>
+	<div class='col-md-7 mt center_wrap'>
+		<h3 class='t-sl drop-shadow-up'><i class='fa fa-fw fa-check-square tc-g fa-lg'></i> The Solution</h3>
+	    <p class='lead word_wrap text-justify mt pt tc-grey-dark'><%= t('the-solution') %></p>
+	</div>	
+	<div class='col-md-5 center_wrap'>
 		<%= image_tag asset_path('give_by_phone.jpg'), :height => '300px' %>
 	</div>
 </div>
