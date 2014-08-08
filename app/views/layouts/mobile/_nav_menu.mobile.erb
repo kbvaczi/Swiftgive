@@ -7,7 +7,9 @@
 			<%= link_to 'My Account', show_user_profile_path, :'data-role' => 'button', :'data-icon' => 'user', :'data-mini' => 'true' %>
 			<%= link_to 'My Funds', funds_path, :'data-role' => 'button', :'data-icon' => 'shop', :'data-mini' => 'true' %>
 			<br class='spacer'/>
-		<% end %>		
+		<% else %>
+			<h3>Welcome Guest</h3>
+		<% end %>
 
 		<% if user_signed_in? %>
 			<div style="border-top:1px solid #eee"></div>
