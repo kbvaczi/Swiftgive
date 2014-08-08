@@ -1,6 +1,6 @@
-
 <h3>About</h3>
 <p class='lead'><%= display_description_with_line_breaks(current_fund.description) %></p>
+
 <table class="table table-striped">
   <% if current_fund.is_business_fund? %> 
     <tr>
@@ -8,7 +8,6 @@
       <td><%= current_fund.receiver_name %></td>
     </tr>
   <% end %>
-  
   
   <% if current_fund.is_third_party_fund? %>
     <tr>

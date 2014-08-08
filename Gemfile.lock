@@ -11,6 +11,7 @@ GIT
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     CFPropertyList (2.2.8)
     actionmailer (3.2.17)

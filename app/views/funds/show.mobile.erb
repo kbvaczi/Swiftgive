@@ -12,6 +12,13 @@
 </ul>
 
 <ul data-role="listview" data-inset="true" data-theme"a">
+<li data-role="list-divider">Share This Fund</li>
+	<li>
+		<div class='center_wrap'><%= render :partial => 'funds/show/social_buttons' %></div>
+	</li>
+</ul>
+
+<ul data-role="listview" data-inset="true" data-theme"a">
 	
 	<% if current_fund.is_third_party_fund? %>
 		<li data-role="list-divider">Giving Benefits</li>

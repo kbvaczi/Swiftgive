@@ -1,5 +1,6 @@
 @import "shared/variables";
 @import "shared/helpers";
+@import "shared/social_media";
 @import "shared/jumbotron_carousel_backgrounds";
 
 html {
@@ -10,7 +11,7 @@ html {
 
 body {
   overflow-y:scroll; /* always show scrollbar */
-  background-color: rgb(253, 253, 253);
+  background-color: rgb(252, 252, 252);
   color: $fontColor;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }  
