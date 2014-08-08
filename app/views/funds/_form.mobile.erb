@@ -11,7 +11,7 @@
                       :maxlength => 500 %>
   </li>
   <li>
-    <%= f.select      :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For Business / Non-Profit','business']], {}, 
+    <%= f.select      :fund_type, [['For Myself','person'],['For Someone Else','third_party'],['For an Organization','business']], {}, 
                       :'data-mini' => true,  
                       :'data-native-menu' => 'false',  
                       :onchange => "refreshFormNewFund()" %>
@@ -22,12 +22,12 @@
   <li data-role="list-divider" >Business / Non-Profit Information</li>
   <li>
     <%= f.text_field  :receiver_name, 
-                      :placeholder => 'Business Name', 
+                      :placeholder => 'Organization Name', 
                       :'data-mini' => true, 
                       :maxlength => 30, 
                       :disabled => ('true' unless @fund.is_business_fund?) %>
     <%= f.text_field  :receiver_email, 
-                      :placeholder => 'Business Email', 
+                      :placeholder => 'Organization Email', 
                       :'data-mini' => true, 
                       :maxlength => 30, 
                       :disabled => ('true' unless @fund.is_business_fund?) %>

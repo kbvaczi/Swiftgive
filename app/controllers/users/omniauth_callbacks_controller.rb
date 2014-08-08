@@ -135,7 +135,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       user.update_authentication_raw_data(:standardized_auth_data => standardized_auth_data, :raw_auth_data => raw_auth_data)
       set_flash_message(:notice, :success, :kind => standardized_auth_data[:provider_name]) if is_navigational_format?
       #remember_me(user)
-      user.update_attribute(:confirmed_at, Time.now) unless user.confirmed_at.present? # This line is needed in case someone has created an account using email, but not confirmed their address, then try to subsequently login through omniauth
+      user.update_attribute(:confirmed_at, Time.zone.now) unless user.confirmed_at.present? # This line is needed in case someone has created an account using email, but not confirmed their address, then try to subsequently login through omniauth
       sign_in_and_redirect user, :event => :authentication #this will throw if @user is not activated
     else
       register_new_account

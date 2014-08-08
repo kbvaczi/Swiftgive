@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
 
   # used to consistently display model errors in a flash message
   def display_errors(model)
-    model.errors.full_messages.inject {|string, m| string + '<br/>' + m.to_s}
+    model.errors.full_messages.inject {|string, m| string + '<br/>' + m.to_s}.html_safe
   end
   helper_method :display_errors
 

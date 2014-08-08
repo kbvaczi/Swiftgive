@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
     existing_authentication = Users::Authentication.where(options[:standardized_auth_data].slice(:provider, :uid)).first    
     unless existing_authentication.present?
       new_user = new(options[:standardized_auth_data].slice(:email, :account_attributes))
-      new_user.confirmed_at = Time.now.utc # emails are considered confirmed if imported from omniauth
+      new_user.confirmed_at = Time.zone.now.utc # emails are considered confirmed if imported from omniauth
       new_user.build_authentication(options)
       new_user.password = SecureRandom.base64(10).to_s # set a random strong password so user's account cannot be accessed manually
       new_user.is_password_set = false # this lets us know that the user does not have a password
