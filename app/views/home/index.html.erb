@@ -139,9 +139,9 @@
 			<div class='panel-body center_wrap'>
 				<h3 class='lead t-ssl drop-shadow-up'>Check out Our Fund</h3>
 				<% if ENV['SWIFTGIVE_FUND_UID'].present? %>
-					<%= link_to image_tag("swiftgive_give_code.png", :width => '400px'), fund_path(ENV['SWIFTGIVE_FUND_UID']) %>	
+					<%= link_to image_tag("swiftgive_give_code.png", :width => '400px', :style=>'max-width:90%;'), fund_path(ENV['SWIFTGIVE_FUND_UID']) %>	
 				<% else %>
-					<%= image_tag("swiftgive_give_code.png", :width => '400px') %>
+					<%= image_tag("swiftgive_give_code.png", :width => '400px', :style=>'max-width:90%;') %>
 				<% end %>				
 			</div>
 			<div class="panel-footer">
