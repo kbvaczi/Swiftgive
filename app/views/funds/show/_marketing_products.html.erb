@@ -7,8 +7,12 @@
 		<div class="col-md-3"  style='height:200px;'>
 			<div class="thumbnail bc-w">
 				<div class='center_wrap'>
-				<%= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_image0_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name, :tc => current_fund.uid), :class => 'clearfix center ', :target => '_blank' %>
-				</div>
+				<%# direct link removed in favor of iframe dynamically loaded with product url %>
+				<%#= link_to image_tag(product.image_url(:thumb)), product.link_to_product(:t_givecode_iid => current_fund.give_code_vector.url, :t_text_txt => current_fund.name, :t_text0_txt => current_fund.name), :class => 'clearfix center ', :target => '_blank' %>
+				<%= link_to image_tag(product.image_url(:thumb)), "", 
+					:class => 'clearfix center marketing_product_link', 
+					:'data-product-url' => product.link_to_product(:t_image0_iid => current_fund.give_code_vector.url, :t_text0_txt => current_fund.name, :tc => current_fund.uid) %>
+				</div> 
 			</div>
 			<div class='caption mb ml-m' style='margin-top:-10px'>
 				<strong><%= product.name %></strong>
@@ -17,3 +21,16 @@
 		</div>
 	<% end %>
 </div>
+
+<script type='text/javascript'>
+	$('.marketing_product_link').click(function(e){
+        var id = $(this).data("windowid");
+        if(id == null || id.closed) {
+            id =  window.open($(this).data("product-url"), "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=100, left=100, width=1000, height=700");
+        }
+        id.focus();
+        $(this).data("windowid", id);
+        e.preventDefault();
+        return false;
+    });
+</script>
