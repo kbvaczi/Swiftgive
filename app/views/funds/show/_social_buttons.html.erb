@@ -1,10 +1,12 @@
 <!-- Buttons start here. Copy this ul to your document. -->
 <% current_url = url_for(:host => ENV['HOST'], :port => false) %>
 
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-envelope-square social_grey'), "mailto:?subject=Check%20out%20this%20fund%20on%20Swiftgive&body=#{current_url}" %>
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-facebook-square'), "https://www.facebook.com/sharer/sharer.php?u=#{current_url}", :class => 'popup facebook', :target => '_blank' %>
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-google-plus-square'), "https://plus.google.com/share?url=#{current_url}", :class => 'popup google' , :target => '_blank'%>
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-twitter-square'), "http://twitter.com/home?status=#{current_url}", :class => 'popup twitter', :target => '_blank' %>
+<div class='center_wrap'>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-envelope-square social_grey'), "mailto:?subject=Check%20out%20this%20fund%20on%20Swiftgive&body=#{current_url}", :class => 'social_media_button' %>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-facebook-square'), "https://www.facebook.com/sharer/sharer.php?u=#{current_url}", :class => 'popup social_media_button facebook', :target => '_blank' %>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-google-plus-square'), "https://plus.google.com/share?url=#{current_url}", :class => 'popup social_media_button google' , :target => '_blank'%>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-twitter-square'), "http://twitter.com/home?status=#{current_url}", :class => 'popup social_media_button twitter', :target => '_blank' %>
 
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-linkedin-square'), "http://www.linkedin.com/shareArticle?mini=true&url=#{current_url}&title=Check%20out%20this%20fund%20on%20Swiftgive&summary=Free%2C%20easy%20mobile%20fundraising%20and%20tipping&source=Swiftgive", :class => 'popup linkedin', :target => '_blank' %>
-<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-reddit-square'), "http://www.reddit.com/submit?url=#{current_url}&title=Check%20out%20this%20fund%20on%20Swiftgive", :class => 'popup reddit', :target => '_blank' %>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-linkedin-square'), "http://www.linkedin.com/shareArticle?mini=true&url=#{current_url}&title=Check%20out%20this%20fund%20on%20Swiftgive&summary=Free%2C%20easy%20mobile%20fundraising%20and%20tipping&source=Swiftgive", :class => 'popup social_media_button linkedin', :target => '_blank' %>
+	<%= link_to content_tag(:i, "", :class => 'fa fa-3x fa-reddit-square'), "http://www.reddit.com/submit?url=#{current_url}&title=Check%20out%20this%20fund%20on%20Swiftgive", :class => 'popup social_media_button reddit', :target => '_blank' %>
+</div>

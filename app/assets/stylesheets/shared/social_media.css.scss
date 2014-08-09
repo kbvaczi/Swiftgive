@@ -10,3 +10,13 @@
 .linkedin:hover	{ color:#0062A0 !important; }
 .social_grey	{ color:#AAAAAA !important; }
 .social_grey:hover	{ color:#999999 !important; }
+
+.social_media_button {
+	font-size:100%;
+}
+
+@media(max-width:767px){
+	.social_media_button {
+		font-size:90%;
+	}
+}
