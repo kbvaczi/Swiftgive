@@ -2,6 +2,7 @@
 <% is_current_fund_owner = (user_signed_in? and current_fund.owners.include?(current_user)) %>
 <% is_current_fund_member = (user_signed_in? and current_fund.members.include?(current_user)) %>
 
+<%= render :partial => 'funds/show/new_fund_modal' if @show_new_fund_modal %>
 <%= render :partial => 'funds/show/give_code_modal' %>
 <%= render :partial => 'funds/show/info' %>
 

@@ -8,7 +8,6 @@ class FundsController < ApplicationController
   # GET /funds
   def index
     set_back_path
-
     respond_to do |format|
       format.mobile
     end
@@ -19,6 +18,13 @@ class FundsController < ApplicationController
     set_back_path
     current_fund
     add_fund_to_recent_funds_viewed
+    if session["on_display_of_fund_#{current_fund.uid}"] == 'show new fund modal'
+      session["on_display_of_fund_#{current_fund.uid}"] = 'show success flash'
+      @show_new_fund_modal = true
+    elsif session["on_display_of_fund_#{current_fund.uid}"] == 'show success flash'
+      flash.now[:notice] = "Your fund was successfully created!"
+      session["on_display_of_fund_#{current_fund.uid}"] = nil
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -70,12 +76,13 @@ class FundsController < ApplicationController
     @fund.creator = current_user
     @fund.creator_info = @creator_info
     if @fund.save
-      redirect_to fund_path(@fund), notice: 'Fund was successfully created.'
+      session["on_display_of_fund_#{current_fund.uid}"] = 'show new fund modal'
+      redirect_to fund_path(@fund)
     else
       Rails.logger.debug @fund.errors.full_messages.to_s
       flash[:error] = display_errors(@fund).html_safe
       render action: "new"
-    end    
+    end
   end
 
   # PUT /funds/1
@@ -97,6 +104,12 @@ class FundsController < ApplicationController
     else
       flash[:error] = 'Fund cound not be deleted'
       redirect_to back_path
+    end
+  end
+
+  def check_code_status
+    respond_to do |format|
+      format.json { render :json => (current_fund.give_code_image.present? & current_fund.give_code_vector.present?) ? true : false }
     end
   end
   
