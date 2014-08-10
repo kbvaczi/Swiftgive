@@ -4,6 +4,7 @@ class FundsController < ApplicationController
   before_filter :verify_give_code_present, :only => [:promote, :give_code]
   before_filter :verify_creator_info_present, :only => [:new, :create]
   before_filter :authenticate_fund_owner, :only => [:edit, :manage, :update, :destroy]
+  before_filter :verify_user_has_less_than_five_funds, :only => [:new, :create]
 
   # GET /funds
   def index
@@ -140,6 +141,13 @@ class FundsController < ApplicationController
   def verify_give_code_present
     unless current_fund.give_code_image.present? and current_fund.give_code_vector.present?
       flash[:error] = 'Your give code has not been generated yet.  Please try again later.'
+      redirect_to back_path
+    end
+  end
+
+  def verify_user_has_less_than_five_funds
+    if current_user.funds.count > 4
+      flash[:error] = "You can only have 5 funds at a time. Please delete one of your funds."
       redirect_to back_path
     end
   end
