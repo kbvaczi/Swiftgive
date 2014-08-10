@@ -34,14 +34,19 @@
 <%= render :partial => 'funds/show/marketing_products' %>
 
 <%= content_for :sidebar do %>
-	<div class='thumbnail clearfix center_wrap'>		
-	    <% if current_fund.give_code_image.present? %>
-          <%= image_tag current_fund.give_code_image.url, :style => "width:100%;border-radius:10px;", :alt => "Swiftgive | #{current_fund.name}" %>
-        <% else %>
-          <h2>Ooops!</h2>
-          <h4>We haven't generated the give code for this fund yet.  Please try again later.  Sorry for the inconvenience!</h4>
-        <% end %>        
-    </div>    
+	<div class='panel panel-default'>
+		<div class='panel-body center_wrap'>
+		    <% if current_fund.give_code_image.present? %>
+			    <%= image_tag current_fund.give_code_image.url, :style => "width:100%;", :alt => "Swiftgive | #{current_fund.name}" %>
+		    <% else %>
+				<h2>Ooops!</h2>
+				<h4>We haven't generated the give code for this fund yet.  Please try again later.  Sorry for the inconvenience!</h4>
+			<% end %>      
+		</div>
+		<div class="panel-footer">
+			<i>Scan the give code above to donate to this fund from your mobile device.</i>
+		</div>
+	</div>
 	<div class='content_box clearfix'>
 		<h4>Donations</h4>
 		<table class='table'>
