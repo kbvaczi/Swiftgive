@@ -58,8 +58,7 @@ a:hover img {
   background:#fff;
 }
 
-.content_box {
-  background-color: $backgroundColor !important;
+.content_box, {
   border: 1px solid $borderColor;
 }
 
@@ -80,6 +79,6 @@ h2, h3, h4 {
   margin-bottom:20px;
 }
 
-.thumbnail {
-  border-color: $borderColor;
-}
+.panel-footer, .content_box {  background-color: $backgroundColor !important;}
+.panel, .panel-footer, .thumbnail { border-color: $borderColor; }
+.panel { box-shadow: none; }
