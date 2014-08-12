@@ -29,11 +29,14 @@ body {
 	vertical-align: middle !important;
 }
 .jumbotron-translucent {
-  background-color: rgba(124,124,124,0.2);
+  background-color: rgba(0,0,0,0.1);
   color: rgb(248, 248, 248);
 }
 .jumbotron-clear {
   background:none;
+}
+.jumbotron h1 {
+  text-shadow: -1px -1px 3px rgba(50,50,50,0.3);
 }
 @media(min-width:768px){
   .jumbotron h1 {font-size:50px;}
@@ -55,8 +58,7 @@ a:hover img {
   background:#fff;
 }
 
-.content_box {
-  background-color: $backgroundColor !important;
+.content_box, {
   border: 1px solid $borderColor;
 }
 
@@ -77,6 +79,6 @@ h2, h3, h4 {
   margin-bottom:20px;
 }
 
-.thumbnail {
-  border-color: $borderColor;
-}
+.panel-faded .panel-footer, .content_box {  background-color: $backgroundColor !important;}
+.panel-faded, .panel-faded .panel-footer, .thumbnail { border-color: $borderColor; }
+.panel { box-shadow: none; }

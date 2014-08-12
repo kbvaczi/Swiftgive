@@ -1,0 +1,89 @@
+<div id="give_code_modal" class="modal fade" data-keyboard='false' data-show='true' data-backdrop='static'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class="modal-body">    
+        <div class=''>
+          <h2 class='t-sl drop-shadow-up'>We're Almost Done... What's Next?</h2>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <div class='row'>
+              <div class='col-sm-2'>
+                <span class='icon-wrapper-circle icon-wrapper-circle-small bc-g right'>
+                  <div class='tc-w icon-in-wrapper-small'><i class='fa fa-laptop'></i></div>
+                </span>
+              </div>
+              <div class='col-sm-10 mt-s'>
+                <h3 class='lead mb-s'>Promote online</h3>
+                <p class='tc-grey'>Share your fund with others over social media.  People can scan your give code and donate directly from your fund page.</p>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-sm-2'>
+                <span class='icon-wrapper-circle icon-wrapper-circle-small bc-g right'>
+                  <div class='tc-w icon-in-wrapper-small'><i class='fa fa-mobile-phone'></i></div>
+                </span>
+              </div>
+              <div class='col-sm-10 mt-s'>
+                <h3 class='lead mb-s'>Promote in public from your mobile device</h3>
+                <p class='tc-grey'>Using a mobile device, navigate to your fund page and display your give code. People can scan the code directly off your device screen.</p>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-sm-2'>
+                <span class='icon-wrapper-circle icon-wrapper-circle-small bc-g right'>
+                  <div class='tc-w icon-in-wrapper-small'><i class='fa fa-qrcode'></i></div>
+                </span>
+              </div>
+              <div class='col-sm-10 mt-s'>
+                <h3 class='lead mb-s'>Promote in public using products</h3>
+                <p class='tc-grey'>Purchase customizable marketing products from your fund page. Want face-to-face interaction? Pick up some coded buttons to wear or business cards to hand out. Prefer a more distanced approach? Put up coded stickers and posters, or just mail out some coded post cards.</p>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>   
+      <div id="new_fund_modal_footer" class="modal-footer">                
+        <span>Generating your give code</span> &nbsp;
+        <i class="fa fa-2x fa-spinner fa-spin mb-s"></i>        
+        
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script type='text/javascript'>
+  
+  // Show this modal as soon as the page loads
+  $('#give_code_modal').modal('show');
+
+  // start checking for give code creation
+  checkCodeStatus();
+
+  function checkCodeStatus() {
+    window.setTimeout(function() {
+      var url = '<%= check_code_status_fund_path(current_fund) %>';   
+      $.ajax( {
+        url: url,
+        data: $(this).serialize(),
+        type: "GET",
+        success: function (response) {       
+          if (response == true) {
+            var link_to_replace_loader = "<a href='<%= fund_path(current_fund) %>' class='btn btn-primary'>Let&#x27;s Go!</a>";
+            $('#new_fund_modal_footer').html(link_to_replace_loader);
+          } else {
+            checkCodeStatus();
+          }        
+        },
+        error: function (response) {
+          var error_to_replace_loader = 'Error generating your give code &nbsp;&nbsp; <%= link_to "Try again later", root_path, :class => "btn btn-primary" %>';
+          $('#new_fund_modal_footer').html(error_to_replace_loader);
+        },
+        dataType: 'json'
+      });
+    }, 10000 );
+  }  
+
+</script>

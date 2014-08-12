@@ -3,7 +3,8 @@
   
   <%= f.input :sender_name,   :label => "Your Name", :required => true %>
   
-  <%= f.input :email,         :required => true %>
+  <%= f.input :email,         :label => "Your Email",
+                              :required => true %>
   
   <%= f.input :support_type,  :label => "Reason for Contact",
                               :include_blank => false , 
@@ -20,8 +21,8 @@
 
   <div class="control-group col-md-6 col-md-offset-4">
     <div class="controls">
-      <%= f.submit 'Submit', :class => 'btn btn-primary' %>      
-      <%= submit_tag 'Cancel', :type => :reset, :class => "btn" %>      
+      <%= f.submit 'Send Message', :class => 'btn btn-primary' %>      
+      <%= submit_tag 'Cancel', :type => :reset, :class => "btn btn-default" %>      
     </div>
   </div>
   

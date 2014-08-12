@@ -33,6 +33,7 @@ Swiftgive::Application.routes.draw do
     get 'manage/(:section)' => 'funds#manage', :on => :member, :as => 'manage'
     get 'give_code_html/(:product)' => 'funds/give_codes#give_code_html', :on => :member, :as => :give_code_html
     get 'give_code_image' => 'funds/give_codes#give_code_image', :on => :member, :defaults => { :format => 'pdf' }
+    get 'check_code_status' => 'funds#check_code_status', :on => :member
   end
   
   get 'payments/new/:fund_uid' => 'payments#new', :as => 'new_payment'
