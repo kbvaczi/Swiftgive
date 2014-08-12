@@ -79,6 +79,6 @@ h2, h3, h4 {
   margin-bottom:20px;
 }
 
-.content_box {  background-color: $backgroundColor !important; }
-.thumbnail { border-color: $borderColor; }
+.panel-faded .panel-footer, .content_box {  background-color: $backgroundColor !important;}
+.panel-faded, .panel-faded .panel-footer, .thumbnail { border-color: $borderColor; }
 .panel { box-shadow: none; }

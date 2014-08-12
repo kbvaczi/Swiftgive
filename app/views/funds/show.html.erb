@@ -34,7 +34,7 @@
 <%= render :partial => 'funds/show/marketing_products' %>
 
 <%= content_for :sidebar do %>
-	<div class='panel panel-default'>
+	<div class='panel panel-faded panel-default'>
 		<div class='panel-body center_wrap'>
 		    <% if current_fund.give_code_image.present? %>
 			    <%= image_tag current_fund.give_code_image.url, :style => "width:100%;", :alt => "Swiftgive | #{current_fund.name}" %>
@@ -44,7 +44,7 @@
 			<% end %>      
 		</div>
 		<div class="panel-footer">
-			<i>Scan the give code above to donate to this fund from your mobile device.</i>
+			<i>Scan this give code to donate from your mobile device.</i>
 		</div>
 	</div>
 	<div class='content_box clearfix'>
