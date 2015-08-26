@@ -26,7 +26,7 @@ class Payment < ActiveRecord::Base
   before_validation Proc.new { Rails.logger.debug "Validating #{self.class.name}" }
   before_validation :generate_and_assign_uid, :on => :create, :unless => Proc.new { self.uid.present? }
   before_create     Proc.new { self.is_anonymous = true unless self.sender.present? } # guests cannot send public payments because we do not have their user details
-  after_create      :confirm_payment_by_checking_email
+  #after_create      :confirm_payment_by_checking_email # no longer doing this since email verification has stopped working? need to debug before turning back on.
       
   # asynchronously perform check email task via sidekiq
   def confirm_payment_by_checking_email
