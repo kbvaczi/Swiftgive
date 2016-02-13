@@ -2,7 +2,6 @@
 
   <ul class="nav nav-pills mb">  	
     <li <%= "class=active" if not params[:section].present? %>><a href=<%= url_for params.merge(:section => nil) %>><i class="fa fa-fw fa-eye"></i>Summary</a></li>
-    <li <%= "class=active" if params[:section] == 'donations' %>><a href=<%= url_for params.merge(:section => 'donations') %>><i class="fa fa-fw fa-gift"></i>Donations</a></li>
     <li <%= "class=active" if params[:section] == 'setup' %>><a href=<%= url_for params.merge(:section => 'setup') %>><i class="fa fa-fw fa-wrench"></i>Setup</a></li>
   </ul>
 

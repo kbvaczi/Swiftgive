@@ -5,7 +5,7 @@
 <%= render :partial => 'funds/show/new_fund_modal' if @show_new_fund_modal %>
 <%= render :partial => 'funds/show/info' %>
 
-<% if current_fund.recent_payments.present? %>
+<% if false #current_fund.recent_payments.present? # removing this since email verification not working... %>
 	<h3>Recent Donations</h3>
 	<table class='table'>
 		<% current_fund.recent_payments.each do |payment| %>
@@ -46,19 +46,6 @@
 		<div class="panel-footer">
 			<i>Scan this give code to donate from your mobile device.</i>
 		</div>
-	</div>
-	<div class='content_box clearfix'>
-		<h4>Donations</h4>
-		<table class='table'>
-			<tr>
-				<td>Today</td>
-				<td class='t-l'><span class='right'><%= number_to_currency current_fund.amount_payments_today_in_cents / 100 %></span></td>
-			</tr>
-			<tr>
-				<td>This Month</td>
-				<td class='t-l'><span class='right'><%= number_to_currency current_fund.amount_payments_this_month_in_cents / 100 %></span></td>
-			</tr>
-		</table>	
 	</div>
 	<div class='content_box clearfix'>
 		<h4>Share This Fund</h4>
