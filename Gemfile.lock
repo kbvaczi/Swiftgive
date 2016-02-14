@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/seyhunak/twitter-bootstrap-rails.git
-  revision: feb28d576cdcf3bf9fc6ff4ab206286adf56c68c
+  revision: 1d93c5a77049b3d21d17c847ad0531d7714fa229
   branch: bootstrap3
   specs:
     twitter-bootstrap-rails (3.1.1)
@@ -44,12 +44,12 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     arel (3.0.3)
-    bcrypt (3.1.7)
+    bcrypt (3.1.10)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
     builder (3.0.4)
-    carmen (1.0.1)
-      unicode_utils (~> 1.4.0)
+    carmen (1.0.2)
+      activesupport (>= 3.0.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -58,19 +58,19 @@ GEM
     celluloid (0.12.4)
       facter (>= 1.6.12)
       timers (>= 1.0.0)
-    client_side_validations (3.2.6)
+    client_side_validations (3.2.7)
     client_side_validations-simple_form (2.1.0)
       client_side_validations (~> 3.2.5)
       simple_form (~> 2.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
-    coffee-script (2.2.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
+    coffee-script-source (1.10.0)
     connection_pool (1.2.0)
-    dalli (2.7.1)
+    dalli (2.7.6)
     devise (2.2.8)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -79,66 +79,158 @@ GEM
     devise-async (0.6.0)
       devise (>= 2.2)
     erubis (2.7.0)
-    excon (0.33.0)
-    execjs (2.0.2)
-    facter (2.0.1)
+    excon (0.45.4)
+    execjs (2.6.0)
+    facter (2.4.6)
       CFPropertyList (~> 2.2.6)
-    faraday (0.9.0)
+    faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    fog (1.22.0)
-      fog-brightbox
-      fog-core (~> 1.21, >= 1.21.1)
+    fission (0.5.0)
+      CFPropertyList (~> 2.2)
+    fog (1.37.0)
+      fog-aliyun (>= 0.1.0)
+      fog-atmos
+      fog-aws (>= 0.6.0)
+      fog-brightbox (~> 0.4)
+      fog-core (~> 1.32)
+      fog-dynect (~> 0.0.2)
+      fog-ecloud (~> 0.1)
+      fog-google (<= 0.1.0)
       fog-json
-      nokogiri (~> 1.5, >= 1.5.11)
-    fog-brightbox (0.0.2)
+      fog-local
+      fog-powerdns (>= 0.1.1)
+      fog-profitbricks
+      fog-radosgw (>= 0.0.2)
+      fog-riakcs
+      fog-sakuracloud (>= 0.0.4)
+      fog-serverlove
+      fog-softlayer
+      fog-storm_on_demand
+      fog-terremark
+      fog-vmfusion
+      fog-voxel
+      fog-vsphere (>= 0.4.0)
+      fog-xenserver
+      fog-xml (~> 0.1.1)
+      ipaddress (~> 0.5)
+    fog-aliyun (0.1.0)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      ipaddress (~> 0.8)
+      xml-simple (~> 1.1)
+    fog-atmos (0.1.0)
+      fog-core
+      fog-xml
+    fog-aws (0.8.1)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+      ipaddress (~> 0.8)
+    fog-brightbox (0.10.1)
+      fog-core (~> 1.22)
+      fog-json
+      inflecto (~> 0.0.2)
+    fog-core (1.35.0)
+      builder
+      excon (~> 0.45)
+      formatador (~> 0.2)
+    fog-dynect (0.0.2)
       fog-core
       fog-json
-    fog-core (1.22.0)
-      builder
-      excon (~> 0.33)
-      formatador (~> 0.2)
-      mime-types
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-    fog-json (1.0.0)
-      multi_json (~> 1.0)
-    formatador (0.2.4)
-    hashie (2.1.1)
+      fog-xml
+    fog-ecloud (0.3.0)
+      fog-core
+      fog-xml
+    fog-google (0.1.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-json (1.0.2)
+      fog-core (~> 1.0)
+      multi_json (~> 1.10)
+    fog-local (0.2.1)
+      fog-core (~> 1.27)
+    fog-powerdns (0.1.1)
+      fog-core (~> 1.27)
+      fog-json (~> 1.0)
+      fog-xml (~> 0.1)
+    fog-profitbricks (0.0.5)
+      fog-core
+      fog-xml
+      nokogiri
+    fog-radosgw (0.0.5)
+      fog-core (>= 1.21.0)
+      fog-json
+      fog-xml (>= 0.0.1)
+    fog-riakcs (0.1.0)
+      fog-core
+      fog-json
+      fog-xml
+    fog-sakuracloud (1.7.5)
+      fog-core
+      fog-json
+    fog-serverlove (0.1.2)
+      fog-core
+      fog-json
+    fog-softlayer (1.0.3)
+      fog-core
+      fog-json
+    fog-storm_on_demand (0.1.1)
+      fog-core
+      fog-json
+    fog-terremark (0.1.0)
+      fog-core
+      fog-xml
+    fog-vmfusion (0.1.0)
+      fission
+      fog-core
+    fog-voxel (0.1.0)
+      fog-core
+      fog-xml
+    fog-vsphere (0.6.0)
+      fog-core
+      rbvmomi (~> 1.8)
+    fog-xenserver (0.2.3)
+      fog-core
+      fog-xml
+    fog-xml (0.1.2)
+      fog-core
+      nokogiri (~> 1.5, >= 1.5.11)
+    formatador (0.2.5)
+    hashie (2.1.2)
     hike (1.2.3)
-    hitimes (1.2.1)
-    honeypot-captcha (0.0.2)
+    hitimes (1.2.3)
+    honeypot-captcha (0.0.3)
     httpauth (0.2.1)
-    i18n (0.6.11)
+    i18n (0.7.0)
     imgkit (1.3.10)
+    inflecto (0.0.2)
+    ipaddress (0.8.2)
     journey (1.0.4)
-    jquery-rails (3.1.0)
+    jquery-rails (3.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery_mobile_rails (1.4.2)
+    jquery_mobile_rails (1.4.5)
       railties (>= 3.1.0)
-    json (1.8.1)
+    json (1.8.3)
     jwt (0.1.13)
       multi_json (>= 1.5)
-    kgio (2.9.2)
+    kgio (2.10.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memcachier (0.0.2)
     mime-types (1.25.1)
-    mini_magick (3.7.0)
+    mini_magick (3.8.1)
       subexec (~> 0.2.1)
-    mini_portile (0.5.3)
+    mini_portile2 (2.0.0)
     mobylette (3.3.2)
       actionpack (>= 3.0)
-    mock_redis (0.13.2)
-    multi_json (1.10.1)
+    multi_json (1.11.2)
     multipart-post (2.0.0)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.9.0)
-    newrelic_rpm (3.8.0.218)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
+    newrelic_rpm (3.14.3.313)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     oauth (0.4.7)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -156,7 +248,7 @@ GEM
       omniauth-oauth2
     omniauth-linkedin (0.1.0)
       omniauth-oauth (~> 1.0)
-    omniauth-oauth (1.0.1)
+    omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
     omniauth-oauth2 (1.1.1)
@@ -164,17 +256,17 @@ GEM
       omniauth (~> 1.0)
     orm_adapter (0.5.0)
     pdfkit (0.6.2)
-    pg (0.17.1)
+    pg (0.18.4)
     polyglot (0.3.5)
-    rack (1.4.5)
-    rack-cache (1.2)
+    rack (1.4.7)
+    rack-cache (1.6.1)
       rack (>= 0.4)
     rack-protection (1.5.3)
       rack
     rack-ssl (1.3.4)
       rack
-    rack-ssl-enforcer (0.2.7)
-    rack-test (0.6.2)
+    rack-ssl-enforcer (0.2.9)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rails (3.2.17)
       actionmailer (= 3.2.17)
@@ -191,15 +283,19 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    raindrops (0.13.0)
-    rake (10.3.2)
+    raindrops (0.15.0)
+    rake (10.5.0)
+    rbvmomi (1.8.2)
+      builder
+      nokogiri (>= 1.4.1)
+      trollop
     rdoc (3.12.2)
       json (~> 1.4)
-    redis (3.0.7)
-    redis-namespace (1.4.1)
-      redis (~> 3.0.4)
+    redis (3.2.2)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     rqrcode (0.4.2)
-    sass (3.3.7)
+    sass (3.4.21)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -210,54 +306,54 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
-    sidekiq-unique-jobs (3.0.0)
-      mock_redis
+    sidekiq-unique-jobs (3.0.15)
       sidekiq (>= 2.6)
-    simple_form (2.1.1)
+    simple_form (2.1.3)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
-    sinatra (1.4.5)
+    sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
-    sitemap_generator (5.0.4)
+      tilt (>= 1.3, < 3)
+    sitemap_generator (5.0.5)
       builder
-    slim (2.0.2)
-      temple (~> 0.6.6)
+    slim (3.0.6)
+      temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
-    sprockets (2.2.2)
+    sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.9)
+    sqlite3 (1.3.11)
     subexec (0.2.3)
-    temple (0.6.7)
+    temple (0.7.6)
     thor (0.19.1)
     tilt (1.4.1)
-    timers (2.0.0)
+    timers (4.1.1)
       hitimes
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.40)
-    uglifier (2.5.0)
+    trollop (2.1.2)
+    tzinfo (0.3.46)
+    uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
-    unicode_utils (1.4.0)
-    unicorn (4.8.3)
+    unf_ext (0.0.7.2)
+    unicorn (5.0.1)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
     unicorn-rails (2.1.1)
       rack
       unicorn
-    warden (1.2.3)
+    warden (1.2.6)
       rack (>= 1.0)
-    wkhtmltopdf-binary (0.9.9.1)
+    wkhtmltopdf-binary (0.9.9.3)
+    xml-simple (1.1.5)
 
 PLATFORMS
   ruby
@@ -303,3 +399,6 @@ DEPENDENCIES
   unicorn
   unicorn-rails (~> 2.1.1)
   wkhtmltopdf-binary (~> 0.9.9.1)
+
+BUNDLED WITH
+   1.11.2
