@@ -21,13 +21,8 @@ ActiveRecord::Schema.define(:version => 20140818203717) do
     t.string   "city"
     t.string   "state"
     t.string   "avatar"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-    t.string   "braintree_customer_id"
-    t.string   "street_address"
-    t.string   "postal_code"
-    t.string   "ssn_last_4"
-    t.date     "date_of_birth"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "accounts", ["uid"], :name => "index_accounts_on_uid"
@@ -38,25 +33,20 @@ ActiveRecord::Schema.define(:version => 20140818203717) do
     t.string   "name"
     t.string   "description"
     t.text     "profile"
+    t.string   "give_code",        :default => ""
     t.string   "creator_name"
+    t.string   "city"
+    t.string   "state"
     t.string   "fund_type"
-    t.boolean  "is_active",                  :default => true
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.string   "receiver_name"
+    t.string   "receiver_email"
+    t.boolean  "is_active",        :default => true
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "give_code_image"
     t.string   "give_code_vector"
-    t.string   "business_name"
-    t.string   "business_dba_name"
-    t.string   "business_tax_id"
-    t.string   "business_email"
-    t.string   "braintree_approval_status"
-    t.string   "braintree_decline_error"
-    t.string   "braintree_merchant_id"
-    t.string   "bank_account_number_last_4"
   end
 
-  add_index "funds", ["braintree_approval_status"], :name => "index_funds_on_braintree_approval_status"
-  add_index "funds", ["braintree_merchant_id"], :name => "index_funds_on_braintree_merchant_id"
   add_index "funds", ["fund_type"], :name => "index_funds_on_fund_type"
   add_index "funds", ["name"], :name => "index_funds_on_name"
   add_index "funds", ["uid"], :name => "index_funds_on_uid"
@@ -90,19 +80,21 @@ ActiveRecord::Schema.define(:version => 20140818203717) do
     t.integer  "sender_id"
     t.integer  "amount_in_cents"
     t.text     "message"
+    t.string   "sender_name_from_email"
     t.string   "sender_email"
+    t.string   "receiver_email"
     t.boolean  "is_anonymous",            :default => true
+    t.boolean  "is_confirmed_by_email",   :default => false
+    t.boolean  "is_cancelled",            :default => false
     t.string   "uid"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "reason_for_cancellation"
-    t.string   "sender_name"
-    t.string   "status"
   end
 
   add_index "payments", ["fund_id"], :name => "index_payments_on_fund_id"
+  add_index "payments", ["is_confirmed_by_email"], :name => "index_payments_on_is_confirmed_by_email"
   add_index "payments", ["sender_id"], :name => "index_payments_on_sender_id"
-  add_index "payments", ["status"], :name => "index_payments_on_status"
   add_index "payments", ["uid"], :name => "index_payments_on_uid"
 
   create_table "users", :force => true do |t|

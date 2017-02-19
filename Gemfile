@@ -14,10 +14,10 @@ gem 'omniauth-google-oauth2', '~> 0.1.13'             # omni-auth strategy for l
 gem 'omniauth-linkedin', '~> 0.1.0'                   # omni-auth strategy for logging in with linkedin
 
 gem 'sidekiq', '~> 2.6.1'                             # redis backed background processing
-gem 'sidekiq-unique-jobs', '~> 3.0.0'                 # adds unique jobs functionality to sidekiq
+gem 'sidekiq-unique-jobs', '3.0.5'                 # adds unique jobs functionality to sidekiq
 gem 'devise-async', '~> 0.6.0'                        # devise emails sent in background
 
-gem 'honeypot-captcha', '~> 0.0.2'                    # alternative to capcha without the complexity 
+gem 'honeypot-captcha', '~> 0.0.2'                    # alternative to capcha without the complexity
 gem 'simple_form', '~> 2.1.0'                         # standardized form CSS and helpers
 gem 'client_side_validations', '~> 3.2.6'
 gem 'client_side_validations-simple_form', '~> 2.1.0' # client-side validations plugin to use simple form CSS
@@ -39,7 +39,7 @@ gem 'sitemap_generator', '~> 5.0.4'                   # generates a sitemap and 
 group :development do
   gem 'unicorn-rails', '~> 2.1.1'                     # unicorn works with "rails s"
   gem 'sqlite3'                                       # simple file-based database
-  gem 'slim'                                          # this is for sidekiq monitoring server 
+  gem 'slim'                                          # this is for sidekiq monitoring server
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
@@ -52,7 +52,7 @@ group :production, :staging do
 end
 
 group :staging do
-  gem 'slim'                                          # this is for sidekiq monitoring server 
+  gem 'slim'                                          # this is for sidekiq monitoring server
   gem 'sinatra', :require => nil                      # this is for sidekiq monitoring server
 end
 
@@ -65,6 +65,3 @@ group :assets do
   gem 'jquery-rails'
   gem 'jquery_mobile_rails', '~> 1.4.2'               # mobile UI bootstrap
 end
-
-
-
